@@ -1,0 +1,8 @@
+---
+title: "Derivations and Technical Details"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+This section contains derivations and other technical details.

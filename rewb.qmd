@@ -1,0 +1,106 @@
+---
+title: "Within, Between, and Contextual Effects"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+Many find it hard to keep track of within, between, and contextual effects in MLMs.
+This short walkthrough shows how to fit and interpret each model using the HSB data.
+
+```{r}
+# load libraries
+library(tidyverse)
+library(lme4)
+library(sjPlot)
+library(ggeffects)
+library(haven)
+
+# clear memory
+rm(list = ls())
+
+select <- dplyr::select
+
+# load HSB data
+hsb <- read_dta("data/hsb.dta") |> 
+  select(mathach, ses, schoolid) |> 
+  group_by(schoolid) |> 
+  mutate(grp_mean_ses = mean(ses)) |> 
+  ungroup() |> 
+  mutate(grp_center_ses = ses - grp_mean_ses)
+```
+
+## Fitting the Models
+
+```{r}
+ols <- lm(mathach ~ ses, hsb)
+fe <- lm(mathach ~ ses + factor(schoolid), hsb)
+ri <- lmer(mathach ~ ses + (1|schoolid), hsb)
+ri_within <- lmer(mathach ~ grp_center_ses + (1|schoolid), hsb)
+ri_between <- lmer(mathach ~ grp_mean_ses + (1|schoolid), hsb)
+re_wb <- lmer(mathach ~ grp_center_ses + grp_mean_ses + (1|schoolid), hsb)
+contextual <- lmer(mathach ~ ses + grp_mean_ses + (1|schoolid), hsb)
+
+tab_model(ols, fe, ri, ri_within, ri_between, re_wb, contextual,
+          p.style = "stars",
+          show.ci = FALSE,
+          show.se = TRUE,
+          keep = "ses",
+          show.dev = TRUE,
+          dv.labels = c("OLS",
+                        "Fixed Effects",
+                        "Rand. Int.",
+                        "RI Within",
+                        "RI Between",
+                        "REWB",
+                        "Mundlak"))
+```
+
+## Interpretation
+
+### OLS
+
+Ignoring school membership, students who are 1-unit higher in SES are predicted to score 3.18 points higher in math
+
+### Fixed Effects
+
+Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math
+
+### Random Intercepts
+
+Students who are 1-unit higher in SES are predicted to score 2.39 points higher in math; schools that are 1-unit higher in mean SES are predicted to have mean math scores 2.39 points higher.
+
+(A precision-weighted average of the within and between effects; Within: 2.19, Between: 5.86. If the RE assumption holds, these are the same in the population so we get more precision by averaging them together. However, in social science, they are rarely the same!)
+
+### Random Intercepts, Within Effect
+
+Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math.
+This is the same coefficient as the FE model, but in an RI framework.
+We have "controlled for school" manually by demeaning the SES variable.
+
+### Random Intercepts, Between
+
+Schools that are 1-unit higher in mean SES are predicted to have mean math scores 5.86 points higher.
+
+### Random Effects within and Between
+
+Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; schools that are 1-unit higher in mean SES are predicted to have mean math scores 5.86 points higher.
+We get the within and between effects in a single model!
+
+### Contextual/Mundlak
+
+Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; *holding constant student SES*, a student that attends a school with 1-unit higher in mean SES are predicted to have mean math scores 3.68 points higher.
+The contextual effect is the *difference* in the within and between effects, and its significance test allows us to determine if it is necessary.
+Mathematically, the Mundlak model and REWB are *identical*, as you can see from the deviance statistics.
+You would choose one over the other depending on your preferred interpretation.
+
+## Further Reading
+
+[@antonakis2019a]

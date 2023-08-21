@@ -1,0 +1,44 @@
+---
+title: "AIC, BIC, and Deviance"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, include=FALSE}
+library( blkvar )
+```
+
+In this section, we briefly walk through how to find AIC, BIC, and Deviance to compare models.
+We have a simple multilevel dataset (we generate through a utility package, `blkvar`, that Miratrix and the C.A.R.E.S. lab has used to explore how multilevel modeling works in practice), and generate a few variables that we will use as predictors.
+Only the fourth variable is actually useful for prediction!
+Let's see if our AIC, etc., measures identify which model is superior.
+
+To install a "working package" we use `devtools`:
+
+```{r, eval=FALSE}
+devtools::install_github("https://github.com/lmiratrix/blkvar" )
+```
+
+```{r}
+library( blkvar )
+dd = generate_multilevel_data( J = 40 )
+head( dd )
+
+dd$X1 = rnorm( nrow(dd) )
+dd$X2 = rnorm( nrow(dd) )
+dd$X3 = rnorm( nrow(dd) )
+dd$X4 = dd$Yobs + rnorm(nrow(dd))
+ 
+M1 = lmer( Yobs ~ 1 + (1|sid), data=dd )
+M2 = lmer( Yobs ~ 1 + X1 + X2 + X3 + (1|sid), data=dd )
+M3 = lmer( Yobs ~ 1 + X1 + X2 + X3 + X4 + (1|sid), data=dd )
+
+library( arm )
+display(M1)
+display(M2)
+ 
+library( texreg )
+screenreg( list( M1, M2, M3 ) )
+```

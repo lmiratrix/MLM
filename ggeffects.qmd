@@ -1,0 +1,80 @@
+---
+title: "Easy Graphing with `ggeffects`"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+An awesome convenience function for graphing regression models is the `ggeffects` package.
+It's the best equivalent I've found in R to Stata's `margins`.
+Let's demonstrate with the HSB data.
+
+```{r}
+# load libraries
+library(tidyverse)
+library(lme4)
+library(ggeffects)
+library(sjPlot)
+library(haven)
+
+# clear memory
+rm(list = ls())
+
+# load HSB data
+hsb <- read_dta("data/hsb.dta")
+```
+
+## Fit a Series of Models
+
+We can fit 2- and 3-way interactions, but they can be hard to interpret from the coefficients alone (unless you have a lot of practice).
+
+```{r}
+m1 <- lmer(mathach ~ ses + (1|schoolid), hsb)
+m2 <- lmer(mathach ~ ses + sector + (1|schoolid), hsb)
+m3 <- lmer(mathach ~ ses*sector + (1|schoolid), hsb)
+m4 <- lmer(mathach ~ ses*sector*female + (1|schoolid), hsb)
+
+# tabulate results with tab_model
+tab_model(m1, m2, m3, m4,
+          p.style = "stars",
+          show.ci = FALSE,
+          show.se = TRUE)
+```
+
+## Graph the Results with `ggeffects`
+
+If we just call `ggeffect` on the model object, we get a bunch of predicted values"
+
+```{r}
+ggeffect(m1)
+```
+
+We can pipe that into `plot` to get a nice plot:
+
+```{r}
+ggeffect(m1) |> 
+  plot()
+```
+
+With multiple covariates, we can call the `terms` argument.
+The first input is on X, the second is mapped to color, the third to facet.
+This makes visualizing the interactions super easy!
+Any covariates included in the model but not included in `terms` are held constant at their means.
+
+```{r}
+ggeffect(m2, terms = c("ses", "sector")) |> 
+  plot(ci = FALSE, add.data = TRUE)
+
+ggeffect(m3, terms = c("ses", "sector")) |> 
+  plot(ci = FALSE)
+
+ggeffect(m4, terms = c("ses", "sector", "female")) |> 
+  plot(ci = FALSE)
+```

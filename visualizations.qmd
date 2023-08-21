@@ -1,0 +1,6 @@
+---
+title: "Visualizations"
+editor: 
+  markdown: 
+    wrap: sentence
+---

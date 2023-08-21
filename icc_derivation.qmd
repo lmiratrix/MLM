@@ -1,0 +1,58 @@
+---
+title: "ICC Derivation"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+Often, the ICC is described as the estimated correlation between pairs of points drawn from the same cluster.
+While you can look at the visualizer to get some intuition on what this means, here is a short proof adapted from S52 materials.
+
+Consider the variance components model:
+
+$$
+y_{ij} = \beta_0 + \zeta_j + \varepsilon_{ij}
+$$
+
+The correlation between an observation $y$ and an observation from the same group $y'$ is the standardized covariance:
+
+$$
+\rho(y, y') = \frac{cov(y,y')}{\sqrt{var(y)var(y')}}
+$$
+
+We can expand the numerator, the covariance between $y$ and $y'$ and substitute in the definition of $y$ from our model:
+
+$$
+cov(y,y') = cov(\beta_0 + \zeta_j + \varepsilon_{ij}, \beta_0 + \zeta_j + \varepsilon'_{ij})
+$$
+
+By definition, $\beta_0$ is the same for everyone (i.e., the "constant" term), and $\zeta_j$ will be the same for both observations because we are looking within a single cluster.
+The only difference between the two groups are the individual level error terms, $\varepsilon_{ij}$.
+The rules of covariance tell us that the constant drops out and the $\varepsilon$ too because it is independent of $\zeta_j$, we can simplify our equation:
+
+$$
+cov(y,y') = cov(\zeta_j, \zeta_j) 
+$$
+
+The covariance of a variable with itself is the variance:
+
+$$
+cov(y,y') = cov(\zeta_j, \zeta_j) = var(\zeta_j) = \sigma^2_\zeta
+$$
+
+Conceptually, the $\zeta_j$ represents the shared influences on $y$ that would cause the similarity between observations in the same group.
+
+We know from our variance decomposition in the ICC formula that $var(y)$ is the sum of the between-group and within-group variance components:
+
+$$
+var(y) = var(y') = \sigma^2_\zeta + \sigma^2_\varepsilon
+$$
+
+We can substitute these quantities into the original formula:
+
+$$
+\rho(y, y') = \frac{cov(y,y')}{\sqrt{var(y)var(y')}} = \frac{\sigma^2_\zeta}{\sigma^2_\zeta + \sigma^2_\varepsilon} = ICC
+$$
+Thus, the ICC is both the proportion of total variance accounted for by group membership **and** the correlation between pairs of observations drawn from the same group.
+QED!

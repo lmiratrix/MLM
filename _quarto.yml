@@ -1,0 +1,76 @@
+project:
+  type: book
+
+book:
+  title: "Resources for S-043: Multilevel and Longitudinal Models"
+  author: "Luke Miratrix and Friends"
+  date: "`r Sys.Date()`"
+  chapters:
+    - index.qmd
+    - part: r_basics.qmd
+      chapters:
+          - self_assess.qmd
+          - intro_markdown.qmd
+          - intro_linear_regression.qmd
+          - intro_ggplot.qmd
+          - r_tips.qmd
+          - summary_plots.qmd
+          - making_tables.qmd
+          - reg_table_demo.qmd
+          - math_reference.qmd
+          - intro_missing_data.qmd
+          - plot_expand_grid.qmd
+          - ggeffects.qmd
+          - double_plot.qmd
+          - pivot_wider.qmd
+    - part: mod_fit.qmd
+      chapters:
+          - broom.qmd
+          - lmer_extract.qmd
+          - fixed_effects.qmd
+          - interpreting_coefficients.qmd
+          - rewb.qmd
+          - growth_models_predictors.qmd
+          - reg_assumptions.qmd
+          - model_cheat_sheet.qmd
+          - model_representations.qmd
+          - interpreting_glms.qmd
+          - glm_vs_transform.qmd
+          - lr_test.qmd
+          - anova.qmd
+          - aic_check.qmd
+    - part: worked_examples.qmd
+      chapters:
+          - hsb_ex.qmd
+          - faraway_ex.qmd
+          - perf_ex.qmd
+          - kenya_ex.qmd
+    - part: visualizations.qmd
+      chapters:
+          - icc_viz.qmd
+          - rand_slopes_viz.qmd
+          - rewb_viz.qmd
+          - latent_logit_viz.qmd
+    - part: derivations.qmd
+      chapters:
+          - icc_derivation.qmd
+          - cov_matrix_derivation.qmd
+          - inflated_variance.qmd
+          - pooling.qmd
+          - survey_weights.qmd
+          - complex_error.qmd
+          - lmer_optimization.qmd
+          - cluster_demo.qmd
+    - peer_grading.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

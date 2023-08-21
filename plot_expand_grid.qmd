@@ -1,0 +1,534 @@
+---
+title: "Example of making plots with `expand.grid`"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=6, fig.height=4) 
+
+library( tidyverse )
+library( arm )
+library( foreign )
+
+```
+
+## Introduction
+
+This script demonstrates using the `predict()` function to make plots with separate lines for different groups.
+A core element is the `expand.grid()` method.
+The central idea is this: for each of our groups we manually create a series of points at different levels of our covariate (e.g. ses or time) and then predict the outcome for each of these values.
+We then plot these predicted points, and it makes a smooth curve for that group.
+
+In this document we start with clustered data (the HS&B dataset) and then illustrate how to this with longitudinal data as well.
+
+## Making plots for the HS&B Dataset
+
+In this section we first look at how to plot the model results by making a tiny dataset from the fixed effects, and then we extend to more powerful plotting of individual schools.
+
+### Setting up the HS&B data
+
+```{r, include=FALSE}
+
+## read student data
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+head( dat )
+
+## read school data
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+head( sdat )
+sdat$sector = factor( sdat$sector, levels=c(0,1), labels=c("public","catholic") )
+sdat$pracad = sdat$disclim = sdat$himinty = NULL
+
+dat = merge( dat, sdat, by="id", all=TRUE )
+
+```
+
+The "many small worlds" view says each school has its own regression line.
+We are going to plot them all.
+See the lecture code files for how to load the HS&B dataset.
+For clarity it is omitted from the printout.
+We end up with this for the schools:
+
+```{r}
+head( sdat )
+```
+
+and this for students (we merged in the school info already):
+
+```{r}
+head( dat )
+```
+
+We fit a fancy random slopes model with 2nd level covariates that impact both the overall school means and the ses by math achievment slopes.
+Our model is $$
+\begin{aligned}
+y_{ij} &= \beta_{0j} + \beta_{1j} ses_{ij} +  \epsilon_{ij} \\
+\beta_{0j} &= \gamma_{00} + \gamma_{01} sector_j + u_{0j} \\
+\beta_{1j} &= \gamma_{10} + \gamma_{11} sector_j + u_{1j} 
+\end{aligned}
+$$ We omit the equations for the random effect distributions.
+The $\epsilon_{ij}$ are normal, and the $(u_{0j},u_{1j})$ are bivariate normal, as usual.
+We fit the model as so:
+
+```{r}
+M1 = lmer( mathach ~ 1 + ses*sector + (1 + ses|id), data=dat )
+
+display( M1 )
+```
+
+### Plotting the model results
+
+We can plot the model results by making a little dataset by hand.
+This section of the handout illustrates how you can hand-construct plots by directly calculating predicted values from your model.
+This is a very useful skill, and we recommend studying this area of the handout as a way of learning how to control plotting at a very direct level.
+
+So, to continue, we proceed in three steps.
+
+*Step 1: Decide on the plot.* Let's make a plot of outcome vs. ses with two lines (one for catholic and one for public).
+Sometimes it is worth actually sketching the desired plot on scratch paper, identifying the x and y axes and general lines desired.
+
+*Step 2: calculate some outcomes using our model.* We do this by deciding what values we want to plot, and then making the outcome.
+
+```{r}
+quantile( dat$ses, c( 0.05, 0.95 ) )
+plt = data.frame( ses = c(-1.5, 1.25, -1.5, 1.25 ),
+                  catholic = c( 0, 0, 1, 1 ) )
+cf = fixef( M1 )
+cf
+plt = mutate( plt,
+              Y = cf[[1]] + cf[[2]]*ses + cf[[3]]*catholic + cf[[4]]*ses*catholic )
+plt
+```
+
+Note that we have made a little mini-dataset with just the points we want to put on our plot.
+We calculated these points "by hand".
+There is no shame in this.
+
+*Step 3: plot.* We plot using ggplot:
+
+```{r}
+plt$catholic = factor( plt$catholic, 
+                       labels=c("public","catholic"),
+                       levels=c(0,1) )
+ggplot( plt, aes( ses, Y, col=catholic ) ) +
+    geom_line()
+```
+
+#### A fancy diversion: categorical variables on the $x$-axis
+
+Say we decided to fit a model where we have ses **categories**:
+
+```{r}
+dat$ses.cat = cut( dat$ses, 
+                   breaks=quantile( dat$ses, c( 0, 0.33, 0.67, 1 ) ),
+                   labels = c( "low","mid","high"),
+                   include.lowest = TRUE )
+table( dat$ses.cat )
+M1b = lmer( mathach ~ 1 + ses.cat*sector + (1 + ses|id), data=dat )
+display( M1b )
+```
+
+Make our outcomes:
+
+```{r}
+plt = data.frame( ses.mid = c( 0, 1, 0, 0, 1, 0 ),
+                  ses.high = c( 0, 0, 1, 0, 0, 1 ),
+                  catholic = c( 0, 0, 0, 1, 1, 1 ) )
+cf = fixef( M1b )
+cf
+plt = mutate( plt,
+              Y = cf[[1]] + cf[[2]]*ses.mid + cf[[3]]*ses.high +
+                cf[[4]]*catholic + cf[[5]]*ses.mid*catholic + cf[[6]]*ses.high*catholic )
+plt
+```
+
+And plot
+
+```{r}
+plt$catholic = factor( plt$catholic, 
+                       labels=c("public","catholic"),
+                       levels=c(0,1) )
+plt$ses = "low"
+plt$ses[plt$ses.mid==1] = "mid"
+plt$ses[plt$ses.high==1] = "high"
+plt$ses = factor( plt$ses, levels=c("low","mid","high") )
+ggplot( plt, aes( ses, Y, col=catholic, group=catholic ) ) +
+    geom_line() + geom_point()
+```
+
+Note the *very important* `group=catholic` line that tells the plot to group everyone by catholic.
+If not, it will get confused and note that since ses is categorical, try to group on that.
+Then it cannot make a line since each group has only a single point.
+
+### Plotting individual school regression lines
+
+We can plot the individual lines by hand-calculating the school level slopes and intercepts.
+This code shows how:
+
+```{r}
+coefs = coef( M1 )$id
+head( coefs )
+coefs = rename( coefs, 
+                gamma.00 = `(Intercept)`,
+                gamma.10 = `ses`,
+                gamma.01 = `sectorcatholic`,
+                gamma.11 = `ses:sectorcatholic` )
+coefs$id = rownames( coefs )
+coefs = merge( coefs, sdat, by="id" )
+coefs = mutate( coefs,
+                beta.0 = gamma.00 + gamma.01 * (sector=="catholic"),
+                beta.1 = gamma.10 + gamma.11 * (sector=="catholic") )
+
+```
+
+Note how we have to add up our gammas to get our betas for each school.
+See our final betas, one set for each school:
+
+```{r}
+head( dplyr::select( coefs, -gamma.00, -gamma.10, -gamma.01, -gamma.11 ) )
+```
+
+Now let's plot a subsample of 20 schools
+
+```{r}
+set.seed( 102030 )
+sub20 = sample( unique( dat$id ), 20 )
+
+coefs.20 = filter( coefs, id %in% sub20 )
+
+ggplot( coefs.20, aes( group=id ) ) +
+  geom_abline( aes( slope=beta.1, intercept=beta.0, col=sector) ) +
+  coord_cartesian( xlim=c(-2.5,2), ylim=range(dat$mathach) )
+```
+
+*Commentary:* We need to specify the size of the plot since we have no data, just the intercepts and slopes.
+We are using the Emperical Bayes estimates of the random effects added to our school level fixed effects to get the $\hat{\beta}_{0j}, \hat{\beta}_{1j}$ which define the school-specific regression line for school $j$.
+
+Our two types of school are clearly separated.
+Catholic schools have higher average performance, and less of a ses-achievement relationship.
+Since we have merged in our school level data, we can color the lines by catholic vs public, making our plot easier to read.
+
+### Plotting with predict()
+
+A more general plotitng approach is to plot using `predict()`, where for each student we predict the outcome.
+
+```{r}
+dat$math.hat = predict( M1 )
+```
+
+Now let's plot a subsample of 20 schools
+
+```{r}
+dat.20 = filter( dat, id %in% sub20 )
+
+ggplot( dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line()
+```
+
+But look at how the lines don't go the full distance.
+What ggplot is doing is plotting the individual students, and connecting them with a line.
+We can see this by plotting the students as well, like this:
+
+```{r}
+ggplot( dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line() +
+  geom_point()
+```
+
+We have a predicted outcome for each student, which removes the student residual, giving just the school trends.
+If we don't have students for some range of ses for a school, we won't have points in our plot for that range for that school.
+The lines thus give the ranges (left to right) of the ses values in each school.
+
+### Making our lines go the same length with expand.grid()
+
+The way we fix this is we, for each school, make a bunch of fake students with different SES and predict along all those fake students.
+This will give us equally spaced lines.
+
+That being said: the shorter lines above are also informative, as they give you a sense of what the range of ses for each school actually is.
+Which approach is somewhat a matter of taste.
+
+We can generate fake children of each group for each school using `expand.grid()`.
+This method will generate a dataframe with all combinations of the given variables supplied.
+Here we make all combinations of ses, for a set of ses values, and school id.
+
+```{r}
+synth.dat = expand_grid( id = unique( dat$id ),
+                         ses = seq( -2.5, 2, length.out=9 ) )
+head( synth.dat )
+```
+
+The `seq()` command makes an evenly spaced *seq*uence of numbers going from the first to the last, with 9 numbers.
+E.g.,
+
+```{r}
+seq( 1, 10, length.out=4 )
+```
+
+We then merge our school info back in to get sector for each school id:
+
+```{r}
+synth.dat = merge( synth.dat, sdat, by="id", all.x=TRUE )
+```
+
+We finally predict for each school, predicting outcome for our fake kids in each school.
+
+```{r}
+synth.dat$math.hat = predict( M1, newdata=synth.dat )
+```
+
+We have predictions just as above, just for students that we set for each school.
+The school random effects and everything remain because we are using the original school ids.
+
+Using our new data, plot 20 random schools--this code is the same as in the prior subsection.
+
+```{r}
+synth.dat.20 = filter( synth.dat, id %in% sub20 )
+
+ggplot( synth.dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line()
+```
+
+But see our equally spaced students?
+
+```{r}
+ggplot( synth.dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line() +
+  geom_point()
+```
+
+**Why do this?** The `predict()` approach allows us to avoid working with the gammas and adding them up like we did above.
+This is a flexible and powerful approach that avoids a lot of work in many cases.
+In the next section we illustrate by fitting curves rather than lines.
+This would be very hard to do directly.
+
+### Superfancy extra bonus plotting of complex models!
+
+We can use predict for weird nonlinear relationships also.
+This will be important for longitudinal data.
+To illustrate we fit a model that allows a quadradic relationship between ses and math achievement.
+
+```{r}
+dat$ses2 = dat$ses^2
+M2 = lmer( mathach ~ 1 + (ses + ses2)*sector + meanses + (1 + ses|id), data=dat )
+
+display( M2 )
+```
+
+To fit a quadratic model we need our quadratic ses term, which we make by hand.
+We could also have used `I(ses^2)` in the `lmer()` command directly, but people don't tend to find that easy to read.
+
+And here we predict and plot:
+
+```{r}
+synth.dat = expand.grid( id = unique( dat$id ),
+                         ses= seq( -2.5, 2, length.out=9 ) )
+synth.dat$ses2 = synth.dat$ses^2
+synth.dat = merge( synth.dat, sdat, by="id", all.x=TRUE )
+```
+
+Note how we make our `ses2` variable out of `ses` just like we did above.
+
+```{r}
+synth.dat$math.hat = predict( M2, newdata=synth.dat )
+
+synth.dat.20 = filter( synth.dat, id %in% sub20 )
+
+ggplot( synth.dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line()
+```
+
+This code is the same as above.
+The prediction handles all our model complexity for us.
+
+Again, we have our equally spaced students:
+
+```{r}
+ggplot( synth.dat.20, aes( ses, math.hat, group=id, col=sector ) ) +
+  geom_line() +
+  geom_point()
+```
+
+## Longitudinal Data
+
+We next do the above, but for longitudinal data.
+The story is basically the same.
+
+### The data
+
+We use the "US Sustaining Effects Study" taken from Raudenbush and Bryk (we have not seen these data in class).
+We have kids in grades nested in schools.
+So longitudinal data with a clustering on top of that.
+
+```{r, include = FALSE}
+dat = readRDS( "data/EG_data.rds" )
+dat$RACEETH = as.factor( ifelse( dat$BLACK, "black", ifelse( dat$HISPANIC, "hispanic", "white" ) ) )
+dat = dplyr::select( dat, -BLACK, -HISPANIC, -RETAINED, SIZE, -LOWINC, -SIZE.INDEX, -MOBILITY )
+```
+
+```{r}
+head( dat )
+```
+
+### A model
+
+We will be using the following 3-level quadradic growth model:
+
+```{r fitmodel, cache=TRUE}
+M4 = lmer( MATH ~ 1 + (YEAR + I(YEAR^2)) * (FEMALE * RACEETH ) + 
+                (YEAR|CHILDID:SCHOOLID) + (YEAR|SCHOOLID), data=dat )
+display( M4 )
+```
+
+We are just taking the model as given; this document is about showing the fit of this model.
+In particular, if you haven't seen 3-level models before, just consider the above as some complex model; the nice thing about `predict()` is you don't even need to understand the model you are using!
+Note we do have a lot of fixed effect interaction terms, allowing for systematically different trajectories for groups of kids that are grouped on recorded race and gender.
+
+### The simple predict() approach
+
+We can use our model to predict outcomes for each timepoint in the data.
+This will smooth out the time to time variation.
+
+```{r}
+dat$Yhat = predict( M4 )
+ggplot( dat, aes( YEAR, Yhat, group=CHILDID ) ) +
+  facet_grid( RACEETH ~ FEMALE ) +
+  geom_line( alpha=0.25 )
+```
+
+Note how the growth lines don't go across all years for all kids.
+This is because we were missing data for those kids in the original dataset at those timepoints, so we didn't predict outcomes when we used the `predict()` function, above.
+
+To fix this we will add in those missing timepoints so we get predictions for all kids for all timepoints.
+
+### The expand.grid() function
+
+We now want different trajectories for the different groups.
+We can generate fake children of each group for each school using `expand.grid()`.
+This method will generate a dataframe with all combinations of the given variables supplied.
+Here we make all combinations of year, gender, and race/ethnic group for each school.
+
+```{r}
+synth.dat = expand.grid( CHILDID = -1,
+                         SCHOOLID = levels( dat$SCHOOLID ),
+                         YEAR = unique( dat$YEAR ),
+                         FEMALE = c( 0, 1 ),
+                         RACEETH = levels( dat$RACEETH ) )
+head( synth.dat )
+nrow( synth.dat )
+```
+
+The `CHILDID = -1` line means we are making up a new child (not using one of the real ones) so the child random effects will be set to 0 in the predictions.
+
+Once we have our dataset, we use predict to calculate the predicted outcomes for each student type for each year timepoint for each school:
+
+```{r}
+synth.dat = mutate( synth.dat, MATH = predict( M4, 
+                                               newdata=synth.dat,
+                                               allow.new.levels = TRUE) )
+```
+
+Now we can plot with our new predictions
+
+```{r}
+ggplot( synth.dat, aes( YEAR, MATH, group=SCHOOLID ) ) +
+  facet_grid( RACEETH ~ FEMALE ) +
+  geom_line( alpha=0.5 )
+```
+
+Here we are seeing the different school trajectories for the six types of kid defined by our student-level demographics.
+
+Or, for a subset of schools
+
+```{r}
+synth.dat = mutate( synth.dat, GENDER = ifelse( FEMALE, "female", "male" ) )
+keepers = sample( unique( synth.dat$SCHOOLID ), 12 )
+s2 = filter( synth.dat, SCHOOLID %in% keepers )
+ggplot( s2, aes( YEAR, MATH, col=RACEETH, lty=GENDER ) ) +
+  facet_wrap( ~ SCHOOLID ) +
+  geom_line( alpha=0.5) + geom_point( alpha=0.5 )
+```
+
+Here we see the six lines for the six groups within each school, plotted in little tiles, one for each school.
+
+### Population aggregation
+
+You can also aggregate these predictions.
+This is the easiest way to get what collection of schools, averaging over their random effects, looks like.
+
+Aggregate with the `group_by()` and the `summarise()` methods:
+
+```{r}
+agg.dat = synth.dat %>% group_by( GENDER, RACEETH, YEAR ) %>%
+  dplyr::summarise( MATH = mean( MATH ) )
+ggplot( agg.dat, aes( YEAR, MATH, col=RACEETH, lty=GENDER ) ) +
+  geom_line( alpha=0.5) + geom_point( alpha=0.5 )
+```
+
+Or do this via predict directly, using the prior ideas
+
+```{r}
+synth.dat.agg = expand.grid( CHILDID = -1,
+                             SCHOOLID = -1,
+                             YEAR = unique( dat$YEAR ),
+                             FEMALE = c( 0, 1 ),
+                             RACEETH = levels( dat$RACEETH ) )
+nrow( synth.dat.agg )
+synth.dat.agg = mutate( synth.dat.agg, 
+                        MATH = predict( M4, 
+                                        newdata=synth.dat.agg,
+                                        allow.new.levels = TRUE) )
+synth.dat.agg = mutate( synth.dat.agg, GENDER = ifelse( FEMALE, "female", "male" ) )
+
+ggplot( synth.dat.agg, aes( YEAR, MATH, col=RACEETH, lty=GENDER ) ) +
+  geom_line( alpha=0.5) + geom_point( alpha=0.5 )
+```
+
+The above plot suggests that the gender gap only exists for the white children.
+It also shows that there are racial gaps, and that the Black children appear to be falling further behind as time passes.
+
+This block of code is stand-alone, showing the making of fake data and plotting of predictions all in one go.
+Especially for glms, where there are nonlinearities due to the link function, this will give you the "typical" units, whereas the aggregation method will average over your individuals in the sample.
+
+Finally, we can also make tables to calculate observed gaps (although in many cases you can just read this sort of thing off the regression table).
+First `spread` our data to get columns for each race
+
+```{r}
+s3 = spread( synth.dat.agg, key="RACEETH", value="MATH" )
+head( s3 )
+```
+
+Then summarise:
+
+```{r, results="asis"}
+tab = s3 %>% group_by( YEAR ) %>% 
+  summarise( gap.black.white = mean( white ) - mean( black ),
+             gap.hispanic.white = mean( white ) - mean( hispanic ),
+             gap.black.hispanic = mean( hispanic ) - mean( black ) )
+knitr::kable( tab, digits=2 )
+```
+
+This again shows widening gap between Black and White students, and the closing gap of Hispanic and White students.
+
+### Plotting random effects by Level 2 variable
+
+You can also look at estimated random effects as a function of level 2 variables.
+For example, we can see if there is a pattern of average math score for students by year.
+
+```{r, warning=FALSE}
+ranef = ranef( M4 )$SCHOOLID
+ranef$SCHOOLID = rownames( ranef )
+schools = dat %>% group_by( SCHOOLID ) %>%
+  summarise( n = n(),
+             size = SIZE[[1]] )
+schools = merge( schools, ranef, by="SCHOOLID" )
+head( schools )
+ggplot( schools, aes( size, `(Intercept)` ) ) +
+  geom_point() +
+  geom_smooth(method="lm")
+```
+
+We see a possible negative trend.

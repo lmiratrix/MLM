@@ -1,0 +1,150 @@
+---
+title: "Interpreting Coefficients"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+## Interpreting your models (they won't interpret themselves!)
+
+So, multilevel models sure are great, but they can also make interpretations much more challenging.
+You've done OLS regression, so you have an understanding of how to interpret regression coefficients.
+However, adding additional levels means that some of our interpretations also need to change.
+This document is intended to provide a brief guide to how to do that.
+
+### Coefficients and indices at various levels of the model {#coefficients-and-indices-at-various-levels-of-the-model .unnumbered}
+
+But before we even start, we need to talk about how we use different coefficients and letters at different levels of the model.
+There isn't a single convention for how to do this, but we'll try to be consistent at least in this class.
+
+We'll distinguish between two basic types of models, those that are multilevel and *not* longitudinal, and those that *are* longitudinal.
+
+As a canonical example of the first type, let's consider the model we use in class, namely
+
+$$\begin{aligned}
+mathach_{ij} &= \beta_{0j[i]} + \beta_{1j[i]}SES_i + \varepsilon_i, \\
+\beta_{0j} &= \gamma_{00} + \gamma_{01}sector_j + u_{0j},\\
+\beta_{1j} &= \gamma_{10} + \gamma_{11}sector_j + u_{1j},\\
+\varepsilon_i &\sim Normal(0, \sigma^2_\varepsilon) \\
+\begin{pmatrix}
+u_{0j}\\
+u_{1j}\\
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\sigma^2_0 & \rho\sigma_0\sigma_1\\
+\rho\sigma_0\sigma_1 & \sigma^2_1
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned}$$
+
+Here are the features of the model to attend to.
+When referring to students (or other first-level units), we will use $i$ as a subscript.
+$X_i$ will indicate a measurement taken for the $i$th student.
+When referring to schools (or other second-level units), we will $j$ as a subscript.
+$X_j$ will indicate a measurement taken for the $j$th school.
+When we expand these models to include third-level units (e.g., districts), we will use the subscript $k$ for these units.
+I don't intend to go past that, although we could.
+When we introduce cross-classified models (i.e., models will non-nested hierarchies) we'll pick subscripts that are intended to be evocative.
+
+We'll also try to be consistent when using coefficients.
+We'll use the letter $\beta$ (beta) to indicate regression coefficients measured at the first level.
+We'll use the letter $\gamma$ (gamma) to indicate regression coefficients measured at the second level.
+Eventually we'll use the letter $\xi$ (xi, or ksi) to indicate regression coefficients measured at the third level.
+
+When we subscript regression coefficients, we'll need a number of subscripts equal to the level of the model at which this coefficient has been entered.
+The first subscript will indicate the level-1 coefficient with which this particular coefficient is associated, the second subscript will indicates the level-2 coefficient with which it is associated, and so on.
+This means that each coefficient will have a number of subscripts equal to the level of the model.
+As a really complicated example, if a coefficient is labeled as $\xi_{021}$, this indicates that the coefficient is the first slope coefficient (the 1 at the end) in a model for the second level-2 slope coefficient (the 2 in the second position) in a model for the level-1 intercept.
+Similarly, the first subscript in a random effect will indicate the level-1 coefficient with which it is associated, and the second will indicate the level-2 coefficient with which is is associated.
+Random effects will always have one fewer subscript than the coefficients at that level.
+As you can imagine, subscripts quickly get out of hand as we introduce more and more levels to a model.
+
+We'll use $\sigma^2_p$ to indicate the variance of the level-2 residual for the $p$th random effect (starting at 0 for the intercept).
+I'm not yet sure how to do the subscripting at level-3, and for now am hoping to just wing it.
+The correlation between the $p$th and $q$th random effects will be subscripted $pq$, and correlations will always be identified with a $\rho$ (rho, not p).
+
+Longitudinal models are similar, except for the subscripting.
+I'll always (probably) subscript the first level with $t$, for time.
+The second level will become $i$ (assuming that we're looking at growth in students or other individuals), followed by $j$ for the third level (we probably won't include a fourth level).
+
+### Interpreting fixed effects {#interpreting-fixed-effects .unnumbered}
+
+Okay, that was complicated, although I think writing down definitions and rules is often more challenging than applying them.
+Now let's practice some interpretations, going back to our model.
+
+At the first level, we interpret (almost) exactly as we would in a standard regression model.
+If we have
+
+$$mathach_{ij} = \beta_{0j[i]} + \beta_{1j[i]}SES_i + \varepsilon_i,$$
+
+then we interpret $\beta_{0j}$ as the predicted value of $mathach$ for a student of 0 SES (which represents the grand mean) *who is located in school* $j$.
+Because this is a multilevel model, different schools have different intercepts.
+Similarly, we can interpret $\beta_{1j[i]}$ as the expected difference in math achievement associated with a one-unit difference in SES *for students in school* $j$.
+We don't interpret it, but $\varepsilon_i$ indicates the difference between what we observed for this student and what we predicted based on her or his school and SES.
+
+We interpret the level-2 units depending on the coefficients they predict.
+For the school-intercept we have
+
+$$\beta_{0j} = \gamma_{00} + \gamma_{01}sector_j + u_{0j}.$$
+
+We can interpret $\gamma_{00}$ as the predicted intercept for schools for which $sector = j$ (i.e., public schools).
+We can interpret $\gamma_{01}$ as the predicted difference in school intercepts between Catholic and public schools.
+Although it's less common, we can also interpret the residual for school $j$, $u_{0j}$, because you can't tell me what to do.
+$u_{0j}$ represents the difference between the observed/inferred intercept for school $j$ and the predicted intercept.
+
+Turning to the model for the slope, we have
+
+$$\beta_{1j} = \gamma_{10} + \gamma_{11}sector_j + u_{0j}.$$
+
+Here $\gamma_{10}$ is the predicted slope for SES in public schools, while $\gamma_{11}$ is the mean difference in slopes between Catholic and public school.
+Finally, $u_1j$ is the difference between the slope observed/inferred for school $j$ and the slope predicted by the model.
+
+We can *also* interpret these coefficients at the student level.
+Rewrite the model by substituting $\beta_{0j} = \gamma_{00} + \gamma_{01}sector_j + u_{0j}$ and $\beta_{1j} = \gamma_{10} + \gamma_{11}sector_j + u_{1j}$ to obtain
+
+$$\begin{aligned}
+mathach_i &= \gamma_{00} + \gamma_{01}sector_{j[i]} + u_{0j[i]} + (\gamma_{10} + \gamma_{11}sector_{j[i]} + u_{1j[i]})SES_i + \varepsilon_i \\
+&= \gamma_{00} + \gamma_{01}sector_{j[i]} + \gamma_{10}SES_i + \gamma_{11}sector_{j[i]}SES_i + (u_{0j[i]} + u_{1j[i]}SES_i + \varepsilon_i).
+\end{aligned}$$
+
+Now we can interpret these coefficients as in a typical one-level linear regression model.
+
+1.  $\gamma_{00}$ is the predicted mean value of $mathach$ for students of $SES = 0$ in public schools;
+
+2.  $\gamma_{01}$ is the predicted difference in $mathach$ between students of $SES = 0$ in Catholic schools and similar peers in public schools;
+
+3.  $\gamma_{10}$ is the predicted difference in $mathach$ associated with a one-unit difference in SES for students in public schools; and
+
+4.  $\gamma_{11}$ is the predicted difference in the above difference between students in Catholic schools and students in public schools.
+
+Either interpretation is acceptable, and you should base your decision on how you're framing your question.
+
+### Interpreting variance-covariance parameters {#interpreting-variance-covariance-parameters .unnumbered}
+
+Now we're going to turn to the variance-covariance matrix for the random offsets, namely
+
+$$\begin{aligned}
+\Sigma = \begin{pmatrix}
+u_{0j}\\
+u_{1j}\\
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\sigma^2_0 & \rho\sigma_0\sigma_1\\
+\rho\sigma_0\sigma_1 & \sigma^2_1
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned}$$
+
+The variance of a random offset (e.g., $\sigma_0^2$, the variance of $u_{0j}$) represents how variable the coefficient associated with that coefficient is, conditional on the variables in the model.
+The correlations (e.g., $\rho$, the only correlation in this model) represent the tendency of the random offsets to covary, i.e., to be associated with each other.

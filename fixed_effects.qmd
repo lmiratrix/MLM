@@ -1,0 +1,43 @@
+---
+title: "Clarification on Fixed Effects and Identification"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+## The language of "Fixed Effects"
+
+I wanted to follow-up on a couple of things that I had written down but not sent out.
+
+People will talk about "fixed effects" in (at least) two ways.
+The first is when you have a dummy variable for each of your clusters, and you are using OLS regression (not multilevel modeling).
+In this case you are estimating a parameter for each cluster, and we refer to that collection of estimates and parameters that go with these cluster level dummy variables as "fixed effects" and the model is a "fixed effects model." The second is when you are using multilevel modeling, such as the following:
+
+`M0 <- lmer(Y ~ 1 + var1 + var2 + var3 + (var1|id), data)`
+
+When we fit the above model, we will be estimating a grand intercept, and three coefficients for the three variables.
+Call these $\beta_0$, $\beta_1$, $\beta_2$, and $\beta_3$.
+We are also estimating a random intercept and random slope for `var1`, with each group defined by the `id` variable having its own random intercept and slope.
+These are described by a variance-covariance matrix that we have been describing with $\tau_{00}, \tau_{01}, \tau_{11}$.
+
+Now, the $\beta$ are the fixed part, or fixed effects, of the model.
+The $\tau$ describe the random part or random effects.
+This is why, in R, we say `fixef(M0)` to get the $\beta$.
+If we say `ranef(M0)` we get the Empirical Bayes estimates of the random parts for each cluster.
+If we say `coef(M0)` R adds all this together to give the sum of the fixed part and random part, for each cluster defined by `id`.
+
+Read Gelman and Hill 12.3 for more on this sticky language.
+G&H do not like "fixed effects" as a description because it is so vague.
+
+## Underidentification
+
+If we fit a model with a dummy variable for each cluster, and a level to variable that does not vary within cluster, we say our model is "underidentified." We say it is underidentified because no matter how much data we have, we will always have an infinite number of parameter values that can describe our model equally well.
+For example, say our level 2 variable is a dummy variable (e.g., sector).
+Then a model where we add five to the coefficient of the level 2 variable, and subtract five from all of the fixed effects for the clusters with sector=1 will fit our data just as well as one where we don't.
+We can't tell the difference!
+Hence we do not have enough to "identify" the parameter values.
+
+## Further Reading
+
+[@antonakis2019a]

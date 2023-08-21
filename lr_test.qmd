@@ -1,0 +1,93 @@
+---
+title: "Likelihood Ratio Tests"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## R Setup
+
+```{r}
+# load libraries
+library(tidyverse)
+library(lme4)
+library(haven)
+library(sjPlot)
+
+# clear memory
+rm(list = ls())
+
+select <- dplyr::select
+
+# load HSB data
+hsb <- read_dta("data/hsb.dta") |> 
+  select(mathach, ses, schoolid)
+```
+
+## Why LR Tests?
+
+Our fixed effects coefficients have SEs, z-statistics, and p-values, which allow us to easily test the null hypothesis that the slopes are 0 in the population.
+No such quantities, however, are provided for the random effects of our model.
+We can use LR tests to address this issue and test the statistical significance of the various random portions of our model.
+
+We can also use LR tests on fixed effects or sets of fixed effects (like a nested F-test in OLS), but 99.9% of the time, the conclusion will be the same as using the z-statistics.
+
+LR tests require that the models are *nested*, meaning that they use the same data, and one model can be expressed as a constrained version of the other.
+
+## HSB Example
+
+We fit 3 models:
+
+1.  Random intercept model
+2.  Random slope model
+3.  Random slope model with no correlation between intercepts and slopes
+
+We can see from the model output that the point estimates for the random slope variance $\tau_{11}$ and the correlation $\rho_{01}$ are non-zero, but how can we get p-values for these quantities?
+
+```{r}
+m1 <- lmer(mathach ~ ses + (1|schoolid), hsb)
+m2 <- lmer(mathach ~ ses + (ses|schoolid), hsb)
+m3 <- lmer(mathach ~ ses + (ses||schoolid), hsb)
+
+tab_model(m1, m2, m3,
+          p.style = "stars",
+          show.se = TRUE,
+          show.ci = FALSE,
+          dv.labels = c("RI", "RS", "No Rho"))
+```
+
+### Are random `ses` slopes necessary?
+
+We use `anova` to perform the LR test comparing `m1` and `m2`, and we see that the random slopes are not statistically significant.
+
+```{r}
+anova(m1, m2)
+```
+
+### Is there a correlation between the random intercept and slope for `ses`?
+
+Similarly, we see that the correlation is non-significant
+
+```{r}
+anova(m2, m3)
+```
+
+## Technical Notes
+
+TL/DR: The traditional LR test provided by `anova` is likely to be conservative for testing the significance of variance components.
+For the purposes of this course, it is fine.
+
+There is a lot of multilevel literature arguing that testing a null hypothesis on variance components with LR tests is not the best approach.
+The reason is that variances cannot be negative, so the null hypothesis exists on the "boundary of the parameter space" and therefore is "likely to be conservative" (to use the warning that Stata gives you, i.e., the p-values are too high).
+The true distribution of a 0 variance component is not a normal distribution, but a mixture distribution with half of the probability mass at 0 and the other half $\chi^2$.
+When you're testing the significance of the random intercepts model, you can divide the p-value by 2 to get the right answer (Stata default), though for more complex models it's not so simple.
+There are some R packages that use simulation-based approaches to provide more robust results such as `pbkrtest::PBmodcomp`, but we won't go into them here.
+See RH&S pp. 88-89 for a more thorough discussion of this issue.
+Despite this, the standard LR test remains common in practice.

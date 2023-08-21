@@ -1,0 +1,63 @@
+---
+title: "Predictors in Longitudinal Growth Models"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+## Tips for growth models
+
+Start with an unconditional growth model, i.e., don't include any level-1 or level-2 predictors.
+This model provides useful empirical evidence for determining a proper specification of the individual growth equation and baseline statistics for evaluating more complicated level-2 models.
+
+The nature of the predictor in longitudinal analysis determines where it gets added to the model: Time-invariant predictors always go in level-2 (subject level) model Time-varying predictors can go in level-1 and/or level-2.
+The level of the predictor dictates which variance component it seeks to describe: Level-2 describes level-2 variances and Level-1 describes level-1 variances.
+Although the order in which you add these predictors (in a series of successive models) may not ultimately matter, general practice is to add level-2 (time-invariant) predictors first.
+
+How to decide where to add predictors?
+One strategy:
+
+1.  First fit an unconditional (i.e. no predictors) random intercept model.
+    This isn't really predictive, but we can use it as a baseline model that partitions variance into between and within-person variances.
+    Singer & Willett (2003) call this the "unconditional means model".
+
+2.  Calculate the ICC
+
+    1.  If most of the variance is between-persons in the random intercept (level-2), then you'll use person-level predictors to reduce that variance (i.e., account for inter-person differences)
+
+    2.  If most of the variance is within-person (level-1 residual variance), you'll need time-level predictors to reduce that variance (i.e. account for intra-person differences)
+
+Because the time-specific subscript *t* can only appear in the level-1 model, all time-varying predictors must appear in the level-1 individual growth model.
+That is, person-specific predictors that vary over time appear at level-1, not level-2.
+Time-invariant predictors go in level-2.
+Furthermore, because they are time-invariant, this means they have no within-person variation to allow for a level-2 residual; thus, the level-2 growth rate parameter corresponding to this time-invariant predictor will not have an error term (i.e. it's assumed to be zero).
+Interpretation wise, this assumes the effect of a person-specific effect is constant across population members.
+For a time-varying predictor, however, the associated level-2 growth parameter equation would have a residual term.
+This allows the effect of the time-varying predictor to vary randomly across the individuals in the population.
+
+With only a few measurement points per person, we often lack sufficient data to estimate many variance components.
+Thus, it's suggested that we resist the temptation to automatically allow the effects of time-varying predictors to vary at level-2 unless you have a good reason, and enough data, to do so.
+
+So far in class, we've seen person-specific variables appear in level-2 submodels as predictors for level-1 growth parameters.
+You might therefore think that substantive predictors must always appear at level-2, but this isn't true!
+
+How inclusion of predictors affect variance components: Generally, when we include time-invariant predictors:
+
+1.  the level-1 variance component, $\sigma^2_e$, remains pretty stable because time-invariant predictors can't explain any within-person variation
+
+2.  the level-2 variance components, $\tau_{00}$ and $\tau_{01}$, will decrease if the time-invariant predictors explain some of the between-person variation in initial status or rates of change, respectively.
+
+When we include time-varying predictors:
+
+1.  both level-1 and level-2 variance components might be affected because time-varying predictors vary both within a person and between people
+
+2.  we can interpret the resulting decrease in the level-1 variance component as amount of variation in the outcome explained by the time-varying predictors; however, it isn't meaningful to interpret subsequent changes in level-2 variance components because adding the time-varying predictor changes the meaning of the individual growth parameters, which consequently alters the meaning of the level-2 variances, so it doesn't make sense to compare the magnitude of these level-2 variances across successive models.
+
+## Additional Resources
+
+-   [https://books.google.com/books?i d=PpnA1M8VwR8C&pg=PA168&lpg=PA168&dq=longitudinal+data+analysis+level1+level2+predictors&source=bl&ots=N4p8yFdyuL&sig=wWjmaEeqakD040s4B9-QquJF1eE&hl=en&sa=X&ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&q=longitudinal%20data%20analysis%20level1%20level2%20predictors&f=false](https://books.google.com/books?i d=PpnA1M8VwR8C&pg=PA168&lpg=PA168&dq=longitudinal+data+analysis+level1+level2+predictors&source=bl&ots=N4p8yFdyuL&sig=wWjmaEeqakD040s4B9-QquJF1eE&hl=en&sa=X&ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&q=longitudinal%20data%20analysis%20level1%20level2%20predictors&f=false)
+
+-   <http://jonathantemplin.com/files/mlm/mlm12uga/mlm12uga_section06.pdf>
+
+-   <http://www.lesahoffman.com/944/944_Lecture07_Time-Invariant.pdf>

@@ -1,0 +1,523 @@
+---
+title: "HSB Example"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## R Setup
+
+```{r}
+library(foreign) #this lets us read in spss files
+library(tidyverse) #this is a broad package that allows us to do lots of data management-y things (and ggplot!)
+library(lme4) #this allows us to run MLM
+library(arm) #this allows us to display MLM
+library( lmerTest ) # this puts p-values on the summary() command for fixed effects
+```
+
+## Load HS&B data
+
+```{r}
+# Read student data
+stud.dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+
+# Read in school data
+sch.dat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+
+# Make single data frame with all variables, keep all students even if they
+# don't match to a school
+dat = merge( stud.dat, sch.dat, by="id", all.x=TRUE )
+```
+
+## Table 4.1 Descriptive summaries
+
+```{r}
+## Get mean and SD of the Level 1 variables, rounded to 2 decimal places
+# math achievement
+round(mean(dat$mathach),2)
+round(sd(dat$mathach),2)
+
+# ses
+round(mean(dat$ses),2)
+round(sd(dat$ses),2)
+
+## Get mean and SD of Level 2 variables, round to 2 decimal places
+# NOTE: we are getting these from the SCHOOL-LEVEL FILE
+# sector
+round(mean(sch.dat$sector),2) # this answers "what percent of schools are catholic?"
+round(sd(sch.dat$sector),2)
+
+# mean ses
+round(mean(sch.dat$meanses),2) # this answers "what is the average of the school-average SES values?"
+round(sd(sch.dat$meanses),2)
+
+# NOTE: if we used the student-level or "dat" file, we would be answering the
+# following questions:
+# * what percent of students attend a catholic school?
+# * what is the average student ses? <- this would match what we calculated
+# ourselves if we had the entire school in our sample
+```
+
+## Table 4.2: One-Way ANOVA (i.e uncontrolled random intercept)
+
+```{r}
+## Fit the model described 
+mod4.2 <- lmer(mathach ~ 1 + (1|id), data=dat)
+# Peek at the results
+display(mod4.2)
+
+## Extract the fixed effect coefficient (and it's standard error)
+fixef(mod4.2) # extracts the fixed effect coefficient(s)
+se.coef(mod4.2)$fixef #extracts the standard errors for the fixed effect(s)
+
+## Extract the variance components
+# Note: in the model display, we see the SDs, not the variance
+VarCorr(mod4.2)
+
+# To get the variances, we extract each part and square it
+# variance of random intercept
+(sigma.hat(mod4.2)$sigma$id)^2
+
+# variance of level 1 residual (easier to extract)
+sigma(mod4.2)^2 
+# could also use the more complicated formula that we used with the intercept.
+# If we do, we get the same thing
+sigma.hat(mod4.2)$sigma$data^2
+
+# Inference on the need for a random intercept
+# Thus uses the book's way of calculating a test statistic with a
+# chi-squared distribution.
+
+schools = dat %>% group_by( id ) %>%
+  summarise( nj = n(),
+             Y.bar.j = mean( mathach ) )
+gamma.00 = fixef( mod4.2 )[[1]]
+sigma.2 = sigma(mod4.2)^2 
+H = sum( schools$nj * (schools$Y.bar.j - gamma.00)^2 / sigma.2 )
+H
+# our p-value
+pchisq( H, df = nrow( schools ) - 1, lower.tail = FALSE )
+
+
+# calculating the ICC
+tau.00 = VarCorr(mod4.2)$id[1,1]
+rho.hat = tau.00 / (tau.00 + sigma.2 )
+rho.hat
+
+# Calculating reliability for each school mean. (Here it is purely a function of
+# students in the school.  More students, more info, and thus more reliable.)
+sigma.2 = sigma(mod4.2)^2 
+tau.00 = VarCorr(mod4.2)$id[1,1]
+lambda = tau.00 / ( tau.00 + sigma.2 / schools$nj )
+mean( lambda )
+
+# A bonus graph of the reliabilities
+qplot( lambda )
+```
+
+## Table 4.3 Means as Outcomes Model
+
+```{r}
+# (i.e. random intercept with Level 2 predictor)
+## Fit the model described 
+mod4.3 <- lmer(mathach ~ 1 + meanses + (1|id), data=dat)
+
+# Peek at the results
+display(mod4.3)
+
+## Extract the fixed effect coefficients (and standard errors/t-statistics)
+fixef(mod4.3) # extracts the fixed effect coefficients
+# NOTE: you can call them separately by "indexing" them
+# just the intercept
+fixef(mod4.3)[1]
+# just coefficient on mean ses
+fixef(mod4.3)[2]
+
+
+se.coef(mod4.3)$fixef #extracts the standard errors for the fixed effect(s)
+
+## Calculate (or extract) the t-ratio (aka the t-statistic)
+
+# NOTE: the author's don't present this for the intercept, because we often
+# don't care. But it is presented here for completeness
+
+# tstats for intercept
+fixef(mod4.3)[1]/se.coef(mod4.3)$fixef[1]
+
+# tstat mean ses
+fixef(mod4.3)[2]/se.coef(mod4.3)$fixef[2]
+
+# tstat extracted - this does both variables at once! 
+coef(summary(mod4.3))[,"t value"]
+
+# NOTE: Let's look at what is happening here:
+coef(summary(mod4.3)) # gives us all the fixed effect statistics we could want
+
+# the [ ] is called "indexing" - it's a way of subsetting data by telling R
+# which [rows,columns] you want to see we are telling R that we want ALL rows "[
+# ," but only the column labeled "t value"
+
+## Extract the variance components
+# Note: in the model display, we see the SDs, not the variance
+VarCorr(mod4.3)
+
+# To get the variances, we extract each part and square it
+# variance of random intercept
+(sigma.hat(mod4.3)$sigma$id)^2
+
+# variance of level 1 residual
+sigma(mod4.3)^2 
+
+# Range of plausible values for school means for schools with mean SES of 0:
+# See page 73-74)
+fixef( mod4.3 )[[1]] + c(-1.96, 1.96) * (sigma.hat(mod4.3)$sigma$id)
+# Compare to our model without mean ses
+fixef( mod4.2 )[[1]] + c(-1.96, 1.96) * (sigma.hat(mod4.2)$sigma$id)
+
+# Proportion reduction in variance or "variance explained" at level 2
+tau.00.anova = (sigma.hat(mod4.2)$sigma$id)^2
+tau.00.meanses = (sigma.hat(mod4.3)$sigma$id)^2
+(tau.00.anova-tau.00.meanses) / tau.00.anova
+
+## Inference on the random effects
+schools = merge( schools, sch.dat, by="id" )
+gamma.00 = fixef( mod4.3 )[[1]]
+gamma.01 = fixef( mod4.3 )[[2]]
+schools = mutate( schools, resid = Y.bar.j - gamma.00 - gamma.01*meanses )
+H = sum( schools$nj * schools$resid^2 ) / sigma(mod4.3)^2 
+H
+pchisq( H, nrow( schools ) - 2, lower.tail = FALSE )
+
+
+## Reliability revisited (from pg 75)
+mod4.3
+u.hat = coef( mod4.3 )$id
+head( u.hat )
+sigma.2 = sigma(mod4.3)^2 
+tau.00 = VarCorr(mod4.3)$id[1,1]
+sigma.2
+tau.00
+
+# These are the individual reliabilities---how well we can separate schools with the same Mean SES
+# (So it is _conditional_ on the mean SES of the schools.)
+lambda.j = tau.00 / (tau.00 + (sigma.2 / schools$nj))
+mean( lambda.j )
+```
+
+## Table 4.4 Random coefficient model (i.e. random slope)
+
+```{r}
+# group-mean center ses  
+dat <- dat %>% group_by( id ) %>% 
+  mutate( ses_grpcenter = ses - mean(ses) )
+
+## Fit the model described 
+mod4.4 <- lmer(mathach ~ 1 + ses_grpcenter + ( 1 + ses_grpcenter | id ), data=dat)
+# Peek at the results
+display(mod4.4)
+
+## Extract the fixed effect coefficients (and standard errors/t-statistics)
+coef(summary(mod4.4)) #this reproduces the whole first panel, though methods used above also work
+
+
+## Extract the variance components
+# Note: in the model display, we see the SDs, not the variance
+VarCorr(mod4.4) 
+
+# variance of random effects
+(sigma.hat(mod4.4)$sigma$id)^2
+# NOTE: to extract one or the other, you can use indexing
+(sigma.hat(mod4.4)$sigma$id[1])^2 #this is just the intercept random effect
+
+# variance of level 1 residual
+sigma(mod4.4)^2
+```
+
+## Table 4.5 Intercepts and Slopes as Outcomes Model
+
+```{r}
+## Fit the model described 
+mod4.5 <- lmer(mathach ~ 1 + meanses + sector + ses_grpcenter*(meanses + sector) + ( 1 + ses_grpcenter | id ), data=dat)
+
+# NOTE: The code above allows the coefficients to appear in the same order as in Table 4.5
+
+# R automatically includes the main effects, so this model can be written more
+# concisely as shown below:
+#
+# lmer(mathach ~ 1 + ses_grpcenter*(meanses + sector) + ( 1 + ses_grpcenter | id ), data=dat)
+
+# Peek at the results
+display(mod4.5)
+
+
+## Extract the fixed effect coefficients (and standard errors/t-statistics)
+#this reproduces the whole first panel, though methods used above also work
+coef(summary(mod4.5))
+
+# NOTE: there is a slight descrepancy in the estimate for meanses:ses_grpcenter and 
+# the t-statistics for meanses:ses_grpcenter and sector:ses_grpcenter; nothing that 
+# changes the interpretations, however.
+
+
+# Testing the need for sector  (see page 82)
+# (We use a likelihood ratio test with the anova() function)
+mod4.5.null <- lmer(mathach ~ 1 + meanses + ses_grpcenter*(meanses) + ( 1 + ses_grpcenter | id ), data=dat)
+anova( mod4.5, mod4.5.null )
+
+# Testing the need for random slope  (see page 84)
+# (We use a likelihood ratio test with the anova() function)
+mod4.5.null.slope <- lmer(mathach ~ 1 + meanses + sector + ses_grpcenter*(meanses + sector) + ( 1 | id ), data=dat) 
+anova( mod4.5, mod4.5.null.slope )
+```
+
+## Figure 4.1
+
+NOTE: Figure 4.1 is a graphical display using the results from Model/Table 4.5
+
+The solid line represents the slope of the gamma-01 coefficient; this is the same in public and catholic schools.
+The dotted lines represent the the slope for individual schools with "prototypical" values of meanses (-1,0,1 standard deviations from mean)
+
+```{r}
+
+
+# to calculate this, we should note a few values: 
+avg_meanses <- mean(dat$meanses) #average of mean ses var
+high_meanses <- mean(dat$meanses) + sd(dat$meanses) # 1 sd above avg meanses
+low_meanses <- mean(dat$meanses) - sd(dat$meanses) # 1 sd below avg meanses
+
+fake.students = expand.grid( id = -1,
+                             meanses = c( low_meanses, avg_meanses, high_meanses ),
+                             sector = c( 0, 1 ),
+                             ses_grpcenter = c( -1, 0, 1 ) )
+fake.students = mutate( fake.students, ses = meanses + ses_grpcenter )
+fake.students$mathach = predict( mod4.5, newdata=fake.students, allow.new.levels = TRUE )
+fake.schools = filter( fake.students, ses_grpcenter == 0 )
+
+ggplot( fake.students, aes( ses, mathach ) ) + 
+  facet_wrap( ~ sector ) +
+  geom_line( aes( group=meanses ), lty = 2 ) +
+  geom_line( data=fake.schools, aes( x = ses, y = mathach ) ) +
+  geom_point( data=fake.schools, aes( x = ses, y = mathach ) )
+```
+
+## Set-up for remaining tables/figures of chapter
+
+In order to create table 4.6 and the following 2 graphs, we will need to prepare a new dataset.
+These next lines of code do that.
+
+```{r}
+## Start with school level data frame and keep variables interesting to our model comparison
+mod.comp <- dplyr::select( sch.dat, id, meanses, sector )
+
+## Add in number of observations per school 
+n_j <- dat %>% group_by( id ) %>%
+  dplyr::summarise(n_j = n())
+
+mod.comp <- merge(mod.comp, n_j, by="id")
+head( mod.comp )
+
+## Run site-specific OLS for each school and save estimates 
+
+# Calculate global (not group) centered ses
+dat$ses_centered <- dat$ses - mean(dat$ses)
+
+# This is the "for loop" method of generating an estimate for each of many small
+# worlds (schools). See lecture 2.3 code for the "tidyverse" way.
+est.ols <- matrix(nrow=160,ncol=2) #create a matrix to store estimates 
+se.ols <- matrix(nrow=160,ncol=2) #create matrix to store standard errors
+
+for (i in 1:length(unique(dat$id))){ #looping across the 160 different values of id
+    id <- unique(dat$id)[i] #pick the value of id we want
+    mod <- lm(mathach ~ 1 + ses_grpcenter, data=dat[dat$id==id,]) #run the model on students in that 1 school
+    est.ols[i,] <- coef( mod ) #save the setimates in the matrix we created
+    se.ols[i,] <- se.coef( mod ) # and the SEs
+}
+
+#convert the matrix to a dataframe and attach the schoolid info
+est.ols <- as.data.frame(est.ols)
+est.ols$id <- sch.dat$id
+names(est.ols) <- c( 'b0_ols', 'b1_ols', 'id' )
+
+#store standard errors for later
+se.ols <- as.data.frame(se.ols)
+se.ols$id <- sch.dat$id
+names(se.ols) <- c( 'se_b0_ols', 'se_b1_ols', 'id' )
+
+mod.comp <- merge(mod.comp, est.ols, by='id')
+mod.comp <- merge(mod.comp, se.ols, by='id' )
+head( mod.comp )
+
+# We are done running OLS on each of our schools and storing the results.
+
+## Extract site-specific coefficients from "unconditional model" (model 4.4)
+est4.4 <- coef(mod4.4)$id
+names(est4.4) <- c('b0_uncond', 'b1_uncond') #rename
+est4.4$id = rownames( est4.4 )
+
+## Extract site-specific coefficients from the "conditional model" (model 4.5)
+est4.5 <- coef(mod4.5)$id
+head( est4.5 )
+est4.5$id = rownames( est4.5 )
+
+# Now we need to calculate the point estimates using our individual regression equations
+# including our level-2 values for each school
+# (This is a bit of a pain.)
+est4.5 = merge( est4.5, mod.comp, by="id", suffixes = c( "", ".v" ) )
+head( est4.5 )
+est4.5 = mutate( est4.5, 
+                 b0_cond = `(Intercept)` + sector * sector.v + meanses * meanses.v,
+                 b1_cond = ses_grpcenter + `sector:ses_grpcenter` * sector.v + `meanses:ses_grpcenter` * meanses.v )
+
+est4.5 = dplyr::select( est4.5, id, b0_cond, b1_cond )
+
+
+## Combine the MLM estimates into 1 dataset with ids
+est.mlm <- merge( est4.4, est4.5, by="id" )
+
+# Merge all the estimates together by school id
+mod.comp <- merge(mod.comp,est.mlm,by = 'id',all=TRUE)
+
+head( mod.comp )
+```
+
+## Table 4.6 Comparing site-specific estimates from different models
+
+```{r}
+## Create the list of rows that B&R include in the table p. 87
+keeprows <- c(4, 15, 17, 22, 27, 53, 69, 75, 81, 90, 135, 153)
+
+## Limit data to the rows of interest, and print the columns in Table 4.6 in the correct order
+tab4.6 <- mod.comp[keeprows, c('b0_ols','b1_ols','b0_uncond','b1_uncond','b0_cond','b1_cond','n_j','meanses','sector') ]
+
+
+## Print Table 4.6 -- the Empirical Bayes from conditional model (b0_cond, b1_cond) are waaaaaay off
+round(tab4.6,2)
+```
+
+## Figure 4.2 : Scatter plots of the estimates from 2 unconstrained models
+
+```{r}
+## Panel (a) and Panel (b) are plotted on the same graph 
+ggplot(data=mod.comp,aes()) + 
+  geom_point(aes(x=b1_ols,y=b0_ols),color='black',alpha=0.7) + 
+  geom_point(aes(x=b1_uncond,y=b0_uncond),color='blue',alpha=0.7) + 
+  labs(title="Black=OLS; Blue=Unconditional EB") +
+  xlim(-5,8) + ylim(2,20)
+```
+
+## Figure 4.3 : Scatter plots of residuals from the OLS & Constrained MLM model
+
+```{r}
+## Luke: Equation 4.271 and 4.27b (p. 92) are allegedly how we calculate the intercept and slope residuals 
+## But I'm not sure where the estimates for the gamma-hat terms come from; the OLS model only includes
+## individual-level ses
+
+# trying it here with the predictions from conditional EB
+fes = fixef( mod4.5 )
+fes
+
+mod.comp = mutate( mod.comp,
+                   u0_ols = b0_ols - (fes[1] + fes[2]*meanses + fes[3]*sector),
+                   u1_ols = b1_ols - (fes[4] + fes[5]*meanses + fes[6]*sector)  )
+
+
+## Panel (a) and (b) plotted on same graph
+
+mod.comp = mutate( mod.comp, 
+                   u0_cond = b0_cond - (fes[1] + fes[2]*meanses + fes[3]*sector),
+                   u1_cond = b1_cond - (fes[4] + fes[5]*meanses + fes[6]*sector)  )
+
+head( mod.comp )
+nrow( mod.comp )
+ggplot(data=mod.comp, aes( pch=as.factor(sector)) ) + 
+         geom_point(aes(x=u1_ols, y=u0_ols),color='black', alpha=0.7) +   
+         geom_point(aes(x=u1_cond, y=u0_cond),color='blue', alpha=0.7) + 
+         labs(title = "Black: OLS, Blue: Conditional EB") + 
+         xlim(-6,6) + ylim(-8,8)
+
+
+# To get in two-panel format we need to get our data to long format
+mod.comp.ols = data.frame( sector = mod.comp$sector,
+                           u0 = mod.comp$u0_ols,
+                           u1 = mod.comp$u1_ols )
+mod.comp.EB = data.frame(  sector = mod.comp$sector,
+                           u0 = mod.comp$u0_cond,
+                           u1 = mod.comp$u1_cond )
+mod.comp.l = bind_rows( ols=mod.comp.ols, cond = mod.comp.EB, .id = "method" )
+
+ggplot(data=mod.comp.l, aes( u1, u0, pch=as.factor(sector)) ) + 
+  facet_wrap( ~ method ) +
+  geom_point()
+```
+
+## Table 4.7 : pg 94
+
+```{r}
+
+
+# This section is not very good--I would skip.
+# Generating confidence intervals for individual random intercepts and slopes is a weird business.
+
+# OLS First:
+
+# Doing it by fitting OLS on our subset
+sch.2305 = filter( dat, id == 2305 )
+head( sch.2305 )
+M.2305 = lm( mathach ~ ses_grpcenter, data=sch.2305 )
+M.2305
+confint( M.2305 )
+
+sch.8367 = filter( dat, id == 8367 )
+head( sch.8367 )
+M.8367 = lm( mathach ~ ses_grpcenter, data=sch.8367 )
+M.8367
+confint( M.8367 )
+
+
+# Use SE from earlier to get confint
+est4.7 <- mod.comp[c(22,135),]
+est4.7
+
+# CI for intercept and slope using our normal and stored SEs.
+# (Not taking t distribution into account changes things, as does not
+# taking the uncertainty in the fixed effects for the EB CIs.  So this is
+# very approximate.)
+se_uncond = as.data.frame( se.coef(mod4.4)$id )
+head( se_uncond )
+names( se_uncond ) = c("se_b0_uncond","se_b1_uncond" )
+se_cond = as.data.frame( se.coef(  mod4.5 )$id )
+names( se_cond ) = c("se_b0_cond","se_b1_cond" )
+head( se_cond )
+se_uncond$id = rownames( se_uncond )
+se_cond$id = rownames( se_cond )
+est4.7 = merge( est4.7, se_uncond, by="id" )
+est4.7 = merge( est4.7, se_cond, by="id" )
+
+est4.7.int = mutate( est4.7, 
+                 CI.low.ols = b0_ols + - 1.96 * se_b0_ols,
+                 CI.high.ols = b0_ols + 1.96 * se_b0_ols,
+                 CI.low.uncond = b0_uncond + - 1.96 * se_b0_uncond,
+                 CI.high.uncond = b0_uncond + 1.96 * se_b0_uncond,
+                 CI.low.cond = b0_cond + - 1.96 * se_b0_cond,
+                 CI.high.cond = b0_cond + 1.96 * se_b0_cond )
+
+dplyr::select( est4.7.int, starts_with("CI" ) )
+
+
+est4.7.slope = mutate( est4.7, 
+                     CI.low.ols = b1_ols + - 1.96 * se_b1_ols,
+                     CI.high.ols = b1_ols + 1.96 * se_b1_ols,
+                     CI.low.uncond = b1_uncond + - 1.96 * se_b1_uncond,
+                     CI.high.uncond = b1_uncond + 1.96 * se_b1_uncond,
+                     CI.low.cond = b1_cond + - 1.96 * se_b1_cond,
+                     CI.high.cond = b1_cond + 1.96 * se_b1_cond )
+
+dplyr::select( est4.7.slope, starts_with("CI" ) )
+```

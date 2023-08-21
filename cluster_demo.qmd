@@ -1,0 +1,285 @@
+---
+title: "Walk-through of calculating robust standard errors"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r include=FALSE}
+library( arm )
+require( foreign )
+library( lmtest )
+
+```
+
+In this document, we'll discuss approaches to dealing with clustered data which focus on getting the standard errors for the coefficients right, without bothering with modeling the second level.
+We'll start by discussing an approach for correcting for heteroscedasticity (unequal variance in the residuals at different levels of the predictors), and then show how to use a similar technique to correct for residuals which may be correlated within clusters.
+
+The goal is to show you how to use *cluster-robust standard errors* to correct for biased standard errors introduced by working with clustered data.
+We'll also show you how you can implement some model-fitting techniques using the matrix operations in R.
+
+We'll be working with data we've seen before (The High School and Beyond dataset.)
+
+While this document shows how to calculate things by hand, it also shows the relevant R packages to automate it so you don't have to bother.
+The "by-hand" stuff is for interest, and to see what is happening under the hood.
+
+## Robust errors (no clustering)
+
+The (no clustering, ordinary) linear regression model assumes that
+
+$$y = X\beta + \varepsilon$$
+
+with the $\varepsilon$'s independently and identically normally distributed with variance $\sigma^2$.
+Here $\beta$ is a column vector of regression coefficients, $(\beta_0, \beta_1)$ in our example.
+$y$ is a vector of the outcomes and $\varepsilon$ is a vector of the residuals.
+$X$ is a $n$ by $p$ matrix referred to as the *model matrix* (p is the number of predictors, including the intercept).
+In this example, the first column of the matrix is all 1's, for the intercept, and the second column is each person's value for ses.
+The third is each person's value for sector (which will be the same for all students in a single school).
+
+```{r, warning=FALSE, message=FALSE}
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+dat = merge( dat, sdat, by="id", all.x=TRUE )
+dat = dat[ c( "id", "mathach", "ses", "sector" ) ]
+dat$id <- factor( dat$id ) ### make the school variable a factor
+head( dat )
+```
+
+Making a model matrix from a regression
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+X <- model.matrix( mathach ~ ses + sector, data = dat )
+head( X )
+y <- dat$mathach
+head( y )
+```
+
+With these assumptions, our estimate for $\beta$ using the OLS criterion is $\hat{\beta} = (X^TX)^{-1}X^Ty$.
+We can calculate this directly with R.
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+solve(t(X) %*% X) %*% t(X) %*% y ##(X'X)^{-1}X'y
+```
+
+Compare with lm: they are the same!
+
+```{r}
+mod = lm(mathach ~ ses + sector, data = dat)
+mod 
+```
+
+We can also estimate standard errors for the coefficients by taking $\sqrt{\hat{\sigma}^2diag((X^TX)^{-1})}$.
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
+preds <- X %*% beta_hat
+resids <- y - preds
+sigma_2_hat <- sum(resids^2)/(nrow(X)-3) ### estimate of the residual variance
+sqrt(sigma_2_hat * diag(solve(t(X) %*% X))) ### using the matrix algebra
+```
+
+Again, compare:
+
+```{r}
+library( arm )
+display( mod ) ### same results
+```
+
+But notice that this assumes that the residuals have a single variance, $\sigma^2$.
+Frequently this assumption is implausible, in which case the standard errors we derive may not be correct.
+It would be useful to have a way to derive standard errors which does not require us to assume that the residuals are homoscedastic.
+This is where *heteroscedasticity-robust standard errors*, or Huber-White standard errors, come in.
+Huber-White standard errors are asymptotically correct, even if the residual variance is not constant at all values of the predictor.
+
+The basic idea behind Huber-White standard errors is that we let each individual residual serve as an estimate of the variance of the residuals at that value of the predictors.
+If we let $V = (X^TX)^{-1},$ $N$ be the number of observations, and $K$ be the number of predictors, including the intercept, then the formula for the standard errors is
+
+$$ SE^2 = \frac{N}{N-K} \cdot diag\left( V \cdot \left( \sum X_i X_i^T \varepsilon_i^2 \right) \cdot V\right) $$
+
+This is called a sandwich estimator, where $V$ is the bread and $\sum X_i X_i^T \varepsilon_i^2$ (which is a $K$ by $K$ matrix) is the meat.
+Below, we implement this in R.
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+N <- nrow(dat) ### number of observations
+K <- 3 ### number of regression coefficients, including the intercept
+V <- solve(t(X) %*% X) ### the bread
+V
+
+meat <- matrix(0, nrow = K, ncol = K) ### we'll build the meat as we go, iterating over the 
+                                      ### individual rows
+for(i in 1:nrow(dat)){
+  this_point <- X[i, ] %*% t(X[i, ]) * resids[i]^2 ### the contribution of this particular 
+                                                   ### point
+  meat <- meat + this_point ### take the current meat, and add this point's contribution
+}
+meat
+
+SEs = sqrt(diag(N/(N-K) * V %*% meat %*% V)) ### standard errors
+SEs
+```
+
+Notice that the estimated standard errors haven't changed much, so whatever heteroscedasticity is present in this association doesn't seem to be affecting them.
+
+Combining the above steps in a tidy bit of code gives:
+
+```{r}
+mod <- lm(mathach ~ ses + sector, data = dat)
+resids = resid( mod )
+
+X <- model.matrix(mathach ~ ses + sector, data = dat)
+
+V <- solve(t(X) %*% X) ### the bread
+vcov_hw = V %*% t(X) %*% diag(resids^2) %*% X %*% V
+
+vcov_hw
+sqrt(diag(vcov_hw)) ### standard errors
+sqrt( diag( vcov( mod ) ) )
+```
+
+### R Packages to do all this for you
+
+There is an R package to do all of this for us.
+The following gives us the "Variance Covariance" matrix:
+
+```{r}
+library(sandwich)
+vc <- vcovHC( mod, type = "HC0")
+print( vc, digits=3 )
+```
+
+The square root of the diagonal are our standard errors
+
+```{r}
+sqrt( diag( vc ) )
+```
+
+They are what we hand-calculated above (up to some rounding error).
+Observe how the differences are all very close to zero:
+
+```{r}
+sqrt( diag( vc ) ) - SEs
+```
+
+We can use them for testing as follows
+
+```{r}
+library( lmtest )
+coeftest( mod, vcov. = vc )
+```
+
+(Note the weird ".". I don't know why it is part of the name.)
+
+In fact, these packages play well together, so you can tell `lmtest` to use the `vcovHC` function as follows:
+
+```{r}
+coeftest( mod, vcov. = vcovHC )
+```
+
+All this is well and good, but everything we have done so far is **WRONG** because we have failed to account for the clustering of students within schools.
+Huber-White (Sandwich) corrections only deal with heteroskedasticity, not clustering.
+We extend these ideas to do clustering next.
+
+## Cluster Robust Standard Errors
+
+The next step is to get standard errors which allow the residuals to be correlated within clusters and to have non-0 means within clusters (which violates the assumption of independence of residuals).
+The math here is harder to explain.
+We start by calculating $X*\varepsilon$, multiplying each row in $X$ by the associated residual.
+Then we take the column sum of $X$ within each cluster.
+This is easiest to understand for the intercept column, where the sum is simply equal to the sum of the residuals in that cluster.
+If all of the residuals in a cluster are large and positive (or large and negative), then this sum will be very large; if the residuals are close to mean 0 in a cluster, the sum will be small.
+We then bind the results into a $M$ by $K$ matrix, where $M$ is the number of clusters, each row corresponds to a cluster, and each column corresponds to a coefficient, which we'll call $U$.
+This is the meat which we sandwich with $V$.
+Finally, we take
+
+$$\sqrt{ diag( \frac{M}{M-1}\frac{N-1}{N-K} VU^TUV)}$$
+
+which gives us estimated standard errors for the regression coefficients.
+
+The intuition isn't so clear here, but notice that the more highly correlated residuals are within clusters (especially clusters with extreme values of the predictors), the larger $U^TU$ will be, and the less precise our estimates.
+
+Here's a "by hand" implementation in R.
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+cluster <- dat$id
+M <- length(unique(cluster))
+weight_mat <- as.vector(resids) * X ### start by calculating for each X predictor values 
+                                    ### weighted by the residuals
+head( weight_mat )
+u_icept <- tapply(weight_mat[, '(Intercept)'], cluster, sum) ### sum up the weighted 
+                                                             ### intercepts in each cluster
+u_ses <- tapply(weight_mat[, 'ses'], cluster, sum) ### sum up the weighted slopes in 
+                                                       ### each cluster
+u_sector <- tapply(weight_mat[, 'sector'], cluster, sum)
+
+u <- cbind(u_icept, u_ses, u_sector)
+
+### cluster-robust standard errors
+SE.adj.hand = sqrt((M/(M-1))*((N-1)/(N-K)) * diag(V %*% t(u) %*% u %*% V)) 
+SE.adj.hand
+```
+
+These are a lot higher than before; there's a lot of within-cluster correlation, and our OLS-based estimated standard errors are unrealistically small.
+
+You can use these standard errors in general if you're not interested in modeling what's happening at the cluster level and just want to get the right standard errors for your fixed effects.
+
+### Using R Packages
+
+There is a package that gives you the cluster-robust estimate of the variance-covariance matrix.
+You can then use this matrix to get your adjusted standard errors:
+
+```{r}
+library( multiwayvcov )
+
+m1 <- lm( mathach ~ ses + sector, data=dat )
+vcov_id <- cluster.vcov(m1, dat$id)
+coeftest(m1, vcov_id)
+```
+
+Compare to if we ignored clustering:
+
+```{r}
+coeftest( m1 )  ## BAD!!
+```
+
+We can look at how much bigger they are:
+
+```{r}
+SE.adj = sqrt( diag( vcov_id ) )
+SE.bad = sqrt( diag( vcov( m1 ) ) )
+SE.adj / SE.bad
+```
+
+More than 100% bigger for our sector variable and intercept.
+The ses variable is less so, since it varies within cluster.
+
+Finally, we check to see that our hand-calculation is the same as the package:
+
+```{r}
+SE.adj.hand - SE.adj
+```
+
+Up to rounding errors, we are the same!
+
+### Aside: Making your own function
+
+The following is code to generate the var-cor matrix more efficiently.
+For reference (or to ignore):
+
+```{r}
+ cl <- function(dat, fm, cluster){
+   attach(dat, warn.conflicts = F)
+   require(sandwich)
+   require(lmtest)
+   M <- length(unique(cluster))
+   N <- length(cluster)
+   K <- fm$rank
+   dfc <- (M/(M-1))*((N-1)/(N-K))
+   uj  <- apply(estfun(fm), 2, function(x) 
+                       tapply(x, cluster, sum));
+   vcovCL <- dfc*sandwich(fm, meat=crossprod(uj)/N)
+   coeftest(fm, vcovCL)
+ }
+ 
+cl(dat, mod, dat$id)
+```

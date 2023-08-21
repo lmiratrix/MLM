@@ -1,0 +1,8 @@
+---
+title: "Peer Grading"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+Grading should be quick work. The idea is to develop some facility in responding to statistical arguments. We ask you to leave a sentence or two explaining your grade and commenting on any notable points raised, whether interesting or questionable. If there are any problems with Canvas, we'll be watching on Piazza to respond to questions.

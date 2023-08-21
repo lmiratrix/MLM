@@ -1,0 +1,119 @@
+---
+title: "Covariance Derivation"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+We have a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11--15):
+
+$$\begin{aligned}
+Y_{ti} &= \pi_{0i} + \pi_{1i} a_t + \tilde{\epsilon}_{ti} \\
+\pi_{0i} &=  \beta_{0} + u_{0i} \\
+\pi_{1i} &= \beta_{1} + u_{1i} \\
+\begin{pmatrix} u_{0j} \\
+u_{1j}
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\tau_{00} & \tau_{01} \\
+        & \tau_{11} 
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned}$$
+
+Let $\tilde{\epsilon}_i \sim N(0, \sigma^2)$.
+Let our intercept correspond to our first timepoint, so $a_1 = 0, a_2 = 1, ..., a_5 = 4$.
+I.e., our $a_t$ is number of years since onset of study.
+Then $\beta_{0}$ is the average outcome at onset of the study and $\beta_{1}$ is the rate of growth (per year) in the population.
+
+The reduced form is $$\begin{aligned}
+ Y_{ti} &= \beta_{0}  + \beta_{1}  a_t  + u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti} \\ 
+ &= \beta_{0}  + \beta_{1}  a_t  + \epsilon_{ti} 
+\end{aligned}$$ with $\epsilon_{ti} = u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti}$.
+
+Note that $\tilde{\epsilon}_{ti}$ is the specific time-individual residual after the individual random effects, and $\epsilon_{ti}$ is the *overall* residual (deviation from what we expect from the population, or the difference between our observed outcome and the *population* model, not student latent growth curve).
+
+Now for any subject $i$, the covariance matrix of their residuals is $$\begin{aligned}
+\begin{pmatrix} \epsilon_{i1} \\
+\epsilon_{i2} \\
+\epsilon_{i3} \\
+\epsilon_{i4} \\
+\epsilon_{i5}
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0 \\
+0\\
+0 \\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\delta_{11} & \delta_{12} & \delta_{13} & \delta_{14} & \delta_{15} \\
+           & \delta_{22} & \delta_{23} & \delta_{24} & \delta_{25} \\
+         &              & \delta_{33} & \delta_{34} & \delta_{35} \\
+         &              &             & \delta_{44} & \delta_{45} \\
+         &              &              &            & \delta_{55} 
+\end{pmatrix}
+\end{bmatrix}\\[2\jot]
+\end{aligned}$$
+
+This matrix is one of the blocks in our block-diagonal matrix for our residuals.
+The diagonal are our variances at each timepoint (this means, for example, that if our model is good, that if we took the variance of all the $t=5$ observations across our dataset we should get something close to $\delta_{55}$).
+
+## Calculating the $\delta_{tt'}$ {#calculating-the-delta_tt .unnumbered}
+
+Let's calculate $\delta_{13} = cov( \epsilon_{i1}, \epsilon_{i2} )$.
+
+First we need a math fact about random quantities $A$, $B$, and $C$: $$cov( A + B, C ) = cov( A, C ) + cov( B, C ) .$$ Also if you multiply something by a constant $k$ you have $$cov( k_1 A, k_2 B ) = k_1 k_2 cov( A, B ) .$$
+
+Also note that $a_1 = 0$ and $a_3 = 2$.
+Then we have: $$\begin{aligned}
+\delta_{13} &= cov( \epsilon_{i1}, \epsilon_{i3} ) \\
+   &= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_3 + \tilde{\epsilon}_{3i} ) \\
+   &= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + 2 u_{1i} + \tilde{\epsilon}_{3i} ) \\
+   &= cov(  u_{0i}, u_{0i} ) + cov( u_{0i}, 2 u_{1i} ) + cov( u_{0i}, \tilde{\epsilon}_{3i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 2 u_{1i} )  + cov( \tilde{\epsilon}_{1i}, \tilde{\epsilon}_{3i}) \\
+   &= \tau_{00} + 2\tau_{01} + 0 + 0 + 0 + 0 \\
+   &= \tau_{00} + 2\tau_{01} 
+\end{aligned}$$
+
+Note how we multiple out the individual components, and this gives an expression for the overall covariance of our two residuals.
+If we did this for each $\delta_{tt'}$ we could fill in our $5 \times 5$ matrix.
+Fun!
+
+A core idea here is the independence of the different residual pieces makes a lot of the terms go to 0, giving short(er) expressions than we might have otherwise.
+The random slope model dictates the overall covariance of the residuals.
+
+## Calculating the diagonal terms.
+
+For the variances, you would just calculate covariance of a quantity with itself.
+Let's do $\delta_{11}$, the variance of timepoint 1: $$\begin{aligned}
+\delta_{11} &= var( \epsilon_{i1} ) = cov( \epsilon_{i1}, \epsilon_{i1} ) \\
+   &= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i} ) \\
+   &= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + \tilde{\epsilon}_{1i} ) \\
+   &= cov(  u_{0i}, u_{0i} ) + cov( u_{0i},  \tilde{\epsilon}_{1i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+   &= \tau_{00} + 0 + 0 + \sigma^2 =  \tau_{00} + \sigma^2
+\end{aligned}$$
+
+Now let's do $\delta_{55}$, the variance of timepoint 5: $$\begin{aligned}
+\delta_{55} &= var( \epsilon_{i5} ) = cov( \epsilon_{i5}, \epsilon_{i5} ) \\
+   &= cov(  u_{0i} + u_{1i} a_5 + \tilde{\epsilon}_{5i},  u_{0i} + u_{5i} a_5 + \tilde{\epsilon}_{5i} ) \\
+   &= cov(  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i},  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i} ) \\
+   &= cov(  u_{0i}, u_{0i} ) + cov(  u_{0i}, 4 u_{1i} )  + cov( u_{0i},  \tilde{\epsilon}_{5i} ) + \\
+    &\qquad cov( 4 u_{1i}, u_{0i} ) + cov( 4 u_{1i}, 4 u_{1i} )  + cov( 4 u_{1i}, \tilde{\epsilon}_{5i} ) \\
+    & \qquad cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 4 u_{1i} )  + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+   &= \tau_{00} + 4 \tau_{01} + 0 + 4 \tau_{01} + 16 \tau_{11} + 0 + 0 + 0 + \sigma^2 \\
+   &= \tau_{00} + 16 \tau_{11} + 8 \tau_{01} + \sigma^2 .
+\end{aligned}$$
+
+Note how the variance around the intercept (at time 1 where $a_1 = 0$) looks like it would be smaller than far out.
+That being said, the covariance $\tau_{01}$ could be large and negative, causing the variance at the intercept to be less.
+But, $\tau_{01}$ is positive, the overall variance increases as we move away from the intercept point.
+
+One interesting aspect of random slope models is the marginal (at each time point) has heteroskedasticity: the variances are each time point can be different because the lines can spread or gather.

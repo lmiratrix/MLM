@@ -1,0 +1,90 @@
+---
+title: "Survey Weights"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+## Multilevel modeling and survey weights
+
+In many circumstances you may be faced with a multilevel modeling project where you also have survey weights.
+Unfortunately R does not have good support for this hybrid of two worlds (although if you go the econometric direction you can incorporate weights into your robust standard errors).
+
+You basically have two options at this point: you can ignore the weights (defendable, but often upsetting to reviewers and colleagues), or switch to Stata, which allows for both.
+
+## Topline advice
+
+Ignore the weights for your final project and worry about extending to your general population later on, depending on where your research takes you.
+More important than the weights is making sure you have random effects corresponding to all clustering involved in the way the data were collected.
+For example, if the program was a sample of states and then a sample of villages, and then households, you would have a 4-level model: states, villages, households, and individuals.
+You would want a random effect for each level.
+If you had few states, you could back off and have fixed effects for state and generalize only to the sampled states rather than the full country.
+
+## What are survey weights?
+
+The easy way to think of sample weights (survey weights) is the answer to "how many people does this individual represent in the population?" (Although note that weights will generally be proportional to the answer to this question rather than literally that value.)
+
+For example, if you had three people, the first with a weight of 1, the second with a weight of 0.5 and the third with a weight of 3, then we would think of our population as being $1 + 0.5 + 3 = 4.5$ people, 3 of whom are people similar to our third sampled person, 0.5 of which our second sampled person, and 1 of whom is similar to our first person.
+
+In other words, our first person is sampled proportional to their prevalence in the population.
+The 0.5 weight person is "oversampled"---we have too many people like this in our sample, as compared to the population so we "downweight" them.
+The third person is underrepresented, by contrast.
+We should have had three times as many of these types of people in our sample as we have.
+
+Thus, sampling weights adjust for the probability of selecting an individual from the population when that probability is not constant (this could be due either by design or by chance).
+For nationally representative data surveys often select a sample where individuals have an unequal probability of being selected.
+This is done to increase the number of individuals and reduce sampling variability, particularly for certain areas or subgroups of the population.
+In some cases, corrections for non-response are also built into the weights.
+Sampling weights are then inversely proportional to the probability of selection.
+
+In some complex surveys, there may be more than one sampling weight when different subsamples are selected.
+For example, the Demographic and Health Surveys (DHS)[^survey_weights-1] select a subsample of adults to be tested for HIV.
+If 1 in 5 households is selected for HIV testing, then no weighting is needed.
+But if 1 in 5 urban households and 1 in 2 rural households are selected, then sampling weights need to be applied to both descriptive statistics and model estimates to estimate at national level.
+
+[^survey_weights-1]: These are nationally representative surveys conducted in low- and middle-income countries collecting data primarily on maternal and child health.
+
+## What happens if you ignore the weights?
+
+In this case (as long as you are modeling the clustering correctly) you are estimating relationships on your sample, rather than the target population.
+This can be a totally fine thing: if you are interested in how some variables interrelate you might reasonably believe that a found pattern of relationships in the sample is very indicative of how things may play out on a wider stage.
+It would be odd for (statistically significant) relationships in the sample to not be at least somewhat similar to the population the sample came from.
+The true magnitudes may shift, but the story should be the same.
+
+For example, if, after ignoring weights, you find an impact of some treatment, then you know the treatment works, at least for those in your sample.
+Even if your sample is a nonrepresentative sample of your population, it is still some sort of representation, and thus you would believe that your treatment would work to some degree more generally.
+In this case, any differences between your sample and population would be due to treatment variation, i.e., some in your sample respond differently than some in the population, and so your results in the sample would be weighting some people more than we "should," causing the discrepancy.
+
+Survey weights are usually much more important when trying to estimate level, or prevalence, of an outcome.
+If, for example, you are attempting to measure the average literacy in a population, then survey weights will be very important: if the weights of those systematically more (or less) literate are different, then ignoring the weights can cause bias.
+In addition, if some types of groups or areas are oversampled, then your estimates will tend to be biased towards the levels and relationships in the oversampled group/area.
+But if you are interested in the relationship between literacy and some covariate, the weights will matter less: it is only if the relationship between these variables is different in your high weight and low weight individuals where you will get bias.
+This is arguably a less natural phenomenon.
+
+## How to apply weights?
+
+As a rule of thumb, you want to first read any available documentation for the data you are using.
+You want to understand how the sample was obtained and how the weights were calculated.
+Publicly available data often comes with manuals on how to handle weights.
+Some manuals even come with R and Stata code!
+This is a very important step as sometimes you have to manipulate the weights before you can use them!
+For example, when using DHS data, you have to divide the weight by 1,000,000 before use.
+This is a function of how the weights are calculated.
+In addition, many complex surveys that use weights may also have stratified the sample, and that is also something to account for in your analysis.
+
+When using survey weights it is always advisable to compare the results that include weights with those without them.
+In general, one should not expect see substantive changes in the point estimates of regression coefficients to the point of dramatically changing one's interpretation of one's results.
+The model itself is supposed to capture structural relationships between covariates and outcomes, and under correct model specification the weights are superfluous with regards to these coefficients.
+Where weights could cause change is with descriptives such as the overall averages (e.g., the intercepts, in particular, could be different. We may also see changes in the variance parameters. Finally, with weights, one usually sees an increase in the the standard errors.
+
+A limitation with some packages is one might not have an easy way to obtain model fit statistics to help compare models.
+A clean way to avoid this is to go through the process of model selection using the data in the sample (ignoring the weights) and using the packages and approaches we have seen in class.
+The findings from such an exploration would be valid for the structure of the data in our sample.
+Then, as a second step, include the survey weights to move to inference to a larger population (for which the sample is supposed to be representative), taking the preferred model choices from step one and fitting them through a package that allows for survey weights.
+
+## Further references
+
+For some good resources see [@asparouhov2006; @carle2009; @rabe-hesketh2006].
+Prior students previously also used @laukaityte2018importance and @lorah2020estimating for some guidance.
+They then worked with the `BIFIEsurvey` R package to fit multi-level models with survey weights to account for the complex sampling design in their data.

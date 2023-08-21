@@ -1,0 +1,212 @@
+---
+title: "Extracting model information with `broom`"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+There are three general ways to get information out of a fit model: print it to the screen and read it, use a variety of methods to pull information out of the model, and use the `broom` package to pull information out of the model into different kinds of data frames (which is in line with *tidy programming*, and the tidyverse).
+
+This chapter looks at the third way.
+The following chapter looks at the "base R" way.
+Which to use is a matter of preference.
+
+## Simple Demonstration
+
+One of my favorite R packages is `broom`, which has many awesome convenience functions for regression models, including MLMs.
+`broom.mixed` is an extension that works with `lmer` models.
+
+```{r}
+# load libraries
+library(tidyverse)
+library(broom.mixed)
+library(haven)
+library(knitr)
+library(lme4)
+
+# clear memory
+rm(list = ls())
+
+# load HSB data
+hsb <- read_dta("data/hsb.dta")
+```
+
+### `tidy`
+
+`tidy` takes a model object and returns the output as a tidy tibble, which makes it very easy to work with.
+Compare the results below:
+
+```{r}
+ols <- lm(mathach ~ ses, hsb)
+
+# ugly!
+summary(ols)
+
+# beautiful!
+tidy(ols)
+
+# even better
+ols |> tidy() |> kable(digits = 2)
+
+# works great for MLMs
+mlm <- lmer(mathach ~ ses + mnses + (ses|schoolid), hsb)
+
+tidy(mlm)
+```
+
+### `glance`
+
+What about model fit stats?
+That's where `glance` comes in:
+
+```{r}
+glance(ols)
+
+glance(mlm) |> 
+  kable(digits = 2)
+```
+
+### `augment`
+
+What about residuals?
+`augment` to the rescue:
+
+```{r}
+mlm |> 
+  ranef() |> 
+  augment() |> 
+  head() |> 
+  kable(digits = 2)
+```
+
+## Extracting `lmer` model info
+
+### Obtaining Fixed Effects
+
+`lmer` models are reduced form, so fixed effects include both L1 and L2 predictors.
+`tidy` denotes the type of effect in a column called `effect`, where `fixed` means fixed, and `ran_pars` means random (standing for "random parameters")
+
+```{r}
+mlm |> 
+  tidy() |> 
+  filter(effect == "fixed")
+```
+
+We can use the `[[]]` notation or a pipeline to extract elements from the data frame:
+
+```{r}
+# within effect of SES
+tidy(mlm)[[2,4]]
+
+# contextual effect of SES
+tidy(mlm)[[3,4]]
+
+# using the variable names in a pipeline
+mlm |> 
+  tidy() |> 
+  filter(term == "ses") |> 
+  pull(estimate)
+```
+
+### Obtaining Random Effects
+
+`tidy` includes the random effects (SDs and correlations) right there in the output.
+For example, `sd__ses` is the SD of the SES slope.
+
+```{r}
+# display all random effects
+mlm |> 
+  tidy() |> 
+  filter(effect == "ran_pars")
+
+# pull single number
+mlm |> 
+  tidy() |> 
+  filter(term == "sd__ses") |> 
+  pull(estimate)
+```
+
+### Obtaining Empirical Bayes Estimates of the Random Effects
+
+This is best done in a pipeline.
+We first apply `ranef`, then `augment` and get the EB estimates in the `estimate` column, along with the `std.error`, confidence bounds, and `qq` statistics.
+
+```{r}
+mlm |> 
+  ranef() |> 
+  augment() |> 
+  head()
+```
+
+### Intercept-Slope Correlation
+
+The BLUPs are in long form.
+We can reshape to wide if we want to, for example, visualize the correlation between the random intercepts and slopes.
+
+```{r}
+blups <- mlm |> 
+  ranef() |> 
+  augment() |> 
+  select(variable, level, estimate) |> 
+  pivot_wider(names_from = variable, values_from = estimate,
+              id_cols = level) |> 
+  rename(schoolid = 1, random_intercept = 2, random_slope = 3)
+
+head(blups)
+
+ggplot(blups, aes(x = random_intercept, y = random_slope)) +
+  geom_point()
+```
+
+### Caterpillar Plots
+
+The included information makes it easy to construct caterpillar plots!
+
+```{r}
+ri <- mlm |> 
+  ranef() |> 
+  augment() |> 
+  filter(variable == "(Intercept)")
+
+ggplot(ri, aes(x = level, y = estimate,
+               ymin = lb,
+               ymax = ub)) +
+  geom_point() +
+  geom_errorbar() +
+  theme_classic()
+```
+
+### Fitted Values
+
+Using `augment` directly on the `lmer` object gives us fitted values (`.fitted`) and residuals (`.resid`).
+We can use this for residual plots or for plotting lines for each school.
+
+```{r}
+mlm |> 
+  augment() |> 
+  head()
+
+# fitted lines
+mlm |> 
+  augment() |> 
+  ggplot(aes(x = ses, y = .fitted, group = schoolid)) +
+  geom_line( alpha=0.5 )
+
+# residuals
+mlm |> 
+  augment() |> 
+  ggplot(aes(y = .resid, x = .fitted)) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(alpha = 0.2)
+```
+
+## Additional Resources
+
+I've recently discovered the packaged `mixedup` that has some excellent convenience functions for extracting info from `lmer` models: <https://m-clark.github.io/mixedup/index.html>

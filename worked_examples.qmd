@@ -1,0 +1,8 @@
+---
+title: "Worked Examples"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+This section provides several worked examples of various MLM techniques.
