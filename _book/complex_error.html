@@ -648,39 +648,42 @@ y_{i5}
 . &amp; . &amp; . &amp; . &amp; \tau_{52}
 \end{array}\right)\right] = N[ \mu, \Sigma ]\]</span></p>
 <p>Note that the key parts here are the correlations between the residuals at different times. We call our entire covariance matrix <span class="math inline">\(\Sigma\)</span>. This matrix describes how the residuals within a single individual (with 5 time points of observation) are correlated. The mean vector can easily be separated out:</p>
-$$
-<span class="math display">\[\begin{pmatrix}y_{i1}\\
-
+<p><span class="math display">\[\begin{pmatrix}y_{i1}\\
 y_{i2}\\
 y_{i3}\\
 y_{i4}\\
 y_{i5}
-\end{pmatrix}\]</span>
-= (
-<span class="math display">\[\begin{array}{c}
+\end{pmatrix} = \left(\begin{array}{c}
 \mu_{1i}\\
 \mu_{2i}\\
 \mu_{3i}\\
 \mu_{4i}\\
 \mu_{5i}
-\end{array}\]</span>
-) + (
-<span class="math display">\[\begin{array}{c}
+\end{array}\right) + \left(\begin{array}{c}
 \epsilon_{1i}\\
 \epsilon_{2i}\\
 \epsilon_{3i}\\
 \epsilon_{4i}\\
 \epsilon_{5i}
-\end{array}\]</span>
-)<span class="math display">\[ \]</span>(
-<span class="math display">\[\begin{array}{c}
+\end{array}\right)\]</span> <span class="math display">\[\left(\begin{array}{c}
 \epsilon_{1i}\\
 \epsilon_{2i}\\
 \epsilon_{3i}\\
 \epsilon_{4i}\\
 \epsilon_{5i}
-\end{array}\]</span>
-<p>)N$$</p>
+\end{array}\right)\sim N\left[\left(\begin{array}{c}
+0\\
+0\\
+0\\
+0\\
+0
+\end{array}\right),\left(\begin{array}{ccccc}
+\tau_{11} &amp; \tau_{12} &amp; \tau_{13} &amp; \tau_{14} &amp; \tau_{15}\\
+. &amp; \tau_{22} &amp; \tau_{23}&amp; \tau_{24} &amp; \tau_{25}\\
+. &amp; . &amp; \tau_{33}&amp; \tau_{34} &amp; \tau_{35}\\
+. &amp; . &amp; . &amp; \tau_{44} &amp; \tau_{45}\\
+. &amp; . &amp; . &amp; . &amp; \tau_{55}
+\end{array}\right)\right]\]</span></p>
 <p>Our regression model would give us the mean vector for any given student (e.g., it would be <span class="math inline">\(X'\beta\)</span> for some covariate matrix (design matrix) <span class="math inline">\(X\)</span> and fixed effect parameter vector <span class="math inline">\(\beta\)</span>. <span class="math inline">\(X\)</span> would have one row per time point and time would be one of the columns, to give our predictions for our 5 time points.</p>
 <p>Our error structure model gives us the distribution of the <span class="math inline">\((\epsilon_{1i}, \ldots, \epsilon_{5i})\)</span> for that student. Different ideas about the data generating process lead to different correlation structures here. We saw a couple of those in class.</p>
 </section>
@@ -951,21 +954,21 @@ Random effects:
  Formula: ~AGE | ID
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
-(Intercept) 0.51024132 (Intr)
+(Intercept) 0.51024133 (Intr)
 AGE         0.05038614 -0.98 
-Residual    0.16265429       
+Residual    0.16265428       
 
 Fixed effects:  ATTIT ~ 1 + AGE 
-                 Value  Std.Error  DF  t-value p-value
-(Intercept) -0.5133250 0.05834087 839 -8.79872       0
-AGE          0.0646849 0.00492904 839 13.12323       0
+                 Value  Std.Error  DF   t-value p-value
+(Intercept) -0.5133250 0.05834087 839 -8.798719       0
+AGE          0.0646849 0.00492904 839 13.123228       0
  Correlation: 
     (Intr)
 AGE -0.981
 
 Standardized Within-Group Residuals:
         Min          Q1         Med          Q3         Max 
--2.87852414 -0.55971196 -0.07521191  0.57495075  3.45648134 
+-2.87852426 -0.55971198 -0.07521191  0.57495076  3.45648137 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1012,27 +1015,27 @@ Random effects:
  Formula: ~AGE | ID
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
-(Intercept) 0.57693602 (Intr)
-AGE         0.05431367 -0.979
-Residual    0.14054184       
+(Intercept) 0.57693635 (Intr)
+AGE         0.05431371 -0.979
+Residual    0.14054173       
 
 Variance function:
  Structure: Different standard deviations per stratum
  Formula: ~1 | agefac 
  Parameter estimates:
        11        12        13        14        15 
-1.0000000 1.1956071 1.3095864 1.1255177 0.9802311 
+1.0000000 1.1956045 1.3095883 1.1255244 0.9802308 
 Fixed effects:  ATTIT ~ AGE 
                  Value  Std.Error  DF   t-value p-value
-(Intercept) -0.4929012 0.05715889 839 -8.623351       0
-AGE          0.0631404 0.00483385 839 13.062122       0
+(Intercept) -0.4929012 0.05715888 839 -8.623352       0
+AGE          0.0631404 0.00483385 839 13.062119       0
  Correlation: 
     (Intr)
 AGE -0.981
 
 Standardized Within-Group Residuals:
-       Min         Q1        Med         Q3        Max 
--2.9163540 -0.5498217 -0.0758348  0.5482942  3.2370312 
+        Min          Q1         Med          Q3         Max 
+-2.91635759 -0.54982016 -0.07583344  0.54829414  3.23703121 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1048,10 +1051,10 @@ Number of Groups: 239 </code></pre>
 <pre><code>ID 9 
 Marginal variance covariance matrix
          1        2        3        4        5
-1 0.034915 0.016947 0.018731 0.020516 0.022300
+1 0.034915 0.016947 0.018731 0.020515 0.022300
 2 0.016947 0.049916 0.026415 0.031150 0.035884
 3 0.018731 0.026415 0.067975 0.041784 0.049468
-4 0.020516 0.031150 0.041784 0.077440 0.063052
+4 0.020515 0.031150 0.041784 0.077440 0.063052
 5 0.022300 0.035884 0.049468 0.063052 0.095615
   Standard Deviations: 0.18685 0.22342 0.26072 0.27828 0.30922 </code></pre>
 </div>
@@ -1061,11 +1064,11 @@ Marginal variance covariance matrix
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(myVarCov[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1         2         3         4         5
-1 1.0000000 0.4059446 0.3844935 0.3945453 0.3859525
-2 0.4059446 1.0000000 0.4534860 0.5010159 0.5194173
-3 0.3844935 0.4534860 1.0000000 0.5759089 0.6136046
-4 0.3945453 0.5010159 0.5759089 1.0000000 0.7327497
-5 0.3859525 0.5194173 0.6136046 0.7327497 1.0000000</code></pre>
+1 1.0000000 0.4059443 0.3844926 0.3945439 0.3859519
+2 0.4059443 1.0000000 0.4534860 0.5010154 0.5194178
+3 0.3844926 0.4534860 1.0000000 0.5759074 0.6136043
+4 0.3945439 0.5010154 0.5759074 1.0000000 0.7327485
+5 0.3859519 0.5194178 0.6136043 0.7327485 1.0000000</code></pre>
 </div>
 </div>
 <p>And our AIC:</p>
@@ -1111,12 +1114,12 @@ Variance function:
  Formula: ~1 | agefac 
  Parameter estimates:
       11       12       13       14       15 
-1.000000 1.118479 1.414269 1.522510 1.560074 
+1.000000 1.118479 1.414270 1.522511 1.560072 
 
 Coefficients:
                  Value  Std.Error   t-value p-value
-(Intercept) -0.4557090 0.05465564 -8.337822       0
-AGE          0.0597274 0.00458344 13.031145       0
+(Intercept) -0.4557089 0.05465560 -8.337826       0
+AGE          0.0597274 0.00458343 13.031153       0
 
  Correlation: 
     (Intr)
@@ -1124,7 +1127,7 @@ AGE -0.979
 
 Standardized residuals:
          Min           Q1          Med           Q3          Max 
--1.482606297 -0.809004080 -0.006791942  0.840804584  4.082258054 
+-1.482607475 -0.809004625 -0.006791829  0.840804662  4.082257854 
 
 Residual standard error: 0.1903187 
 Degrees of freedom: 1079 total; 1077 residual</code></pre>
@@ -1140,8 +1143,8 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
          [,1]     [,2]     [,3]     [,4]     [,5]
 [1,] 0.036221 0.018541 0.019071 0.024335 0.026466
 [2,] 0.018541 0.045313 0.029251 0.026924 0.027989
-[3,] 0.019071 0.029251 0.072448 0.051703 0.047736
-[4,] 0.024335 0.026924 0.051703 0.083962 0.065764
+[3,] 0.019071 0.029251 0.072448 0.051704 0.047736
+[4,] 0.024335 0.026924 0.051704 0.083962 0.065764
 [5,] 0.026466 0.027989 0.047736 0.065764 0.088156
   Standard Deviations: 0.19032 0.21287 0.26916 0.28976 0.29691 </code></pre>
 </div>
