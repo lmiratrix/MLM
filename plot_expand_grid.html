@@ -8,7 +8,7 @@
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S-043: Multilevel and Longitudinal Models - 11&nbsp; Example of making plots with expand.grid</title>
+<title>Resources for S-043: Multilevel and Longitudinal Models - 12&nbsp; Example of making plots with expand.grid</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./ggeffects.html" rel="next">
-<link href="./intro_missing_data.html" rel="prev">
+<link href="./summary_plots.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_basics.html">R Foundations</a></li><li class="breadcrumb-item"><a href="./plot_expand_grid.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example of making plots with `expand.grid`</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./using_ggplot.html">Using ggPlot</a></li><li class="breadcrumb-item"><a href="./plot_expand_grid.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with `expand.grid`</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,21 +142,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./r_basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Foundations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./self_assess.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Do I take S-043? A self-assessment</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./r_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R and R Markdown</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_markdown.html" class="sidebar-item-text sidebar-link">
@@ -171,68 +171,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./r_tips.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./making_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Making Regression Tables and More Complete Summary Output</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Making Regression Tables and More Complete Summary Output</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./math_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pivot_wider.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./using_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using ggPlot</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
   </div>
 </li>
       </ul>
@@ -241,11 +252,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./mod_fit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Fitting and Interpretation</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link">
@@ -272,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rewb.html" class="sidebar-item-text sidebar-link">
+  <a href="./within_v_between.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
   </div>
 </li>
@@ -336,11 +347,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./worked_examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Worked Examples</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
@@ -371,11 +382,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./visualizations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visualizations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
@@ -406,11 +417,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./derivations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Derivations and Technical Details</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
@@ -463,12 +474,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./peer_grading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Peer Grading</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -483,24 +488,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">11.1</span> Introduction</a></li>
-  <li><a href="#making-plots-for-the-hsb-dataset" id="toc-making-plots-for-the-hsb-dataset" class="nav-link" data-scroll-target="#making-plots-for-the-hsb-dataset"><span class="header-section-number">11.2</span> Making plots for the HS&amp;B Dataset</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">12.1</span> Introduction</a></li>
+  <li><a href="#making-plots-for-the-hsb-dataset" id="toc-making-plots-for-the-hsb-dataset" class="nav-link" data-scroll-target="#making-plots-for-the-hsb-dataset"><span class="header-section-number">12.2</span> Making plots for the HS&amp;B Dataset</a>
   <ul class="collapse">
-  <li><a href="#setting-up-the-hsb-data" id="toc-setting-up-the-hsb-data" class="nav-link" data-scroll-target="#setting-up-the-hsb-data"><span class="header-section-number">11.2.1</span> Setting up the HS&amp;B data</a></li>
-  <li><a href="#plotting-the-model-results" id="toc-plotting-the-model-results" class="nav-link" data-scroll-target="#plotting-the-model-results"><span class="header-section-number">11.2.2</span> Plotting the model results</a></li>
-  <li><a href="#plotting-individual-school-regression-lines" id="toc-plotting-individual-school-regression-lines" class="nav-link" data-scroll-target="#plotting-individual-school-regression-lines"><span class="header-section-number">11.2.3</span> Plotting individual school regression lines</a></li>
-  <li><a href="#plotting-with-predict" id="toc-plotting-with-predict" class="nav-link" data-scroll-target="#plotting-with-predict"><span class="header-section-number">11.2.4</span> Plotting with predict()</a></li>
-  <li><a href="#making-our-lines-go-the-same-length-with-expand.grid" id="toc-making-our-lines-go-the-same-length-with-expand.grid" class="nav-link" data-scroll-target="#making-our-lines-go-the-same-length-with-expand.grid"><span class="header-section-number">11.2.5</span> Making our lines go the same length with expand.grid()</a></li>
-  <li><a href="#superfancy-extra-bonus-plotting-of-complex-models" id="toc-superfancy-extra-bonus-plotting-of-complex-models" class="nav-link" data-scroll-target="#superfancy-extra-bonus-plotting-of-complex-models"><span class="header-section-number">11.2.6</span> Superfancy extra bonus plotting of complex models!</a></li>
+  <li><a href="#setting-up-the-hsb-data" id="toc-setting-up-the-hsb-data" class="nav-link" data-scroll-target="#setting-up-the-hsb-data"><span class="header-section-number">12.2.1</span> Setting up the HS&amp;B data</a></li>
+  <li><a href="#plotting-the-model-results" id="toc-plotting-the-model-results" class="nav-link" data-scroll-target="#plotting-the-model-results"><span class="header-section-number">12.2.2</span> Plotting the model results</a></li>
+  <li><a href="#plotting-individual-school-regression-lines" id="toc-plotting-individual-school-regression-lines" class="nav-link" data-scroll-target="#plotting-individual-school-regression-lines"><span class="header-section-number">12.2.3</span> Plotting individual school regression lines</a></li>
+  <li><a href="#plotting-with-predict" id="toc-plotting-with-predict" class="nav-link" data-scroll-target="#plotting-with-predict"><span class="header-section-number">12.2.4</span> Plotting with predict()</a></li>
+  <li><a href="#making-our-lines-go-the-same-length-with-expand.grid" id="toc-making-our-lines-go-the-same-length-with-expand.grid" class="nav-link" data-scroll-target="#making-our-lines-go-the-same-length-with-expand.grid"><span class="header-section-number">12.2.5</span> Making our lines go the same length with expand.grid()</a></li>
+  <li><a href="#superfancy-extra-bonus-plotting-of-complex-models" id="toc-superfancy-extra-bonus-plotting-of-complex-models" class="nav-link" data-scroll-target="#superfancy-extra-bonus-plotting-of-complex-models"><span class="header-section-number">12.2.6</span> Superfancy extra bonus plotting of complex models!</a></li>
   </ul></li>
-  <li><a href="#longitudinal-data" id="toc-longitudinal-data" class="nav-link" data-scroll-target="#longitudinal-data"><span class="header-section-number">11.3</span> Longitudinal Data</a>
+  <li><a href="#longitudinal-data" id="toc-longitudinal-data" class="nav-link" data-scroll-target="#longitudinal-data"><span class="header-section-number">12.3</span> Longitudinal Data</a>
   <ul class="collapse">
-  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"><span class="header-section-number">11.3.1</span> The data</a></li>
-  <li><a href="#a-model" id="toc-a-model" class="nav-link" data-scroll-target="#a-model"><span class="header-section-number">11.3.2</span> A model</a></li>
-  <li><a href="#the-simple-predict-approach" id="toc-the-simple-predict-approach" class="nav-link" data-scroll-target="#the-simple-predict-approach"><span class="header-section-number">11.3.3</span> The simple predict() approach</a></li>
-  <li><a href="#the-expand.grid-function" id="toc-the-expand.grid-function" class="nav-link" data-scroll-target="#the-expand.grid-function"><span class="header-section-number">11.3.4</span> The expand.grid() function</a></li>
-  <li><a href="#population-aggregation" id="toc-population-aggregation" class="nav-link" data-scroll-target="#population-aggregation"><span class="header-section-number">11.3.5</span> Population aggregation</a></li>
-  <li><a href="#plotting-random-effects-by-level-2-variable" id="toc-plotting-random-effects-by-level-2-variable" class="nav-link" data-scroll-target="#plotting-random-effects-by-level-2-variable"><span class="header-section-number">11.3.6</span> Plotting random effects by Level 2 variable</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"><span class="header-section-number">12.3.1</span> The data</a></li>
+  <li><a href="#a-model" id="toc-a-model" class="nav-link" data-scroll-target="#a-model"><span class="header-section-number">12.3.2</span> A model</a></li>
+  <li><a href="#the-simple-predict-approach" id="toc-the-simple-predict-approach" class="nav-link" data-scroll-target="#the-simple-predict-approach"><span class="header-section-number">12.3.3</span> The simple predict() approach</a></li>
+  <li><a href="#the-expand.grid-function" id="toc-the-expand.grid-function" class="nav-link" data-scroll-target="#the-expand.grid-function"><span class="header-section-number">12.3.4</span> The expand.grid() function</a></li>
+  <li><a href="#population-aggregation" id="toc-population-aggregation" class="nav-link" data-scroll-target="#population-aggregation"><span class="header-section-number">12.3.5</span> Population aggregation</a></li>
+  <li><a href="#plotting-random-effects-by-level-2-variable" id="toc-plotting-random-effects-by-level-2-variable" class="nav-link" data-scroll-target="#plotting-random-effects-by-level-2-variable"><span class="header-section-number">12.3.6</span> Plotting random effects by Level 2 variable</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -510,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></h1>
 </div>
 
 
@@ -531,16 +536,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="introduction" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">11.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">12.1</span> Introduction</h2>
 <p>This script demonstrates using the <code>predict()</code> function to make plots with separate lines for different groups. A core element is the <code>expand.grid()</code> method. The central idea is this: for each of our groups we manually create a series of points at different levels of our covariate (e.g.&nbsp;ses or time) and then predict the outcome for each of these values. We then plot these predicted points, and it makes a smooth curve for that group.</p>
 <p>In this document we start with clustered data (the HS&amp;B dataset) and then illustrate how to this with longitudinal data as well.</p>
 </section>
-<section id="making-plots-for-the-hsb-dataset" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="making-plots-for-the-hsb-dataset"><span class="header-section-number">11.2</span> Making plots for the HS&amp;B Dataset</h2>
+<section id="making-plots-for-the-hsb-dataset" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="making-plots-for-the-hsb-dataset"><span class="header-section-number">12.2</span> Making plots for the HS&amp;B Dataset</h2>
 <p>In this section we first look at how to plot the model results by making a tiny dataset from the fixed effects, and then we extend to more powerful plotting of individual schools.</p>
-<section id="setting-up-the-hsb-data" class="level3" data-number="11.2.1">
-<h3 data-number="11.2.1" class="anchored" data-anchor-id="setting-up-the-hsb-data"><span class="header-section-number">11.2.1</span> Setting up the HS&amp;B data</h3>
+<section id="setting-up-the-hsb-data" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="setting-up-the-hsb-data"><span class="header-section-number">12.2.1</span> Setting up the HS&amp;B data</h3>
 <p>The “many small worlds” view says each school has its own regression line. We are going to plot them all. See the lecture code files for how to load the HS&amp;B dataset. For clarity it is omitted from the printout. We end up with this for the schools:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( sdat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -601,8 +606,8 @@ deviance = 46563.2 </code></pre>
 </div>
 </div>
 </section>
-<section id="plotting-the-model-results" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="plotting-the-model-results"><span class="header-section-number">11.2.2</span> Plotting the model results</h3>
+<section id="plotting-the-model-results" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="plotting-the-model-results"><span class="header-section-number">12.2.2</span> Plotting the model results</h3>
 <p>We can plot the model results by making a little dataset by hand. This section of the handout illustrates how you can hand-construct plots by directly calculating predicted values from your model. This is a very useful skill, and we recommend studying this area of the handout as a way of learning how to control plotting at a very direct level.</p>
 <p>So, to continue, we proceed in three steps.</p>
 <p><em>Step 1: Decide on the plot.</em> Let’s make a plot of outcome vs.&nbsp;ses with two lines (one for catholic and one for public). Sometimes it is worth actually sketching the desired plot on scratch paper, identifying the x and y axes and general lines desired.</p>
@@ -644,8 +649,8 @@ deviance = 46563.2 </code></pre>
 <p><img src="plot_expand_grid_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
-<section id="a-fancy-diversion-categorical-variables-on-the-x-axis" class="level4" data-number="11.2.2.1">
-<h4 data-number="11.2.2.1" class="anchored" data-anchor-id="a-fancy-diversion-categorical-variables-on-the-x-axis"><span class="header-section-number">11.2.2.1</span> A fancy diversion: categorical variables on the <span class="math inline">\(x\)</span>-axis</h4>
+<section id="a-fancy-diversion-categorical-variables-on-the-x-axis" class="level4" data-number="12.2.2.1">
+<h4 data-number="12.2.2.1" class="anchored" data-anchor-id="a-fancy-diversion-categorical-variables-on-the-x-axis"><span class="header-section-number">12.2.2.1</span> A fancy diversion: categorical variables on the <span class="math inline">\(x\)</span>-axis</h4>
 <p>Say we decided to fit a model where we have ses <strong>categories</strong>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>ses.cat <span class="ot">=</span> <span class="fu">cut</span>( dat<span class="sc">$</span>ses, </span>
@@ -729,8 +734,8 @@ deviance = 46666.1 </code></pre>
 <p>Note the <em>very important</em> <code>group=catholic</code> line that tells the plot to group everyone by catholic. If not, it will get confused and note that since ses is categorical, try to group on that. Then it cannot make a line since each group has only a single point.</p>
 </section>
 </section>
-<section id="plotting-individual-school-regression-lines" class="level3" data-number="11.2.3">
-<h3 data-number="11.2.3" class="anchored" data-anchor-id="plotting-individual-school-regression-lines"><span class="header-section-number">11.2.3</span> Plotting individual school regression lines</h3>
+<section id="plotting-individual-school-regression-lines" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="plotting-individual-school-regression-lines"><span class="header-section-number">12.2.3</span> Plotting individual school regression lines</h3>
 <p>We can plot the individual lines by hand-calculating the school level slopes and intercepts. This code shows how:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">=</span> <span class="fu">coef</span>( M1 )<span class="sc">$</span>id</span>
@@ -785,8 +790,8 @@ deviance = 46666.1 </code></pre>
 <p><em>Commentary:</em> We need to specify the size of the plot since we have no data, just the intercepts and slopes. We are using the Emperical Bayes estimates of the random effects added to our school level fixed effects to get the <span class="math inline">\(\hat{\beta}_{0j}, \hat{\beta}_{1j}\)</span> which define the school-specific regression line for school <span class="math inline">\(j\)</span>.</p>
 <p>Our two types of school are clearly separated. Catholic schools have higher average performance, and less of a ses-achievement relationship. Since we have merged in our school level data, we can color the lines by catholic vs public, making our plot easier to read.</p>
 </section>
-<section id="plotting-with-predict" class="level3" data-number="11.2.4">
-<h3 data-number="11.2.4" class="anchored" data-anchor-id="plotting-with-predict"><span class="header-section-number">11.2.4</span> Plotting with predict()</h3>
+<section id="plotting-with-predict" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="plotting-with-predict"><span class="header-section-number">12.2.4</span> Plotting with predict()</h3>
 <p>A more general plotitng approach is to plot using <code>predict()</code>, where for each student we predict the outcome.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>math.hat <span class="ot">=</span> <span class="fu">predict</span>( M1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -812,8 +817,8 @@ deviance = 46666.1 </code></pre>
 </div>
 <p>We have a predicted outcome for each student, which removes the student residual, giving just the school trends. If we don’t have students for some range of ses for a school, we won’t have points in our plot for that range for that school. The lines thus give the ranges (left to right) of the ses values in each school.</p>
 </section>
-<section id="making-our-lines-go-the-same-length-with-expand.grid" class="level3" data-number="11.2.5">
-<h3 data-number="11.2.5" class="anchored" data-anchor-id="making-our-lines-go-the-same-length-with-expand.grid"><span class="header-section-number">11.2.5</span> Making our lines go the same length with expand.grid()</h3>
+<section id="making-our-lines-go-the-same-length-with-expand.grid" class="level3" data-number="12.2.5">
+<h3 data-number="12.2.5" class="anchored" data-anchor-id="making-our-lines-go-the-same-length-with-expand.grid"><span class="header-section-number">12.2.5</span> Making our lines go the same length with expand.grid()</h3>
 <p>The way we fix this is we, for each school, make a bunch of fake students with different SES and predict along all those fake students. This will give us equally spaced lines.</p>
 <p>That being said: the shorter lines above are also informative, as they give you a sense of what the range of ses for each school actually is. Which approach is somewhat a matter of taste.</p>
 <p>We can generate fake children of each group for each school using <code>expand.grid()</code>. This method will generate a dataframe with all combinations of the given variables supplied. Here we make all combinations of ses, for a set of ses values, and school id.</p>
@@ -870,8 +875,8 @@ deviance = 46666.1 </code></pre>
 </div>
 <p><strong>Why do this?</strong> The <code>predict()</code> approach allows us to avoid working with the gammas and adding them up like we did above. This is a flexible and powerful approach that avoids a lot of work in many cases. In the next section we illustrate by fitting curves rather than lines. This would be very hard to do directly.</p>
 </section>
-<section id="superfancy-extra-bonus-plotting-of-complex-models" class="level3" data-number="11.2.6">
-<h3 data-number="11.2.6" class="anchored" data-anchor-id="superfancy-extra-bonus-plotting-of-complex-models"><span class="header-section-number">11.2.6</span> Superfancy extra bonus plotting of complex models!</h3>
+<section id="superfancy-extra-bonus-plotting-of-complex-models" class="level3" data-number="12.2.6">
+<h3 data-number="12.2.6" class="anchored" data-anchor-id="superfancy-extra-bonus-plotting-of-complex-models"><span class="header-section-number">12.2.6</span> Superfancy extra bonus plotting of complex models!</h3>
 <p>We can use predict for weird nonlinear relationships also. This will be important for longitudinal data. To illustrate we fit a model that allows a quadradic relationship between ses and math achievement.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>ses2 <span class="ot">=</span> dat<span class="sc">$</span>ses<span class="sc">^</span><span class="dv">2</span></span>
@@ -933,11 +938,11 @@ deviance = 46506.8 </code></pre>
 </div>
 </section>
 </section>
-<section id="longitudinal-data" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="longitudinal-data"><span class="header-section-number">11.3</span> Longitudinal Data</h2>
+<section id="longitudinal-data" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="longitudinal-data"><span class="header-section-number">12.3</span> Longitudinal Data</h2>
 <p>We next do the above, but for longitudinal data. The story is basically the same.</p>
-<section id="the-data" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="the-data"><span class="header-section-number">11.3.1</span> The data</h3>
+<section id="the-data" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="the-data"><span class="header-section-number">12.3.1</span> The data</h3>
 <p>We use the “US Sustaining Effects Study” taken from Raudenbush and Bryk (we have not seen these data in class). We have kids in grades nested in schools. So longitudinal data with a clustering on top of that.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -952,8 +957,8 @@ deviance = 46506.8 </code></pre>
 </div>
 </div>
 </section>
-<section id="a-model" class="level3" data-number="11.3.2">
-<h3 data-number="11.3.2" class="anchored" data-anchor-id="a-model"><span class="header-section-number">11.3.2</span> A model</h3>
+<section id="a-model" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="a-model"><span class="header-section-number">12.3.2</span> A model</h3>
 <p>We will be using the following 3-level quadradic growth model:</p>
 <div class="cell" data-hash="plot_expand_grid_cache/html/fitmodel_55ff3bb0c35de36c1578150afb3e7fe6">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>M4 <span class="ot">=</span> <span class="fu">lmer</span>( MATH <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (YEAR <span class="sc">+</span> <span class="fu">I</span>(YEAR<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">*</span> (FEMALE <span class="sc">*</span> RACEETH ) <span class="sc">+</span> </span>
@@ -997,8 +1002,8 @@ deviance = 16109.7 </code></pre>
 </div>
 <p>We are just taking the model as given; this document is about showing the fit of this model. In particular, if you haven’t seen 3-level models before, just consider the above as some complex model; the nice thing about <code>predict()</code> is you don’t even need to understand the model you are using! Note we do have a lot of fixed effect interaction terms, allowing for systematically different trajectories for groups of kids that are grouped on recorded race and gender.</p>
 </section>
-<section id="the-simple-predict-approach" class="level3" data-number="11.3.3">
-<h3 data-number="11.3.3" class="anchored" data-anchor-id="the-simple-predict-approach"><span class="header-section-number">11.3.3</span> The simple predict() approach</h3>
+<section id="the-simple-predict-approach" class="level3" data-number="12.3.3">
+<h3 data-number="12.3.3" class="anchored" data-anchor-id="the-simple-predict-approach"><span class="header-section-number">12.3.3</span> The simple predict() approach</h3>
 <p>We can use our model to predict outcomes for each timepoint in the data. This will smooth out the time to time variation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>Yhat <span class="ot">=</span> <span class="fu">predict</span>( M4 )</span>
@@ -1012,8 +1017,8 @@ deviance = 16109.7 </code></pre>
 <p>Note how the growth lines don’t go across all years for all kids. This is because we were missing data for those kids in the original dataset at those timepoints, so we didn’t predict outcomes when we used the <code>predict()</code> function, above.</p>
 <p>To fix this we will add in those missing timepoints so we get predictions for all kids for all timepoints.</p>
 </section>
-<section id="the-expand.grid-function" class="level3" data-number="11.3.4">
-<h3 data-number="11.3.4" class="anchored" data-anchor-id="the-expand.grid-function"><span class="header-section-number">11.3.4</span> The expand.grid() function</h3>
+<section id="the-expand.grid-function" class="level3" data-number="12.3.4">
+<h3 data-number="12.3.4" class="anchored" data-anchor-id="the-expand.grid-function"><span class="header-section-number">12.3.4</span> The expand.grid() function</h3>
 <p>We now want different trajectories for the different groups. We can generate fake children of each group for each school using <code>expand.grid()</code>. This method will generate a dataframe with all combinations of the given variables supplied. Here we make all combinations of year, gender, and race/ethnic group for each school.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>synth.dat <span class="ot">=</span> <span class="fu">expand.grid</span>( <span class="at">CHILDID =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
@@ -1067,8 +1072,8 @@ deviance = 16109.7 </code></pre>
 </div>
 <p>Here we see the six lines for the six groups within each school, plotted in little tiles, one for each school.</p>
 </section>
-<section id="population-aggregation" class="level3" data-number="11.3.5">
-<h3 data-number="11.3.5" class="anchored" data-anchor-id="population-aggregation"><span class="header-section-number">11.3.5</span> Population aggregation</h3>
+<section id="population-aggregation" class="level3" data-number="12.3.5">
+<h3 data-number="12.3.5" class="anchored" data-anchor-id="population-aggregation"><span class="header-section-number">12.3.5</span> Population aggregation</h3>
 <p>You can also aggregate these predictions. This is the easiest way to get what collection of schools, averaging over their random effects, looks like.</p>
 <p>Aggregate with the <code>group_by()</code> and the <code>summarise()</code> methods:</p>
 <div class="cell">
@@ -1115,12 +1120,12 @@ the `.groups` argument.</code></pre>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( s3 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  CHILDID SCHOOLID YEAR FEMALE GENDER     black  hispanic      white
-1      -1       -1 -2.5      0   male -3.062600 -3.140762 -2.5729287
-2      -1       -1 -2.5      1 female -3.022569 -3.090733 -2.7217827
-3      -1       -1 -1.5      0   male -2.129830 -2.071722 -1.4888219
-4      -1       -1 -1.5      1 female -2.110196 -2.048893 -1.7416606
-5      -1       -1 -0.5      0   male -1.284949 -1.107972 -0.5317719
-6      -1       -1 -0.5      1 female -1.268485 -1.096512 -0.8412447</code></pre>
+1      -1       -1 -2.5      0   male -3.062597 -3.140761 -2.5729327
+2      -1       -1 -2.5      1 female -3.022567 -3.090730 -2.7217865
+3      -1       -1 -1.5      0   male -2.129829 -2.071721 -1.4888230
+4      -1       -1 -1.5      1 female -2.110196 -2.048891 -1.7416614
+5      -1       -1 -0.5      0   male -1.284951 -1.107972 -0.5317700
+6      -1       -1 -0.5      1 female -1.268487 -1.096511 -0.8412427</code></pre>
 </div>
 </div>
 <p>Then summarise:</p>
@@ -1181,8 +1186,8 @@ the `.groups` argument.</code></pre>
 </div>
 <p>This again shows widening gap between Black and White students, and the closing gap of Hispanic and White students.</p>
 </section>
-<section id="plotting-random-effects-by-level-2-variable" class="level3" data-number="11.3.6">
-<h3 data-number="11.3.6" class="anchored" data-anchor-id="plotting-random-effects-by-level-2-variable"><span class="header-section-number">11.3.6</span> Plotting random effects by Level 2 variable</h3>
+<section id="plotting-random-effects-by-level-2-variable" class="level3" data-number="12.3.6">
+<h3 data-number="12.3.6" class="anchored" data-anchor-id="plotting-random-effects-by-level-2-variable"><span class="header-section-number">12.3.6</span> Plotting random effects by Level 2 variable</h3>
 <p>You can also look at estimated random effects as a function of level 2 variables. For example, we can see if there is a pattern of average math score for students by year.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>ranef <span class="ot">=</span> <span class="fu">ranef</span>( M4 )<span class="sc">$</span>SCHOOLID</span>
@@ -1194,12 +1199,12 @@ the `.groups` argument.</code></pre>
 <span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( schools )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      SCHOOLID   n size (Intercept)        YEAR
-1 2020          97  380  0.40324907  0.15258009
-2 2040          89  502  0.11549704  0.07547476
-3 2180         168  777 -0.08150587 -0.08227023
-4 2330         150  800  0.32371449 -0.04389409
-5 2340         220 1133 -0.05151814 -0.01128432
-6 2380          87  439 -0.17017724  0.10803318</code></pre>
+1 2020          97  380  0.40323695  0.15257155
+2 2040          89  502  0.11549112  0.07547119
+3 2180         168  777 -0.08149965 -0.08226575
+4 2330         150  800  0.32372001 -0.04389156
+5 2340         220 1133 -0.05151492 -0.01128209
+6 2380          87  439 -0.17018815  0.10802722</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( schools, <span class="fu">aes</span>( size, <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> ) ) <span class="sc">+</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -1451,15 +1456,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro_missing_data.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span>
+      <a href="./summary_plots.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./ggeffects.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

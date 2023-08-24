@@ -8,7 +8,7 @@
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S-043: Multilevel and Longitudinal Models - 6&nbsp; Simple tables, plots, and model diagnostics</title>
+<title>Resources for S-043: Multilevel and Longitudinal Models - 11&nbsp; Simple tables, plots, and model diagnostics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./making_tables.html" rel="next">
-<link href="./r_tips.html" rel="prev">
+<link href="./plot_expand_grid.html" rel="next">
+<link href="./intro_ggplot.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_basics.html">R Foundations</a></li><li class="breadcrumb-item"><a href="./summary_plots.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./using_ggplot.html">Using ggPlot</a></li><li class="breadcrumb-item"><a href="./summary_plots.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -140,21 +140,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./r_basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Foundations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./self_assess.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Do I take S-043? A self-assessment</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./r_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R and R Markdown</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_markdown.html" class="sidebar-item-text sidebar-link">
@@ -169,68 +169,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./r_tips.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary_plots.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./making_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Making Regression Tables and More Complete Summary Output</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Making Regression Tables and More Complete Summary Output</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./math_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pivot_wider.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./using_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using ggPlot</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary_plots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
   </div>
 </li>
       </ul>
@@ -239,11 +250,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./mod_fit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Fitting and Interpretation</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link">
@@ -270,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rewb.html" class="sidebar-item-text sidebar-link">
+  <a href="./within_v_between.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
   </div>
 </li>
@@ -334,11 +345,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./worked_examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Worked Examples</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
@@ -369,11 +380,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./visualizations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visualizations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
@@ -404,11 +415,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./derivations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Derivations and Technical Details</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
@@ -461,12 +472,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./peer_grading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Peer Grading</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -481,16 +486,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#national-youth-survey-example" id="toc-national-youth-survey-example" class="nav-link active" data-scroll-target="#national-youth-survey-example"><span class="header-section-number">6.1</span> National Youth Survey Example</a>
+  <li><a href="#national-youth-survey-example" id="toc-national-youth-survey-example" class="nav-link active" data-scroll-target="#national-youth-survey-example"><span class="header-section-number">11.1</span> National Youth Survey Example</a>
   <ul class="collapse">
-  <li><a href="#getting-the-data-ready" id="toc-getting-the-data-ready" class="nav-link" data-scroll-target="#getting-the-data-ready"><span class="header-section-number">6.1.1</span> Getting the data ready</a></li>
+  <li><a href="#getting-the-data-ready" id="toc-getting-the-data-ready" class="nav-link" data-scroll-target="#getting-the-data-ready"><span class="header-section-number">11.1.1</span> Getting the data ready</a></li>
   </ul></li>
-  <li><a href="#tabulating-data-categorical-variables" id="toc-tabulating-data-categorical-variables" class="nav-link" data-scroll-target="#tabulating-data-categorical-variables"><span class="header-section-number">6.2</span> Tabulating data (Categorical variables)</a></li>
-  <li><a href="#summary-stats-continuous-variables" id="toc-summary-stats-continuous-variables" class="nav-link" data-scroll-target="#summary-stats-continuous-variables"><span class="header-section-number">6.3</span> Summary stats (continuous variables)</a></li>
-  <li><a href="#table-of-summary-stats" id="toc-table-of-summary-stats" class="nav-link" data-scroll-target="#table-of-summary-stats"><span class="header-section-number">6.4</span> Table of summary stats</a></li>
-  <li><a href="#high-school-and-beyond-example" id="toc-high-school-and-beyond-example" class="nav-link" data-scroll-target="#high-school-and-beyond-example"><span class="header-section-number">6.5</span> High School and Beyond Example</a></li>
-  <li><a href="#summarizing-by-group" id="toc-summarizing-by-group" class="nav-link" data-scroll-target="#summarizing-by-group"><span class="header-section-number">6.6</span> Summarizing by group</a></li>
-  <li><a href="#diagnostic-plots" id="toc-diagnostic-plots" class="nav-link" data-scroll-target="#diagnostic-plots"><span class="header-section-number">6.7</span> Diagnostic plots</a></li>
+  <li><a href="#tabulating-data-categorical-variables" id="toc-tabulating-data-categorical-variables" class="nav-link" data-scroll-target="#tabulating-data-categorical-variables"><span class="header-section-number">11.2</span> Tabulating data (Categorical variables)</a></li>
+  <li><a href="#summary-stats-continuous-variables" id="toc-summary-stats-continuous-variables" class="nav-link" data-scroll-target="#summary-stats-continuous-variables"><span class="header-section-number">11.3</span> Summary stats (continuous variables)</a></li>
+  <li><a href="#table-of-summary-stats" id="toc-table-of-summary-stats" class="nav-link" data-scroll-target="#table-of-summary-stats"><span class="header-section-number">11.4</span> Table of summary stats</a></li>
+  <li><a href="#high-school-and-beyond-example" id="toc-high-school-and-beyond-example" class="nav-link" data-scroll-target="#high-school-and-beyond-example"><span class="header-section-number">11.5</span> High School and Beyond Example</a></li>
+  <li><a href="#summarizing-by-group" id="toc-summarizing-by-group" class="nav-link" data-scroll-target="#summarizing-by-group"><span class="header-section-number">11.6</span> Summarizing by group</a></li>
+  <li><a href="#diagnostic-plots" id="toc-diagnostic-plots" class="nav-link" data-scroll-target="#diagnostic-plots"><span class="header-section-number">11.7</span> Diagnostic plots</a></li>
   </ul>
 </nav>
     </div>
@@ -499,7 +504,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></h1>
 </div>
 
 
@@ -522,8 +527,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>In this document we give a few simple plots and summary tables that may be useful for final projects and other things as well. This includes a few simple model diagnostic plots to check for extreme outliers and whatnot.</p>
 <p>It is a bit of a hodge-podge, but skimming to get some ideas is definitely worthwhile.</p>
-<section id="national-youth-survey-example" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="national-youth-survey-example"><span class="header-section-number">6.1</span> National Youth Survey Example</h2>
+<section id="national-youth-survey-example" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="national-youth-survey-example"><span class="header-section-number">11.1</span> National Youth Survey Example</h2>
 <p>Our running example is the National Youth Survey (NYS) data as described in Raudenbush and Bryk, page 190. This data comes from a survey in which the same students were asked yearly about their acceptance of 9 “deviant” behaviors (such as smoking marijuana, stealing, etc.). The study began in 1976, and followed two cohorts of children, starting at ages 11 and 14 respectively. We will analyze the first 5 years of data.</p>
 <p>At each time point, we have measures of:</p>
 <ul>
@@ -537,8 +542,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Minority status (binary)</li>
 <li>Family income, in units of $10K (this can be either categorical or continuous).</li>
 </ul>
-<section id="getting-the-data-ready" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="getting-the-data-ready"><span class="header-section-number">6.1.1</span> Getting the data ready</h3>
+<section id="getting-the-data-ready" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="getting-the-data-ready"><span class="header-section-number">11.1.1</span> Getting the data ready</h3>
 <p>We’ll focus on the first cohort, from ages 11-15. First, let’s read the data. Note that this data frame is in “wide format”. That is, there is only one row for each student, with all the different observations for that student in different columns of that one row.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nyswide <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/nyswide.csv"</span>)</span>
@@ -614,8 +619,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note how we have correlation of residuals: some students have systematically lower trajectories and some students have systematically higher trajectories (although there is a lot of bouncing around).</p>
 </section>
 </section>
-<section id="tabulating-data-categorical-variables" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="tabulating-data-categorical-variables"><span class="header-section-number">6.2</span> Tabulating data (Categorical variables)</h2>
+<section id="tabulating-data-categorical-variables" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="tabulating-data-categorical-variables"><span class="header-section-number">11.2</span> Tabulating data (Categorical variables)</h2>
 <p>We can tabulate data as so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nys1<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -652,8 +657,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The margin determines what adds up to 100%.</p>
 </section>
-<section id="summary-stats-continuous-variables" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="summary-stats-continuous-variables"><span class="header-section-number">6.3</span> Summary stats (continuous variables)</h2>
+<section id="summary-stats-continuous-variables" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="summary-stats-continuous-variables"><span class="header-section-number">11.3</span> Summary stats (continuous variables)</h2>
 <p>The <code>tableone</code> package is useful:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(tableone)</span>
@@ -698,8 +703,8 @@ have: agefac Dropped</code></pre>
 </div>
 </div>
 </section>
-<section id="table-of-summary-stats" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="table-of-summary-stats"><span class="header-section-number">6.4</span> Table of summary stats</h2>
+<section id="table-of-summary-stats" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="table-of-summary-stats"><span class="header-section-number">11.4</span> Table of summary stats</h2>
 <p>You can easily make pretty tables using the <code>stargazer</code> package:</p>
 <div class="cell" data-messages="false">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(stargazer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -719,16 +724,16 @@ Please cite as: </code></pre>
 </div>
 <p>See the <code>stargazer</code> help file for how to set/change more of the options: https://cran.r-project.org/web/packages/stargazer/stargazer.pdf</p>
 </section>
-<section id="high-school-and-beyond-example" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="high-school-and-beyond-example"><span class="header-section-number">6.5</span> High School and Beyond Example</h2>
+<section id="high-school-and-beyond-example" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="high-school-and-beyond-example"><span class="header-section-number">11.5</span> High School and Beyond Example</h2>
 <p>For this part, we’ll use the HSB data to summarize variables by group/school.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data </span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="summarizing-by-group" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="summarizing-by-group"><span class="header-section-number">6.6</span> Summarizing by group</h2>
+<section id="summarizing-by-group" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="summarizing-by-group"><span class="header-section-number">11.6</span> Summarizing by group</h2>
 <p>To plot summaries by group, first aggregate your data, and plot the results. Like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>aggdat <span class="ot">=</span> dat <span class="sc">%&gt;%</span> </span>
@@ -782,8 +787,8 @@ Please cite as: </code></pre>
 </div>
 </div>
 </section>
-<section id="diagnostic-plots" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="diagnostic-plots"><span class="header-section-number">6.7</span> Diagnostic plots</h2>
+<section id="diagnostic-plots" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="diagnostic-plots"><span class="header-section-number">11.7</span> Diagnostic plots</h2>
 <p>We can also make some disagnostic plots for our model. first, let’s fit a random intercept model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), <span class="at">data=</span>dat)</span>
@@ -1090,16 +1095,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./r_tips.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span>
+      <a href="./intro_ggplot.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./making_tables.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./plot_expand_grid.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
