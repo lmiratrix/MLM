@@ -7,29 +7,31 @@ book:
   date: "`r Sys.Date()`"
   chapters:
     - index.qmd
+    - self_assess.qmd
     - part: r_basics.qmd
       chapters:
-          - self_assess.qmd
           - intro_markdown.qmd
           - intro_linear_regression.qmd
-          - intro_ggplot.qmd
           - r_tips.qmd
-          - summary_plots.qmd
           - making_tables.qmd
           - reg_table_demo.qmd
           - math_reference.qmd
+          - pivot_wider.qmd
           - intro_missing_data.qmd
+    - part: using_ggplot.qmd
+      chapters:
+          - intro_ggplot.qmd
+          - summary_plots.qmd
           - plot_expand_grid.qmd
           - ggeffects.qmd
           - double_plot.qmd
-          - pivot_wider.qmd
     - part: mod_fit.qmd
       chapters:
           - broom.qmd
           - lmer_extract.qmd
           - fixed_effects.qmd
           - interpreting_coefficients.qmd
-          - rewb.qmd
+          - within_v_between.qmd
           - growth_models_predictors.qmd
           - reg_assumptions.qmd
           - model_cheat_sheet.qmd
@@ -61,7 +63,6 @@ book:
           - complex_error.qmd
           - lmer_optimization.qmd
           - cluster_demo.qmd
-    - peer_grading.qmd
     - references.qmd
 
 bibliography: references.bib

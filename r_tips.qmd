@@ -41,7 +41,8 @@ Otherwise you will not be able to knit.
 
 If you can't knit PDFs you need to install latex (tex).
 Once you do, reboot your computer.
-If things don't work, then knit to Microsoft word or HTML, print to pdf, and turn that in.
+If things don't work, then knit to Microsoft word (or, failing that, html as a last resort), print to pdf, and turn that in.
+But then ask a teaching fellow to help get things set up, since PDFs make for much more readable reports.
 
 ### File structure: how not to do it
 
@@ -70,7 +71,7 @@ Try instead something like:
     -   /HW1
         -   ...
 
-Your `readme.txt` might have something like data from bit.ly/XYZ; turned in trees.4" to remind you of what you were up to.
+Your `readme.txt` might have informational notes such as "Got data from bit.ly/XYZ." to remind you of what you were up to.
 
 Your `figures` folder should be full of figures you can easily regenerate with code in your `code` folder.
 

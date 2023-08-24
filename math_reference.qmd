@@ -68,7 +68,7 @@ This was found by searching "tex symbols" on Google.
 
 ### Equations on lines by themselves
 
-To write an equation on a line by itself, surround the math stuff with the double "\$\$" and "\$\$".
+To write an equation on a line by itself, put the math stuff in between a pair of double "\$".
 E.g., if we write:
 
 ```         
@@ -77,29 +77,11 @@ $$ Y = a X + b $$
 
 We get $$ Y = a X + b $$
 
-If we want multiple lines, we use a double backslash ("\\\\") to denote a line break (even if we have a line break we have to do this---we have to explicitly tell the program converting our raw text to nice formatted text where the line breaks are).
-E.g., if we write:
+If we want multiple lines, we have to put our equation between a `\begin{aligned}` and `\end{aligned}` command and use a double backslash ("\\\\") to denote each line break (even if we have a line break we have to do this---we have to explicitly tell the program converting our raw text to nice formatted text where the line breaks are).
+Finally, inside the begin-end block of math, line things up with `&` symbols on each row of our equation.
+The `&` symbols will be lined up vertically.
 
-```         
-$$
-\begin{aligned}
-Y = 10 X + 2 \\
-Y - 5 = 3 X^2 + 5
-\end{aligned}
-$$
-```
-
-we get: $$ 
-\begin{aligned}
-Y = 10 X + 2 \\
-Y - 5 = 3 X^2 + 5 
-\end{aligned}
-$$
-
-Notice how these equations are not quite lined up nicely.
-It automatically centers each line.
-We can make it nicer using the `\begin{aligned}` and `\end{aligned}` commands to get our equations to line up.
-We then, inside the begin-end block of math, line things up by the `&` symbols on each row of our equation:
+So if we write
 
 ```         
 $$
@@ -110,7 +92,7 @@ Y - 5 &= 3 X^2 + 5
 $$
 ```
 
-and $$
+we get $$
 \begin{aligned}
 Y &= 10 X + 2 \\
 Y - 5 &= 3 X^2 + 5
@@ -135,7 +117,7 @@ $$
 
 ### Normal text in equations
 
-If you put words in your equations, they get all italliced and weird:
+If you put words in your equations, they get all italliced and weird, without their spaces:
 
 ```         
 $$
@@ -158,6 +140,8 @@ $$
 $$
 5 + \mbox{my dog} = 10
 $$
+
+We next walk through some latex code for the models you will most see.
 
 ## Random Intercept Model
 
@@ -378,7 +362,7 @@ u_{1j}
 \sigma^2_{0} & \rho \sigma_0 \sigma_1 \\
  & \sigma^2_{1} \\
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]
+\end{bmatrix}
 $$
 ```
 
@@ -395,8 +379,10 @@ u_{1j}
 \sigma^2_{0} & \rho \sigma_0 \sigma_1 \\
  & \sigma^2_{1} \\
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]
-$$ Here we have a correlation of random effects, $\rho$, instead of a covariance, $\tau_{01}$.
+\end{bmatrix}
+$$
+
+Here we have a correlation of random effects, $\rho$, instead of a covariance, $\tau_{01}$.
 And we can talk about the standard deviation of, e.g., the random intercepts, as $\sigma_0$ rather than $\sqrt{ \tau_{00} }$.
 Different ways of writing the same mathematical thing are called different *parameterizations*; they are equivalent, but are more or less clear for different contexts.\
 Unfortunately, this means there is no one right answer for how to write down a mathematical equation!
@@ -438,3 +424,19 @@ $$
 $$
 X = \left( \frac{1}{2} + y \right)
 $$
+
+Annoyingly, you always need a pair of these big brackets.
+If you really don't want one, you use a backslash and a dot, like so:
+
+```         
+$$
+X = \left( \frac{1}{2} + y \right.
+$$
+```
+
+$$
+X = \left( \frac{1}{2} + y \right.
+$$
+
+The rest you can find on StackOverflow or similar.
+Or perhaps have ChatGPT help you write your code!

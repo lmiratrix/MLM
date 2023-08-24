@@ -5,7 +5,7 @@ editor:
     wrap: sentence
 ---
 
-# How to decide to take the course?
+## How to decide to take the course?
 
 I received numerous inquiries as to whether a given background is enough to take this course.
 Let me elaborate at length.
@@ -46,12 +46,12 @@ But *please* don't be surprised if you sign up for an intense experience... and 
 
 To get a very rough sense of what it might feel like, take the quiz below.
 
-# A self-assessment quiz
+## A self-assessment quiz  {.unnumbered}
 
 Trying to figure out how S43 will be for you?
 ​Add up the points across the following categories:
 
-### **Work Experience**
+### **Work Experience**  {.unnumbered}
 
 +0        I have no work experience with quantitative data, or
 
@@ -59,7 +59,7 @@ Trying to figure out how S43 will be for you?
 
 +2        I have substantial work experience with quantitative data
 
-### **Stat Courses**
+### **Stat Courses**  {.unnumbered}
 
 -2        I have no prior stat experience under my belt, or
 
@@ -73,7 +73,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if classes were comfortable for you
 
-### **Programming**
+### **Programming**  {.unnumbered}
 
 +0        I have basically no experience doing computer programming, or
 
@@ -81,7 +81,7 @@ Trying to figure out how S43 will be for you?
 
 +2        I have a lot of experience doing computer programming
 
-### **R Skills**
+### **R Skills**  {.unnumbered}
 
 +0        I have no real experience with R, or
 
@@ -95,7 +95,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if you are comfortable with something like STATA
 
-### **Math**
+### **Math**  {.unnumbered}
 
 +0        I don't recall much math from my past education, or
 
@@ -105,7 +105,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if classes were comfortable for you
 
-### **Other**
+### **Other**  {.unnumbered}
 
 +2        I am content with getting a B or taking the class SAT/UNSAT
 

@@ -3,5 +3,9 @@
 .RData
 .Ruserdata
 .DS_Store
-
 /.quarto/
+self_assess.qmd
+_book/
+data/
+load_all_libraries.R
+book-output/

@@ -41,9 +41,12 @@ display( M0 )
 
 ```
 
-This handout shows a model, the `lmer` syntax, and the output for the model discussed in class in Lecture 2.4.
+This handout shows (1) the mathematical model, (2) the `lmer` syntax, and (3) the output for the model, as discussed in class in Lecture 2.4.
+This handout is designed to help translate between these three different worlds.
 
-The model Level 1 models: $$
+## The mathematical model
+
+Level 1 models: $$
 \begin{aligned}
 y_{ij} &= \beta_{0j} + \beta_{1j} ses_{ij} + \beta_2 female_{ij} +  \epsilon_{ij} \\
 \epsilon_{ij} &\sim N( 0, \sigma^2_y ) \\
@@ -68,11 +71,15 @@ u_{1j}
 \tau_{00} & \tau_{01}\\
  & \tau_{11} \\
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]
+\end{bmatrix} .
 $$
 
 The $\tau_{01}$ is the covariance of the random intercept and random slope.
-We usually look at the correlation of \[ \rho = \frac{ \tau_{01} }{ \sqrt{ \tau_{00} \tau_{11} } } \] The estimated $\rho$ is what R gives us in the printed output.
+We usually look at the correlation of
+
+$$ \rho = \frac{ \tau_{01} }{ \sqrt{ \tau_{00} \tau_{11} } } . $$
+
+The estimated $\rho$ is what R gives us in the printed output, rather than $\tau_{01}$.
 
 The derivation of the reduced form is:
 
@@ -83,9 +90,9 @@ y_{ij} &= \beta_{0j} + \beta_{1j} ses_{ij} + \epsilon_{ij}\\
 &= \gamma_{00} + \gamma_{01} sector_j + \gamma_{02} meanSES_j  + u_{0j}  + \gamma_{10}ses_{ij} + \gamma_{11} sector_j ses_{ij} + u_{1j} ses_{ij} + \beta_2 female_{ij} +  \epsilon_{ij}  \\
 &= \gamma_{00} + \gamma_{01} sector_j + \gamma_{02} meanSES_j +  \gamma_{10}ses_{ij} + \gamma_{11} sector_j ses_{ij} + \beta_2 female_{ij}  + \left(u_{0j} + u_{1j} ses_{ij} + \epsilon_{ij} \right) 
 \end{aligned}
-$$ This tells us what to tell R.
+$$ This formula is what we will give to `lmer()` in R's formula notation.
 
-The code
+## The lmer code
 
 ```{r}
 M1 = lmer( mathach ~ 1 + female + ses*sector + 
@@ -93,20 +100,25 @@ M1 = lmer( mathach ~ 1 + female + ses*sector +
            data = dat )
 ```
 
-This code is the exact same model, using the fact that `ses*sector` means `ses + sector + ses:sector`:
+This code is the exact same model, using the fact that `ses*sector` means `ses + sector + ses:sector`.
+I.e., the above is exactly the same as this more explicitly written R code:
 
 ```{r}
 M1 = lmer( mathach ~ 1 + sector + meanses + ses + sector:ses + female + (1+ses|id),
            data = dat )
 ```
 
-The output
+Each term in the expanded formula corresponds to a math symbol in the mathematical model.
+The `(1+ses|id)` make our random effects, and tie to all the $\tau$ terms.
+The residual variance $\sigma^2_y$ is the only parameter not explicitly listed in the above model.
+
+## The output
 
 ```{r}
 display( M1 )
 ```
 
-Now, using this output, we have
+Now, using this output, we have estimates for all our mathematical modeling parameters:
 
 -   $\gamma_{00} = 12.79$ - The overall average math achievement for a student with 0 ses in a public school with 0 mean SES.
 -   $\gamma_{01} = 1.29$ - The average difference between otherwise equivilent catholic and public schools.

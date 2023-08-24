@@ -1,5 +1,5 @@
 ---
-title: "R Foundations"
+title: "R and R Markdown"
 editor: 
   markdown: 
     wrap: sentence
@@ -9,4 +9,4 @@ Some of you have never used R before.
 Some may have used R for years.
 This section contains some tutorials on basic R functionality that will be helpful for data wrangling and visualization and will lay a strong foundation for the MLM applications later on.
 
-Another great resource is the free online book R for [Data Science](https://r4ds.hadley.nz).
+Another great resource is the free online book [R for Data Science](https://r4ds.hadley.nz).
