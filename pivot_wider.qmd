@@ -6,13 +6,21 @@ editor:
     wrap: sentence
 ---
 
-```{r, echo = FALSE}
+```{r setup_pivot_longer, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 ```
 
-`pivot_longer` and `pivot_wider` from `tidyverse` are great functions to understand.
+Generally, you want your data to be in a form where each row is a case and each column is a variable (either explanatory or response).
+Sometimes your data don't start that way.
+This section describes how to move your data around to get it in that form.
+The tidyverse provides a simple method for doing this (`pivot_longer()` and `pivot_wider()`) which you should read about in R for Data Science.
+There are also "old school" ways of doing this, via a method called `reshape()`; this way is more powerful and useful in some circumstances.
+See the final section for more on this old-style approach.
+
+But for now, the pivot methods will pretty much do everything you want.
+Both `pivot_longer` and `pivot_wider` from `tidyverse` are great functions to understand.
 First, we load `tidyverse` and make some fake data.
 
 ```{r}
@@ -27,11 +35,9 @@ dat <- data.frame( ID = c( 1:3 ),
 dat
 ```
 
-We use `pivot_longer` to take our `Y` values (imagine these as three measurements) and nest them within each `ID` for longitudinal MLM analysis. (NB you can use SEM to fit longitudinal models with wide data; we do not explore the application here.)
-
-`pivot_wider` takes us back in the other direction.
-
-We then verify our work with a few checks.
+This data is in wide format, where we have multiple measurements (Y1, Y2, and Y3) for each individual (each row of data).
+We use `pivot_longer` to take our `Y` values and nest them within each `ID` for longitudinal MLM analysis.
+(NB you can use SEM to fit longitudinal models with wide data; we do not explore that application here.)
 
 ```{r}
 datL <- pivot_longer(dat, Y1:Y3, 
@@ -40,22 +46,101 @@ datL <- pivot_longer(dat, Y1:Y3,
 
 datL
 
+
+
+```
+
+`pivot_wider` takes us back in the other direction.
+```{r}
 newdat <- pivot_wider( datL, c(ID, X), 
                        names_from=time, 
                        values_from=front  )
 
 newdat
+```
 
+We then verify our work with a few checks.
+
+```{r}
 stopifnot( length( unique( newdat$ID ) ) == nrow( newdat ) )
-
-
-datL
 
 students = datL %>% dplyr::select( ID, X ) %>%
     unique()
-
 students
 
 students = merge( students, newdat, by="ID" )
-
 ```
+
+
+## Optional: Using old School `reshape`
+
+Say you have data in a form where a row has a value for a variable for several different points in time.
+The following code turns it into a data.frame where each row (case) is a value for the variable at that point in time.
+You also have an ID variable for which Country the GDP came from.
+
+```{r LoadDat}
+dtw = read.csv( "data/fake_country_block.csv", as.is=TRUE )
+dtw
+```
+
+Here we have three rows, but actually a lot of cases if we consider each time point a case.
+For trying it on your own, get the sample csv file ()\[here\]\
+See the website to get the sample csv file \verb\|fake_country_block.csv\|.
+
+The following \emph{reshapes} our original data by making a case for each time point:
+
+```{r GoToLong}
+dt = reshape( dtw, idvar="Country", timevar="Year", varying=2:9, sep="", direction="long" )
+head(dt)
+```
+
+Things to notice: each case has a "row name" made out of the country and the Year.
+The "2:9" indicates a range of columns for the variable that is actually the same variable.\
+R picked up that, for each of these columns, "X" is the name of the variable and the number is the time, and seperated them.
+You can set the name of your time variable, \verb\|timevar\|, to whatever you want.
+
+The above output is called "long format" and the prior is called "wide format."\
+You can go in either direction.
+Here:
+
+```{r GoToWide}
+dtn = reshape( dt, idvar="Country", timevar="Year" )
+dtn
+```
+
+You can reshape on multiple variables.
+For example:
+
+```{r ReshapeExpDat}
+exp.dat = data.frame( ID=c("a","b","c","d"), 
+      cond = c("AI","DI","DI","AI"),
+			trial1 = c("E","U","U","E"),
+			dec1 = c(1,1,0,1),
+			trial2 = c("U","E","U","E"),
+			dec2 = c(0,0,0,1),
+				trial3 = c("U","E","E","U"),
+			dec3 = c(0,1,0,1),
+				trial4 = c("E","U","E","U"),
+			dec4 = c(0,1,0,0) )
+exp.dat
+rs = reshape( exp.dat,  idvar="ID", 
+  		varying=c( 3:10 ), sep="", direction="long")			
+head(rs)
+```
+
+It sorts out which variables are which.
+Note the names have to be exactly the same for any group of variables.
+
+Once you have reshaped, you can look at things more easily (I use mosaic's tally instead of the base table):
+
+```{r TableDat}
+mosaic::tally( trial ~ dec, data=rs )
+```
+
+or
+
+```{r TwoWayTable}
+mosaic::tally( trial~dec+cond, data=rs )
+```
+
+### 

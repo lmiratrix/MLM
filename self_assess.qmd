@@ -46,12 +46,12 @@ But *please* don't be surprised if you sign up for an intense experience... and 
 
 To get a very rough sense of what it might feel like, take the quiz below.
 
-## A self-assessment quiz  {.unnumbered}
+## A self-assessment quiz {.unnumbered}
 
 Trying to figure out how S43 will be for you?
 ​Add up the points across the following categories:
 
-### **Work Experience**  {.unnumbered}
+### **Work Experience** {.unnumbered}
 
 +0        I have no work experience with quantitative data, or
 
@@ -59,7 +59,7 @@ Trying to figure out how S43 will be for you?
 
 +2        I have substantial work experience with quantitative data
 
-### **Stat Courses**  {.unnumbered}
+### **Stat Courses** {.unnumbered}
 
 -2        I have no prior stat experience under my belt, or
 
@@ -73,7 +73,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if classes were comfortable for you
 
-### **Programming**  {.unnumbered}
+### **Programming** {.unnumbered}
 
 +0        I have basically no experience doing computer programming, or
 
@@ -81,7 +81,7 @@ Trying to figure out how S43 will be for you?
 
 +2        I have a lot of experience doing computer programming
 
-### **R Skills**  {.unnumbered}
+### **R Skills** {.unnumbered}
 
 +0        I have no real experience with R, or
 
@@ -95,7 +95,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if you are comfortable with something like STATA
 
-### **Math**  {.unnumbered}
+### **Math** {.unnumbered}
 
 +0        I don't recall much math from my past education, or
 
@@ -105,7 +105,7 @@ Trying to figure out how S43 will be for you?
 
 +1 bonus if classes were comfortable for you
 
-### **Other**  {.unnumbered}
+### **Other** {.unnumbered}
 
 +2        I am content with getting a B or taking the class SAT/UNSAT
 

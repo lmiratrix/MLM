@@ -20,6 +20,9 @@ opts_chunk$set(progress = TRUE, verbose = TRUE, prompt=FALSE,
                size="scriptsize")
 ```
 
+
+This chapter is a complete hodge-podge of  section covers ways of dealing with data, especially messy data you might have for final projects.
+
 ## Some miscellaneous advice
 
 So you are starting to learn R.
@@ -43,37 +46,6 @@ If you can't knit PDFs you need to install latex (tex).
 Once you do, reboot your computer.
 If things don't work, then knit to Microsoft word (or, failing that, html as a last resort), print to pdf, and turn that in.
 But then ask a teaching fellow to help get things set up, since PDFs make for much more readable reports.
-
-### File structure: how not to do it
-
-Ever seen this?
-
--   /My Documents
-    -   my paper.tex
-    -   my paper draft 2.tex
-    -   my paper final.tex
-    -   my paper final revised.tex
-    -   my paper final revised 2.tex
-    -   script.r
-    -   script 2.r
-    -   data.csv
-
-Try instead something like:
-
--   /stat 166-Small Data Analysis
-    -   stat 166.rproj
-    -   /Empty Project
-        -   /code
-        -   /data
-        -   /text
-        -   /figures
-        -   readme.txt
-    -   /HW1
-        -   ...
-
-Your `readme.txt` might have informational notes such as "Got data from bit.ly/XYZ." to remind you of what you were up to.
-
-Your `figures` folder should be full of figures you can easily regenerate with code in your `code` folder.
 
 ### Saving R objects
 
@@ -125,13 +97,43 @@ If you want to get fancy, try this (after installing the \`TeachingDemos' packag
 TeachingDemos::char2seed("quinn") # Using your name as a seed says "nothing up my sleeve"
 ```
 
-## Data Wrangling in R
+## File structure: how not to do it
 
-This section covers ways of dealing with data, especially messy data you might have for final projects.
+Ever seen this?
+
+-   /My Documents
+    -   my paper.tex
+    -   my paper draft 2.tex
+    -   my paper final.tex
+    -   my paper final revised.tex
+    -   my paper final revised 2.tex
+    -   script.r
+    -   script 2.r
+    -   data.csv
+
+Try instead something like:
+
+-   /stat 166-Small Data Analysis
+    -   stat 166.rproj
+    -   /Empty Project
+        -   /code
+        -   /data
+        -   /text
+        -   /figures
+        -   readme.txt
+    -   /HW1
+        -   ...
+
+Your `readme.txt` might have informational notes such as "Got data from bit.ly/XYZ." to remind you of what you were up to.
+
+Your `figures` folder should be full of figures you can easily regenerate with code in your `code` folder.
+
+
+
 
 ### Making Data Frames
 
-You can make data the hard way like so:
+For small datasets, you can type in data the hard way like so:
 
 ```{r MakeFakeData}
 exp.dat = data.frame( ID=c("a","b","c","d"), 
@@ -151,9 +153,7 @@ This is for an experiment on 4 subjects.
 The first and forth subject got the AI treatment, the second two got the DI treatment.
 The subjects then had 4 trials each, and they received a "E" choice or a "U" choice, and the decision variable is whether they accepted the choice.
 
-\
 As you can see, data can get a bit complicated!
-This document will show ways of messing with such complex data.
 
 ### Making sure your data are numeric
 
@@ -188,73 +188,6 @@ For a dataframe, you fix like this:
 exp.dat$trial1 = as.numeric( exp.dat$trial1 )
 ```
 
-### Reshaping Data
-
-## JG: Luke - can we replace this with the newer stuff from S22 using `left_join`, `pivot`, etc. Or, I can rewrite these
-
-Generally, you want your data to be in a form where each row is a case and each column is a variable (either explanatory or response).
-Sometimes your data don't start that way.
-This section describes how to move your data around to get it in that form.
-The tidyverse provides a simple method for doing this (`spread()` and `gather()`) which you should read about in R for Data Science.
-That being said, `reshape()` is more powerful and useful in some circumstances, hence the intro in the following.
-
-First, you might have data in a form where a row has a value for a variable for several different points in time.
-The following code turns it into a data.frame where each row (case) is a value for the variable at that point in time.
-You also have an ID variable for which Country the GDP came from.
-
-```{r LoadDat}
-dtw = read.csv( "data/fake_country_block.csv", as.is=TRUE )
-dtw
-```
-
-Here we have three rows, but actually a lot of cases if we consider each time point a case.\
-See the website to get the sample csv file \verb|fake_country_block.csv|.
-
-The following \emph{reshapes} our original data by making a case for each time point:
-
-```{r GoToLong}
-dt = reshape( dtw, idvar="Country", timevar="Year", varying=2:9, sep="", direction="long" )
-head(dt)
-```
-
-Things to notice: each case has a "row name" made out of the country and the Year.
-The "2:9" indicates a range of columns for the variable that is actually the same variable.\
-R picked up that, for each of these columns, "X" is the name of the variable and the number is the time, and seperated them.
-You can set the name of your time variable, \verb|timevar|, to whatever you want.
-
-The above output is called "long format" and the prior is called "wide format."\
-You can go in either direction.
-Here:
-
-```{r GoToWide}
-dtn = reshape( dt, idvar="Country", timevar="Year" )
-dtn
-```
-
-You can reshape on multiple variables.
-For example, using the \verb|exp.dat| from above, we have this:
-
-```{r ReshapeExpDat}
-rs = reshape( exp.dat,  idvar="ID", 
-  		varying=c( 3:10 ), sep="", direction="long")			
-head(rs)
-```
-
-It sorts out which variables are which.
-Note the names have to be exactly the same for any group of variables.
-
-Once you have reshaped, you can look at things more easily (I use mosaic's tally instead of the base table):
-
-```{r TableDat}
-mosaic::tally( trial ~ dec, data=rs )
-```
-
-or
-
-```{r TwoWayTable}
-mosaic::tally( trial~dec+cond, data=rs )
-```
-
 ### Merging Data
 
 Often you have two datasets that you want to merge.
@@ -281,23 +214,35 @@ If you added "all.y=TRUE" then you would get all 50 states from the SAT datafram
 Try it!
 
 You can merge on more than one variable.
-I.e., if you said \verb|by=c("A","B")| then it would match records if they had the same value for both A and B.
+I.e., if you said \verb\|by=c("A","B")\| then it would match records if they had the same value for both A and B.
 See below for an example on this.
 
 ### Lagged Data
 
-Sometimes you have multiple times for the same country or state or something, and you want to regress, say, future X on current X.
+Sometimes you have multiple times for your units (think country or state), and you want to regress, say, future X on current X.
 Then you want to have both future and current X for each case.
 
 Here think of a case as a Country at a point in time.
+E.g., we might have data like this:
+
+```{r}
+dtw = read.csv( "data/fake_country_block.csv", as.is=TRUE )
+dt = pivot_longer( dtw, cols=X1997:X2004,
+                   names_to = "Year", names_prefix = "X",
+                   values_to = "X" )
+dt$Year = as.numeric( dt$Year )
+slice_sample( dt, n=5 )
+```
+
 We then want to know what the X will be 2 years in the future.
-We can do this with the following trick (using \verb|dt| from the reshape command up top):
+We can do this with the following trick:
 
 ```{r LaggedYear}
 dt.fut = dt
 dt.fut$Year = dt.fut$Year - 2
 head(dt.fut)
-newdt = merge( dt, dt.fut, all.x=TRUE, by=c("Country","Year"), suffixes=c("",".fut") )
+newdt = left_join( dt, dt.fut, 
+                   by=c("Country","Year"), suffix=c("",".fut") )
 head( newdt, 10 )
 ```
 
@@ -307,7 +252,7 @@ Note that for the final two China entries, we don't have a future X value.
 The merge will make it NA indicating it is missing.
 
 How this works: we are tricking the program.
-We are making a new \verb|dt.lag| data.frame and then putting all the entires into the past by two years.
+We are making a new \verb\|dt.lag\| data.frame and then putting all the entries into the past by two years.
 When we merge, and match on Country and Year, the current dataframe and the lagged dataframe get lined up by this shift.
 Clever, no?
 
@@ -317,6 +262,17 @@ Now we could do regression:
 my.lm = lm( X.fut ~ X + Country, data=newdt )
 summary( my.lm )
 ```
+
+<!--
+For organized data, where you know the years are in ascending order with no skips, you can also use the `lead()` and `lag()` methods:
+```{r, eval=FALSE}
+dt <- dt %>%
+  arrange( Country, Year ) %>%
+  group_by( Country ) %>%
+  mutate( X.fut = dplyr::lead( X, 2 ) )
+print( dt, n = 11 )
+```
+-->
 
 ### Summarizing Data
 
@@ -332,15 +288,16 @@ newdt %>% group_by( Country ) %>%
         sd.X = sd( X, na.rm=TRUE ) )
 ```
 
-Here is an example from the experimental dat file, above.
+<!--Here is an example from the experimental dat file, above.
 
-```{r SumExpDat}
+```{r SumExpDat, eval=FALSE}
 nd = rs %>% group_by( ID, trial) %>%
     summarize( n=n(),
                accept=sum(dec) )
 nd$reject = nd$n - nd$accept
 head(nd)
 ```
+-->
 
 You can also augment data.
 Here we subtract the mean from each group:
