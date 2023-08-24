@@ -9,3 +9,5 @@ _book/
 data/
 load_all_libraries.R
 book-output/
+rand_slopes_viz_files
+*_files/
