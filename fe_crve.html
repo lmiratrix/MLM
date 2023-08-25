@@ -8,7 +8,7 @@
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S-043: Multilevel and Longitudinal Models - 18&nbsp; Clarification on Fixed Effects and Identification</title>
+<title>Resources for S-043: Multilevel and Longitudinal Models - 19&nbsp; A tour of fixed effects and cluster-robust SEs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,26 +55,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -84,8 +65,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./fe_crve.html" rel="next">
-<link href="./lmer_extract.html" rel="prev">
+<link href="./fe_discussion.html" rel="next">
+<link href="./fixed_effects.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,8 +96,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -130,7 +109,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./fixed_effects.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./fe_crve.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -296,13 +275,13 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link active">
+  <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fe_crve.html" class="sidebar-item-text sidebar-link">
+  <a href="./fe_crve.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
   </div>
 </li>
@@ -525,17 +504,17 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-language-of-fixed-effects" id="toc-the-language-of-fixed-effects" class="nav-link active" data-scroll-target="#the-language-of-fixed-effects"><span class="header-section-number">18.1</span> The language of “Fixed Effects”</a></li>
-  <li><a href="#underidentification" id="toc-underidentification" class="nav-link" data-scroll-target="#underidentification"><span class="header-section-number">18.2</span> Underidentification</a></li>
-  <li><a href="#model-syntax-removing-the-main-ses-term-vs-not" id="toc-model-syntax-removing-the-main-ses-term-vs-not" class="nav-link" data-scroll-target="#model-syntax-removing-the-main-ses-term-vs-not"><span class="header-section-number">18.3</span> Model syntax: removing the main ses term vs not</a>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link active" data-scroll-target="#aggregation"><span class="header-section-number">20</span> Aggregation</a></li>
+  <li><a href="#student-level-regression-and-cluster-robust-ses" id="toc-student-level-regression-and-cluster-robust-ses" class="nav-link" data-scroll-target="#student-level-regression-and-cluster-robust-ses"><span class="header-section-number">21</span> Student level regression and cluster robust SES</a>
   <ul class="collapse">
-  <li><a href="#plot-our-model" id="toc-plot-our-model" class="nav-link" data-scroll-target="#plot-our-model"><span class="header-section-number">18.3.1</span> Plot our model</a></li>
-  <li><a href="#what-do-the-intercepts-of-any-of-the-lines-mean" id="toc-what-do-the-intercepts-of-any-of-the-lines-mean" class="nav-link" data-scroll-target="#what-do-the-intercepts-of-any-of-the-lines-mean"><span class="header-section-number">18.3.2</span> What do the intercepts of any of the lines mean?</a></li>
-  <li><a href="#what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools" id="toc-what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools" class="nav-link" data-scroll-target="#what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools"><span class="header-section-number">18.3.3</span> What differences, if any, are there between running a new linear model on each school vs.&nbsp;running the interacted model on the set of 10 schools?</a></li>
-  <li><a href="#do-we-trust-the-red-lines-on-the-plot-why-or-why-not" id="toc-do-we-trust-the-red-lines-on-the-plot-why-or-why-not" class="nav-link" data-scroll-target="#do-we-trust-the-red-lines-on-the-plot-why-or-why-not"><span class="header-section-number">18.3.4</span> Do we trust the red lines on the plot? Why or why not?</a></li>
-  <li><a href="#what-about-the-variability-in-the-slopes-and-intercepts-of-the-red-lines" id="toc-what-about-the-variability-in-the-slopes-and-intercepts-of-the-red-lines" class="nav-link" data-scroll-target="#what-about-the-variability-in-the-slopes-and-intercepts-of-the-red-lines"><span class="header-section-number">18.3.5</span> What about the variability in the slopes and intercepts of the red lines?</a></li>
+  <li><a href="#getting-the-right-standard-errors" id="toc-getting-the-right-standard-errors" class="nav-link" data-scroll-target="#getting-the-right-standard-errors"><span class="header-section-number">21.1</span> Getting the right standard errors</a></li>
   </ul></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">18.4</span> Further Reading</a></li>
+  <li><a href="#and-fixed-effects" id="toc-and-fixed-effects" class="nav-link" data-scroll-target="#and-fixed-effects"><span class="header-section-number">22</span> And fixed effects?</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-of-fixed-effects-and-dummy-variables" id="toc-the-problem-of-fixed-effects-and-dummy-variables" class="nav-link" data-scroll-target="#the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">22.1</span> The problem of fixed effects and dummy variables</a></li>
+  <li><a href="#using-fixed-effects-to-handle-clustering" id="toc-using-fixed-effects-to-handle-clustering" class="nav-link" data-scroll-target="#using-fixed-effects-to-handle-clustering"><span class="header-section-number">22.2</span> Using fixed effects to handle clustering</a></li>
+  <li><a href="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" id="toc-bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="nav-link" data-scroll-target="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">22.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -544,7 +523,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></h1>
 </div>
 
 
@@ -565,157 +544,328 @@ div.csl-indent {
 
 </header>
 
-<p>This chapter talks a bit more about fixed effects. It starts with an overview of the language used to talk about them, gives a brief bit about underidentification, and then moves to looking at how we can have fixed effects interacted with other covariates. The final parts connect to in-class discussion of fixed effects; in particular it gives a reflection on the four concept questions from Packet 1.2 (the live session slides).</p>
-<section id="the-language-of-fixed-effects" class="level2" data-number="18.1">
-<h2 data-number="18.1" class="anchored" data-anchor-id="the-language-of-fixed-effects"><span class="header-section-number">18.1</span> The language of “Fixed Effects”</h2>
-<p>People will talk about “fixed effects” in (at least) two ways. The first is when you have a dummy variable for each of your clusters, and you are using OLS regression (not multilevel modeling). In this case you are estimating a parameter for each cluster, and we refer to that collection of estimates and parameters that go with these cluster level dummy variables as “fixed effects” and the model is a “fixed effects model.” The second is when you are using multilevel modeling, such as the following:</p>
-<p><code>M0 &lt;- lmer(Y ~ 1 + var1 + var2 + var3 + (var1|id), data)</code></p>
-<p>When we fit the above model, we will be estimating a grand intercept, and three coefficients for the three variables. Call these <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and <span class="math inline">\(\beta_3\)</span>. We are also estimating a random intercept and random slope for <code>var1</code>, with each group defined by the <code>id</code> variable having its own random intercept and slope. These are described by a variance-covariance matrix that we have been describing with <span class="math inline">\(\tau_{00}, \tau_{01}, \tau_{11}\)</span>.</p>
-<p>Now, the <span class="math inline">\(\beta\)</span> are the fixed part, or fixed effects, of the model. The <span class="math inline">\(\tau\)</span> describe the random part or random effects. This is why, in R, we say <code>fixef(M0)</code> to get the <span class="math inline">\(\beta\)</span>. If we say <code>ranef(M0)</code> we get the Empirical Bayes estimates of the random parts for each cluster. If we say <code>coef(M0)</code> R adds all this together to give the sum of the fixed part and random part, for each cluster defined by <code>id</code>.</p>
-<p>Read Gelman and Hill 12.3 for more on this sticky language. G&amp;H do not like “fixed effects” as a description because it is so vague.</p>
-</section>
-<section id="underidentification" class="level2" data-number="18.2">
-<h2 data-number="18.2" class="anchored" data-anchor-id="underidentification"><span class="header-section-number">18.2</span> Underidentification</h2>
-<p>If we fit a model with a dummy variable for each cluster, and a level to variable that does not vary within cluster, we say our model is “underidentified.” We say it is underidentified because no matter how much data we have, we will always have an infinite number of parameter values that can describe our model equally well. For example, say our level 2 variable is a dummy variable (e.g., sector). Then a model where we add five to the coefficient of the level 2 variable, and subtract five from all of the fixed effects for the clusters with sector=1 will fit our data just as well as one where we don’t. We can’t tell the difference! Hence we do not have enough to “identify” the parameter values.</p>
-</section>
-<section id="model-syntax-removing-the-main-ses-term-vs-not" class="level2" data-number="18.3">
-<h2 data-number="18.3" class="anchored" data-anchor-id="model-syntax-removing-the-main-ses-term-vs-not"><span class="header-section-number">18.3</span> Model syntax: removing the main ses term vs not</h2>
-<p>We talked about both these two models:</p>
+<p>This brief handout will walk through fixed effects and cluster robust standard errors, with a stop at aggregation and heteroskedastic standard errors.</p>
+<p>Consider the following research question:</p>
+<p>RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?</p>
+<section id="aggregation" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Aggregation</h1>
+<p>One way forward is to aggregate our HS&amp;B data and merge it into our school-level data, and then analyze the result.</p>
+<p>We aggregate as so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id, <span class="at">data=</span>dat.ten )</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>col.dat <span class="ot">=</span> dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( id ) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>( <span class="at">per.fem =</span> <span class="fu">mean</span>(female),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">per.min =</span> <span class="fu">mean</span>(minority),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean.ses =</span> <span class="fu">mean</span>(ses),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean.ach =</span> <span class="fu">mean</span>(mathach),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n.stud =</span> <span class="fu">n</span>() )</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># combine our school-level variables (ours and theirs) into one data.frame</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sdat <span class="ot">=</span> <span class="fu">merge</span>( sdat, col.dat, <span class="at">by=</span><span class="st">"id"</span>, <span class="at">all=</span><span class="cn">TRUE</span> )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( sdat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       ses     id1288     id3533     id3881     id4530     id5761     id6074 
- 3.2554487 13.1149374 10.3671216 11.6441421 10.0390287 12.1419451 14.2022643 
-    id6170     id8800     id9225     id9347 ses:id3533 ses:id3881 ses:id4530 
-15.6332900  9.1573804 13.9360803 12.9702661 -3.5672188 -0.8647429 -1.6080227 
-ses:id5761 ses:id6074 ses:id6170 ses:id8800 ses:id9225 ses:id9347 
--0.1474381 -1.7263610  1.5563357 -0.6873233 -0.3695565 -0.5694548 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id <span class="sc">-</span> ses, <span class="at">data=</span>dat.ten )</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M2 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    id1288     id3533     id3881     id4530     id5761     id6074     id6170 
-13.1149374 10.3671216 11.6441421 10.0390287 12.1419451 14.2022643 15.6332900 
-    id8800     id9225     id9347 ses:id1288 ses:id3533 ses:id3881 ses:id4530 
- 9.1573804 13.9360803 12.9702661  3.2554487 -0.3117701  2.3907058  1.6474260 
-ses:id5761 ses:id6074 ses:id6170 ses:id8800 ses:id9225 ses:id9347 
- 3.1080106  1.5290877  4.8117843  2.5681254  2.8858922  2.6859939 </code></pre>
+<pre><code>    id size sector pracad disclim himinty meanses   per.fem    per.min
+1 1224  842      0   0.35   1.597       0  -0.428 0.5957447 0.08510638
+2 1288 1855      0   0.27   0.174       0   0.128 0.4400000 0.12000000
+3 1296 1719      0   0.32  -0.137       1  -0.420 0.6458333 0.97916667
+4 1308  716      1   0.96  -0.622       0   0.534 0.0000000 0.40000000
+5 1317  455      1   0.95  -1.694       1   0.351 1.0000000 0.72916667
+6 1358 1430      0   0.25   1.535       0  -0.014 0.3666667 0.10000000
+     mean.ses  mean.ach n.stud
+1 -0.43438298  9.715447     47
+2  0.12160000 13.510800     25
+3 -0.42550000  7.635958     48
+4  0.52800000 16.255500     20
+5  0.34533333 13.177687     48
+6 -0.01966667 11.206233     30</code></pre>
 </div>
 </div>
-<p>Note how when we remove ses via <code>- ses</code> we gain an extra interaction term of <code>ses:id1288</code>. In M1, our <code>ses</code> coefficient is our baseline slope of school 1288. The ses interaction terms are <em>slope changes</em>.</p>
-<p>Note how if we add ses to the changes we get back all the slopes in M2:</p>
+<p>We can now answer our research question with a school-level regression:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )[<span class="dv">12</span><span class="sc">:</span><span class="dv">20</span>] <span class="sc">+</span> <span class="fu">coef</span>(M1)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Magg <span class="ot">=</span> <span class="fu">lm</span>( mean.ach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> mean.ses, <span class="at">data=</span>sdat )</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( sandwich )</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lmtest )</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>( Magg, <span class="at">vcov. =</span> vcovHC, <span class="at">type =</span> <span class="st">"HC0"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ses:id3533 ses:id3881 ses:id4530 ses:id5761 ses:id6074 ses:id6170 ses:id8800 
--0.3117701  2.3907058  1.6474260  3.1080106  1.5290877  4.8117843  2.5681254 
-ses:id9225 ses:id9347 
- 2.8858922  2.6859939 </code></pre>
+<pre><code>
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept) 12.11950    0.18743 64.6605 &lt; 2.2e-16 ***
+sector       1.22194    0.31959  3.8235 0.0001894 ***
+mean.ses     5.38738    0.33769 15.9538 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Bottom line: M1 and M2 are exactly the same in what they are describing, they are just parameterized differently. Anything we learn from one we could learn from the other.</p>
-<section id="plot-our-model" class="level3" data-number="18.3.1">
-<h3 data-number="18.3.1" class="anchored" data-anchor-id="plot-our-model"><span class="header-section-number">18.3.1</span> Plot our model</h3>
-<p>To plot our model we make a dataset of the intercepts and slopes of each school. Doing this with M2 is much easier than M1, since the coefficients are exactly what we want:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">names</span>( <span class="fu">coef</span>(M2) )[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">inter =</span> <span class="fu">coef</span>(M2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">slope =</span> <span class="fu">coef</span>(M2)[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>] )</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to fix our IDs.  :-(</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>lines<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">gsub</span>( <span class="st">"id"</span>, <span class="st">""</span>, lines<span class="sc">$</span>id)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( lines )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         id    inter      slope
-id1288 1288 13.11494  3.2554487
-id3533 3533 10.36712 -0.3117701
-id3881 3881 11.64414  2.3907058
-id4530 4530 10.03903  1.6474260
-id5761 5761 12.14195  3.1080106
-id6074 6074 14.20226  1.5290877</code></pre>
-</div>
-</div>
-<p>(The gsub “substitutes” (replaces) the string “id” with “” in all of our ids so we get back to the actual school ids. Otherwise we will not be able to connect these data to our raw students as easily.)</p>
-<p>We now plot!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( dat.ten, <span class="fu">aes</span>( ses, mathach ) ) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> id, <span class="at">nrow=</span><span class="dv">2</span> ) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">size=</span><span class="fl">0.75</span>, <span class="at">alpha=</span><span class="fl">0.5</span> ) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>( <span class="at">data=</span>lines, <span class="fu">aes</span>( <span class="at">slope=</span>slope, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">intercept=</span>inter ), </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">1</span> ) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>( <span class="at">xintercept =</span> <span class="dv">0</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="fixed_effects_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
-</div>
-</div>
+<p>We use heteroskedastic robust standard errors to take into account possible heteroskedasticity due to, for example, some school outcomes being based on smaller numbers of students (and thus having more variation) than other school outcomes.</p>
+<p>In this regression we are controlling for school mean SES, not student SES. If anything is going on <em>within school</em> between SES and math achievement, and that is maybe different for different sectors, we might be missing it.</p>
 </section>
-<section id="what-do-the-intercepts-of-any-of-the-lines-mean" class="level3" data-number="18.3.2">
-<h3 data-number="18.3.2" class="anchored" data-anchor-id="what-do-the-intercepts-of-any-of-the-lines-mean"><span class="header-section-number">18.3.2</span> What do the intercepts of any of the lines mean?</h3>
-<p>The intercepts predict what math achievement a studnet with ses = 0 going to a given school would have. For example, in school 8800, we predict a student with an ses of 0 would have a math achievement of 9.2.</p>
-<p>Notice that for some schools the intercept is <em>extrapolating</em>. E.g., most of school 8800’s students are below 0 for ses, and the intercept is thus describing what we expect for students at the higher end of their range. For school 9225, we are seeing a prediction for students a bit below the middle of their range.</p>
-</section>
-<section id="what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools" class="level3" data-number="18.3.3">
-<h3 data-number="18.3.3" class="anchored" data-anchor-id="what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools"><span class="header-section-number">18.3.3</span> What differences, if any, are there between running a new linear model on each school vs.&nbsp;running the interacted model on the set of 10 schools?</h3>
-<p>The lines would be <em>exactly</em> the same. The standard errors are different. Here is the line on just school 1288:</p>
+<section id="student-level-regression-and-cluster-robust-ses" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> Student level regression and cluster robust SES</h1>
+<p>Instead of using our aggregated data, we can merge our <em>school-level</em> variables into the studnet data and run a student level regression:</p>
+<p>The merge brings in level 2 variables, repeating them for each student in a school:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>s1288 <span class="ot">=</span> <span class="fu">filter</span>( dat.ten, id <span class="sc">==</span> <span class="st">"1288"</span> )</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>M_1288 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses, <span class="at">data=</span>s1288 )</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( M_1288 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">merge</span>( dat, sdat, <span class="at">by=</span><span class="st">"id"</span> )</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    id minority female    ses mathach size sector pracad disclim himinty
+1 1224        0      1 -1.528   5.876  842      0   0.35   1.597       0
+2 1224        0      1 -0.588  19.708  842      0   0.35   1.597       0
+3 1224        0      0 -0.528  20.349  842      0   0.35   1.597       0
+4 1224        0      0 -0.668   8.781  842      0   0.35   1.597       0
+5 1224        0      0 -0.158  17.898  842      0   0.35   1.597       0
+6 1224        0      0  0.022   4.583  842      0   0.35   1.597       0
+  meanses   per.fem    per.min  mean.ses mean.ach n.stud
+1  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
+2  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
+3  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
+4  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
+5  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
+6  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47</code></pre>
+</div>
+</div>
+<p>And now our regression</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Mstud <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses, <span class="at">data =</span> dat )</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( Mstud )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = mathach ~ 1 + ses, data = s1288)
+lm(formula = mathach ~ 1 + sector + ses, data = dat)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--15.648  -5.700   1.048   4.420   9.415 
+     Min       1Q   Median       3Q      Max 
+-20.1339  -4.6785   0.1504   4.8894  16.5847 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   13.115      1.387   9.456 2.17e-09 ***
-ses            3.255      2.080   1.565    0.131    
+(Intercept) 11.79325    0.10610  111.15   &lt;2e-16 ***
+sector       1.93501    0.15249   12.69   &lt;2e-16 ***
+ses          2.94856    0.09783   30.14   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 6.819 on 23 degrees of freedom
-Multiple R-squared:  0.09628,   Adjusted R-squared:  0.05699 
-F-statistic:  2.45 on 1 and 23 DF,  p-value: 0.1312</code></pre>
+Residual standard error: 6.345 on 7182 degrees of freedom
+Multiple R-squared:  0.1492,    Adjusted R-squared:  0.149 
+F-statistic: 629.8 on 2 and 7182 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>The SEs will be different, however. Compare:</p>
+<section id="getting-the-right-standard-errors" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="getting-the-right-standard-errors"><span class="header-section-number">21.1</span> Getting the right standard errors</h2>
+<p>The standard errors for the above regression, however, is <strong>wrong</strong>: we are not taking the clustering into account. We can fix this with cluster-robust standard errors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">=</span> <span class="fu">summary</span>( M2 )</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sum<span class="sc">$</span>coefficients[ <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">11</span> ), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>( Mstud, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Estimate Std. Error   t value     Pr(&gt;|t|)
-id1288     13.114937   1.291495 10.154850 9.121968e-22
-ses:id1288  3.255449   1.936454  1.681139 9.349559e-02</code></pre>
+<pre><code>
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept) 11.79325    0.20315 58.0532 &lt; 2.2e-16 ***
+sector       1.93501    0.31718  6.1007 1.111e-09 ***
+ses          2.94856    0.12794 23.0469 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>In this case the SEs are close, but they could be a lot different if we have a lot of heteroskedasticity or the school has few data points so we do a bad job estimating uncertainty.</p>
-<p>The key is in the single model we are using <em>all</em> the schools to estimate the residual variance, and this is the number that drives our SE estimates.</p>
+<p>Catholic schools score 2 points higher than Public, on average, beyond individual level SES.</p>
+<p>We can further control for school mean SES, like with aggregation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Mstud2 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses <span class="sc">+</span> meanses, <span class="at">data =</span> dat )</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>( Mstud2, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept) 12.09792    0.17024 71.0629 &lt; 2.2e-16 ***
+sector       1.28039    0.30008  4.2669 2.008e-05 ***
+ses          2.19116    0.12981 16.8802 &lt; 2.2e-16 ***
+meanses      2.97267    0.36491  8.1464 4.388e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The contextual value of school mean SES is explaining some of the difference between Catholic and public schools, here: note the reduction of the coefficient for <code>sector</code>. That being said, and still accounting for clustering, <code>sector</code> is still quite significant.</p>
+<p>Confidence intervals give:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(Mstud2, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %    97.5 %
+(Intercept) 11.7641926 12.431643
+sector       0.6921486  1.868627
+ses          1.9367009  2.445618
+meanses      2.2573428  3.687995</code></pre>
+</div>
+</div>
+<p>Relative to the overall standard deviation of math achievement we have:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sd_math <span class="ot">=</span> <span class="fu">sd</span>( dat<span class="sc">$</span>mathach )</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sd_math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.878246</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(Mstud2, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id ) <span class="sc">/</span> sd_math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+(Intercept) 1.7103478 1.8073858
+sector      0.1006286 0.2716720
+ses         0.2815690 0.3555583
+meanses     0.3281858 0.5361825</code></pre>
+</div>
+</div>
+<p>The difference between Catholic and public schools is somewhere between 0.10 and 0.27 standard deviations, beyond what can be explained by ses.</p>
 </section>
-<section id="do-we-trust-the-red-lines-on-the-plot-why-or-why-not" class="level3" data-number="18.3.4">
-<h3 data-number="18.3.4" class="anchored" data-anchor-id="do-we-trust-the-red-lines-on-the-plot-why-or-why-not"><span class="header-section-number">18.3.4</span> Do we trust the red lines on the plot? Why or why not?</h3>
-<p>We trust them because they are driven just by the school data, so they are essentially unbiased. But these are small datasets, so they are unstable.</p>
 </section>
-<section id="what-about-the-variability-in-the-slopes-and-intercepts-of-the-red-lines" class="level3" data-number="18.3.5">
-<h3 data-number="18.3.5" class="anchored" data-anchor-id="what-about-the-variability-in-the-slopes-and-intercepts-of-the-red-lines"><span class="header-section-number">18.3.5</span> What about the variability in the slopes and intercepts of the red lines?</h3>
-<p>The variation is not to be trusted. The slopes are varying because of measurement error. For example, it is unlikely school 3533 really has a negative slope. It is more likely we just got some low performing high ses kids by happenstance in our sample. Similarly, it is unlikely school 6170 has such a steep slope. It has few kids, and the kid with less than -2 ses and a very low math achievment is likely an influential point in that regression.</p>
+<section id="and-fixed-effects" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> And fixed effects?</h1>
+<p>We can combine fixed effects and cluster robust standard errors quite easily, but we cannot combine fixed effects and level 2 covariates at all. We next look at this latter problem, and then see what combining these options looks like when asking questions that do not rely on level 2 variables for main effects.</p>
+<section id="the-problem-of-fixed-effects-and-dummy-variables" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">22.1</span> The problem of fixed effects and dummy variables</h2>
+<p>Fixed effects cannot be used to take into account school differences if we are interested in level 2 variables, because the fixed effects and level 2 variables are <em>co-linear</em>. Put another way, if we let each school have its own mean outcome (represented by the coefficient for a dummy variable for that school), then we can’t have a variable like <code>sector</code> to measure how Catholic schools are different from public schools, conditioned on all the school mean outcomes. There is nothing left to explain as, by construction, there are no differences in school mean outcomes once we “control for” the individual school mean outcomes via fixed effects!</p>
+<p>What R will do when you give colinear variables is drop the extra ones. Here is a mini-example fake dataset of 4 schools with 3 students in each school:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">=</span> <span class="fu">tibble</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>),</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mathach =</span> <span class="fu">rnorm</span>( <span class="dv">12</span> ),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ses =</span> <span class="fu">rnorm</span>( <span class="dv">12</span> ),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sector =</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span> ) )</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fake<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">as.factor</span>( fake<span class="sc">$</span>id )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>fake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   id    mathach     ses sector
+   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 1      1.31   -1.05        0
+ 2 1      2.40    0.229       0
+ 3 1      0.330  -0.695       0
+ 4 2     -0.0249  0.280       1
+ 5 2     -0.216  -0.526       1
+ 6 2     -0.172  -0.435       1
+ 7 3     -1.17   -1.30        0
+ 8 3      1.02    0.197       0
+ 9 3      0.354   1.57        0
+10 4      0.432  -0.263       1
+11 4     -0.565  -0.618       1
+12 4      2.01   -0.0752      1</code></pre>
+</div>
+</div>
+<p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> id <span class="sc">+</span> ses <span class="sc">+</span> sector, <span class="at">data =</span> fake )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
+
+Coefficients:
+     id1       id2       id3       id4       ses    sector  
+ 1.71103   0.02661  -0.04497   0.85558   0.72354        NA  </code></pre>
+</div>
+</div>
+<p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>
 </section>
+<section id="using-fixed-effects-to-handle-clustering" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="using-fixed-effects-to-handle-clustering"><span class="header-section-number">22.2</span> Using fixed effects to handle clustering</h2>
+<p>That being said, fixed effects are an excellent way to control for school differences when looking at <em>within-school relationships</em>. For example, we can ask how math relates to SES within schools, controlling for systematic differences across schools.</p>
+<p>Here is the no fixed effect regression, and the fixed effect regression:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Mstud3_noFE <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses, <span class="at">data=</span>dat )</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>id)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Mstud3 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> id, <span class="at">data=</span>dat )</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud3 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ses    id1224    id1288    id1296    id1308    id1317 
+ 2.191172 10.667255 13.244353  8.568302 15.098561 12.421003 </code></pre>
+</div>
+</div>
+<p>For our fixed effect model, we will have lots of coefficients because we have a fixed effect for each school; the <code>head()</code> command is just showing us the first few. We also had to explicitly make our <code>id</code> variable a factor (categorical variable), so R doesn’t think it is a continuous covariate.</p>
+<p>For our standard errors, etc., we can further account for clustering of our residuals above and beyond what can be explained by our fixed effects (even if we subtract out the mean outcome, we might still have dependencies between students within a given school). So we use our cluster-robust standard errors as so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coeftest</span>( Mstud3, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( coefs )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Estimate Std. Error   t value     Pr(&gt;|t|)
+ses     2.191172 0.13124281  16.69556 2.130074e-61
+id1224 10.667255 0.05700964 187.11316 0.000000e+00
+id1288 13.244353 0.01595913 829.89215 0.000000e+00
+id1296  8.568302 0.05584382 153.43332 0.000000e+00
+id1308 15.098561 0.06929621 217.88439 0.000000e+00
+id1317 12.421003 0.04532252 274.05809 0.000000e+00</code></pre>
+</div>
+</div>
+<p>We have again used <code>head()</code> to just get the first lines. The whole printout would be one line per school, plus the ses coefficient!</p>
+<p>Let’s compare our three models (note the way we omit coefficients with <code>id</code> to drop our fixed effects from the table):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="st">`</span><span class="at">No FE</span><span class="st">`</span><span class="ot">=</span>Mstud3_noFE, <span class="st">`</span><span class="at">FE</span><span class="st">`</span> <span class="ot">=</span> Mstud3, <span class="st">`</span><span class="at">FE + CRVE</span><span class="st">`</span><span class="ot">=</span>coefs ), </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">omit.coef=</span><span class="st">"id"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+================================================
+             No FE        FE           FE + CRVE
+------------------------------------------------
+(Intercept)    12.75 ***                        
+               (0.08)                           
+ses             3.18 ***     2.19 ***   2.19 ***
+               (0.10)       (0.11)     (0.13)   
+------------------------------------------------
+R^2             0.13         0.83               
+Adj. R^2        0.13         0.82               
+Num. obs.    7185         7185                  
+================================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+<p>A few things to note:</p>
+<ul>
+<li>Not having fixed effects means we are getting an estimate of the math-ses relationship <em>including</em> school level context. Note the higher point estimate. Often we want to focus on within-school relationships. Fixed effects does this.</li>
+<li>The standard errors are larger once we include fixed effects; the fixed effects are partially accounting for clustering.</li>
+<li>The standard errors are even larger when we include CRVE. It is more fully accounting for the clustering, and the fact that the clusters themselves could vary. In general, one should typically use CRVE in addition to fixed effects, if one wants to view the clusters as representative of a larger population (in this case a larger population of schools).</li>
+</ul>
 </section>
-<section id="further-reading" class="level2" data-number="18.4">
-<h2 data-number="18.4" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">18.4</span> Further Reading</h2>
-<p><span class="citation" data-cites="antonakis2019a">(<a href="references.html#ref-antonakis2019a" role="doc-biblioref">Antonakis, Bastardoz, and Rönkkö 2019</a>)</span></p>
+<section id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">22.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</h2>
+<p>If we want to see if the <em>relationship</em> of math and SES is different between schools, we can get tricky like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Mstud4 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, <span class="at">data=</span>dat )</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ses    id1224    id1288    id1296    id1308    id1317 
+ 2.782105 10.923946 13.172496  8.819744 15.498595 12.682641 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    id9359     id9397     id9508     id9550     id9586 ses:sector 
+ 14.763044   9.982311  13.772485  10.941590  13.973252  -1.348572 </code></pre>
+</div>
+</div>
+<p>Note interaction terms always get pushed to the end of the list of estimates by R. So we have to pull them out with <code>tail()</code>.</p>
+<p>In the following we compare SEs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">coeftest</span>( Mstud4, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">wrong=</span>Mstud4, <span class="at">adjusted=</span>a ), </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">omit.coef=</span><span class="st">"id"</span>, <span class="at">single.row =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+================================================
+            wrong               adjusted        
+------------------------------------------------
+ses            2.78 (0.14) ***   2.78 (0.16) ***
+ses:sector    -1.35 (0.22) ***  -1.35 (0.24) ***
+------------------------------------------------
+R^2            0.83                             
+Adj. R^2       0.82                             
+Num. obs.   7185                                
+================================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+<p>In our second column we are accounting for our clustering with our cluster robust SEs.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-antonakis2019a" class="csl-entry" role="listitem">
-Antonakis, John, Nicolas Bastardoz, and Mikko Rönkkö. 2019. <span>“On Ignoring the Random Effects Assumption in Multilevel Models: Review, Critique, and Recommendations.”</span> <em>Organizational Research Methods</em> 24 (2): 443–83. <a href="https://doi.org/10.1177/1094428119877457">https://doi.org/10.1177/1094428119877457</a>.
-</div>
-</div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -954,13 +1104,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./lmer_extract.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">How to extract information from fitted <code>lmer</code> models</span></span>
+      <a href="./fixed_effects.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./fe_crve.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./fe_discussion.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Thinking about Fixed Effects Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
