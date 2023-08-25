@@ -8,7 +8,7 @@
 
 <meta name="author" content="Josh Gilbert">
 
-<title>Resources for S-043: Multilevel and Longitudinal Models - 15&nbsp; Extracting model information with broom</title>
+<title>Resources for S-043: Multilevel and Longitudinal Models - 16&nbsp; Extracting model information with broom</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./lmer_extract.html" rel="next">
-<link href="./mod_fit.html" rel="prev">
+<link href="./double_plot.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mod_fit.html">Model Fitting and Interpretation</a></li><li class="breadcrumb-item"><a href="./broom.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting model information with `broom`</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./broom.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Extracting model information with `broom`</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -148,8 +148,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./r_basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R and R Markdown</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">R &amp; R MARKDOWN</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -187,28 +187,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./math_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pivot_wider.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./using_ggplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Using ggPlot</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">USING ggPLOT</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -217,39 +223,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./mod_fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Fitting and Interpretation</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">MODEL FITTING &amp; INTERPRETATION</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -258,79 +264,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting model information with <code>broom</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Extracting model information with <code>broom</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_extract.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">How to extract information from fitted <code>lmer</code> models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">How to extract information from fitted <code>lmer</code> models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_coefficients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./within_v_between.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./growth_models_predictors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_cheat_sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_representations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_glms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -343,8 +343,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./worked_examples.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Worked Examples</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">WORKED EXAMPLES</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -378,8 +378,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./visualizations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Visualizations</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">VISUALIZATIONS</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -413,8 +413,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./derivations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Derivations and Technical Details</span></a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">MATH DERIVATIONS</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -486,22 +486,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#simple-demonstration" id="toc-simple-demonstration" class="nav-link active" data-scroll-target="#simple-demonstration"><span class="header-section-number">15.1</span> Simple Demonstration</a>
+  <li><a href="#simple-demonstration" id="toc-simple-demonstration" class="nav-link active" data-scroll-target="#simple-demonstration"><span class="header-section-number">16.1</span> Simple Demonstration</a>
   <ul class="collapse">
-  <li><a href="#tidy" id="toc-tidy" class="nav-link" data-scroll-target="#tidy"><span class="header-section-number">15.1.1</span> <code>tidy</code></a></li>
-  <li><a href="#glance" id="toc-glance" class="nav-link" data-scroll-target="#glance"><span class="header-section-number">15.1.2</span> <code>glance</code></a></li>
-  <li><a href="#augment" id="toc-augment" class="nav-link" data-scroll-target="#augment"><span class="header-section-number">15.1.3</span> <code>augment</code></a></li>
+  <li><a href="#tidy" id="toc-tidy" class="nav-link" data-scroll-target="#tidy"><span class="header-section-number">16.1.1</span> <code>tidy</code></a></li>
+  <li><a href="#glance" id="toc-glance" class="nav-link" data-scroll-target="#glance"><span class="header-section-number">16.1.2</span> <code>glance</code></a></li>
+  <li><a href="#augment" id="toc-augment" class="nav-link" data-scroll-target="#augment"><span class="header-section-number">16.1.3</span> <code>augment</code></a></li>
   </ul></li>
-  <li><a href="#extracting-lmer-model-info" id="toc-extracting-lmer-model-info" class="nav-link" data-scroll-target="#extracting-lmer-model-info"><span class="header-section-number">15.2</span> Extracting <code>lmer</code> model info</a>
+  <li><a href="#extracting-lmer-model-info" id="toc-extracting-lmer-model-info" class="nav-link" data-scroll-target="#extracting-lmer-model-info"><span class="header-section-number">16.2</span> Extracting <code>lmer</code> model info</a>
   <ul class="collapse">
-  <li><a href="#obtaining-fixed-effects" id="toc-obtaining-fixed-effects" class="nav-link" data-scroll-target="#obtaining-fixed-effects"><span class="header-section-number">15.2.1</span> Obtaining Fixed Effects</a></li>
-  <li><a href="#obtaining-random-effects" id="toc-obtaining-random-effects" class="nav-link" data-scroll-target="#obtaining-random-effects"><span class="header-section-number">15.2.2</span> Obtaining Random Effects</a></li>
-  <li><a href="#obtaining-empirical-bayes-estimates-of-the-random-effects" id="toc-obtaining-empirical-bayes-estimates-of-the-random-effects" class="nav-link" data-scroll-target="#obtaining-empirical-bayes-estimates-of-the-random-effects"><span class="header-section-number">15.2.3</span> Obtaining Empirical Bayes Estimates of the Random Effects</a></li>
-  <li><a href="#intercept-slope-correlation" id="toc-intercept-slope-correlation" class="nav-link" data-scroll-target="#intercept-slope-correlation"><span class="header-section-number">15.2.4</span> Intercept-Slope Correlation</a></li>
-  <li><a href="#caterpillar-plots" id="toc-caterpillar-plots" class="nav-link" data-scroll-target="#caterpillar-plots"><span class="header-section-number">15.2.5</span> Caterpillar Plots</a></li>
-  <li><a href="#fitted-values" id="toc-fitted-values" class="nav-link" data-scroll-target="#fitted-values"><span class="header-section-number">15.2.6</span> Fitted Values</a></li>
+  <li><a href="#obtaining-fixed-effects" id="toc-obtaining-fixed-effects" class="nav-link" data-scroll-target="#obtaining-fixed-effects"><span class="header-section-number">16.2.1</span> Obtaining Fixed Effects</a></li>
+  <li><a href="#obtaining-random-effects" id="toc-obtaining-random-effects" class="nav-link" data-scroll-target="#obtaining-random-effects"><span class="header-section-number">16.2.2</span> Obtaining Random Effects</a></li>
+  <li><a href="#obtaining-empirical-bayes-estimates-of-the-random-effects" id="toc-obtaining-empirical-bayes-estimates-of-the-random-effects" class="nav-link" data-scroll-target="#obtaining-empirical-bayes-estimates-of-the-random-effects"><span class="header-section-number">16.2.3</span> Obtaining Empirical Bayes Estimates of the Random Effects</a></li>
+  <li><a href="#intercept-slope-correlation" id="toc-intercept-slope-correlation" class="nav-link" data-scroll-target="#intercept-slope-correlation"><span class="header-section-number">16.2.4</span> Intercept-Slope Correlation</a></li>
+  <li><a href="#caterpillar-plots" id="toc-caterpillar-plots" class="nav-link" data-scroll-target="#caterpillar-plots"><span class="header-section-number">16.2.5</span> Caterpillar Plots</a></li>
+  <li><a href="#fitted-values" id="toc-fitted-values" class="nav-link" data-scroll-target="#fitted-values"><span class="header-section-number">16.2.6</span> Fitted Values</a></li>
   </ul></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">15.3</span> Additional Resources</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">16.3</span> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -510,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting model information with <code>broom</code></span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Extracting model information with <code>broom</code></span></h1>
 </div>
 
 
@@ -531,11 +531,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>There are three general ways to get information out of a fit model: print it to the screen and read it, use a variety of methods to pull information out of the model, and use the <code>broom</code> package to pull information out of the model into different kinds of data frames (which is in line with <em>tidy programming</em>, and the tidyverse).</p>
+<p>There are three general ways to get information out of a fit model: (1) print it to the screen and read it, (2) use a variety of base R methods to pull information out of the model, and (2) use the <code>broom</code> package to pull information out of the model into different kinds of data frames (which is in line with <em>tidy programming</em>, and the tidyverse).</p>
 <p>This chapter looks at the third way. The following chapter looks at the “base R” way. Which to use is a matter of preference.</p>
-<section id="simple-demonstration" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="simple-demonstration"><span class="header-section-number">15.1</span> Simple Demonstration</h2>
-<p>One of my favorite R packages is <code>broom</code>, which has many awesome convenience functions for regression models, including MLMs. <code>broom.mixed</code> is an extension that works with <code>lmer</code> models.</p>
+<section id="simple-demonstration" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="simple-demonstration"><span class="header-section-number">16.1</span> Simple Demonstration</h2>
+<p>One of my favorite R packages is <code>broom</code>, which has many awesome convenience functions for regression models, including MLMs. <code>broom.mixed</code> is the extension that specifically works with <code>lmer</code> models. It does this via a few core methods that give you the model parameters and information as a nice data frame that you can then use more easily than the original result from your <code>lmer()</code> call. Let’s see how it works.</p>
+<p>We first load it (and a few other things, and some data):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -550,9 +551,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># load HSB data</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="tidy" class="level3" data-number="15.1.1">
-<h3 data-number="15.1.1" class="anchored" data-anchor-id="tidy"><span class="header-section-number">15.1.1</span> <code>tidy</code></h3>
-<p><code>tidy</code> takes a model object and returns the output as a tidy tibble, which makes it very easy to work with. Compare the results below:</p>
+<section id="tidy" class="level3" data-number="16.1.1">
+<h3 data-number="16.1.1" class="anchored" data-anchor-id="tidy"><span class="header-section-number">16.1.1</span> <code>tidy</code></h3>
+<p>The <code>tidy()</code> method takes a model object and returns the output as a tidy tibble (i.e., a data frame), which makes it very easy to work with. Compare the results below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> ses, hsb)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -618,7 +619,7 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># works great for MLMs</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Also works great for MLMs</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> mnses <span class="sc">+</span> (ses<span class="sc">|</span>schoolid), hsb)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -636,8 +637,8 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="glance" class="level3" data-number="15.1.2">
-<h3 data-number="15.1.2" class="anchored" data-anchor-id="glance"><span class="header-section-number">15.1.2</span> <code>glance</code></h3>
+<section id="glance" class="level3" data-number="16.1.2">
+<h3 data-number="16.1.2" class="anchored" data-anchor-id="glance"><span class="header-section-number">16.1.2</span> <code>glance</code></h3>
 <p>What about model fit stats? That’s where <code>glance</code> comes in:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(ols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -678,9 +679,9 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="augment" class="level3" data-number="15.1.3">
-<h3 data-number="15.1.3" class="anchored" data-anchor-id="augment"><span class="header-section-number">15.1.3</span> <code>augment</code></h3>
-<p>What about residuals? <code>augment</code> to the rescue:</p>
+<section id="augment" class="level3" data-number="16.1.3">
+<h3 data-number="16.1.3" class="anchored" data-anchor-id="augment"><span class="header-section-number">16.1.3</span> <code>augment</code></h3>
+<p>What about your estimated random effects? <code>augment</code> to the rescue, giving estimates for each random effect:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ranef</span>() <span class="sc">|&gt;</span> </span>
@@ -776,13 +777,14 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </table>
 </div>
 </div>
+<p>The <code>level</code> column are your school IDs, here. If you have multiple sets of random effects, they will all be stacked, and indexed via <code>grp</code>.</p>
 </section>
 </section>
-<section id="extracting-lmer-model-info" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="extracting-lmer-model-info"><span class="header-section-number">15.2</span> Extracting <code>lmer</code> model info</h2>
-<section id="obtaining-fixed-effects" class="level3" data-number="15.2.1">
-<h3 data-number="15.2.1" class="anchored" data-anchor-id="obtaining-fixed-effects"><span class="header-section-number">15.2.1</span> Obtaining Fixed Effects</h3>
-<p><code>lmer</code> models are reduced form, so fixed effects include both L1 and L2 predictors. <code>tidy</code> denotes the type of effect in a column called <code>effect</code>, where <code>fixed</code> means fixed, and <code>ran_pars</code> means random (standing for “random parameters”)</p>
+<section id="extracting-lmer-model-info" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="extracting-lmer-model-info"><span class="header-section-number">16.2</span> Extracting <code>lmer</code> model info</h2>
+<section id="obtaining-fixed-effects" class="level3" data-number="16.2.1">
+<h3 data-number="16.2.1" class="anchored" data-anchor-id="obtaining-fixed-effects"><span class="header-section-number">16.2.1</span> Obtaining Fixed Effects</h3>
+<p><code>lmer</code> models are in reduced form, so fixed effects include both L1 and L2 predictors. <code>tidy</code> denotes the type of effect in a column called <code>effect</code>, where <code>fixed</code> means fixed, and <code>ran_pars</code> means random (standing for “random parameters”)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="sc">|&gt;</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
@@ -818,8 +820,8 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="obtaining-random-effects" class="level3" data-number="15.2.2">
-<h3 data-number="15.2.2" class="anchored" data-anchor-id="obtaining-random-effects"><span class="header-section-number">15.2.2</span> Obtaining Random Effects</h3>
+<section id="obtaining-random-effects" class="level3" data-number="16.2.2">
+<h3 data-number="16.2.2" class="anchored" data-anchor-id="obtaining-random-effects"><span class="header-section-number">16.2.2</span> Obtaining Random Effects</h3>
 <p><code>tidy</code> includes the random effects (SDs and correlations) right there in the output. For example, <code>sd__ses</code> is the SD of the SES slope.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display all random effects</span></span>
@@ -845,8 +847,8 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="obtaining-empirical-bayes-estimates-of-the-random-effects" class="level3" data-number="15.2.3">
-<h3 data-number="15.2.3" class="anchored" data-anchor-id="obtaining-empirical-bayes-estimates-of-the-random-effects"><span class="header-section-number">15.2.3</span> Obtaining Empirical Bayes Estimates of the Random Effects</h3>
+<section id="obtaining-empirical-bayes-estimates-of-the-random-effects" class="level3" data-number="16.2.3">
+<h3 data-number="16.2.3" class="anchored" data-anchor-id="obtaining-empirical-bayes-estimates-of-the-random-effects"><span class="header-section-number">16.2.3</span> Obtaining Empirical Bayes Estimates of the Random Effects</h3>
 <p>This is best done in a pipeline. We first apply <code>ranef</code>, then <code>augment</code> and get the EB estimates in the <code>estimate</code> column, along with the <code>std.error</code>, confidence bounds, and <code>qq</code> statistics.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="sc">|&gt;</span> </span>
@@ -871,17 +873,17 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="intercept-slope-correlation" class="level3" data-number="15.2.4">
-<h3 data-number="15.2.4" class="anchored" data-anchor-id="intercept-slope-correlation"><span class="header-section-number">15.2.4</span> Intercept-Slope Correlation</h3>
+<section id="intercept-slope-correlation" class="level3" data-number="16.2.4">
+<h3 data-number="16.2.4" class="anchored" data-anchor-id="intercept-slope-correlation"><span class="header-section-number">16.2.4</span> Intercept-Slope Correlation</h3>
 <p>The BLUPs are in long form. We can reshape to wide if we want to, for example, visualize the correlation between the random intercepts and slopes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>blups <span class="ot">&lt;-</span> mlm <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ranef</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, level, estimate) <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, level, estimate) <span class="sc">|&gt;</span> </span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> variable, <span class="at">values_from =</span> estimate,</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">id_cols =</span> level) <span class="sc">|&gt;</span> </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">schoolid =</span> <span class="dv">1</span>, <span class="at">random_intercept =</span> <span class="dv">2</span>, <span class="at">random_slope =</span> <span class="dv">3</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">schoolid =</span> <span class="dv">1</span>, <span class="at">random_intercept =</span> <span class="dv">2</span>, <span class="at">random_slope =</span> <span class="dv">3</span>)</span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -902,28 +904,27 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="caterpillar-plots" class="level3" data-number="15.2.5">
-<h3 data-number="15.2.5" class="anchored" data-anchor-id="caterpillar-plots"><span class="header-section-number">15.2.5</span> Caterpillar Plots</h3>
-<p>The included information makes it easy to construct caterpillar plots!</p>
+<section id="caterpillar-plots" class="level3" data-number="16.2.5">
+<h3 data-number="16.2.5" class="anchored" data-anchor-id="caterpillar-plots"><span class="header-section-number">16.2.5</span> Caterpillar Plots</h3>
+<p>The included information as a data frame makes it easy to construct caterpillar plots!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ri <span class="ot">&lt;-</span> mlm <span class="sc">|&gt;</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ranef</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"(Intercept)"</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ri, <span class="fu">aes</span>(<span class="at">x =</span> level, <span class="at">y =</span> estimate,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">ymin =</span> lb,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">ymax =</span> ub)) <span class="sc">+</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>() <span class="sc">+</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ri, <span class="fu">aes</span>(<span class="at">x =</span> level, <span class="at">y =</span> estimate,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">ymin =</span> lb,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">ymax =</span> ub)) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> variable, <span class="at">nrow =</span> <span class="dv">1</span> ) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>() <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="broom_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="fitted-values" class="level3" data-number="15.2.6">
-<h3 data-number="15.2.6" class="anchored" data-anchor-id="fitted-values"><span class="header-section-number">15.2.6</span> Fitted Values</h3>
+<section id="fitted-values" class="level3" data-number="16.2.6">
+<h3 data-number="16.2.6" class="anchored" data-anchor-id="fitted-values"><span class="header-section-number">16.2.6</span> Fitted Values</h3>
 <p>Using <code>augment</code> directly on the <code>lmer</code> object gives us fitted values (<code>.fitted</code>) and residuals (<code>.resid</code>). We can use this for residual plots or for plotting lines for each school.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="sc">|&gt;</span> </span>
@@ -962,9 +963,10 @@ F-statistic:  1075 on 1 and 7183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </section>
 </section>
-<section id="additional-resources" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">15.3</span> Additional Resources</h2>
-<p>I’ve recently discovered the packaged <code>mixedup</code> that has some excellent convenience functions for extracting info from <code>lmer</code> models: <a href="https://m-clark.github.io/mixedup/index.html" class="uri">https://m-clark.github.io/mixedup/index.html</a></p>
+<section id="additional-resources" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">16.3</span> Additional Resources</h2>
+<p>I’ve recently discovered the packaged <code>mixedup</code> that has some excellent additional convenience functions for extracting info from <code>lmer</code> models: <a href="https://m-clark.github.io/mixedup/index.html" class="uri">https://m-clark.github.io/mixedup/index.html</a>.</p>
+<p>It might be worth checking out as well!</p>
 
 
 </section>
@@ -1205,13 +1207,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./mod_fit.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Model Fitting and Interpretation</span>
+      <a href="./double_plot.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./lmer_extract.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">How to extract information from fitted <code>lmer</code> models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">How to extract information from fitted <code>lmer</code> models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
