@@ -5,3 +5,35 @@ This online book has a bunch of resources for S-043: Multilevel and Longitudinal
 lmiratrix\@gse.harvard.edu
 
 joshua_gilbert\@g.harvard.edu
+
+## Overview
+
+There are several parts to the book, loosely arranged by type of handout. We list the parts next, with some brief overview.
+
+### R & R Markdown
+
+The book starts with material on just using R and making tables and whatnot.
+
+### Using ggPlot
+
+The ggPlot section's handouts are on using ggPlot, with an emphasis on using small multiples and other tricks to plot clustered or longitudinal data and results from multilevel data analysis. This section also includes how to use prediction to visualize a model's fit, which is especially important for longitudinal data, and plotting growth curves.
+
+### Model Fitting and Interpretation
+
+This section has information on how to deal with the results from a `lmer()` call, and also has material connecting the code to the mathematical model. There are handouts on how to interpret parameters as well. This has help for much of the core content of the course.
+
+### Worked Examples
+
+The section has several case studies that illustrate things such as three-level models. It also has all the code to replicate the High School and Beyond example from Chapter 4 of Raudenbush and Bryk,
+
+### Visualizations
+
+The visualization section has some interactive visualiations made by Josh Gilbert that can bring some of the ideas of this course to life.
+
+### Math Derivations
+
+The math derivations at the end show how some of the variance decomposition stuff works, or error correlation matrices are built.
+
+## Acknowledgements
+
+Some of these handouts, or early drafts of these handouts, were written by the many prior TFs of this course. We have attributed authorship where we had it, but input from TFs has improved pretty much everything you see here. Thanks also to the many prior students who have asked for these handouts, given feedback, and overall have helped this course be what it is today (which, as you can tell from the number of handouts, is a lot).

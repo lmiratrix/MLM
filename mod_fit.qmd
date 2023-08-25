@@ -1,8 +1,0 @@
----
-title: "Model Fitting and Interpretation"
-editor: 
-  markdown: 
-    wrap: sentence
----
-
-This section covers model fitting and interpretation

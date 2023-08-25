@@ -1,7 +1,0 @@
----
-title: "Using ggPlot"
----
-
-This section's handouts are on using ggPlot, with an emphasis on using small multiples and other tricks to plot clustered or longitudinal data and results from multilevel data analysis.
-
-It includes how to use prediction to visualize a model's fit.

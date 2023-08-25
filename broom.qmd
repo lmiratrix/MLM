@@ -12,7 +12,7 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 ```
 
-There are three general ways to get information out of a fit model: print it to the screen and read it, use a variety of methods to pull information out of the model, and use the `broom` package to pull information out of the model into different kinds of data frames (which is in line with *tidy programming*, and the tidyverse).
+There are three general ways to get information out of a fit model: (1) print it to the screen and read it, (2) use a variety of base R methods to pull information out of the model, and (2) use the `broom` package to pull information out of the model into different kinds of data frames (which is in line with *tidy programming*, and the tidyverse).
 
 This chapter looks at the third way.
 The following chapter looks at the "base R" way.
@@ -21,7 +21,11 @@ Which to use is a matter of preference.
 ## Simple Demonstration
 
 One of my favorite R packages is `broom`, which has many awesome convenience functions for regression models, including MLMs.
-`broom.mixed` is an extension that works with `lmer` models.
+`broom.mixed` is the extension that specifically works with `lmer` models.
+It does this via a few core methods that give you the model parameters and information as a nice data frame that you can then use more easily than the original result from your `lmer()` call.
+Let's see how it works.
+
+We first load it (and a few other things, and some data):
 
 ```{r}
 # load libraries
@@ -40,7 +44,7 @@ hsb <- read_dta("data/hsb.dta")
 
 ### `tidy`
 
-`tidy` takes a model object and returns the output as a tidy tibble, which makes it very easy to work with.
+The `tidy()` method takes a model object and returns the output as a tidy tibble (i.e., a data frame), which makes it very easy to work with.
 Compare the results below:
 
 ```{r}
@@ -55,7 +59,7 @@ tidy(ols)
 # even better
 ols |> tidy() |> kable(digits = 2)
 
-# works great for MLMs
+# Also works great for MLMs
 mlm <- lmer(mathach ~ ses + mnses + (ses|schoolid), hsb)
 
 tidy(mlm)
@@ -75,8 +79,8 @@ glance(mlm) |>
 
 ### `augment`
 
-What about residuals?
-`augment` to the rescue:
+What about your estimated random effects?
+`augment` to the rescue, giving estimates for each random effect:
 
 ```{r}
 mlm |> 
@@ -86,11 +90,14 @@ mlm |>
   kable(digits = 2)
 ```
 
+The `level` column are your school IDs, here.
+If you have multiple sets of random effects, they will all be stacked, and indexed via `grp`.
+
 ## Extracting `lmer` model info
 
 ### Obtaining Fixed Effects
 
-`lmer` models are reduced form, so fixed effects include both L1 and L2 predictors.
+`lmer` models are in reduced form, so fixed effects include both L1 and L2 predictors.
 `tidy` denotes the type of effect in a column called `effect`, where `fixed` means fixed, and `ran_pars` means random (standing for "random parameters")
 
 ```{r}
@@ -154,10 +161,10 @@ We can reshape to wide if we want to, for example, visualize the correlation bet
 blups <- mlm |> 
   ranef() |> 
   augment() |> 
-  select(variable, level, estimate) |> 
+  dplyr::select(variable, level, estimate) |> 
   pivot_wider(names_from = variable, values_from = estimate,
               id_cols = level) |> 
-  rename(schoolid = 1, random_intercept = 2, random_slope = 3)
+  dplyr::rename(schoolid = 1, random_intercept = 2, random_slope = 3)
 
 head(blups)
 
@@ -167,17 +174,16 @@ ggplot(blups, aes(x = random_intercept, y = random_slope)) +
 
 ### Caterpillar Plots
 
-The included information makes it easy to construct caterpillar plots!
+The included information as a data frame makes it easy to construct caterpillar plots!
 
 ```{r}
 ri <- mlm |> 
   ranef() |> 
-  augment() |> 
-  filter(variable == "(Intercept)")
-
+  augment() 
 ggplot(ri, aes(x = level, y = estimate,
                ymin = lb,
                ymax = ub)) +
+  facet_wrap( ~ variable, nrow = 1 ) +
   geom_point() +
   geom_errorbar() +
   theme_classic()
@@ -209,4 +215,6 @@ mlm |>
 
 ## Additional Resources
 
-I've recently discovered the packaged `mixedup` that has some excellent convenience functions for extracting info from `lmer` models: <https://m-clark.github.io/mixedup/index.html>
+I've recently discovered the packaged `mixedup` that has some excellent additional convenience functions for extracting info from `lmer` models: <https://m-clark.github.io/mixedup/index.html>.
+
+It might be worth checking out as well!

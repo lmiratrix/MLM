@@ -8,7 +8,7 @@ book:
   chapters:
     - index.qmd
     - self_assess.qmd
-    - part: r_basics.qmd
+    - part: "R & R MARKDOWN"
       chapters:
           - intro_markdown.qmd
           - intro_linear_regression.qmd
@@ -19,14 +19,14 @@ book:
           - math_reference.qmd
           - pivot_wider.qmd
           - intro_missing_data.qmd
-    - part: using_ggplot.qmd
+    - part: "USING ggPLOT"
       chapters:
           - intro_ggplot.qmd
           - summary_plots.qmd
           - plot_expand_grid.qmd
           - ggeffects.qmd
           - double_plot.qmd
-    - part: mod_fit.qmd
+    - part: "MODEL FITTING & INTERPRETATION"
       chapters:
           - broom.qmd
           - lmer_extract.qmd
@@ -41,19 +41,19 @@ book:
           - glm_vs_transform.qmd
           - lr_test.qmd
           - aic_check.qmd
-    - part: worked_examples.qmd
+    - part: "WORKED EXAMPLES"
       chapters:
           - hsb_ex.qmd
           - faraway_ex.qmd
           - perf_ex.qmd
           - kenya_ex.qmd
-    - part: visualizations.qmd
+    - part: "VISUALIZATIONS"
       chapters:
           - icc_viz.qmd
           - rand_slopes_viz.qmd
           - rewb_viz.qmd
           - latent_logit_viz.qmd
-    - part: derivations.qmd
+    - part: "MATH DERIVATIONS"
       chapters:
           - icc_derivation.qmd
           - cov_matrix_derivation.qmd
@@ -65,11 +65,14 @@ book:
           - cluster_demo.qmd
     - references.qmd
 
+highlight-style: pygments
+
 bibliography: references.bib
 output_dir: "docs"
 format:
   html:
     theme: cosmo
+    code-copy: true
   pdf:
     documentclass: scrreprt
 
