@@ -6,10 +6,10 @@ editor:
     wrap: sentence
 ---
 
-Often, the ICC is described as the estimated correlation between pairs of points drawn from the same cluster.
+Often, the ICC is described as the correlation between observations that share the same group membership.
 While you can look at the visualizer to get some intuition on what this means, here is a short proof adapted from S52 materials.
 
-Consider the variance components model:
+Consider the variance components model (this is the random intercept model with no covariates):
 
 $$
 y_{ij} = \beta_0 + \zeta_j + \varepsilon_{ij}
@@ -43,7 +43,7 @@ $$
 
 Conceptually, the $\zeta_j$ represents the shared influences on $y$ that would cause the similarity between observations in the same group.
 
-We know from our variance decomposition in the ICC formula that $var(y)$ is the sum of the between-group and within-group variance components:
+We know from our variance decomposition in the ICC formula that $var(y)$ is the sum of the between-group and within-group variance components (note the independence of random effects assumption is key here):
 
 $$
 var(y) = var(y') = \sigma^2_\zeta + \sigma^2_\varepsilon
@@ -53,6 +53,5 @@ We can substitute these quantities into the original formula:
 
 $$
 \rho(y, y') = \frac{cov(y,y')}{\sqrt{var(y)var(y')}} = \frac{\sigma^2_\zeta}{\sigma^2_\zeta + \sigma^2_\varepsilon} = ICC
-$$
-Thus, the ICC is both the proportion of total variance accounted for by group membership **and** the correlation between pairs of observations drawn from the same group.
+$$ Thus, the ICC is both the proportion of total variance accounted for by group membership **and** the correlation between pairs of observations drawn from the same group.
 QED!

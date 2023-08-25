@@ -50,7 +50,7 @@ tab_model(m1, m2, m3, m4,
 
 ## Graph the Results with `ggeffects`
 
-If we just call `ggeffect` on the model object, we get a bunch of predicted values"
+If we just call `ggeffect` on the model object, we get a bunch of predicted values:
 
 ```{r}
 ggeffect(m1)

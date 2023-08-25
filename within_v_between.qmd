@@ -67,19 +67,37 @@ tab_model(ols, fe, ri, ri_within, ri_between, re_wb, contextual,
 
 ### OLS
 
-Ignoring school membership, students who are 1-unit higher in SES are predicted to score 3.18 points higher in math
+```{r,echo=FALSE}
+ols$call
+```
+
+Ignoring school membership, students who are 1-unit higher in SES are predicted to score 3.18 points higher in math. This is generally not a preferred model.
 
 ### Fixed Effects
 
-Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math
+```{r,echo=FALSE}
+fe$call
+```
+
+Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math. Fixed effects models focus on within-school comparisons: we are looking at how students within schools relate to each other, and then averaging this relationship across all our schools to get our final estimate.
 
 ### Random Intercepts
 
+```{r,echo=FALSE}
+ri@call
+```
 Students who are 1-unit higher in SES are predicted to score 2.39 points higher in math; schools that are 1-unit higher in mean SES are predicted to have mean math scores 2.39 points higher.
 
-(A precision-weighted average of the within and between effects; Within: 2.19, Between: 5.86. If the RE assumption holds, these are the same in the population so we get more precision by averaging them together. However, in social science, they are rarely the same!)
+The random intercept model gives a precision-weighted average of the within and between effects.
+Looking at the other models, note that our within effect is 2.19 and our between effect is 5.86.
+If the RE assumption holds, these are the same in the population, so we get more precision by averaging them together. However, in social science, they are rarely the same, making this model provide a weird blend of two kinds of mechanism.
+
 
 ### Random Intercepts, Within Effect
+
+```{r,echo=FALSE}
+ri_within@call
+```
 
 Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math.
 This is the same coefficient as the FE model, but in an RI framework.
@@ -87,19 +105,31 @@ We have "controlled for school" manually by demeaning the SES variable.
 
 ### Random Intercepts, Between
 
+```{r,echo=FALSE}
+ri_between@call
+```
+
 Schools that are 1-unit higher in mean SES are predicted to have mean math scores 5.86 points higher.
 
 ### Random Effects within and Between
+
+```{r,echo=FALSE}
+re_wb@call
+```
 
 Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; schools that are 1-unit higher in mean SES are predicted to have mean math scores 5.86 points higher.
 We get the within and between effects in a single model!
 
 ### Contextual/Mundlak
+```{r,echo=FALSE}
+contextual@call
+```
 
 Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; *holding constant student SES*, a student that attends a school with 1-unit higher in mean SES are predicted to have mean math scores 3.68 points higher.
-The contextual effect is the *difference* in the within and between effects, and its significance test allows us to determine if it is necessary.
+The contextual effect is the *difference* in the within and between effects (note that 5.86 - 2.19 = 3.68, up to rounding), and, in principle, its significance test allows us to determine if having both is necessary.
 Mathematically, the Mundlak model and REWB are *identical*, as you can see from the deviance statistics.
 You would choose one over the other depending on your preferred interpretation.
+
 
 ## Further Reading
 

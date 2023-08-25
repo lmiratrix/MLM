@@ -15,20 +15,17 @@ set.seed(2023)
 ```
 
 Those of you coming from S40 and S52 may recall that when we have non-linear relationships between X and Y, we can apply a transformation, such as taking the log, to linearize the relationship.
-In the words of Jimmy Kim, "with transformations, we use the *machinery of linear regression to model non-linear relationships*".
-If that's the case, then what is Poisson regression about, which deals with log counts?
+In the words of Jimmy Kim, "with transformations, we use the *machinery of linear regression to model non-linear relationships.*" If that's the case, then what is Poisson regression about, which deals with log counts?
 This is a topic that confused me for many years so hopefully I can clear it up here.
 
 ## Making and Graphing the Data
 
 Let's start by making some fake data.
-Here's the data-generating function, which suggests that a 1-unit increase in `x` will increase the expected count by $e^.5 = 1.65$.
+Here's the data-generating function, which has the relationship that a 1-unit increase in `x` will increase the expected count by $e^.5 = 1.65$.
 
 $$
 y = Poisson(e^{0.5x})
 $$
-
-In the graph, we can see that the relationship between `x` and `y` is clearly non linear!
 
 ```{r}
 library(tidyverse)
@@ -43,7 +40,10 @@ dat <- tibble(
   x = runif(1000, 0, 5),
   y = rpois(1000, exp(0.5*x))
 )
+```
 
+In the graph, we can see that the relationship between x and y is clearly non linear!
+```{r}
 ggplot(dat, aes(x = x, y = y)) +
   geom_point() +
   geom_smooth(se = FALSE)
@@ -61,16 +61,16 @@ ggplot(dat, aes(x = x, y = log(y + 1))) +
 
 ## Fitting the Regression Models
 
-Let's use OLS and Poisson regression to fit the data.
+Let's use both OLS and Poisson regression to fit the data.
 We see a few things:
 
-1.  The Poisson model fits drastically better, both in terms of $R^2$ and the coefficients are close to the data-generating values
+1.  The Poisson model fits drastically better, both in terms of $R^2$ and that the coefficients are close to the data-generating values
 2.  The transformed OLS model understates the slope
 3.  Both models have (seemingly) similar interpretations: a 1-unit increase in `x` causes an $e^\beta$ increase in `y`. How is this possible?
 
 So what's going on?
 
-The answer is that there is a very subtle difference between transformed OLS and Poisson regression.
+The answer is that there is a very subtle difference between a transformed OLS regression and a Poisson regression.
 In transformed OLS, we are modeling the mean of the log of Y, or $E(ln(y|x))$.
 In Poisson, we're modeling the log of the mean of Y, or $ln(E(y|x))$.
 These are not equivalent!
