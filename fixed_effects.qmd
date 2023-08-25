@@ -6,9 +6,11 @@ editor:
     wrap: sentence
 ---
 
-## The language of "Fixed Effects"
+This chapter talks a bit more about fixed effects.
+It starts with an overview of the language used to talk about them, gives a brief bit about underidentification, and then moves to looking at how we can have fixed effects interacted with other covariates.
+The final parts connect to in-class discussion of fixed effects; in particular it gives a reflection on the four concept questions from Packet 1.2 (the live session slides).
 
-I wanted to follow-up on a couple of things that I had written down but not sent out.
+## The language of "Fixed Effects"
 
 People will talk about "fixed effects" in (at least) two ways.
 The first is when you have a dummy variable for each of your clusters, and you are using OLS regression (not multilevel modeling).
@@ -37,6 +39,157 @@ For example, say our level 2 variable is a dummy variable (e.g., sector).
 Then a model where we add five to the coefficient of the level 2 variable, and subtract five from all of the fixed effects for the clusters with sector=1 will fit our data just as well as one where we don't.
 We can't tell the difference!
 Hence we do not have enough to "identify" the parameter values.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+# Libraries so we can do stuff
+library( foreign )
+library( tidyverse )
+
+
+##
+## Loading data and looking at individuals
+##
+
+# read student data
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+str( dat )
+head( dat )
+
+nrow( dat )
+
+
+# This controls the random number generation.
+# This makes it so we all have the same 10 schools
+set.seed( 12345 )
+
+
+
+#### Making a toy dataset of 10  schools ####
+
+sids = unique( dat$id )
+length( sids )
+
+winners = sample( sids, 10 )
+winners
+
+nrow( dat )
+dat.ten = filter( dat, id %in% winners )
+nrow( dat.ten )
+# dat.ten$id = droplevels( dat.ten$id )
+table( dat.ten$id )
+
+
+```
+
+## Model syntax: removing the main ses term vs not
+
+We talked about both these two models:
+
+```{r}
+M1 = lm( mathach ~ 0 + ses*id, data=dat.ten )
+coef( M1 )
+
+M2 = lm( mathach ~ 0 + ses*id - ses, data=dat.ten )
+coef( M2 )
+```
+
+Note how when we remove ses via `- ses` we gain an extra interaction term of `ses:id1288`.
+In M1, our `ses` coefficient is our baseline slope of school 1288.
+The ses interaction terms are *slope changes*.
+
+Note how if we add ses to the changes we get back all the slopes in M2:
+
+```{r}
+coef( M1 )[12:20] + coef(M1)[[1]]
+```
+
+Bottom line: M1 and M2 are exactly the same in what they are describing, they are just parameterized differently.
+Anything we learn from one we could learn from the other.
+
+### Plot our model
+
+To plot our model we make a dataset of the intercepts and slopes of each school.
+Doing this with M2 is much easier than M1, since the coefficients are exactly what we want:
+
+```{r}
+lines = data.frame( id = names( coef(M2) )[1:10],
+                    inter = coef(M2)[1:10],
+                    slope = coef(M2)[11:20] )
+
+# we need to fix our IDs.  :-(
+lines$id = gsub( "id", "", lines$id)
+head( lines )
+```
+
+(The gsub "substitutes" (replaces) the string "id" with "" in all of our ids so we get back to the actual school ids.
+Otherwise we will not be able to connect these data to our raw students as easily.)
+
+We now plot!
+
+```{r, fig.height=3, fig.width = 6}
+ggplot( dat.ten, aes( ses, mathach ) ) +
+    facet_wrap( ~ id, nrow=2 ) +
+    geom_point( size=0.75, alpha=0.5 ) +
+    geom_abline( data=lines, aes( slope=slope, 
+                                  intercept=inter ), 
+                 col="red", lwd=1 ) +
+    geom_vline( xintercept = 0 )
+```
+
+### What do the intercepts of any of the lines mean?
+
+The intercepts predict what math achievement a studnet with ses = 0 going to a given school would have.
+For example, in school 8800, we predict a student with an ses of 0 would have a math achievement of 9.2.
+
+Notice that for some schools the intercept is *extrapolating*.
+E.g., most of school 8800's students are below 0 for ses, and the intercept is thus describing what we expect for students at the higher end of their range.
+For school 9225, we are seeing a prediction for students a bit below the middle of their range.
+
+```{r, include=FALSE}
+dat.ten %>% group_by( id ) %>% 
+    summarise( mean_ses = mean( ses ) )
+```
+
+### What differences, if any, are there between running a new linear model on each school vs. running the interacted model on the set of 10 schools?
+
+The lines would be *exactly* the same.
+The standard errors are different.
+Here is the line on just school 1288:
+
+```{r}
+s1288 = filter( dat.ten, id == "1288" )
+M_1288 = lm( mathach ~ 1 + ses, data=s1288 )
+summary( M_1288 )
+```
+
+The SEs will be different, however.
+Compare:
+
+```{r}
+sum = summary( M2 )
+sum$coefficients[ c(1, 11 ), ]
+```
+
+In this case the SEs are close, but they could be a lot different if we have a lot of heteroskedasticity or the school has few data points so we do a bad job estimating uncertainty.
+
+The key is in the single model we are using *all* the schools to estimate the residual variance, and this is the number that drives our SE estimates.
+
+### Do we trust the red lines on the plot? Why or why not?
+
+We trust them because they are driven just by the school data, so they are essentially unbiased.
+But these are small datasets, so they are unstable.
+
+### What about the variability in the slopes and intercepts of the red lines?
+
+The variation is not to be trusted.
+The slopes are varying because of measurement error.
+For example, it is unlikely school 3533 really has a negative slope.
+It is more likely we just got some low performing high ses kids by happenstance in our sample.
+Similarly, it is unlikely school 6170 has such a steep slope.
+It has few kids, and the kid with less than -2 ses and a very low math achievment is likely an influential point in that regression.
 
 ## Further Reading
 

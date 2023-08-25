@@ -31,6 +31,9 @@ book:
           - broom.qmd
           - lmer_extract.qmd
           - fixed_effects.qmd
+          - fe_crve.qmd
+          - fe_discussion.qmd
+          - robust_mlm.qmd
           - interpreting_coefficients.qmd
           - within_v_between.qmd
           - growth_models_predictors.qmd
@@ -41,6 +44,7 @@ book:
           - glm_vs_transform.qmd
           - lr_test.qmd
           - aic_check.qmd
+          - survey_weights.qmd
     - part: "WORKED EXAMPLES"
       chapters:
           - hsb_ex.qmd
@@ -59,7 +63,6 @@ book:
           - cov_matrix_derivation.qmd
           - inflated_variance.qmd
           - pooling.qmd
-          - survey_weights.qmd
           - complex_error.qmd
           - lmer_optimization.qmd
           - cluster_demo.qmd

@@ -1,0 +1,174 @@
+---
+title: "MLM and Cluster-Robust Standard Errors"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library( tidyverse )
+library( arm )
+library( foreign )
+
+# read student data
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+head( dat )
+
+# school data
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+head( sdat )
+
+
+dat = merge( dat, sdat, by="id", all.x=TRUE )
+head( dat )
+
+library( sandwich )
+library( lmtest )
+library( clubSandwich )
+
+```
+
+We have talked about multilevel modeling, and talked about cluster robust standard errors.
+We can actually have both.
+In STATA, you just write "`, robust`" in your modeling command.
+In R, you have to use the `clubSandwich` package.
+Let's illustrate with the High School and Beyond data.
+
+# Robust standard errors without multilevel modeling
+
+As a reminder, here is how to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):
+
+First we fit our regression, like we would normally:
+
+```{r}
+one.sch = filter( dat, id == "8857" )
+nrow( one.sch )
+
+M0 <- lm( mathach ~ 1 + ses, dat) 
+arm::display( M0 )
+```
+
+Then we use the `sandwich` and `lmtest` package:
+
+```{r}
+library( sandwich )
+library( lmtest )
+lmtest::coeftest(M0, type = "HC1")
+```
+
+And here is cluster robust standard errors when you have clustered data, but have not bothered with multilevel modeling:
+
+```{r}
+M1 = lm( mathach ~ 1 + ses + sector, data = dat )
+lmtest::coeftest( M1, type = "CL", cluster = dat$id )
+```
+
+# CRSE + Multilevel Modeling
+
+Ok, so we have seen how to get robust standard errors in the above; how do we combine them with multilevel modeling?
+First, let's fit our multilevel model:
+
+```{r}
+M2 = lmer( mathach ~ 1 + ses + sector + (1|id), data=dat )
+display( M2 )
+```
+
+If we believe all our MLM assumptions, we can get our vanilla standard errors as so:
+
+```{r}
+summary( M2 )$coef
+```
+
+If we don't believe them fully, we might want to make our inference more robust.
+Before we turn to this, first note that our point estimates can be different for MLM vs OLS:
+
+```{r}
+coef( M1 )
+fixef( M2 )
+```
+
+The assumption of the random effects means we are not weighting all our data the same way.
+For example, if we find the clusters vary in size a lot, we might weight the clusters more equally when estimating a cluster-level coefficient (e.g., sector) instead of counting on the big clusters more.
+
+Regardless, we might worry that complex dependencies within our clusters are messing up our standard errors in our MLM, however.
+Fixing that is easy:
+
+```{r}
+library( clubSandwich )
+club <- coef_test( M2,
+           vcov = "CR1S",
+           test = "Satterthwaite")
+club
+```
+
+The `clubSandwich` package works for multi-level models fit with either `lme4::lmer()` or `nlme::lme()`.
+Note that `coef_test` is *not* the same as `coeftest`.
+The `vcov = "CR1S"` replicates the Stata SEs (or so it has been speculated, and assuming they use the same correction as for panel data models).
+
+We can compare the SEs as so:
+
+```{r}
+rbind( club$SE, se.fixef(M2) )
+```
+
+We see that the SEs did not change much from the homoskedastic- and within-cluster-independence-assuming standard errors of the vanilla lmer call in this circumstance.
+
+## Misspecified how?
+
+The sorts of misspecification that we might be worried about are things such as the following:
+
+1.  Using a random intercept model when the real data-generating process has a random slope;
+2.  Using a model that assumes homogeneous random effects when the real data-generating process involves heteroskedasticity (e.g., different random effects variances for treatment schools than for control schools);
+3.  Using a model with a single level of random effects (e.g., school random effects) when the real data-generating process has multiple levels of structure (e.g., school and classroom random effects); or
+4.  Assuming homoscedastic variance for the lowest-level errors when the real process is heteroskedastic or has some other structure.
+
+Of the above (3) could have "secret clustering" in your clusters, and give you radically incorrect standard errors.
+The other options are more violations of homoskedasticity, and are likely to not be as serious of concerns.
+You can also diagnose them with residual plots, and see if you are seeing more scatter in your data for some groups or individuals than others.
+
+Regardless, if you are worried about these things, then the above will give you improved standard errors.
+
+# Some technical notes
+
+So what is this thing even doing?
+In the following I describe a rough approximation.
+The key idea is that a multilevel model specification is specifying a parameterized $n \times n$ variance-covariance matrix of the residuals of a generic linear model.
+Due to our assumption of independent clusters, this matrix is block diagonal with blocks $V_1, \ldots, V_J$, with block $V_j$ corresponding to group $j$.
+For a random intercept model, for example, block $j$ would be a $n_j \times n_j$ matrix with $\tau_{00} + \sigma^2$ for the diagonal and $\tau_{00}$ for the off-diagonal, with $\tau_{00}$ being the variance of the random intercepts and $\sigma^2$ being the within-block residual variance.
+
+```{=html}
+<!--
+In particular, consider a random effects model of the form
+$$
+Y_{ij} = \beta_{0j} + \beta_{1j} X_{1,ij} + \ldots + \beta_{pj} X_{p,ij} + \epsilon_{ij} 
+$$
+-->
+```
+If we write our multilevel model in reduced form, we can write it as a mini-regression for each group $j$ of: $$
+Y_j = X_j \vec{\beta} + Z_j \vec{r}_j + e_j ,
+$$ where $Y_j$ is the vector of outcomes, $X_j$ and $Z_j$ are mini design matrices of covariates (including a column of 1s for the intercept, normally), with $X_j$ being all the covariates and $Z_j$ being those covariates that have corresponding random effects (also with a column of 1s), $\vec{\beta}$ the vector of coefficients (the fixed effects), $\vec{r}_j$ the vector of random effects for group $j$, and $e_j$ the vector of residuals.
+
+Importantly, the $u_j := Z_j \vec{u}_j + e_j$ is all residual, and $V_j = Var( u_j )$: the variance-covariance matrix of the residuals is determined by this structure and our assumptions on $\vec{u}_j$ being multivariate normal and the $e_j$ being a vector of independent residual draws (the $\epsilon_{ij}$).
+
+Now, given this view of our multilevel model, we can estimated this with generalized least squares.
+Generalized least squares is a generic regression technique where, if you have a parameterized covariance matrix on the residuals, you can estimate your regression coefficients taking that correlation structure into account.
+Think of it as a three-step process: first fit the regression without taking the residuals into account, then use the fit model to estimate our big $n \times n$ variance-covariance matrix, and then use this estimated matrix as a set of weights that we plug back into a least squares estimation.
+
+In particular, the estimator for $\vec{\beta}$ is weighted least squares: $$ \hat{\beta} = (X'WX)^{-1}X'W Y ,  $$ with $W$ a weight matrix that is a $n \times n$ block-diagonal matrix formed from the inverses of the estimated $V_j$.
+Now if the random effects structure (the assumed distribution of the $r_j$) is misspecified or the residual error structure (on the $\epsilon_{ij}$) is wrong, then $V_j$ will be wrong, but $\hat{\beta}$ will still be asymptotically consistent (under some conditions).
+
+Cluster-robust methods use the empirical residuals (the $\hat{u}_{j}$) to assess the uncertainty in $\hat{\beta}$ as an estimate of the $\beta$ as defined by the implied weights $W$.
+Even if the random effects part of the model is wrong, the assumption of independent clusters means our inference on this estimand is still right.
+The key idea is cluster-robust methods take a weighted average of $J$ very badly estimated variance-covariance matrices to get a decent estimate of overall population-level uncertainty.
+
+The main advantage of the `clubSandwich` package is it will take our multilevel model and do this cluster-roboust standard error calculation.
+Even better, however, is it will (using "CR2" adjustment) try to improve the basic sandwich estimator by 1) adjusting the residuals (the $\hat{u}_j$) a bit so that the variance estimator is exactly unbiased if the working model is exactly correct and b) using Satterthwaite degrees of freedom (or generalizations thereof) for tests/confidence intervals, also derived under the assumption that the working model is exactly correct.
+
+# Acknowledgements
+
+Thanks to James Pustejovsky, the creator of the `clubSandwich` package, for the help in thinking this through.
+Much of these notes, in particular the reasons for misspecification and much of the technical notes, are liberally stolen from emails with this fine colleague.

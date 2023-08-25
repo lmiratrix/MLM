@@ -1,0 +1,226 @@
+---
+title: "A tour of fixed effects and cluster-robust SEs"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library( tidyverse )
+library( sandwich )
+library( texreg )
+library( lmtest )
+
+# read student data
+library( foreign )
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+head( dat )
+
+
+# read in school data
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+
+head( sdat )
+nrow( sdat )
+
+
+```
+
+This brief handout will walk through fixed effects and cluster robust standard errors, with a stop at aggregation and heteroskedastic standard errors.
+
+Consider the following research question:
+
+RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?
+
+# Aggregation
+
+One way forward is to aggregate our HS&B data and merge it into our school-level data, and then analyze the result.
+
+We aggregate as so:
+
+```{r}
+col.dat = dat %>% group_by( id ) %>% 
+    summarize( per.fem = mean(female),
+                 per.min = mean(minority),
+                 mean.ses = mean(ses),
+                 mean.ach = mean(mathach),
+                 n.stud = n() )
+
+# combine our school-level variables (ours and theirs) into one data.frame
+sdat = merge( sdat, col.dat, by="id", all=TRUE )
+head( sdat )
+
+```
+
+We can now answer our research question with a school-level regression:
+
+```{r}
+Magg = lm( mean.ach ~ 1 + sector + mean.ses, data=sdat )
+
+library( sandwich )
+library( lmtest )
+coeftest( Magg, vcov. = vcovHC, type = "HC0" )
+```
+
+We use heteroskedastic robust standard errors to take into account possible heteroskedasticity due to, for example, some school outcomes being based on smaller numbers of students (and thus having more variation) than other school outcomes.
+
+In this regression we are controlling for school mean SES, not student SES.
+If anything is going on *within school* between SES and math achievement, and that is maybe different for different sectors, we might be missing it.
+
+# Student level regression and cluster robust SES
+
+Instead of using our aggregated data, we can merge our *school-level* variables into the studnet data and run a student level regression:
+
+The merge brings in level 2 variables, repeating them for each student in a school:
+
+```{r}
+dat = merge( dat, sdat, by="id" )
+head( dat )
+```
+
+And now our regression
+
+```{r}
+Mstud = lm( mathach ~ 1 + sector + ses, data = dat )
+summary( Mstud )
+```
+
+## Getting the right standard errors
+
+The standard errors for the above regression, however, is **wrong**: we are not taking the clustering into account.
+We can fix this with cluster-robust standard errors:
+
+```{r}
+coeftest( Mstud, vcov. = vcovCL, cluster = dat$id )
+```
+
+Catholic schools score 2 points higher than Public, on average, beyond individual level SES.
+
+We can further control for school mean SES, like with aggregation:
+
+```{r}
+Mstud2 = lm( mathach ~ 1 + sector + ses + meanses, data = dat )
+coeftest( Mstud2, vcov. = vcovCL, cluster = dat$id )
+```
+
+The contextual value of school mean SES is explaining some of the difference between Catholic and public schools, here: note the reduction of the coefficient for `sector`.
+That being said, and still accounting for clustering, `sector` is still quite significant.
+
+Confidence intervals give:
+
+```{r}
+coefci(Mstud2, vcov. = vcovCL, cluster = dat$id )
+```
+
+Relative to the overall standard deviation of math achievement we have:
+
+```{r}
+sd_math = sd( dat$mathach )
+sd_math
+coefci(Mstud2, vcov. = vcovCL, cluster = dat$id ) / sd_math
+```
+
+The difference between Catholic and public schools is somewhere between 0.10 and 0.27 standard deviations, beyond what can be explained by ses.
+
+# And fixed effects?
+
+We can combine fixed effects and cluster robust standard errors quite easily, but we cannot combine fixed effects and level 2 covariates at all.
+We next look at this latter problem, and then see what combining these options looks like when asking questions that do not rely on level 2 variables for main effects.
+
+## The problem of fixed effects and dummy variables
+
+Fixed effects cannot be used to take into account school differences if we are interested in level 2 variables, because the fixed effects and level 2 variables are *co-linear*.
+Put another way, if we let each school have its own mean outcome (represented by the coefficient for a dummy variable for that school), then we can't have a variable like `sector` to measure how Catholic schools are different from public schools, conditioned on all the school mean outcomes.
+There is nothing left to explain as, by construction, there are no differences in school mean outcomes once we "control for" the individual school mean outcomes via fixed effects!
+
+What R will do when you give colinear variables is drop the extra ones.
+Here is a mini-example fake dataset of 4 schools with 3 students in each school:
+
+```{r}
+fake = tibble( id = c( 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4),
+                   mathach = rnorm( 12 ),
+                   ses = rnorm( 12 ),
+                   sector = c( 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1 ) )
+fake$id = as.factor( fake$id )
+fake
+```
+
+And our regression model with fixed effects for school plus our school-level `ses` gives this:
+
+```{r}
+lm( mathach ~ 0 + id + ses + sector, data = fake )
+```
+
+Note the `NA` for sector!
+We cannot estimate it due to colinearity, so it got dropped.
+
+## Using fixed effects to handle clustering
+
+That being said, fixed effects are an excellent way to control for school differences when looking at *within-school relationships*.
+For example, we can ask how math relates to SES within schools, controlling for systematic differences across schools.
+
+Here is the no fixed effect regression, and the fixed effect regression:
+
+```{r}
+Mstud3_noFE = lm( mathach ~ 1 + ses, data=dat )
+
+dat$id = as.factor(dat$id)
+Mstud3 = lm( mathach ~ 0 + ses + id, data=dat )
+head( coef( Mstud3 ) )
+```
+
+For our fixed effect model, we will have lots of coefficients because we have a fixed effect for each school; the `head()` command is just showing us the first few.
+We also had to explicitly make our `id` variable a factor (categorical variable), so R doesn't think it is a continuous covariate.
+
+For our standard errors, etc., we can further account for clustering of our residuals above and beyond what can be explained by our fixed effects (even if we subtract out the mean outcome, we might still have dependencies between students within a given school).
+So we use our cluster-robust standard errors as so:
+
+```{r}
+coefs <- coeftest( Mstud3, vcov. = vcovCL, cluster = dat$id )
+head( coefs )
+```
+
+We have again used `head()` to just get the first lines.
+The whole printout would be one line per school, plus the ses coefficient!
+
+Let's compare our three models (note the way we omit coefficients with `id` to drop our fixed effects from the table):
+
+```{r}
+library( texreg )
+screenreg( list( `No FE`=Mstud3_noFE, `FE` = Mstud3, `FE + CRVE`=coefs ), 
+           omit.coef="id" )
+
+```
+
+A few things to note:
+
+-   Not having fixed effects means we are getting an estimate of the math-ses relationship *including* school level context. Note the higher point estimate. Often we want to focus on within-school relationships. Fixed effects does this.
+-   The standard errors are larger once we include fixed effects; the fixed effects are partially accounting for clustering.
+-   The standard errors are even larger when we include CRVE. It is more fully accounting for the clustering, and the fact that the clusters themselves could vary. In general, one should typically use CRVE in addition to fixed effects, if one wants to view the clusters as representative of a larger population (in this case a larger population of schools).
+
+## Bonus: Interactions with level-2 variables are OK, even with fixed effects
+
+If we want to see if the *relationship* of math and SES is different between schools, we can get tricky like so:
+
+```{r}
+Mstud4 = lm( mathach ~ 0 + ses + ses:sector + id, data=dat )
+head( coef( Mstud4 ) )
+tail( coef( Mstud4 ) )
+```
+
+Note interaction terms always get pushed to the end of the list of estimates by R.
+So we have to pull them out with `tail()`.
+
+In the following we compare SEs.
+
+```{r}
+a <- coeftest( Mstud4, vcov. = vcovCL, cluster = dat$id )
+library( texreg )
+screenreg( list( wrong=Mstud4, adjusted=a ), 
+           omit.coef="id", single.row = TRUE )
+```
+
+In our second column we are accounting for our clustering with our cluster robust SEs.
