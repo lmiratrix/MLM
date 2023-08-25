@@ -1,7 +1,7 @@
 {
   "hash": "63dca958b2b8dd0cb34df3406a493859",
   "result": {
-    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output-display}\n[![](rand_slopes_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/)\n:::\n:::\n",
+    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output .cell-output-stderr}\n```\nPhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.\n```\n:::\n\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/?showcase=0\" width=\"100%\" height=\"1500px\" data-external=\"1\"></iframe>\n:::\n",
     "supporting": [
       "rand_slopes_viz_files"
     ],

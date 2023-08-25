@@ -221,5 +221,14 @@
   },
   "within_v_between.qmd": {
     "within_v_between.html": "f8ace43c"
+  },
+  "fe_crve.qmd": {
+    "fe_crve.html": "07736be9"
+  },
+  "fe_discussion.qmd": {
+    "fe_discussion.html": "da77de23"
+  },
+  "robust_mlm.qmd": {
+    "robust_mlm.html": "03554478"
   }
 }
