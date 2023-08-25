@@ -32,7 +32,6 @@ book:
           - lmer_extract.qmd
           - fixed_effects.qmd
           - fe_crve.qmd
-          - fe_discussion.qmd
           - robust_mlm.qmd
           - interpreting_coefficients.qmd
           - within_v_between.qmd
