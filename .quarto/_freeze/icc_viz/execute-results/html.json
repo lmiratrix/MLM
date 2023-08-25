@@ -1,0 +1,16 @@
+{
+  "hash": "681e2dfcf9fb50a8d77a7a0ecf13d2ab",
+  "result": {
+    "markdown": "---\ntitle: \"ICC Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_icc_viz/?showcase=0\" width=\"672\" height=\"1000px\" data-external=\"1\"></iframe>\n:::\n",
+    "supporting": [
+      "icc_viz_files/figure-html"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

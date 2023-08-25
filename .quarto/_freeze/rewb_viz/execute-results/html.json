@@ -1,0 +1,14 @@
+{
+  "hash": "db843ed79ce7ec4fd2dcae4d45215036",
+  "result": {
+    "markdown": "---\ntitle: \"REWB Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_rewb_viz/?showcase=0\" width=\"672\" height=\"1500px\" data-external=\"1\"></iframe>\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

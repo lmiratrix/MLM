@@ -1,0 +1,14 @@
+{
+  "hash": "63dca958b2b8dd0cb34df3406a493859",
+  "result": {
+    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/?showcase=0\" width=\"672\" height=\"1500px\" data-external=\"1\"></iframe>\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "hash": "3cdf1d004d9936fb507d3129be82ba9e",
+  "result": {
+    "markdown": "---\ntitle: \"Latent Logit/LPM Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output-display}\n[![](latent_logit_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_latent_logit_viz/)\n:::\n:::\n",
+    "supporting": [
+      "latent_logit_viz_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "index.qmd": {
+    "index.html": "2b036237",
+    "docs.html": "f2416cda"
+  },
+  "intro.qmd": {
+    "intro.html": "e7612e57"
+  },
+  "summary.qmd": {
+    "summary.html": "8759124c"
+  },
+  "references.qmd": {
+    "references.html": "31c9509f",
+    "docs.html": "019691d2"
+  },
+  "intro_linear_regression.qmd": {
+    "intro_linear_regression.html": "e6c890ce",
+    "docs.html": "9330b54b"
+  },
+  "intro_ggplot.qmd": {
+    "intro_ggplot.html": "bda30a86",
+    "docs.html": "0caf7ef2"
+  },
+  "intro_markdown.qmd": {
+    "intro_markdown.html": "1670eccb",
+    "docs.html": "9db16f63"
+  },
+  "model_cheat_sheet.qmd": {
+    "model_cheat_sheet.html": "72e0312e",
+    "docs.html": "63aadd8e"
+  },
+  "lmer_extract.qmd": {
+    "lmer_extract.html": "a9d6e7b3",
+    "docs.html": "f344cdec"
+  },
+  "reg_assumptions.qmd": {
+    "reg_assumptions.html": "8e34ac4d",
+    "docs.html": "3ba54b09"
+  },
+  "fixed_effects.qmd": {
+    "fixed_effects.html": "2d7dc320",
+    "docs.html": "3610aae5"
+  },
+  "cluster_demo.qmd": {
+    "cluster_demo.html": "a9529baf",
+    "docs.html": "f4e01d29"
+  },
+  "interpreting_coefficients.qmd": {
+    "interpreting_coefficients.html": "627385c0",
+    "docs.html": "901318aa"
+  },
+  "faraway_ex.qmd": {
+    "faraway_ex.html": "a90b6b8e",
+    "docs.html": "ee21d78a"
+  },
+  "perf_ex.qmd": {
+    "perf_ex.html": "3971c152",
+    "docs.html": "da2a01e3"
+  },
+  "kenya_ex.qmd": {
+    "kenya_ex.html": "30d367e9",
+    "docs.html": "46a8d692"
+  },
+  "lmer_optimization.qmd": {
+    "lmer_optimization.html": "e234216d",
+    "docs.html": "0321a0ca"
+  },
+  "making_tables.qmd": {
+    "making_tables.html": "01c81afd",
+    "docs.html": "f5eefcdf"
+  },
+  "math_reference.qmd": {
+    "math_reference.html": "db6a78d1",
+    "docs.html": "3c810304"
+  },
+  "growth_models_predictors.qmd": {
+    "growth_models_predictors.html": "90205d42",
+    "docs.html": "688c4dfb"
+  },
+  "reg_table_demo.qmd": {
+    "reg_table_demo.html": "b34f32b2",
+    "docs.html": "0ee7b188"
+  },
+  "complex_error.qmd": {
+    "complex_error.html": "3dbcdce6",
+    "docs.html": "b63a09fd"
+  },
+  "intro_missing_data.qmd": {
+    "intro_missing_data.html": "a7752828",
+    "docs.html": "34a391a6"
+  },
+  "plot_expand_grid.qmd": {
+    "plot_expand_grid.html": "d14f1558",
+    "docs.html": "831d188b"
+  },
+  "summary_plots.qmd": {
+    "summary_plots.html": "4a3ae48f",
+    "docs.html": "0d3390cb"
+  },
+  "peer_grading.qmd": {
+    "peer_grading.html": "3092065d",
+    "docs.html": "af50ee80"
+  },
+  "r_tips.qmd": {
+    "r_tips.html": "41274f7d",
+    "docs.html": "f38fd6c4"
+  },
+  "inflated_variance.qmd": {
+    "inflated_variance.html": "21e42ce7",
+    "docs.html": "dbe71e99"
+  },
+  "defining_pooling.qmd": {
+    "defining_pooling.html": "8be88e8e"
+  },
+  "model_representations.qmd": {
+    "model_representations.html": "312db027",
+    "docs.html": "0ffe2b94"
+  },
+  "hsb_ex.qmd": {
+    "hsb_ex.html": "489accc8",
+    "docs.html": "b27fcec2"
+  },
+  "survey_weights.qmd": {
+    "survey_weights.html": "e70d46c4",
+    "docs.html": "11c448e4"
+  },
+  "interpreting_glms.qmd": {
+    "interpreting_glms.html": "f8a1e2fa",
+    "docs.html": "bf494cfc"
+  },
+  "pooling.qmd": {
+    "pooling.html": "ebedeb86",
+    "docs.html": "5b347bda"
+  },
+  "cov_matrix_derivation.qmd": {
+    "cov_matrix_derivation.html": "5615b9b7",
+    "docs.html": "746a1b89"
+  },
+  "broom.qmd": {
+    "broom.html": "4d3ee547",
+    "docs.html": "a0c6dd39"
+  },
+  "ggeffects.qmd": {
+    "ggeffects.html": "d9b2d811",
+    "docs.html": "75a7670c"
+  },
+  "rewb.qmd": {
+    "rewb.html": "ffdb61ae",
+    "docs.html": "3a5bfaaf"
+  },
+  "derivations.qmd": {
+    "derivations.html": "5d4bc1b4",
+    "docs.html": "317c4842"
+  },
+  "r_basics.qmd": {
+    "r_basics.html": "0a947f5f",
+    "docs.html": "041860d9"
+  },
+  "worked_examples.qmd": {
+    "worked_examples.html": "f9d3988e",
+    "docs.html": "0da07e83"
+  },
+  "mod_fit.qmd": {
+    "mod_fit.html": "ed498ffb",
+    "docs.html": "1602e05c"
+  },
+  "icc_derivation.qmd": {
+    "icc_derivation.html": "48302e47",
+    "docs.html": "d1b67cf7"
+  },
+  "icc_viz.qmd": {
+    "icc_viz.html": "0f8edb4d",
+    "docs.html": "71467750"
+  },
+  "visualizations.qmd": {
+    "visualizations.html": "f52c7810",
+    "docs.html": "15b884c0"
+  },
+  "latent_logit_viz.qmd": {
+    "latent_logit_viz.html": "41ba739a",
+    "docs.html": "b408d357"
+  },
+  "rand_slopes_viz.qmd": {
+    "rand_slopes_viz.html": "d1832eeb",
+    "docs.html": "01bff120"
+  },
+  "rewb_viz.qmd": {
+    "rewb_viz.html": "9db0c9a9",
+    "docs.html": "07882303"
+  },
+  "aic_check.qmd": {
+    "aic_check.html": "ba8c0e84",
+    "docs.html": "1275425b"
+  },
+  "double_plot.qmd": {
+    "double_plot.html": "d82b7030",
+    "docs.html": "190c377b"
+  },
+  "pivot_wider.qmd": {
+    "pivot_wider.html": "ca881c3e",
+    "docs.html": "fef7977b"
+  },
+  "anova.qmd": {
+    "anova.html": "03cf2297",
+    "docs.html": "87a411e6"
+  },
+  "self_assess.qmd": {
+    "self_assess.html": "72c8136e",
+    "docs.html": "0465b38a"
+  },
+  "lr_test.qmd": {
+    "lr_test.html": "a9ed717b",
+    "docs.html": "1d1674fb"
+  },
+  "glm_vs_transform.qmd": {
+    "glm_vs_transform.html": "1889db58",
+    "docs.html": "16dd1763"
+  },
+  "using_ggplot.qmd": {
+    "using_ggplot.html": "3108a7f0"
+  },
+  "within_v_between.qmd": {
+    "within_v_between.html": "f8ace43c"
+  }
+}

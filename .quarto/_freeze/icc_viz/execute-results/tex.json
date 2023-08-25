@@ -1,0 +1,20 @@
+{
+  "hash": "681e2dfcf9fb50a8d77a7a0ecf13d2ab",
+  "result": {
+    "markdown": "---\ntitle: \"ICC Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output-display}\n[![](icc_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_icc_viz/)\n:::\n:::\n",
+    "supporting": [
+      "icc_viz_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

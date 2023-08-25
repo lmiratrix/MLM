@@ -1,0 +1,18 @@
+{
+  "hash": "1c3a2c6678e0e399af7c5c64bf247b28",
+  "result": {
+    "markdown": "---\ntitle: \"Pretty ANOVA Tables with `kable`\"\nauthor: \"Luke Miratrix and Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n\n:::\n\n\n\n## R Setup\n\nWe load the `tidyverse` and `knitr`.\nThe `kable` function from `knitr` makes our tables look nice!\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(broom)\n```\n:::\n\n\n\n## Create fake data\n\nWe create a data set called `a` that has 100 observations and specifies our outcome `Y` as a funciton of two uncorrelated variables `A` and `B`\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\na <- tibble( A = rnorm( 100 ),\n            B = rnorm( 100 ),\n            Y = A * 0.2 + B * 0.5 + rnorm( 100, 0, 1 ) )\n```\n:::\n\n\n\n## Run the Models\n\nWe fit two models, one with `A` and `B`, the other with just `A`.\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nM1 <- lm( Y~ A + B, data = a )\nM2 <- lm( Y ~ A, data = a )\n```\n:::\n\n\n\n## Comparing the Models\n\nWe use the `anova` function to compare the two models (see also the chapter on Likelihood Ratio tests).\nWe see that `B` improves the model fit significantly.\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\naa = anova( M2, M1 )\naa\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nAnalysis of Variance Table\n\nModel 1: Y ~ A\nModel 2: Y ~ A + B\n  Res.Df    RSS Df Sum of Sq      F    Pr(>F)    \n1     98 144.23                                  \n2     97 110.44  1    33.789 29.676 3.863e-07 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n```\n:::\n\n```{.r .cell-code}\naa |> \n  tidy() |> \n  kable()\n```\n\n::: {.cell-output-display}\n|term      | df.residual|      rss| df|    sumsq| statistic| p.value|\n|:---------|-----------:|--------:|--:|--------:|---------:|-------:|\n|Y ~ A     |          98| 144.2333| NA|       NA|        NA|      NA|\n|Y ~ A + B |          97| 110.4441|  1| 33.78921|  29.67613|   4e-07|\n:::\n:::\n\n\n\n## Compare to the Significance test on `B`\n\nNote that the p value for `B` is identical to the ANOVA results above.\nWhy bother with ANOVA?\nIt can test more complex hypotheses as well (multiple coefficients, random effects, etc.)\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nM1 |> \n  tidy() |> \n  kable()\n```\n\n::: {.cell-output-display}\n|term        |   estimate| std.error|  statistic|   p.value|\n|:-----------|----------:|---------:|----------:|---------:|\n|(Intercept) |  0.0159223| 0.1110701|  0.1433539| 0.8863081|\n|A           | -0.0316796| 0.1134644| -0.2792034| 0.7806832|\n|B           |  0.6824613| 0.1252779|  5.4475803| 0.0000004|\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

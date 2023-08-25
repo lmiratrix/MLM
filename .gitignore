@@ -3,13 +3,8 @@
 .RData
 .Ruserdata
 .DS_Store
-/.quarto/
-self_assess.qmd
-_book/
 data/
-load_all_libraries.R
 book-output/
 rand_slopes_viz_files
 *_files/
-_quarto.yml
 *_cache/

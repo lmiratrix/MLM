@@ -1,0 +1,20 @@
+{
+  "hash": "63dca958b2b8dd0cb34df3406a493859",
+  "result": {
+    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output-display}\n[![](rand_slopes_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/)\n:::\n:::\n",
+    "supporting": [
+      "rand_slopes_viz_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}
