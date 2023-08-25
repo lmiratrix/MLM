@@ -8,7 +8,7 @@
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S-043: Multilevel and Longitudinal Models - 21&nbsp; MLM and Cluster-Robust Standard Errors</title>
+<title>Resources for S-043: Multilevel and Longitudinal Models - 20&nbsp; MLM and Cluster-Robust Standard Errors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./interpreting_coefficients.html" rel="next">
-<link href="./fe_discussion.html" rel="prev">
+<link href="./fe_crve.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./robust_mlm.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./robust_mlm.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -289,80 +289,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fe_discussion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Thinking about Fixed Effects Models</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./robust_mlm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_coefficients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./within_v_between.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./growth_models_predictors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_cheat_sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_representations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_glms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aic_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey_weights.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,25 +373,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">HSB Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">HSB Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./faraway_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Faraway Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Faraway Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./perf_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kenya_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
   </div>
 </li>
       </ul>
@@ -414,25 +408,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rand_slopes_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rewb_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">REWB Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">REWB Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -449,43 +443,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -506,13 +500,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#robust-standard-errors-without-multilevel-modeling" id="toc-robust-standard-errors-without-multilevel-modeling" class="nav-link active" data-scroll-target="#robust-standard-errors-without-multilevel-modeling"><span class="header-section-number">22</span> Robust standard errors without multilevel modeling</a></li>
-  <li><a href="#crse-multilevel-modeling" id="toc-crse-multilevel-modeling" class="nav-link" data-scroll-target="#crse-multilevel-modeling"><span class="header-section-number">23</span> CRSE + Multilevel Modeling</a>
+  <li><a href="#robust-standard-errors-without-multilevel-modeling" id="toc-robust-standard-errors-without-multilevel-modeling" class="nav-link active" data-scroll-target="#robust-standard-errors-without-multilevel-modeling"><span class="header-section-number">21</span> Robust standard errors without multilevel modeling</a></li>
+  <li><a href="#crse-multilevel-modeling" id="toc-crse-multilevel-modeling" class="nav-link" data-scroll-target="#crse-multilevel-modeling"><span class="header-section-number">22</span> CRSE + Multilevel Modeling</a>
   <ul class="collapse">
-  <li><a href="#misspecified-how" id="toc-misspecified-how" class="nav-link" data-scroll-target="#misspecified-how"><span class="header-section-number">23.1</span> Misspecified how?</a></li>
+  <li><a href="#misspecified-how" id="toc-misspecified-how" class="nav-link" data-scroll-target="#misspecified-how"><span class="header-section-number">22.1</span> Misspecified how?</a></li>
   </ul></li>
-  <li><a href="#some-technical-notes" id="toc-some-technical-notes" class="nav-link" data-scroll-target="#some-technical-notes"><span class="header-section-number">24</span> Some technical notes</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">25</span> Acknowledgements</a></li>
+  <li><a href="#some-technical-notes" id="toc-some-technical-notes" class="nav-link" data-scroll-target="#some-technical-notes"><span class="header-section-number">23</span> Some technical notes</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">24</span> Acknowledgements</a></li>
   </ul>
 </nav>
     </div>
@@ -521,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></h1>
+<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></h1>
 </div>
 
 
@@ -543,8 +537,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>We have talked about multilevel modeling, and talked about cluster robust standard errors. We can actually have both. In STATA, you just write “<code>, robust</code>” in your modeling command. In R, you have to use the <code>clubSandwich</code> package. Let’s illustrate with the High School and Beyond data.</p>
-<section id="robust-standard-errors-without-multilevel-modeling" class="level1" data-number="22">
-<h1 data-number="22"><span class="header-section-number">22</span> Robust standard errors without multilevel modeling</h1>
+<section id="robust-standard-errors-without-multilevel-modeling" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> Robust standard errors without multilevel modeling</h1>
 <p>As a reminder, here is how to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):</p>
 <p>First we fit our regression, like we would normally:</p>
 <div class="cell">
@@ -598,8 +592,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="crse-multilevel-modeling" class="level1" data-number="23">
-<h1 data-number="23"><span class="header-section-number">23</span> CRSE + Multilevel Modeling</h1>
+<section id="crse-multilevel-modeling" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> CRSE + Multilevel Modeling</h1>
 <p>Ok, so we have seen how to get robust standard errors in the above; how do we combine them with multilevel modeling? First, let’s fit our multilevel model:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">=</span> <span class="fu">lmer</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses <span class="sc">+</span> sector <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>id), <span class="at">data=</span>dat )</span>
@@ -670,8 +664,8 @@ sector       2.100837  0.3411243  6.158566</code></pre>
 </div>
 </div>
 <p>We see that the SEs did not change much from the homoskedastic- and within-cluster-independence-assuming standard errors of the vanilla lmer call in this circumstance.</p>
-<section id="misspecified-how" class="level2" data-number="23.1">
-<h2 data-number="23.1" class="anchored" data-anchor-id="misspecified-how"><span class="header-section-number">23.1</span> Misspecified how?</h2>
+<section id="misspecified-how" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="misspecified-how"><span class="header-section-number">22.1</span> Misspecified how?</h2>
 <p>The sorts of misspecification that we might be worried about are things such as the following:</p>
 <ol type="1">
 <li>Using a random intercept model when the real data-generating process has a random slope;</li>
@@ -683,8 +677,8 @@ sector       2.100837  0.3411243  6.158566</code></pre>
 <p>Regardless, if you are worried about these things, then the above will give you improved standard errors.</p>
 </section>
 </section>
-<section id="some-technical-notes" class="level1" data-number="24">
-<h1 data-number="24"><span class="header-section-number">24</span> Some technical notes</h1>
+<section id="some-technical-notes" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span> Some technical notes</h1>
 <p>So what is this thing even doing? In the following I describe a rough approximation. The key idea is that a multilevel model specification is specifying a parameterized <span class="math inline">\(n \times n\)</span> variance-covariance matrix of the residuals of a generic linear model. Due to our assumption of independent clusters, this matrix is block diagonal with blocks <span class="math inline">\(V_1, \ldots, V_J\)</span>, with block <span class="math inline">\(V_j\)</span> corresponding to group <span class="math inline">\(j\)</span>. For a random intercept model, for example, block <span class="math inline">\(j\)</span> would be a <span class="math inline">\(n_j \times n_j\)</span> matrix with <span class="math inline">\(\tau_{00} + \sigma^2\)</span> for the diagonal and <span class="math inline">\(\tau_{00}\)</span> for the off-diagonal, with <span class="math inline">\(\tau_{00}\)</span> being the variance of the random intercepts and <span class="math inline">\(\sigma^2\)</span> being the within-block residual variance.</p>
 <!--
 In particular, consider a random effects model of the form
@@ -701,8 +695,8 @@ Y_j = X_j \vec{\beta} + Z_j \vec{r}_j + e_j ,
 <p>Cluster-robust methods use the empirical residuals (the <span class="math inline">\(\hat{u}_{j}\)</span>) to assess the uncertainty in <span class="math inline">\(\hat{\beta}\)</span> as an estimate of the <span class="math inline">\(\beta\)</span> as defined by the implied weights <span class="math inline">\(W\)</span>. Even if the random effects part of the model is wrong, the assumption of independent clusters means our inference on this estimand is still right. The key idea is cluster-robust methods take a weighted average of <span class="math inline">\(J\)</span> very badly estimated variance-covariance matrices to get a decent estimate of overall population-level uncertainty.</p>
 <p>The main advantage of the <code>clubSandwich</code> package is it will take our multilevel model and do this cluster-roboust standard error calculation. Even better, however, is it will (using “CR2” adjustment) try to improve the basic sandwich estimator by 1) adjusting the residuals (the <span class="math inline">\(\hat{u}_j\)</span>) a bit so that the variance estimator is exactly unbiased if the working model is exactly correct and b) using Satterthwaite degrees of freedom (or generalizations thereof) for tests/confidence intervals, also derived under the assumption that the working model is exactly correct.</p>
 </section>
-<section id="acknowledgements" class="level1" data-number="25">
-<h1 data-number="25"><span class="header-section-number">25</span> Acknowledgements</h1>
+<section id="acknowledgements" class="level1" data-number="24">
+<h1 data-number="24"><span class="header-section-number">24</span> Acknowledgements</h1>
 <p>Thanks to James Pustejovsky, the creator of the <code>clubSandwich</code> package, for the help in thinking this through. Much of these notes, in particular the reasons for misspecification and much of the technical notes, are liberally stolen from emails with this fine colleague.</p>
 
 
@@ -944,13 +938,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./fe_discussion.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Thinking about Fixed Effects Models</span></span>
+      <a href="./fe_crve.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./interpreting_coefficients.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
