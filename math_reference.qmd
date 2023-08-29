@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This document has a bunch of mathematical equations we use in the class.
 It is a good reference for how to write your own math equations in your life moving forward.
 Generally, people write math equations using something called Latex.
-Latex (or Tex) is a way of writing documents where mixed in with the writing of what you want to say are commands describing how you want your document to look.
+Latex (or Tex) is a way of writing documents where mixed in with the writing of what you want to say are commands (editorial markup, if you will) describing how you want your document to look.
 This is a very powerful thing: there are Tex editors that allow you to write entire articles, books, reports, poetry, or whatever with extreme control over the typesetting used.
 It creates beautifully typeset documents that are easy to distinguish from those written in, say, MS Word due to how they adjust whitespace on the page.
 That being said, it can be a lot to jump in to.
@@ -28,7 +28,8 @@ You can even have R Markdown render to MS Word to give you a word doc with all y
 ### Using this document
 
 You are probably reading the PDF version of this document.
-But really you should open the .Rmd file and cut and paste the relevant equations into your own work, and then modify as necessary.
+But really you should open the .Rmd file that generated this document, so you can cut and paste the relevant equations into your own work, and then modify as necessary.
+The link to this file [here](https://raw.githubusercontent.com/lmiratrix/MLM/main/math_reference.qmd "Rmd file of math equations").
 
 ## Overview of Using Latex
 
@@ -43,6 +44,7 @@ I can do subscripts by using an underscore.
 E.g., "\$\\alpha_j\$" gives $\alpha_j$.
 I can also do superscripts by using a hat.
 E.g., "\$\\alpha\^2\$" gives $\alpha^2$.
+To put more than one character in a subscript (or superscript), put the stuff to be subscripted in curly braces, e.g., "\$\\alpha\_{ij}\$" gives $\alpha_{ij}$.
 
 \newpage
 
@@ -75,7 +77,7 @@ E.g., if we write:
 $$ Y = a X + b $$
 ```
 
-We get $$ Y = a X + b $$
+We get $$ Y = a X + b .$$
 
 If we want multiple lines, we have to put our equation between a `\begin{aligned}` and `\end{aligned}` command and use a double backslash ("\\\\") to denote each line break (even if we have a line break we have to do this---we have to explicitly tell the program converting our raw text to nice formatted text where the line breaks are).
 Finally, inside the begin-end block of math, line things up with `&` symbols on each row of our equation.
@@ -143,7 +145,7 @@ $$
 
 We next walk through some latex code for the models you will most see.
 
-## Random Intercept Model
+## Sample code: Random Intercept Model
 
 Our canonical Random Intercept model is as follows.
 First, our Level 1 model:
@@ -242,9 +244,10 @@ $$
 \mbox{ and } u_{j} \stackrel{i.i.d}{\sim} N( 0, \sigma^2_\alpha )
 $$ The `\stackrel{}{}` command takes two bits of latex, each in the curly braces, and stacks them on top of each other.
 
-## Random Slope Model
+## Sample code: Random Slope Model
 
-The canonical random slope model for HS&B with `ses` at level 1 and sector at level 2
+The canonical random slope model for HS&B with `ses` at level 1 and sector at level 2 involves a matrix for the pair of random effects.
+We have to get a bit fancier with our TeX, therefore!
 
 Level 1 models:
 
@@ -318,7 +321,7 @@ u_{1j}
 \end{bmatrix}
 $$
 
-The derivation of the reduced form is:
+The TeX for the derivation of the reduced form is:
 
 ```         
 $$

@@ -2,12 +2,13 @@ project:
   type: book
 
 book:
-  title: "Resources for S-043: Multilevel and Longitudinal Models"
+  title: "Resources for S043/Stat151: Multilevel and Longitudinal Models"
   author: "Luke Miratrix and Friends"
   date: "`r Sys.Date()`"
   chapters:
     - index.qmd
     - self_assess.qmd
+    - assignment_guidelines.qmd
     - part: "R & R MARKDOWN"
       chapters:
           - intro_markdown.qmd
