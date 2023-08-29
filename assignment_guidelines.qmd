@@ -1,21 +1,12 @@
----
-title: "Assignment Formatting Guidelines"
-author: "Luke Miratrix"
-editor: 
-  markdown: 
-    wrap: sentence
----
+# Assignment Formatting Guidelines  {.unnumbered}
 
-The following describes our expectations on what turned in assignments should look like.
-Please read this document carefully before your first assignment.
-Note that many of these requirements will be automatically fulfilled if you use R Markdown.
+The following describes our expectations on what turned in assignments should look like. Please read this document carefully before your first assignment. Note that many of these requirements will be automatically fulfilled if you use R Markdown.
 
 > ***Guiding Principle***
 >
 > Your submitted work should present your work clearly and without undue clutter, be easy to navigate, and adhere to basic publication norms.
 
-The following are some specific details that further the guiding principle.
-It is not an exhaustive list.
+The following are some specific details that further the guiding principle. It is not an exhaustive list.
 
 ## Formatting
 

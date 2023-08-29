@@ -167,20 +167,20 @@ For example, to report the mean reading score, you can use
 ```
 
 Which will produce `r mean(dat$p7read)`.
-That's a few too many decimals, let's round it too using
+That's a few too many decimals, let's round it off, using
 
 ```{r, eval=FALSE}
 `r round(mean(dat$p7read),2)`
 ```
 
-which produces `r round(mean(dat$p7read),2)`".
+which produces "`r round(mean(dat$p7read),2)`."
 
 Here we used two commands: `round` and `mean`.
 You can use more commands and write more complex inline code, depending on what you want to report.
 
 ## Embedding plots
 
-Plots are easy to embed too.
+Plots are easy to embed.
 For example,
 
 ```{r, echo = TRUE, fig.width = 7, fig.height = 7}
@@ -207,21 +207,25 @@ It's not uncommon to use wrong code to create a plot that looks correct (at leas
 
 ## Embedding tables
 
-Finally, you can directly render tables in R Markdown.
-There are many different packages, but in class we'll mostly use `texreg` and `stargazer`.
-(NB the newer function `tab_model` from `sjPlot` is excellent as well!)
+You can directly render tables in R Markdown.
+The idea is, inside an R chunk, you call a command that prints out a table.
+The report then takes this printout and integrates it into your overall report.
+There are many different packages to make tables, but in class we'll mostly use `texreg`, `stargazer`, and the `tab_model()` function in `sjPlot`.
 
 You can use these packages to create a descriptive table.
 For example:
 
 ```{r, results = 'asis', message = FALSE}
-# Here I specified results = asis. If I didn't stargazer will just render the table in html
+# Here I specified results = asis. If I didn't stargazer will just render the table in html.
+# This is bad if you are making a pdf document.
 # I also specified message = FALSE, so that the package citation gets suppressed
 library(stargazer)
 stargazer(dat, type = "latex")
 ```
 
-We can also use `texreg` and `stargazer` to create a taxonomy of regression models.
+See @sec-make-tables for more on making various tables.
+
+We can also use `texreg` or `stargazer` to create a taxonomy of regression models.
 We recommend `texreg`, which automatically outputs the variances of random effects (more on this soon).
 
 For example:
@@ -239,7 +243,7 @@ screenreg(list(m1,m2,m3),
 ```
 
 Both packages include a lot of options and make it easy to produce publication-quality tables with little effort.
-We have provided more resources on Canvas and in other portions of this book.
+We have provided more resources on Canvas and in other portions of this book (see @make-regression-tables, in particular).
 
 ## Embedding mathematical models
 
@@ -260,3 +264,18 @@ $$Y_i = \beta_0 + \beta_1 Y_i + \epsilon_i$$
 
 And the following statement `$\mu$` compiles to $\mu$.
 This will be very helpful when we ask you to match R output to model parameters in homework.
+
+## Help! R Markdown report generation doesn't work
+
+Don't put "View()" in your Markdown file when loading your csv file.
+Just put in the `read_csv` line.
+Otherwise you will not be able to knit.
+
+Also watch for the `skim()` command--it can crash report generation as well.
+
+If you can't knit PDFs you need to install latex (tex).
+Once you do, reboot your computer.
+If things don't work, then knit to Microsoft word (or, failing that, html as a last resort), print to pdf, and turn that in.
+But then ask a teaching fellow to help get things set up, since PDFs make for much more readable reports.
+
+### 

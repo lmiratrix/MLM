@@ -1,5 +1,5 @@
 ---
-title: "How to extract information from fitted `lmer` models"
+title: "Extrating information from fitted `lmer` models using base R"
 author: "Luke Miratrix"
 editor: 
   markdown: 
@@ -16,14 +16,9 @@ knitr::opts_chunk$set(width=100)
 
 ```
 
-Check out the newer chapter on `broom` for a simpler approach to extracting information from `lmer` models.
-
-## Introduction
-
-This document walks through various R code to pull information out of a multilevel model (and OLS models as well, since the methods generally work on everything).
+This chapter follows Chapter @sec-broom, and provides an alternate set of ways of pulling information from a fit `lmer` model.
+In particular, this document walks through various R code to pull information out of a multilevel model (and OLS models as well, since the methods generally work on everything).
 For illustration, we will use a random-slope model on the HS&B dataset with some level 1 and level 2 fixed effects.
-
-### Libraries
 
 We use the following libraries in this file:
 
@@ -33,8 +28,6 @@ library( foreign ) ## to load data
 library( arm )
 library( tidyverse )
 ```
-
-### Loading the data
 
 Loading the data is simple.
 We read student and school level data and merge:
@@ -54,7 +47,15 @@ Now we fit the random slope model with the level-2 covariates:
 M1 = lmer( mathach ~ 1 + ses + meanses + (1 + ses|id), data=dat )
 ```
 
-To get an overview of what our fitted model is, use `arm`'s `display()` method:
+If we just print the object, e.g., by typing the name of the model on the console, we get minimal information:
+
+```{r}
+M1
+```
+
+### The `display()` method
+
+The `arm` package's `display()` method gives an overview of what our fitted model is:
 
 ```{r}
 display( M1 )
@@ -71,16 +72,10 @@ M1 = lmer( mathach ~ 1 + ses + meanses + (1 + ses|id), data=dat )
 summary( M1 )
 ```
 
-If we just print the object, e.g., by typing the name of the model on the console, we get minimal information:
-
-```{r}
-M1
-```
-
 ## Obtaining Fixed Effects
 
-R thinks of models in reduced form.
-Thus when we get the fixed effects we get both the level-1 and level-2 fixed effects
+R thinks of all models in reduced form.
+Thus when we get the fixed effects we get both the level-1 and level-2 fixed effects all together:
 
 ```{r}
 fixef( M1 )
@@ -101,7 +96,7 @@ fixef( M1 )[[2]]
 
 See how it gives you the number without the name here?
 
-## Variance and Covariance estimates of Random Effects
+## Obtaining Variance and Covariance estimates
 
 We can get the Variance-Covariance matrix of the random effects with `VarCorr`.
 
@@ -176,7 +171,7 @@ But here is an easier way using the `sigma()` utility function:
 sigma( M1 )
 ```
 
-## Obtaining Emperical Bayes Estimates of the Random Effects
+## Obtaining Empirical Bayes Estimates of the Random Effects
 
 Random effects come out of the `ranef()` method.
 Each random effect is its own object inside the returned object.
@@ -232,7 +227,7 @@ Here we added in the impact of mean ses to the intercept (as specified by our mo
 Now if we look at the intercepts (the beta0 variables) they will incorperate the level 2 covariate effects.
 If we then plotted a line using beta0 and beta.ses for each school, we would get the estimated lines for each school including the school-level covariate impacts.
 
-## Standard errors
+## Obtaining standard errors
 
 We can get an object with all the standard errors of the coefficients, including the individual Emperical Bayes estimates for the individual random effects.
 This is a lot of information.
@@ -281,7 +276,7 @@ SEs = as.data.frame( se.coef( M1 )$id )
 head( SEs )
 ```
 
-## Confidence intervals and uncertainty
+## Generating confidence intervals
 
 We can compute profile confidence intervals (warnings have been suppressed)
 
@@ -289,7 +284,7 @@ We can compute profile confidence intervals (warnings have been suppressed)
 confint( M1 )
 ```
 
-## Fitted values
+## Obtaining fitted values
 
 Fitted values are the predicted value for each individual given the model.
 

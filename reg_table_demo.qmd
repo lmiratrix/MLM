@@ -1,10 +1,4 @@
----
-title: "Making Regression Tables and More Complete Summary Output"
-author: "Luke Miratrix"
-editor: 
-  markdown: 
-    wrap: sentence
----
+# Making Regression Tables  {#sec-make-regression-tables}
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE }
 
@@ -57,12 +51,11 @@ dat.g8 <- filter(dat, grade==8)
 
 ```
 
-This document demonstrates the different regression table methods, and talks about some weird wrinkles with using them with multilevel modeling.
+For publication-ready tables and graphics, R has many wonderful packages to automate the process. Some of these packages are good for html documents (websites) and some are good for making PDF documents (reports and papers). This document demonstrates different ways of making regression tables in your reports, and talks about some weird wrinkles with using them with multilevel modeling.
 
 ## The basics of regression tables
 
-For the basics we quickly illustrate regression tables using a subset of the Making Caring Common dataset, which we will eventually discuss in class.
-This dataset has a measure of emotional safety (our outcome) and we want to see, in a specific school, if this is predicted by gender and/or grade.
+For the basics we quickly illustrate regression tables using a subset of the Making Caring Common dataset, which we will eventually discuss in class. This dataset has a measure of emotional safety (our outcome) and we want to see, in a specific school, if this is predicted by gender and/or grade.
 
 Our data look like this:
 
@@ -78,15 +71,13 @@ M_B = lm( esafe ~ grade + gender, data = sch1 )
 M_C = lm( esafe ~ grade * gender, data = sch1 )
 ```
 
-Ok, we have fit our regression models.
-We can look at big complex printout of a single model like so:
+Ok, we have fit our regression models. We can look at big complex printout of a single model like so:
 
 ```{r}
 summary( M_C )
 ```
 
-Or we can make *regression tables*.
-There are two packages, one is `texreg`
+Or we can make *regression tables*. Consider these two packages, the first being `texreg`
 
 ```{r}
 library( texreg )
@@ -102,8 +93,7 @@ stargazer( M_A, M_B, M_C, header=FALSE, type='text')
 
 ## Extending to the multilevel model
 
-For our multilevel examples, we use the Making Caring Common data from Project A, and fit data to the 8th grade students only, but do it for all schools.
-We have made a High School dummy variable.
+For our multilevel examples, we use the Making Caring Common data from Project A, and fit data to the 8th grade students only, but do it for all schools. We have made a High School dummy variable.
 
 Our two models we use for demo purposes have a HS term and no HS term:
 
@@ -114,10 +104,9 @@ modB <- lmer( esafe ~ 1 + HS + (1 | ID), data=dat.g8)
 
 In the next sections we first show how to get better summary output (according to some folks) and then we walk through making regression tables in a bit more detail than above.
 
-## Better summary output for lmer: Getting p-values
+## Getting p-values for lmer output
 
-The `lmerTest` package is a way of making R give you more complete output.
-We are going to load it, and then put the new lmer models into new variables so we can see how the different model fitting packages work with the regression table packages below.
+The `lmerTest` package is a way of making R give you more complete output. We are going to load it, and then put the new lmer models into new variables so we can see how the different model fitting packages work with the regression table packages below.
 
 ```{r}
 library( lmerTest )
@@ -129,71 +118,51 @@ summary( modB.T )
 
 ## The texreg package
 
-There are two options, one is `screenreg` and the other is `texreg()`.
+In `texreg` there are two primary functions for table making, one is `screenreg()` and the other is `texreg()`.
 
-### screenreg
+### Using screenreg()
 
-Screenreg is fine for MLMs.
-It looks a bit like raw output, but it is clear and clean.
-It will take models fit using lmer or lmerTest no problem.
+Screenreg is fine for MLMs. It looks a bit like raw output, but it is clear and clean. It will take models fit using lmer or lmerTest, no problem.
 
 ```{r}
 screenreg(list(modA,modB))
 ```
 
-*Comment:* Note that the number of stars are different for the display vs the summary output!
-(Look at the HS coefficient for example.) Not good, it would seem.
+*Comment:* Note that the number of stars are different for the display vs the summary output! (Look at the HS coefficient for example.) Not good, it would seem.
 
-This is because the $p$-values are calculated using the normal approximation by the screenreg command, and using the $t$-test with approximate degrees of freedom by `lmerTest`.
-This makes a difference.
-Consider the following, using the $t$ statistics for the HS variable:
+This is because the $p$-values are calculated using the normal approximation by the screenreg command, and using the $t$-test with approximate degrees of freedom by `lmerTest`. This makes a difference. Consider the following, using the $t$ statistics for the HS variable:
 
 ```{r}
 2 * pt( -2.733, df=25.77814 )
 2 * pnorm( -2.733 )
 ```
 
-One is below 0.01, and one is not.
-An extra star!
+One is below 0.01, and one is not. An extra star!
 
-### Using texreg and latex
+### Using texreg() and TeX
 
-The `textreg` command is part of the `texreg` package and can be integrated with latex (which you would need to install).
-Once you do this, when you compile to a pdf, all is well.
-In the R code chunk you need to include `results="asis"` to get the latex to compile right.
-E.g., "`r, results="asis"`" when you declare a code chunk.
+The `texreg` command is part of the `texreg` package and can be integrated with latex (which you would need to install). Once you do this, when you compile to a pdf, all is well. In the R code chunk you need to include `results="asis"` to get the latex to compile right. E.g., "`r, results="asis"`" when you declare a code chunk.
 
 ```{r, results="asis"}
 texreg(list(modA,modB), table=FALSE)
 ```
 
-Note that the `table=FALSE` puts the table right where you want it, not at some random spot latex things is nice.
-Latex likes to have "floating tables" which it puts where there is space.
+Note that the `table=FALSE` puts the table right where you want it, not at some random spot latex things is nice. Latex likes to have "floating tables," where it puts the table where there is space; this makes it easier to make the entire formatted page look nice.
 
-## Stargazer
+## The stargazer package
 
 ```{r, results="asis"}
 library( stargazer )
 stargazer(modA, modB, header=FALSE, type='latex')
 ```
 
-One issue is stargazer does not include the random effect variances, so the output is quite limited for multilevel modeling.
-It also has less stringent conditions for when to put down stars.
-One star is below 0.10, two is below 0.05, and three is below 0.01.
-This is quite generous.
-Also it is using the normal approximation.
+One issue is stargazer does not include the random effect variances, so the output is quite limited for multilevel modeling. It also has less stringent conditions for when to put down stars. One star is below 0.10, two is below 0.05, and three is below 0.01. This is quite generous. Also it is using the normal approximation.
 
 ### Stargazer with lmerTest
 
-Stargazer with lmerTest is a bit fussy.
-This shows how to make it work if you have loaded the lmerTest package.
-Recall the lmerTest package makes your lmer commands have p-values and whatnot.
-But this means your new `lmer()` command is not quite the same as the old---and stargazer is expecting the old.
-You gix this by lying to R, telling it the new thing is the old thing.
-This basically works.
+Stargazer with lmerTest is a bit fussy. This shows how to make it work if you have loaded the lmerTest package. Recall the lmerTest package makes your lmer commands have p-values and whatnot. But this means your new `lmer()` command is not quite the same as the old---and stargazer is expecting the old. You gix this by lying to R, telling it the new thing is the old thing. This basically works.
 
-Now for stargazer, we need to tell it that our models are the right type.
-First note:
+Now for stargazer, we need to tell it that our models are the right type. First note:
 
 ```{r}
 class( modB )
@@ -207,4 +176,14 @@ library( stargazer )
 class( modB.T ) = "lmerMod" 
 class( modA.T ) = "lmerMod" 
 stargazer(modA.T, modB.T, header=FALSE, type='latex' )
+```
+
+### The sjPlot package
+
+One function, `tab_model` from `sjPlot`, makes nice regression tables:
+
+```{r}
+# tabulate the results of our two tip models
+library( sjPlot )
+tab_model(modA.T, modB.T)
 ```

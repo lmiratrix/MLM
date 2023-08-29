@@ -1,10 +1,4 @@
----
-title: "Tips, Tricks, and Debugging in R"
-author: "Luke Miratrix"
-editor: 
-  markdown: 
-    wrap: sentence
----
+# Tips, Tricks, and Debugging in R
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -18,36 +12,49 @@ opts_chunk$set(progress = TRUE, verbose = TRUE, prompt=FALSE,
                echo=TRUE, fig.align="center", fig.width=8, 
                fig.height=5, out.width="0.7\\linewidth", 
                size="scriptsize")
+
+exp.dat = data.frame( ID=c("a","b","c","d"), 
+      cond = c("AI","DI","DI","AI"),
+			trial1 = c("E","U","U","E"),
+			dec1 = c(1,1,0,1),
+			trial2 = c("U","E","U","E"),
+			dec2 = c(0,0,0,1),
+				trial3 = c("U","E","E","U"),
+			dec3 = c(0,1,0,1),
+				trial4 = c("E","U","E","U"),
+			dec4 = c(0,1,0,0) )
 ```
 
+This chapter is a complete hodge-podge of small things that tend to bite students, especially when they are dealing with messy data that they might have for final projects.
 
-This chapter is a complete hodge-podge of  section covers ways of dealing with data, especially messy data you might have for final projects.
+In particular, as you learn R, there's lots of good tricks you'll never know about until somebody shows you. Clean code is one such good trick; consider the following: "Your most important collaborator is you from 6 months ago. Unfortunately, you can't ask that-you any questions, because they don't answer their email."
 
-## Some miscellaneous advice
+So onwards with a few things that you may find useful, either now or later.
 
-So you are starting to learn R.
-But there's lots of good tricks you'll never know about until somebody shows you.
-Clean code is one such good trick; consider the following: "Your most important collaborator is you from 6 months ago. Unfortunately, you can't ask that-you any questions, because they don't answer their email."
+## Some principles to live by
 
-In this section we give a few things that you may find useful, either now or later.
+### Watch Tricky letter and number confusion in code
 
-### A few random tips
+The letter "l" looks like the number "1"---watch out for that. Things like "mylm" are usually all letters, with "lm" standing for linear model.
 
-The letter "l" looks like the number "1"---watch out for that.
-Things like "mylm" are usually all letters, with "lm" standing for linear model.
+### Write in a good R style
 
-### Quick tips regarding R Markdown report generation
+Try to do the following
 
-Don't put "View()" in your Markdown file when loading your csv file.
-Just put in the `read_csv` line.
-Otherwise you will not be able to knit.
+-   Comment your code!
+-   Structure your R file like so:
+    -   Descriptive comments (including date)
+    -   Load libraries
+    -   Constants and script parameters (# iterations, etc.)
+    -   Functions (with descriptive comment after first line)
+    -   Everything else
+-   Naming: variableName / variable.name, FunctionVerb, kConstantName. not_like_this
+-   Indentation: 2-space indents is nice
+-   Spaces are ok, but don't go overboard.  E.g., `y = (a * x) + b + rnorm(1, sd=sigma)`
+-   Never use `attach()`
 
-If you can't knit PDFs you need to install latex (tex).
-Once you do, reboot your computer.
-If things don't work, then knit to Microsoft word (or, failing that, html as a last resort), print to pdf, and turn that in.
-But then ask a teaching fellow to help get things set up, since PDFs make for much more readable reports.
 
-### Saving R objects
+### Save and load R objects to save time
 
 If you have the result of something that took awhile to run (e.g., a big multilevel model fit to a lot of data) you can try saving it like so:
 
@@ -59,23 +66,7 @@ saveRDS(myBigThing, savedPath)
 myBigThing <- readRDS(savedPath)
 ```
 
-### R style (based on Google style guide)
-
-Try to do the following
-
--   Comment your code!
--   Structure of an R file:
-    -   Descriptive comments (including date)
-    -   Load libraries
-    -   Constants and script parameters (# iterations, etc.)
-    -   Functions (with descriptive comment after first line)
-    -   Everything else
--   variableName / variable.name, FunctionVerb, kConstantName. not_like_this
--   Curly Braces, line breaks: see previous slide
--   Consistency: 2-space indents, `y = (a * x) + b + rnorm(1, sd=sigma)`
--   Avoid `attach()`
-
-### set.seed
+### Reproduce randomness with `set.seed`
 
 If your code uses random numbers, then you should set your seed, which makes your script always generate the same sequence of random numbers.
 
@@ -94,10 +85,11 @@ Key thing to know: **Reproducible results help with debugging.**
 If you want to get fancy, try this (after installing the \`TeachingDemos' package):
 
 ```{r}
-TeachingDemos::char2seed("quinn") # Using your name as a seed says "nothing up my sleeve"
+TeachingDemos::char2seed("quinn") 
+# Using your name as a seed says "nothing up my sleeve"
 ```
 
-## File structure: how not to do it
+### Keep your files organized
 
 Ever seen this?
 
@@ -128,10 +120,153 @@ Your `readme.txt` might have informational notes such as "Got data from bit.ly/X
 
 Your `figures` folder should be full of figures you can easily regenerate with code in your `code` folder.
 
+### Make sure your data are numeric
+
+Sometimes when you load data in, R does weird things like decide all your numbers are actually words. This happens if some of your entries are not numbers. Then R makes them all not numbers. You can check this with the `str()` function:
+
+```{r StrDemo}
+str( exp.dat )
+```
+
+Here we see that we have factors (categorical variables) and numbers (num). All is well.
+
+If something should be a number, then change it like so:
+
+```{r ChangeToNum}
+lst <-  c( 1, 2, 3, "dog", 5, 6 )
+str( lst )
+lst <- as.numeric( lst )
+lst
+str( lst )
+```
+
+Note it warned you that you had non-numbers when you converted. The non-numbers are now missing (NA).
+
+For a dataframe, you fix like this:
+
+```{r ChangeToNumDF}
+exp.dat$trial1 = as.numeric( exp.dat$trial1 )
+```
+
+
+### Categories should be words
+
+For categorical variables, don't use numbers, if at all possible.  E.g.,
+
+```{r}
+levels = c( "Low", "Middle", "High", NA )
+```
+is better than
+```{r}
+levels = c(1, 2, 3, 99 )
+```
+
+
+## Data Wrangling
+
+We next give some high level data wrangling advice. But really, check out R for DS for much more and much better on the merging and summarizing topics.
+
+### Handling Lagged Data
+
+Sometimes you have multiple times for your units (think country or state), and you want to regress, say, future X on current X. Then you want to have both future and current X for each case.
+
+Here think of a case as a Country at a point in time. E.g., we might have data like this:
+
+```{r}
+dtw = read.csv( "data/fake_country_block.csv", as.is=TRUE )
+dt = pivot_longer( dtw, cols=X1997:X2004,
+                   names_to = "Year", names_prefix = "X",
+                   values_to = "X" )
+dt$Year = as.numeric( dt$Year )
+slice_sample( dt, n=5 )
+```
+
+We then want to know what the X will be 2 years in the future. We can do this with the following trick:
+
+```{r LaggedYear}
+dt.fut = dt
+dt.fut$Year = dt.fut$Year - 2
+head(dt.fut)
+newdt = left_join( dt, dt.fut, 
+                   by=c("Country","Year"), suffix=c("",".fut") )
+head( newdt, 10 )
+```
+
+Here we are merging records that match \emph{both} Country and Year.
+
+Note that for the final two China entries, we don't have a future X value. The merge will make it NA indicating it is missing.
+
+How this works: we are tricking the program. We are making a new \\verb\|dt.lag\| data.frame and then putting all the entries into the past by two years. When we merge, and match on Country and Year, the current dataframe and the lagged dataframe get lined up by this shift. Clever, no?
+
+Now we could do regression:
+
+```{r RegExample}
+my.lm = lm( X.fut ~ X + Country, data=newdt )
+summary( my.lm )
+```
+
+<!--
+````{=html}
+For organized data, where you know the years are in ascending order with no skips, you can also use the `lead()` and `lag()` methods:
+```{r, eval=FALSE}
+dt <- dt %>%
+  arrange( Country, Year ) %>%
+  group_by( Country ) %>%
+  mutate( X.fut = dplyr::lead( X, 2 ) )
+print( dt, n = 11 )
+```
+````
+-->
+
+
+### Quick overview of merging data
+
+Often you have two datasets that you want to merge. For example, say you want to merge some data you have on a few states with some SAT information from the mosaic package.
+
+```{r MergeState}
+library( mosaicData )
+data( SAT )
+head( SAT )
+df = data.frame( state=c("Alabama","California","Fakus"), 
+                A=c(10,20,50), 
+                frac=c(0.5, 0.3, 0.4) )
+df
+merge( df, SAT, by="state", all.x=TRUE )
+```
+
+The records are combined by the "by" variable. I.e., each record in df is matched with each record in SAT with the same value of "state."
+
+Things to note: If you have the same variable in each dataframe, it will keep both, and add a suffix of ".x" and ".y" to indicate where they came from.
+
+The "all.x" means keep all records from your first dataframe (here df) even if there is no match. If you added "all.y=TRUE" then you would get all 50 states from the SAT dataframe even though df doesn't have most of them. Try it!
+
+You can merge on more than one variable. I.e., if you said \\verb\|by=c("A","B")\| then it would match records if they had the same value for both A and B. See below for an example on this.
+
+### Summarizing/aggregating Data
+
+Sometimes you want to collapse several cases into one. This is called aggregating. If you install a package called "dplyr" (Run `install.packages( "dplyr" )` once to install, or better yet simply install `tidyverse`) then you will have great power.
+
+Using `newdt` from above, we can summarize countries across all their time points:
+
+```{r PlyrSummarize}
+newdt %>% group_by( Country ) %>% 
+    summarise( mean.X = mean(X, na.rm=TRUE ),
+        sd.X = sd( X, na.rm=TRUE ) )
+```
+
+You can also augment data by adding new variables. You can even do this within groups.
+Here we subtract the mean from each group:
+
+```{r PlyrSummarize2}
+dshift = newdt %>% group_by( Country ) %>%
+    mutate( Xm = mean(X, na.rm=TRUE),
+            Xc = X - mean(X, na.rm=TRUE ) )
+head(dshift)
+```
 
 
 
-### Making Data Frames
+### Making Data Frames on the fly
 
 For small datasets, you can type in data the hard way like so:
 
@@ -149,329 +284,7 @@ exp.dat = data.frame( ID=c("a","b","c","d"),
 exp.dat  
 ```
 
-This is for an experiment on 4 subjects.
-The first and forth subject got the AI treatment, the second two got the DI treatment.
-The subjects then had 4 trials each, and they received a "E" choice or a "U" choice, and the decision variable is whether they accepted the choice.
+This is for an experiment on 4 subjects. The first and forth subject got the AI treatment, the second two got the DI treatment. The subjects then had 4 trials each, and they received a "E" choice or a "U" choice, and the decision variable is whether they accepted the choice.
 
 As you can see, data can get a bit complicated!
 
-### Making sure your data are numeric
-
-Sometimes when you load data in, R does weird things like decide all your numbers are actually words.
-This happens if some of your entries are not numbers.
-Then R makes them all not numbers.
-You can check this with the `str()` function:
-
-```{r StrDemo}
-str( exp.dat )
-```
-
-Here we see that we have factors (categorical variables) and numbers (num).
-All is well.
-
-If something should be a number, then change it like so:
-
-```{r ChangeToNum}
-lst <-  c( 1, 2, 3, "dog", 5, 6 )
-str( lst )
-lst <- as.numeric( lst )
-lst
-str( lst )
-```
-
-Note it warned you that you had non-numbers when you converted.
-The non-numbers are now missing (NA).
-
-For a dataframe, you fix like this:
-
-```{r ChangeToNumDF}
-exp.dat$trial1 = as.numeric( exp.dat$trial1 )
-```
-
-### Merging Data
-
-Often you have two datasets that you want to merge.
-For example, say you want to merge some data you have on a few states with some SAT information from the mosaic package.
-
-```{r MergeState}
-library( mosaicData )
-data( SAT )
-head( SAT )
-df = data.frame( state=c("Alabama","California","Fakus"), 
-                A=c(10,20,50), 
-                frac=c(0.5, 0.3, 0.4) )
-df
-merge( df, SAT, by="state", all.x=TRUE )
-```
-
-The records are combined by the "by" variable.
-I.e., each record in df is matched with each record in SAT with the same value of "state."
-
-Things to note: If you have the same variable in each dataframe, it will keep both, and add a suffix of ".x" and ".y" to indicate where they came from.
-
-The "all.x" means keep all records from your first dataframe (here df) even if there is no match.
-If you added "all.y=TRUE" then you would get all 50 states from the SAT dataframe even though df doesn't have most of them.
-Try it!
-
-You can merge on more than one variable.
-I.e., if you said \verb\|by=c("A","B")\| then it would match records if they had the same value for both A and B.
-See below for an example on this.
-
-### Lagged Data
-
-Sometimes you have multiple times for your units (think country or state), and you want to regress, say, future X on current X.
-Then you want to have both future and current X for each case.
-
-Here think of a case as a Country at a point in time.
-E.g., we might have data like this:
-
-```{r}
-dtw = read.csv( "data/fake_country_block.csv", as.is=TRUE )
-dt = pivot_longer( dtw, cols=X1997:X2004,
-                   names_to = "Year", names_prefix = "X",
-                   values_to = "X" )
-dt$Year = as.numeric( dt$Year )
-slice_sample( dt, n=5 )
-```
-
-We then want to know what the X will be 2 years in the future.
-We can do this with the following trick:
-
-```{r LaggedYear}
-dt.fut = dt
-dt.fut$Year = dt.fut$Year - 2
-head(dt.fut)
-newdt = left_join( dt, dt.fut, 
-                   by=c("Country","Year"), suffix=c("",".fut") )
-head( newdt, 10 )
-```
-
-Here we are merging records that match \emph{both} Country and Year.
-
-Note that for the final two China entries, we don't have a future X value.
-The merge will make it NA indicating it is missing.
-
-How this works: we are tricking the program.
-We are making a new \verb\|dt.lag\| data.frame and then putting all the entries into the past by two years.
-When we merge, and match on Country and Year, the current dataframe and the lagged dataframe get lined up by this shift.
-Clever, no?
-
-Now we could do regression:
-
-```{r RegExample}
-my.lm = lm( X.fut ~ X + Country, data=newdt )
-summary( my.lm )
-```
-
-<!--
-For organized data, where you know the years are in ascending order with no skips, you can also use the `lead()` and `lag()` methods:
-```{r, eval=FALSE}
-dt <- dt %>%
-  arrange( Country, Year ) %>%
-  group_by( Country ) %>%
-  mutate( X.fut = dplyr::lead( X, 2 ) )
-print( dt, n = 11 )
-```
--->
-
-### Summarizing Data
-
-Sometimes you want to collapse several cases into one.
-This is called aggregating.
-If you install a package called "dplyr" (Run `install.packages( "dplyr" )` once to install, or better yet simply install `tidyverse`) then you will have great power.
-
-Using `newdt` from above, we can summarize countries across all their time points:
-
-```{r PlyrSummarize}
-newdt %>% group_by( Country ) %>% 
-    summarise( mean.X = mean(X, na.rm=TRUE ),
-        sd.X = sd( X, na.rm=TRUE ) )
-```
-
-<!--Here is an example from the experimental dat file, above.
-
-```{r SumExpDat, eval=FALSE}
-nd = rs %>% group_by( ID, trial) %>%
-    summarize( n=n(),
-               accept=sum(dec) )
-nd$reject = nd$n - nd$accept
-head(nd)
-```
--->
-
-You can also augment data.
-Here we subtract the mean from each group:
-
-```{r PlyrSummarize2}
-dshift = newdt %>% group_by( Country ) %>%
-    mutate( Xm = mean(X, na.rm=TRUE),
-            Xc = X - mean(X, na.rm=TRUE ) )
-head(dshift)
-```
-
-## Troubleshooting in R
-
-By now you have gotten to the point where you can get some **really weird** errors in R and they can be quite, quite frustrating.
-This section talks about how to think about fixing them on your own.
-It also covers some common mistakes that can happen.
-Say you have some code that does a bootstrap and prints out a histogram.
-Nothing seems to work and the `hist` command is giving a strange error.
-
-First step
-
-```{=tex}
-\bgroup \vspace{5mm}
- \noindent\rule{1ex}{1ex}%
-      \hspace{\stretch{1}}\textbf{Put all your code in an R Script!}\hspace{\stretch{1}}%
-      \rule{1ex}{1ex}
-      \vspace{5mm}
-\egroup
-```
-Put all the commands, start to finish, in your script.
-The reason for this step is then you know what you are looking at.
-When scrolling to old commands and trying different things, you can get very tangled up.
-Anyway, say you do, and you are still getting a strange error:
-
-```{=tex}
-\begin{verbatim}
-> lovemale = rep(c(0,1,2), c(372, 807,34))
-> loveboot = replicate(1000, {
-+     lovesampmale = sample(lovemale, 1000, replace=TRUE)
-+     propsampmale = table(lovesampmale)[0]/length(lovesampmale)
-+     mean(propsampmale)
-+ })
-> hist(loveboot, breaks=20)
-
-Error in hist.default(loveboot, breaks = 20) : character(0)
-In addition: Warning messages:
-1: In min(x) : no non-missing arguments to min; returning Inf
-2: In max(x) : no non-missing arguments to max; returning -Inf
-\end{verbatim}
-```
-You might think `hist` is the culprit, but that might not be true.
-
-\
-First step is to check if you have any strange arguments to hist.
-Try running hist without any arguments other than the data.
-
-```{=tex}
-\bgroup \vspace{5mm}
- \noindent\rule{1ex}{1ex}%
-      \hspace{\stretch{1}}\textbf{ Always simplify when things aren't working! }\hspace{\stretch{1}}%
-      \rule{1ex}{1ex}
-      \vspace{5mm}
-\egroup
-```
-If that doesn't work (and here it won't), then the next step is to see what is going on is to look at what you are making a histogram out of!
-
-```{r broken_code,echo=FALSE,hidden=TRUE}
-lovemale = rep( c(0,1,2), c(372, 807,34) )
-
-loveboot = replicate(1000, {
-   lovesampmale = sample(lovemale, 1000, replace=TRUE)
-   propsampmale = table(lovesampmale)[0]/length(lovesampmale)
-   mean(propsampmale)
-})
-
-head(loveboot)
-```
-
-You can also look at `loveboot` by clicking on it in your 'Workspace' to see if it is weird.
-If it has a bunch of `NA` or `NaN` then you need to fix your bootstrap code.
-You are trying to make a histogram out of bad data.
-Another rule:
-
-```{=tex}
-\bgroup \vspace{5mm}
- \noindent\rule{1ex}{1ex}%
-      \hspace{\stretch{1}}\textbf{Always look at your data and variables!}\hspace{\stretch{1}}%
-      \rule{1ex}{1ex}
-      \vspace{5mm}
-\egroup
-```
-Those bad data came from somewhere!
-Let's examine what is happening inside your bootstrap.\
-The easiest way is to run the stuff **inside** your replicate to get one replicate and see what is going on.
-This illustrates a very important debugging rule:
-
-```{=tex}
-\bgroup \vspace{5mm}
- \noindent\rule{1ex}{1ex}%
-      \hspace{\stretch{1}}\textbf{Break your code down and check each piece.}\hspace{\stretch{1}}%
-      \rule{1ex}{1ex}
-      \vspace{5mm}
-\egroup
-```
-The code inside your `replicate` should run by itself.
-So try it, looking at the value each time
-
-```{r}
-  lovesampmale = sample(lovemale, 1000, replace=TRUE)
-  head(lovesampmale)
-  propsampmale = table(lovesampmale)[0]/length(lovesampmale)
-  propsampmale
-  mean(propsampmale)
-```
-
-We see that the `propsampmale` line is going wonky.
-We unpack the pieces
-
-```{r}
-table(lovesampmale)
-length(lovesampmale)
-table(lovesampmale)[0]
-```
-
-We finally find the error.
-We need quotation marks around the 0.
-Without the quotes, R interprets "\[0\]" as taking the 0th entry of the table, which doesn't exist, rather than the entry **named** "0," which does[^r_tips-1]
-
-[^r_tips-1]: Why?
-    Because for a table those things at the top are **names** and all names are considered words.
-    We denote words in R with quotation marks
-
-```{r headHist5}
-table(lovesampmale)["0"]
-```
-
-### Aside: the table technique
-
-The "table technique" to calculate the proportion of some list of data that has a given value is dangerous.
-In particular if that value isn't present, then the table could drop it, causing some real trouble.
-Instead use
-
-```{r}
-mean(propsampmale == 0)
-```
-
-### Code redundancies
-
-Sometimes you don't need parts of your code at all!
-The propsampmale has the answer.
-No need for the final mean in the above code!
-
-### Categories should be words
-
-For categories, don't use numbers.
-Instead use
-
-```{r}
-lovemale = rep(c("Little", "Some", "Lots"), c(372, 807,34))
-```
-
-and then your mean line will be
-
-```{r}
-lovemale = rep(c("Little", "Some", "Lots"), c(372, 807,34))
-```
-
-giving your final fixed code (plot not shown):
-
-```{r}
-lovemale = rep(c("Little", "Some", "Lots"), c(372, 807,34))
-loveboot = replicate(1000, {
-  lovesampmale = sample( lovemale, replace=TRUE )
-  mean(lovesampmale == "Little")
-})
-hist(loveboot)
-```

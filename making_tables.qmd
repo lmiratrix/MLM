@@ -1,10 +1,4 @@
----
-title: "Making tables in Markdown"
-author: "Luke Miratrix"
-editor: 
-  markdown: 
-    wrap: sentence
----
+# Making tables in Markdown  {#sec-make-tables}
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -18,8 +12,7 @@ options(list(dplyr.summarise.inform = FALSE))
 theme_set( theme_classic() )
 ```
 
-You might want to make tables.
-You should probably make charts, but every so often a table is a nice thing to have.
+You might want to make tables. Usually you should probably make charts instead, but every so often a table is a nice thing to have. This chapter is about making generic tables. For regression tables, see @sec-make-regression-tables.
 
 To illustrate, I make some fake data
 
@@ -47,8 +40,7 @@ Our intermediate results:
 sdat
 ```
 
-Say our grouping variable is a set of codes for something more special.
-We can merge in better names by first making a small "cross-walk" of the ID codes to the full names, and then merging them to our results:
+Say our grouping variable is a set of codes for something more special. We can merge in better names by first making a small "cross-walk" of the ID codes to the full names, and then merging them to our results:
 
 ```{r}
 names = tribble( ~ G, ~ name,
@@ -69,13 +61,11 @@ Finally, the easiest way to make a table is with the `kable` command.
 knitr::kable( sdat, digits=2 )
 ```
 
-This is a great workhorse table-making tool!
-There are expansion R packages as well, e.g. `kableExtra`, which can do lots of fancy customizable stuff.
+This is a great workhorse table-making tool! There are expansion R packages as well, e.g. `kableExtra`, which can do lots of fancy customizable stuff.
 
 ## Making a "table one"
 
-The "table one" is the first table in a lot of papers that show general means of different variables for different groups.
-The `tableone` package is useful:
+The "table one" is the first table in a lot of papers that show general means of different variables for different groups. The `tableone` package is useful:
 
 ```{r}
 library(tableone)
@@ -100,9 +90,7 @@ print(tb$ContTable, printToggle = FALSE) %>%
 
 ## Table of summary stats
 
-You can also easily make pretty tables using the `stargazer` package.
-You need to ensure the data is a data.frame, not tibble, because `stargazer` is old school.
-It appears to only do continuous variables.
+You can also easily make pretty tables using the `stargazer` package. You need to ensure the data is a data.frame, not tibble, because `stargazer` is old school. It appears to only do continuous variables.
 
 Finally, you need to modify the R code chunk so it looks like this:
 

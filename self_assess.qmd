@@ -1,17 +1,6 @@
----
-title: "Do I take S-043? A self-assessment"
-editor: 
-  markdown: 
-    wrap: sentence
----
+# Do I take S-043? A self-assessment  {.unnumbered}
 
-## How to decide to take the course?
-
-I received numerous inquiries as to whether a given background is enough to take this course.
-Let me elaborate at length.
-The stated prerequisite to this course is S052, Stat 139, or equivalent, i.e., you have gone a bit beyond an applied course on linear regression (S040).
-Technically, if you have taken S040 or equivalent, you could take this course; the "a bit beyond" part is just wanting a bit more comfort with these foundational skills.
-More specifically, we greatly prefer you to have the following skills as a prerequisite for this course:
+I received numerous inquiries as to whether a given background is enough to take this course. Let me elaborate at length. The stated prerequisite to this course is S052, Stat 139, or equivalent, i.e., you have gone a bit beyond an applied course on linear regression (S040). Technically, if you have taken S040 or equivalent, you could take this course; the "a bit beyond" part is just wanting a bit more comfort with these foundational skills. More specifically, we greatly prefer you to have the following skills as a prerequisite for this course:
 
 -   You can calculate summary statistics and visualizations for data (the mean, standard deviation, scatterplots, histograms) using some sort of statistical software.
 
@@ -39,17 +28,13 @@ You will have an easier time if you have some of the following skills and experi
 
 If you have a strong mathematical background, or strong comfort with math, or if you have a strong computer programming background, or strong comfort with that, then you can likely get a lot out of this course even if you do not have some of the above skills and knowledge.
 
-People from many, many different backgrounds take S043/Stat151.
-In general, the more background experience you have, the easier the course. 
-Even if you don't have as solid a background, you can still get a lot out of this course if you are willing to sign on for an intense experience.
-But *please* don't be surprised if you sign up for an intense experience... and it is really intense!
+People from many, many different backgrounds take S043/Stat151. In general, the more background experience you have, the easier the course.  Even if you don't have as solid a background, you can still get a lot out of this course if you are willing to sign on for an intense experience. But *please* don't be surprised if you sign up for an intense experience... and it is really intense!
 
 To get a very rough sense of what it might feel like, take the quiz below.
 
 ## A self-assessment quiz {.unnumbered}
 
-Trying to figure out how S43 will be for you?
-​Add up the points across the following categories:
+Trying to figure out how S43 will be for you? ​Add up the points across the following categories:
 
 ### **Work Experience** {.unnumbered}
 
@@ -113,24 +98,14 @@ Trying to figure out how S43 will be for you?
 
 **A VERY ROUGH recommendation is:**
 
-\< 4:      **Danger**!
-Please email the instructor to talk about how this might go for you.
+\< 4:      **Danger**! Please email the instructor to talk about how this might go for you.
 
-4-6:      **It will be really hard**!
-You could take this course, but will likely find it will take much more time than a typical course.
-We would support you through this, but be warned that this could feel like a lot to take on.
+4-6:      **It will be really hard**! You could take this course, but will likely find it will take much more time than a typical course. We would support you through this, but be warned that this could feel like a lot to take on.
 
-7-9:      **It will be hard**!
-There are lots of folks like you who are taking this course.
-The course will likely be a fair bit of work and could feel confusing/overwhelming at times.
-We would support you through this.
-At the end you will have learned a lot if you stick with it.
+7-9:      **It will be hard**! There are lots of folks like you who are taking this course. The course will likely be a fair bit of work and could feel confusing/overwhelming at times. We would support you through this. At the end you will have learned a lot if you stick with it.
 
-10+:     **It will probably feel like a normal course**.
-No reservations.
-You can either work a reasonable amount and learn a lot about data science, or dig deeper to really go far with the skills we cover.
+10+:     **It will probably feel like a normal course**. No reservations. You can either work a reasonable amount and learn a lot about data science, or dig deeper to really go far with the skills we cover.
 
-14+:     **It will probably be a cake-walk.** You will learn some concepts but not have to work particularly hard in this course.
-We would still love to have you!
+14+:     **It will probably be a cake-walk.** You will learn some concepts but not have to work particularly hard in this course. We would still love to have you!
 
 **Students have historically said this course teaches you a lot; the question is just whether you have the time to allocate for the course. This quiz helps assess the time.**

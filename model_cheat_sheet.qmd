@@ -41,7 +41,7 @@ display( M0 )
 
 ```
 
-This handout shows (1) the mathematical model, (2) the `lmer` syntax, and (3) the output for the model, as discussed in class in Lecture 2.4.
+This handout shows (1) a mathematical model, (2) the `lmer` syntax for that model, and (3) the output for that model, for the model discussed in Lecture 2.4.
 This handout is designed to help translate between these three different worlds.
 
 ## The mathematical model

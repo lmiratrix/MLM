@@ -23,17 +23,21 @@ This doesn't really have an analog in the fixed/random effects world.
 
 A completely pooled model in this setting might look like
 
-$$\begin{aligned}
+$$
+\begin{aligned}
     mathach_i &= \beta_0 + \beta_1SES_i + \varepsilon_i \\
     \varepsilon_i &\sim Normal(0, \sigma^2)
-\end{aligned}$$
+\end{aligned}
+$$
 
 In a completely pooled model we're basically assuming that every school has the same intercept and slope, so we just ignore school membership; notice that we don't even include the $j$ subscript because we're ignoring schools completely.
 How rude!
 
-We would fit this model with
+We would fit this model with the classic `lm()` call of
 
-`lm(mathach ~ ses)`.
+```{r, eval=FALSE}
+lm(mathach ~ 1 + ses, data=dat)
+```
 
 ### Partially pooled
 
@@ -66,7 +70,9 @@ mathach_{ij} &= \beta_{0j[i]} + \beta_{1j[i]}SES_i + \varepsilon_i, \\
 
 We would fit this model with
 
-`lmer(mathach ~ ses + (ses|school))`
+```{r, eval=FALSE}
+lmer(mathach ~ 1 + ses + (1 + ses|school), data=dat)
+```
 
 ### Unpooled
 
@@ -84,10 +90,14 @@ $$\begin{aligned}
 
 We would fit the model with
 
-`lm(mathach ~ ses*school)`
+```{r, eval=FALSE}
+lm(mathach ~ 1 + ses*school)
+```
 
 although we might get our estimates in a more useful way by specifying an (identical) model which has no reference school, i.e.,
 
-`lm(mathach ~ 0 + ses + ses:school)`
+```{r, eval=FALSE}
+lm(mathach ~ 0 + ses + ses:school)
+```
 
-For either of these models to fit you need to ensure that school is coded as a factor and not a number; this is *not* a concern for `lmer`.
+For either of these models to fit you need to ensure that school is coded as a factor and not a number; this is *not* a concern for `lmer()`.

@@ -6,6 +6,9 @@ editor:
     wrap: sentence
 ---
 
+This handout walks through the mathematical representation of two core models: the random intercept model and the random slope model.
+The goal is to very carefully explain all the different math parts, and show how that translates to a `lmer()` call to R for fitting the model.
+
 ## The Scenario
 
 We have a collection of schools that we have randomized into treatment and control conditions.
@@ -63,7 +66,9 @@ The $\gamma_{0}$ is the overall mean reading level for students with $X_{ij}=0$ 
 
 Note how we subscript school-level covariates with only a $j$ vs. individual-level covariates get an $ij$.
 If you want, you can index everything by $ij$; the fact that $S_{ij}$ will then be the same for all students $i$ in school $j$ is hidden in the data.
-But it does make it look very much like OLS with a weird error term: $$Y_{ij} &= \gamma_{0} + \gamma_{1} Z_{ij} + \gamma_{2} S_{ij} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + (u_{j} + \epsilon_{ij})$$
+But it does make it look very much like OLS with a weird error term: $$
+Y_{ij} = \gamma_{0} + \gamma_{1} Z_{ij} + \gamma_{2} S_{ij} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + (u_{j} + \epsilon_{ij})
+$$
 
 Finally, you might call all the different pieces by different letters to indicate whether you care about them or not.
 E.g., $$Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + (u_{0j} +  \epsilon_{ij}) .$$ Here $\tau$ is our treatment effects of interest.
@@ -96,7 +101,8 @@ Y_{ij} &= \beta_{0j} + \beta_{1j} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 
 This is the two-level model.
 Level 1 is the first equation with the distribution on the residuals of $\epsilon_{ij} \sim N( 0, \sigma^2 )$.
-Level 2 are the second and third equations, and the distribution of random effects of $$\begin{pmatrix} u_{0j} \\
+Level 2 are the second and third equations, and the distribution of random effects of $$
+\begin{pmatrix} u_{0j} \\
 u_{1j}
 \end{pmatrix} \sim  N
 \begin{bmatrix}
@@ -108,7 +114,8 @@ u_{1j}
 \tau_{00} & \tau_{10} \\
 \tau_{10} & \tau_{11} \\
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]$$ The $\tau_{00}$ is the variance of the random intercept.
+\end{bmatrix}
+$$ The $\tau_{00}$ is the variance of the random intercept.
 $\tau_{11}$ is the variance of the random slope.
 $\tau_{10}$ is the covariance (not correlation) of the random effects.
 To get the *correlation* of random effects we have $\rho = \tau_{10} / \sqrt{ \tau_{00} } \sqrt{ \tau_{11} }$.
@@ -139,7 +146,8 @@ In this model, the school-level covariate explains overall differences in readin
 ### The level 2 covariate matrix.
 
 Sometimes people like to write the correlation matrix using other parameterizations.
-E.g., we might see $$\begin{pmatrix} u_{0j} \\
+E.g., we might see $$
+\begin{pmatrix} u_{0j} \\
 u_{1j}
 \end{pmatrix} \sim  N
 \begin{bmatrix}
@@ -151,7 +159,8 @@ u_{1j}
 \sigma^2_\alpha & \rho \sigma_\alpha \sigma_R \\
  & \sigma^2_R \\
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]$$ to indicate the cross-school variation in the intercept ($\alpha$) and the risk gap ($R$).
+\end{bmatrix}
+$$ to indicate the cross-school variation in the intercept ($\alpha$) and the risk gap ($R$).
 Now we specifically have written our correlation of random effects as $\rho$.
 
 ### The Reduced Form Model

@@ -61,7 +61,7 @@ Now for any subject $i$, the covariance matrix of their residuals is $$\begin{al
          &              &             & \delta_{44} & \delta_{45} \\
          &              &              &            & \delta_{55} 
 \end{pmatrix}
-\end{bmatrix}\\[2\jot]
+\end{bmatrix}
 \end{aligned}$$
 
 This matrix is one of the blocks in our block-diagonal matrix for our residuals.

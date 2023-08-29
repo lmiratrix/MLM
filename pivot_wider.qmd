@@ -36,6 +36,9 @@ dat
 ```
 
 This data is in wide format, where we have multiple measurements (Y1, Y2, and Y3) for each individual (each row of data).
+
+## Converting wide data to long data
+
 We use `pivot_longer` to take our `Y` values and nest them within each `ID` for longitudinal MLM analysis.
 (NB you can use SEM to fit longitudinal models with wide data; we do not explore that application here.)
 
@@ -50,7 +53,10 @@ datL
 
 ```
 
+## Converting long data to wide data
+
 `pivot_wider` takes us back in the other direction.
+
 ```{r}
 newdat <- pivot_wider( datL, c(ID, X), 
                        names_from=time, 
@@ -71,10 +77,12 @@ students
 students = merge( students, newdat, by="ID" )
 ```
 
+## Optional: wrangling data with `reshape`
 
-## Optional: Using old School `reshape`
+The `reshape()` command is the old-school way of doing things, and it is harder to use but also can be more powerful in some ways (alternatively, there is a long literature on doing fancy stuff with the pivot methods as well).
+This section is entirely optional and possibly no longer useful.
 
-Say you have data in a form where a row has a value for a variable for several different points in time.
+Anyway, say you have data in a form where a row has a value for a variable for several different points in time.
 The following code turns it into a data.frame where each row (case) is a value for the variable at that point in time.
 You also have an ID variable for which Country the GDP came from.
 
@@ -85,7 +93,7 @@ dtw
 
 Here we have three rows, but actually a lot of cases if we consider each time point a case.
 For trying it on your own, get the sample csv file ()\[here\]\
-See the website to get the sample csv file \verb\|fake_country_block.csv\|.
+See the website to get the sample csv file \\verb\|fake_country_block.csv\|.
 
 The following \emph{reshapes} our original data by making a case for each time point:
 
@@ -97,7 +105,7 @@ head(dt)
 Things to notice: each case has a "row name" made out of the country and the Year.
 The "2:9" indicates a range of columns for the variable that is actually the same variable.\
 R picked up that, for each of these columns, "X" is the name of the variable and the number is the time, and seperated them.
-You can set the name of your time variable, \verb\|timevar\|, to whatever you want.
+You can set the name of your time variable, \\verb\|timevar\|, to whatever you want.
 
 The above output is called "long format" and the prior is called "wide format."\
 You can go in either direction.
@@ -142,5 +150,3 @@ or
 ```{r TwoWayTable}
 mosaic::tally( trial~dec+cond, data=rs )
 ```
-
-### 

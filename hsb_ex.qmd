@@ -1,5 +1,5 @@
 ---
-title: "HSB Example"
+title: "Code for HSB Example in Chapter 4 of R&B"
 author: "Luke Miratrix"
 editor: 
   markdown: 
@@ -11,6 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 ```
+
+This script builds everything from Chapter 4 of Raudenbush and Bryk in R.
+It is a very useful script for getting pretty much all the code you would need for a conventional multilevel analysis.
+The code is divided by each table or plot from the chapter.
 
 ## R Setup
 

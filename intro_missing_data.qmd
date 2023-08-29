@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to Missing Data"
-author: "Luke Miratrix"
+author: "Maxime Rischard and Luke Miratrix"
 editor: 
   markdown: 
     wrap: sentence
@@ -24,16 +24,14 @@ There's a range of options available, which are, broadly speaking:
 1.  Delete the observations with missing covariates (this is a "complete case analysis")
 2.  Plug in some kind of reasonable value for the missing covariate. This is called "imputation." We discuss three ways of doing this that are increasingly sophisticated and layered on each other:
 
-```{=html}
 <!-- -->
-```
+
 a.  Mean imputation. Simply take the mean of all the observations where you know the value, and then use that for anything that is missing.
 b.  Regression imputation. You generate regression equations describing how all the variables are connected, and use those to predict any missing value.
 c.  Stochastic regression imputation. Here we use regression imputation, but we also add some residual noise to all our imputed values so that our imputed values have as much variation as our actual values (otherwise our imputed values will tend to be all clumped together).
 
-```{=html}
 <!-- -->
-```
+
 3.  Multiply impute the missing data, by fully modeling the covariate and the missingness, and generating a range of complete datasets under this model. Here you end up with a bunch of complete datasets that are all "reasonable guesses" as to what the full dataset might have been. You then analyze each one, and aggregate your findings across them to get a final answer.
 
 The first two general approaches are imperfect, while the third is often more work than the original analysis that we were hoping to perform.

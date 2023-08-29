@@ -108,20 +108,16 @@ summary(tip.mod)
 This output should look very similar to the output for one variable, except now there is a row corresponding to each explanatory variable.
 Our two-category (y, n) `Credit` variable was automatically converted to a 0-1 dummy variable (with "y" being 1 and "n" our baseline).
 
-### Easy Tabulation and Graphing of Multiple Regression Models
-
-For publication-ready tables and graphics, R has many wonderful packages to automate the process.
-I (JG) am partial to `tab_model` from `sjPlot` for regression tables, and `ggeffects` for regression graphs, as shown below.
-See more in the other chapters.
+You can make plots and tables of your fit models.
+For one easy kind of regression graph, try `ggeffects`:
 
 ```{r}
-# tabulate the results of our two tip models
-tab_model(mod, tip.mod)
-
 # graph model 2, with Bill on X, Credit as color, and Guests held constant at the mean
 ggeffect(tip.mod, terms = c("Bill", "Credit")) |> 
   plot(add.data = TRUE, ci = FALSE)
 ```
+
+For making tables, @sec-make-regression-tables.
 
 ## Categorical Variables (and Factors)
 
@@ -230,7 +226,7 @@ mymm = lm( GillRate ~ 0 + Calcium, data=FishGills3 )
 mymm
 ```
 
-## Some extra stuff (optional)
+## Some extensions (optional)
 
 ### Confidence Intervals
 

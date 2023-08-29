@@ -1,10 +1,11 @@
 ---
-title: "Extracting model information with `broom`"
 author: "Josh Gilbert"
 editor: 
   markdown: 
     wrap: sentence
 ---
+
+# Extracting information from fitted \`lmer\` models with \`broom\`  {#sec-broom}
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
