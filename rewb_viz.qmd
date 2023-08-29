@@ -1,5 +1,5 @@
 ---
-title: "REWB Visualization"
+title: "Within vs Between / Contextual Effects Visualization"
 author: "Josh Gilbert"
 editor: 
   markdown: 

@@ -8,6 +8,7 @@ book:
   chapters:
     - index.qmd
     - self_assess.qmd
+    - getting_started.qmd
     - assignment_guidelines.qmd
     - part: "R & R MARKDOWN"
       chapters:

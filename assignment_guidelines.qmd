@@ -17,7 +17,7 @@ Note that many of these requirements will be automatically fulfilled if you use 
 The following are some specific details that further the guiding principle.
 It is not an exhaustive list.
 
-## General
+## Formatting
 
 -   Start each question on a new page.
 -   Provide at least a brief title for the question or sub-question along with the question number. E.g. "(a). Association between graduation rates and school type." You can copy the entire prompt for your future reference if you want, but abbreviated prompts are fine with us!
@@ -45,12 +45,12 @@ It is not an exhaustive list.
 -   Do not include best fit lines unless you have some reason, e.g. a significant $p$-value or a scientific basis for understanding an association.
 -   *"Above all else show the data."* --Edward Tufte
 
-## Avoiding bias:
+## Avoiding bias
 
 -   Use plural phrases, nouns or pronouns, e.g. "children and their toys" for "a child and his toy." You may use the singular "they" pronoun ("a child and their toy"), but be warned that broader academic communities are still in flux regarding this usage.
 -   Try to avoid biased forms of language concerning race, gender, disability and sexuality. A reasonable list of case studies to consider on this topic is https://academicguides.waldenu.edu/writingcenter/scholarlyvoice/avoidingbias. The APA also has a guide for race at https://apastyle.apa.org/style-grammar-guidelines/bias-free-language/racial-ethnic-minorities.
 -   *"I have yet to see a piece of writing, political or non-political, that does not have a slant. All writing slants the way a writer leans, and no man is born perpendicular."* ― E.B. White
 
-## Conciseness:
+## Conciseness
 
 -   *"Brevity is the soul of wit."* --Hamlet
