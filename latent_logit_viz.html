@@ -242,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting information from fitted `lmer` models with `broom`</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting information from fitted <code>lmer</code> models with <code>broom</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -511,6 +511,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Often in education research, dichotomous variables are not really dichotomies (e.g., struck by lightning, not struck by lightning), but rather,&nbsp;<strong>dichotomized</strong>&nbsp;continuous variables, such as passing or failing a test. That is, a test score is a continuous measure of proficiency, but we can define a&nbsp;<strong>cut score</strong>&nbsp;above which you “pass” and below which you “fail”. This practice, while common, has many pitfalls (Ho, 2008) and can distort our understanding of trends and relationships. Fortunately the logit model (and its cousin the probit model) can help un-distort our vision!</p>
+<p>In the shiny app below, we are imagining a distribution of test scores that rises over time. When the distribution is normal, on the left, the&nbsp;<strong>observed proportion of passing scores is non-linear</strong>, even though the trend in the test scores themselves is linear. Because a normal distribution has most of its mass in the center, this results in the classic s-shape of the logit model. When we fit a linear regression, we are implicitly assuming that the underlying (“latent”) distribution is&nbsp;<strong>uniform</strong>, resulting in the graph on the right. This is rarely the case empirically.</p>
+<p>When the cut score is at the average (0 in this case), this doesn’t make much of a difference. But things really start to break down when we shift the cut score to a more extreme value. Try moving it to a standard deviation of +1, and see which model performs better!</p>
 <div class="cell">
 <iframe src="https://s43dnt-josh-gilbert.shinyapps.io/s43_latent_logit_viz/?showcase=0" width="672" height="1000px" data-external="1">
 </iframe>
