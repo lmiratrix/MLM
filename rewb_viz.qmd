@@ -6,6 +6,27 @@ editor:
     wrap: sentence
 ---
 
+Within, between, and contextual effects can be a challenge to think about or visualize.
+This shiny app allows you to explore different effects to build intuition about what these relationships mean, substantively, using students in schools as a context.
+In the graph, the big dots and black dashed line represent school means, that is, the between effect.
+The small dots and the multicolored lines represent individual schools, or, the within effect.
+The contextual effect is the **difference** in within and between effects (sort of like an interaction representing a "difference in slopes").
+By default, it is set to 0, so the within and between effects are the same, which is the assumption of the random intercepts model.
+(NB The "offset" parameter is not a real MLM parameter; it just spreads out the school means on the x-axis to make the visualization more powerful)
+
+Exercises:
+
+-   Before manipulating a slider, make a prediction for what will change in the graph, then verify by moving the slider
+
+-   Select parameters to generate a between effect of 0 and a within effect of 0.5
+
+-   Select parameters to generate a between effect of 0.5 and a within effect of 0
+
+-   Imagine that the clusters are people and the observations are measurements.
+    What would the graph look like if the x-axis represented typing speed and the y-axis represented typing accuracy?
+
+-   Using the within/between [HSB examples](https://lmiratrix.github.io/MLM/within_v_between.html), input the parameter estimates from the Mundlak model into the shiny app and compare that to our visualization of the data [here](https://lmiratrix.github.io/MLM/double_plot.html).
+
 ```{r, echo = FALSE}
 library(knitr)
 include_app("https://s43dnt-josh-gilbert.shinyapps.io/s43_rewb_viz/", height = "1500px")

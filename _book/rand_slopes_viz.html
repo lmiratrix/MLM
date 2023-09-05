@@ -242,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting information from fitted `lmer` models with `broom`</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting information from fitted <code>lmer</code> models with <code>broom</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -511,6 +511,13 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>The shiny app below allows you to set the various parameters of a random slopes multilevel model to see how they are reflected in the data. I often find it easiest to think of random slopes models in longitudinal contexts, so the app here asks for “people” and “timepoints”, but the same logic applies to cross sectional contexts, such as students nested within schools.</p>
+<p>Exercises:</p>
+<ul>
+<li><p>Before manipulating a slider, make a prediction for what will change in the graph, then verify by moving the slider</p></li>
+<li><p>What parameter needs to be changed (and to what value) to generate a random intercepts model? Verify using the app.</p></li>
+<li><p>Select parameters to generate a collection of students ranging from no growth to strong positive growth, where the lower growth schools had higher initial achievement.</p></li>
+</ul>
 <div class="cell">
 <iframe src="https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/?showcase=0" width="672" height="1500px" data-external="1">
 </iframe>
