@@ -1,4 +1,4 @@
-# Making tables in Markdown  {#sec-make-tables}
+# Making tables in Markdown {#sec-make-tables}
 
 ```{r setup, include=FALSE}
 library(tidyverse)

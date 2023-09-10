@@ -1,14 +1,10 @@
 # Preface {.unnumbered}
 
-This online book has a bunch of resources for S-043: Multilevel and Longitudinal Models. The book is written in [Quarto](https://quarto.org/), and is basically a bunch of handouts stapled together. It is very much a work in progress. If you notice errors, please notify us at:
-
-lmiratrix\@gse.harvard.edu
-
-joshua_gilbert\@g.harvard.edu
+This online book has a bunch of resources for S-043: Multilevel and Longitudinal Models. The book is written in [Quarto](https://quarto.org/), and is basically a bunch of handouts stapled together. It is very much a work in progress. If you notice errors, please notify luke_miratrix\@gse.harvard.edu or joshua_gilbert\@g.harvard.edu.
 
 ## Overview
 
-There are several parts to the book, loosely arranged by type of handout. We list the parts next, with some brief overview.
+There are several parts to the book, loosely arranged by type of handout. We give an overview of all the parts next:
 
 ### R & R Markdown
 

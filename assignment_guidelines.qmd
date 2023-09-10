@@ -1,4 +1,4 @@
-# Assignment Formatting Guidelines  {.unnumbered}
+# Assignment Formatting Guidelines {.unnumbered}
 
 The following describes our expectations on what turned in assignments should look like. Please read this document carefully before your first assignment. Note that many of these requirements will be automatically fulfilled if you use R Markdown.
 

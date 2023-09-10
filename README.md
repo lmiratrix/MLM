@@ -22,7 +22,7 @@ The final render should give you a local copy of the book that you can browse an
 
 The posted book available as a GitHub Pages bundle is rendered and stored on the GitHub repo in an alternate branch called `gh-pages`. This process is (not yet) automated, but the shell script `update_book`, when run locally, will copy your current rendered `_book` contents and push those contents to github.
 
-To make this script work, you have to first make a local directory called `_book` via the following call in a Terminal shell at the top-level directory (you can do this inside RStudio's Terminal tab):
+To make this script work, you have to first make a local directory called `book-output` via the following call in a Terminal shell at the top-level directory (you can do this inside RStudio's Terminal tab):
 
 ```         
 git clone -b gh-pages \

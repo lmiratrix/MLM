@@ -1,4 +1,4 @@
-# Making Regression Tables  {#sec-make-regression-tables}
+# Making Regression Tables {#sec-make-regression-tables}
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE }
 

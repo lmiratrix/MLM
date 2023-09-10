@@ -10,6 +10,7 @@ book:
     - self_assess.qmd
     - getting_started.qmd
     - assignment_guidelines.qmd
+    - self_grading.qmd
     - part: "R & R MARKDOWN"
       chapters:
           - intro_markdown.qmd
