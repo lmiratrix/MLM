@@ -16,7 +16,7 @@ library(ggthemes)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This is a simple script demonstrating some powerful features of a plotting package `ggplot2`.
+This chapter demonstrates some powerful features of `ggplot2`, the plotting package that we use most in this course.
 
 `ggplot` can initially seem like a nightmare to some, but once you wrestle it to the ground it is one of the most powerful visualization tools you might have in your toolbox.
 Happily, it is fairly easy to get some basics up and running once you start looking at the world the way it does.
@@ -32,10 +32,8 @@ Happily, when you load data, it usually is.
 For example:
 
 ```{r warning=FALSE}
-dat <- read_dta("data/hsb.dta") |> 
-  select(1:10)
-
-names( dat )
+dat <- read_dta("data/hsb.dta")
+head( dat )
 ```
 
 The easiest full plot to make has two elements.
@@ -47,7 +45,7 @@ ggplot(dat, aes(y = mathach, x = ses)) +
 ```
 
 So far, nothing too scary, right?
-The `ggplot( dat, aes(x=mathach, y=ses) )` says "My plot is going to use `dat` for my data, and my y-axis is the `mathach` variable and my x-axis is `ses`." The `aes()` bit is "aesthetics"--it is a way of tying variables to different kinds of things you could have on your plot: x location, y location, color, plotting symbol, and a few other things.
+The `ggplot( dat, aes(x=mathach, y=ses) )` says "My plot is going to use `dat` for my data, and my $y$-axis is the `mathach` variable and my $x$-axis is `ses`." The `aes()` bit is "aesthetics"--it is a way of tying variables to different kinds of things you could have on your plot: x location, y location, color, plotting symbol, and a few other things.
 
 For example:
 
@@ -68,7 +66,7 @@ Once you do this, however, it will label things in a nice way.
 
 You can also automatically add various statistical summaries, such as simple regression lines:
 
-```{r}
+```{r, messages=FALSE}
 ggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + 
     geom_point() + 
     stat_smooth( method="lm", se = FALSE )
@@ -79,13 +77,13 @@ It gives you a regression line for each group.
 
 The elements of the plot are stacked, and if you remove one of the elements, it will not appear:
 
-```{r}
+```{r, messages=FALSE}
 ggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + 
   stat_smooth( method="lm" )
 ```
 
 Here we also added some uncertainty bars around the regression lines by not saying `se = FALSE`.
-(Including uncertainty is the default.)
+(Including uncertainty is the default; this uncertainty is not to be trusted, especially in this course, as it is not taking clustering into account.)
 
 ## Grouping
 
@@ -93,7 +91,7 @@ Combining these ideas we can make a trend line for each school:
 
 ```{r}
 my.plot = ggplot( dat, aes(y=mathach, x=ses, col=sector, group=schoolid ) ) + 
-    stat_smooth( method="lm", se = FALSE )
+    stat_smooth( method="lm", alpha=0.5, se = FALSE )
 
 my.plot
 ```
@@ -112,7 +110,7 @@ As you may now realize, `ggplot2` is very, very powerful.
 We next show some other things you can do.
 For example, you can make lots of little plots:
 
-```{r}
+```{r, messages=FALSE}
 my.plot + 
   facet_grid( ~ female ) + 
     ggtitle("School-level trend lines for their male and female students") +
@@ -121,21 +119,23 @@ my.plot +
 
 Or,
 
-```{r}
+```{r, messages=FALSE}
 # random subset of schoolid
 sch <- sample( unique( dat$schoolid ), 6 )
 
 # pipe into ggplot 
-my.six.plot <- dat |> 
-  filter(schoolid %in% sch) |> 
-  ggplot(aes(y=mathach, x=ses, col=sector ) ) + 
+sch.six <- dat |> 
+  filter(schoolid %in% sch)
+
+my.six.plot <- ggplot( sch.six, aes(y=mathach, x=ses, col=sector ) ) + 
     facet_wrap( ~ schoolid, ncol=3 ) + 
     geom_point() + stat_smooth( method="lm" )
 
 my.six.plot
+
 ```
 
-Also shown are adding titles.
+Also shown in the above are adding titles.
 
 ## Themes
 
@@ -143,7 +143,7 @@ You can very quickly change the entire presentation of your plot using `themes`.
 There are pre-packaged ones, and you can make your own that you use over and over.
 Here we set up a theme to be used moving forward
 
-```{r}
+```{r, messages=FALSE}
 library( ggthemes )
 my_t = theme_calc() + theme( legend.position="bottom", 
                              legend.direction="horizontal", 
@@ -153,7 +153,7 @@ theme_set( my_t )
 
 Compare the same plot from above, now with a new theme.
 
-```{r}
+```{r, messages=FALSE}
 my.six.plot
 ```
 

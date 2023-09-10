@@ -13,6 +13,7 @@ book:
     - self_grading.qmd
     - part: "R & R MARKDOWN"
       chapters:
+          - style_guide.qmd
           - intro_markdown.qmd
           - intro_linear_regression.qmd
           - summary_plots.qmd

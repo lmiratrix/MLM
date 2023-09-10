@@ -443,37 +443,37 @@
   {
     "objectID": "intro_ggplot.html#summarizing",
     "href": "intro_ggplot.html#summarizing",
-    "title": "11  Intro to ggplot",
-    "section": "11.1 Summarizing",
-    "text": "11.1 Summarizing\nYou can also automatically add various statistical summaries, such as simple regression lines:\n\nggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + \n    geom_point() + \n    stat_smooth( method=\"lm\", se = FALSE )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nNotice how it automatically realized you have two subgroups of data defined by sector. It gives you a regression line for each group.\nThe elements of the plot are stacked, and if you remove one of the elements, it will not appear:\n\nggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + \n  stat_smooth( method=\"lm\" )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nHere we also added some uncertainty bars around the regression lines by not saying se = FALSE. (Including uncertainty is the default.)"
+    "title": "12  Intro to ggplot",
+    "section": "12.1 Summarizing",
+    "text": "12.1 Summarizing\nYou can also automatically add various statistical summaries, such as simple regression lines:\n\nggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + \n    geom_point() + \n    stat_smooth( method=\"lm\", se = FALSE )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nNotice how it automatically realized you have two subgroups of data defined by sector. It gives you a regression line for each group.\nThe elements of the plot are stacked, and if you remove one of the elements, it will not appear:\n\nggplot( dat, aes(y=mathach, x=ses, col=sector ) ) + \n  stat_smooth( method=\"lm\" )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nHere we also added some uncertainty bars around the regression lines by not saying se = FALSE. (Including uncertainty is the default; this uncertainty is not to be trusted, especially in this course, as it is not taking clustering into account.)"
   },
   {
     "objectID": "intro_ggplot.html#grouping",
     "href": "intro_ggplot.html#grouping",
-    "title": "11  Intro to ggplot",
-    "section": "11.2 Grouping",
-    "text": "11.2 Grouping\nCombining these ideas we can make a trend line for each school:\n\nmy.plot = ggplot( dat, aes(y=mathach, x=ses, col=sector, group=schoolid ) ) + \n    stat_smooth( method=\"lm\", se = FALSE )\n\nmy.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nThe trendlines automatically extend to the limits of the data they are run on, hence the different lengths.\nAlso, notice we “saved” the plot in the variable my.plot. Only when we “print” the plot will the plot appear on your display. When we type the name of a variable, it prints. Once you have a plot stored in a variable you can augment it very easily.\nAs you may now realize, ggplot2 is very, very powerful."
+    "title": "12  Intro to ggplot",
+    "section": "12.2 Grouping",
+    "text": "12.2 Grouping\nCombining these ideas we can make a trend line for each school:\n\nmy.plot = ggplot( dat, aes(y=mathach, x=ses, col=sector, group=schoolid ) ) + \n    stat_smooth( method=\"lm\", alpha=0.5, se = FALSE )\n\nmy.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nThe trendlines automatically extend to the limits of the data they are run on, hence the different lengths.\nAlso, notice we “saved” the plot in the variable my.plot. Only when we “print” the plot will the plot appear on your display. When we type the name of a variable, it prints. Once you have a plot stored in a variable you can augment it very easily.\nAs you may now realize, ggplot2 is very, very powerful."
   },
   {
     "objectID": "intro_ggplot.html#customization",
     "href": "intro_ggplot.html#customization",
-    "title": "11  Intro to ggplot",
-    "section": "11.3 Customization",
-    "text": "11.3 Customization\nWe next show some other things you can do. For example, you can make lots of little plots:\n\nmy.plot + \n  facet_grid( ~ female ) + \n    ggtitle(\"School-level trend lines for their male and female students\") +\n    labs(x=\"SES\",y=\"Math Achievement\") \n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nOr,\n\n# random subset of schoolid\nsch &lt;- sample( unique( dat$schoolid ), 6 )\n\n# pipe into ggplot \nmy.six.plot &lt;- dat |&gt; \n  filter(schoolid %in% sch) |&gt; \n  ggplot(aes(y=mathach, x=ses, col=sector ) ) + \n    facet_wrap( ~ schoolid, ncol=3 ) + \n    geom_point() + stat_smooth( method=\"lm\" )\n\nmy.six.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nAlso shown are adding titles."
+    "title": "12  Intro to ggplot",
+    "section": "12.3 Customization",
+    "text": "12.3 Customization\nWe next show some other things you can do. For example, you can make lots of little plots:\n\nmy.plot + \n  facet_grid( ~ female ) + \n    ggtitle(\"School-level trend lines for their male and female students\") +\n    labs(x=\"SES\",y=\"Math Achievement\") \n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nOr,\n\n# random subset of schoolid\nsch &lt;- sample( unique( dat$schoolid ), 6 )\n\n# pipe into ggplot \nsch.six &lt;- dat |&gt; \n  filter(schoolid %in% sch)\n\nmy.six.plot &lt;- ggplot( sch.six, aes(y=mathach, x=ses, col=sector ) ) + \n    facet_wrap( ~ schoolid, ncol=3 ) + \n    geom_point() + stat_smooth( method=\"lm\" )\n\nmy.six.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nAlso shown in the above are adding titles."
   },
   {
     "objectID": "intro_ggplot.html#themes",
     "href": "intro_ggplot.html#themes",
-    "title": "11  Intro to ggplot",
-    "section": "11.4 Themes",
-    "text": "11.4 Themes\nYou can very quickly change the entire presentation of your plot using themes. There are pre-packaged ones, and you can make your own that you use over and over. Here we set up a theme to be used moving forward\n\nlibrary( ggthemes )\nmy_t = theme_calc() + theme( legend.position=\"bottom\", \n                             legend.direction=\"horizontal\", \n                             legend.key.width=unit(1,\"cm\")  )\ntheme_set( my_t )\n\nCompare the same plot from above, now with a new theme.\n\nmy.six.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nCool, no?"
+    "title": "12  Intro to ggplot",
+    "section": "12.4 Themes",
+    "text": "12.4 Themes\nYou can very quickly change the entire presentation of your plot using themes. There are pre-packaged ones, and you can make your own that you use over and over. Here we set up a theme to be used moving forward\n\nlibrary( ggthemes )\nmy_t = theme_calc() + theme( legend.position=\"bottom\", \n                             legend.direction=\"horizontal\", \n                             legend.key.width=unit(1,\"cm\")  )\ntheme_set( my_t )\n\nCompare the same plot from above, now with a new theme.\n\nmy.six.plot\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nCool, no?"
   },
   {
     "objectID": "intro_ggplot.html#next-steps",
     "href": "intro_ggplot.html#next-steps",
-    "title": "11  Intro to ggplot",
-    "section": "11.5 Next steps",
-    "text": "11.5 Next steps\nThere is a lot of information out there on ggplot and my best advice is to find code examples, and then modify them as needed. There are tutorials and blogs that walk through building plots (search for “ggplot tutorial” for example), but seeing examples seems to be the best way to learn the stuff. For example, you could use the above code for your project one quite readily. And don’t be afraid to ask how to modify plots on Piazza!\nIn particular, check out the excellent “R for Data Science’’ textbook. It extensively uses ggplot, starting here."
+    "title": "12  Intro to ggplot",
+    "section": "12.5 Next steps",
+    "text": "12.5 Next steps\nThere is a lot of information out there on ggplot and my best advice is to find code examples, and then modify them as needed. There are tutorials and blogs that walk through building plots (search for “ggplot tutorial” for example), but seeing examples seems to be the best way to learn the stuff. For example, you could use the above code for your project one quite readily. And don’t be afraid to ask how to modify plots on Piazza!\nIn particular, check out the excellent “R for Data Science’’ textbook. It extensively uses ggplot, starting here."
   },
   {
     "objectID": "plot_expand_grid.html#introduction",
@@ -1265,5 +1265,215 @@
     "title": "Self Grading Instructions",
     "section": "Acknowledgement:",
     "text": "Acknowledgement:\nThis idea of self-grading was inspired by Cora Wigger. She used to have some stuff on twitter, but she appears to have removed her account."
+  },
+  {
+    "objectID": "style_guide.html",
+    "href": "style_guide.html",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "",
+    "text": "2 names (style guide rule 2.1)"
+  },
+  {
+    "objectID": "style_guide.html#why-have-coding-style",
+    "href": "style_guide.html#why-have-coding-style",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "1.1 Why have coding style?",
+    "text": "1.1 Why have coding style?\n\nMany style decisions are arbitrary.\nWhy bother?\n\nit makes your code readable\nit means you can focus on writing good code\nyou will be looked down on if you use bad style\n\n\nMuch of this is from the Tidyverse style guide at http://style.tidyverse.org; we are primarily focusing on Chapters 2 and 4. Cartoon is xkcd; read those if you want to be an awesome nerd."
+  },
+  {
+    "objectID": "style_guide.html#rule-2.1-naming",
+    "href": "style_guide.html#rule-2.1-naming",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "2.1 Rule 2.1: Naming",
+    "text": "2.1 Rule 2.1: Naming\n\n“There are only two hard things in Computer Science: cache invalidation and naming things.” —Phil Karlton\n\n\nVariable and function names should be lowercase.\nUse an underscore to separate words within a name.\nGenerally, variable names should be nouns and function names should be verbs.\n\n\n# Good\nday_one\nfirst_day\n\n# Bad\nfirst_day_of_the_month\nDayOne\ndayone\ndjm1"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.1-dont-use-common-names",
+    "href": "style_guide.html#rule-2.1-dont-use-common-names",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "2.2 Rule 2.1: Don’t use common names",
+    "text": "2.2 Rule 2.1: Don’t use common names\n\n# Bad\nTRUE &lt;- FALSE\npi &lt;- 10\nmean &lt;- function(x) sum(x)"
+  },
+  {
+    "objectID": "style_guide.html#example-winsorization",
+    "href": "style_guide.html#example-winsorization",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "2.3 Example: winsorization",
+    "text": "2.3 Example: winsorization\n\n# Good\nwinsor_upper &lt;- 0.99\nwinsor_lower &lt;- 0.01\ndiamonds &lt;-\n  diamonds %&gt;%\n  mutate(y_winsor = winsorize(y, probs = c(winsor_lower, winsor_upper)))\n\n# Mediocre\ndiamonds_clean &lt;-\n  diamonds %&gt;%\n  mutate(y = winsorize(y, probs = c(0.01, 0.99)))"
+  },
+  {
+    "objectID": "style_guide.html#naming-summary",
+    "href": "style_guide.html#naming-summary",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "2.4 Naming summary",
+    "text": "2.4 Naming summary\n\nPrinciple: Ideally, your names should be self-explanatory and your code should be “self-documenting”\nA few specific tips\n\nNever use numbers to store versions of a data frame\nBy default, names for variables, functions, files, etc. should consist of complete words. (dest_short is an exception since it explicitly builds on source var dest) Source: Code and Data for the Social Sciences: A Practitioner’s Guide, Gentzkow and Shapiro\n\nthis is hard. more art than science."
+  },
+  {
+    "objectID": "style_guide.html#syntax-roadmap",
+    "href": "style_guide.html#syntax-roadmap",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.1 syntax: roadmap",
+    "text": "3.1 syntax: roadmap\n\nnaming\nspaces\nargument names\nline length\nassignment\nquotes\ncomments"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.2-spaces-i",
+    "href": "style_guide.html#rule-2.2-spaces-i",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.2 Rule 2.2: Spaces (I)",
+    "text": "3.2 Rule 2.2: Spaces (I)\n\nPut a space before and after = when naming arguments in function calls.\nAlways put a space after a comma, and never before (just like in regular English).\n\n\n# Good\naverage &lt;- mean(x, na.rm = TRUE)\n\n# Bad\naverage&lt;-mean(x, na.rm = TRUE)\naverage &lt;- mean(x ,na.rm = TRUE)"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.2-spaces-ii",
+    "href": "style_guide.html#rule-2.2-spaces-ii",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.3 Rule 2.2: Spaces (II)",
+    "text": "3.3 Rule 2.2: Spaces (II)\n\nMost infix operators (==, +, -, &lt;-, etc.) should be surrounded by spaces.\nThe exception are those with relatively high precedence: ^, :, ::, and :::.\n\n\n\n# Good\nheight &lt;- (feet * 12) + inches\nsqrt(x^2 + y^2)\nx &lt;- 1:10\nbase::get\n\n# Bad\nheight&lt;-feet*12 + inches\nsqrt(x ^ 2 + y ^ 2)\nx &lt;- 1 : 10\nbase :: get"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.2-spaces-iii",
+    "href": "style_guide.html#rule-2.2-spaces-iii",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.4 Rule 2.2: Spaces (III)",
+    "text": "3.4 Rule 2.2: Spaces (III)\nExtra spacing (i.e., more than one space in a row) is ok if it improves alignment of equal signs or assignments (&lt;-).\n\n# Good\nlist(\n  total = a + b + c,\n  mean  = (a + b + c) / n\n)\n\n# Less good\nlist(\n  total = a + b + c,\n  mean = (a + b + c) / n\n)"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.3-argument-names",
+    "href": "style_guide.html#rule-2.3-argument-names",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.5 Rule 2.3: Argument names",
+    "text": "3.5 Rule 2.3: Argument names\nFunction arguments: data to compute on and details of computation.\nOmit names of common arguments (e.g. data, aes)\nIf you override the default value of an argument, use the full name:\n\n# Good\nmean(1:10, na.rm = TRUE)\n\n# Bad\nmean(x = 1:10, , FALSE)\nmean(, TRUE, x = c(1:10, NA))"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.5-line-length-80-characters",
+    "href": "style_guide.html#rule-2.5-line-length-80-characters",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.6 Rule 2.5: Line length: 80 characters",
+    "text": "3.6 Rule 2.5: Line length: 80 characters\n\nuse one line each for the function name, each argument, and the closing )\n\n\n# Good\ndo_something_very_complicated(\n  something = \"that\",\n  requires = many,\n  arguments = \"some of which may be long\"\n)\n\n# Very bad\ndo_something_very_complicated(\"that\", requires, many, arguments, \"some of which may be long\")\n\n# Still bad\ndo_something_very_complicated(\n  \"that\", requires, many,\n  arguments,\n  \"some of which may be long\"\n)\n\n# Yup, still bad\ndo_something_very_complicated(\n  \"that\", requires, many, arguments,\n  \"some of which may be long\"\n)"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.5-line-length",
+    "href": "style_guide.html#rule-2.5-line-length",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.7 Rule 2.5: Line length",
+    "text": "3.7 Rule 2.5: Line length\nException: short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.\n\nmap(x, f,\n  extra_argument_a = 10,\n  extra_argument_b = c(1, 43, 390, 210209)\n)"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.6-assignment",
+    "href": "style_guide.html#rule-2.6-assignment",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.8 Rule 2.6: Assignment",
+    "text": "3.8 Rule 2.6: Assignment\nUse &lt;-, not =, for assignment.\n\n# Good\nx &lt;- 5\n\n# Bad\nx = 5"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.8-quotes",
+    "href": "style_guide.html#rule-2.8-quotes",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.9 Rule 2.8: Quotes",
+    "text": "3.9 Rule 2.8: Quotes\nUse \", not ', for quoting text. The only exception is when the text already contains double quotes and no single quotes.\n\n# Good\n\"Text\"\n'Text with \"quotes\"'\n'&lt;a href=\"http://style.tidyverse.org\"&gt;A link&lt;/a&gt;'\n\n# Bad\n\"Text\"\n'Text with \"double\" and \\'single\\' quotes'"
+  },
+  {
+    "objectID": "style_guide.html#rule-2.9-comments",
+    "href": "style_guide.html#rule-2.9-comments",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.10 Rule 2.9: Comments",
+    "text": "3.10 Rule 2.9: Comments\nIf you need comments to explain what your code is doing, rewrite your code.\nRemarks\n\nThis is counter-intuitive! The problem with comments is that you can change your code without changing the comments. So when you go back and make a change to the code (as is very often necessary), then your comment becomes a source of confusion rather than clarity.\n30535: You can use text in the markdown document to explain what your code is doing in plain English. Use complete sentences. But it is better if you just write the code well.\nLife post 30535: There are times when comments are useful, but I try to use them sparingly."
+  },
+  {
+    "objectID": "style_guide.html#syntax-summary",
+    "href": "style_guide.html#syntax-summary",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "3.11 Syntax summary",
+    "text": "3.11 Syntax summary\n\nuse whitespace\narguments: data before details\nline length: 80 characters\nassignment: &lt;-\nuse double quotes\navoid comments\nI skipped 2.4 and 2.7 because they relate to material we haven’t learned yet"
+  },
+  {
+    "objectID": "style_guide.html#pipes-roadmap",
+    "href": "style_guide.html#pipes-roadmap",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.1 pipes %>%: roadmap",
+    "text": "4.1 pipes %&gt;%: roadmap\n\nintro\nwhitespace\nlong lines\nshort pipes\nno arguments\nassignment"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.1-intro",
+    "href": "style_guide.html#rule-4.1-intro",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.2 Rule 4.1: intro",
+    "text": "4.2 Rule 4.1: intro\nUse %&gt;% to emphasise a sequence of actions, rather than the object that the actions are being performed on.\nAvoid using the pipe when:\n\nYou need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.\nThere are meaningful intermediate objects that could be given informative names (cf rule 2.9)."
+  },
+  {
+    "objectID": "style_guide.html#rule-4.2-whitespace",
+    "href": "style_guide.html#rule-4.2-whitespace",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.3 Rule 4.2: whitespace",
+    "text": "4.3 Rule 4.2: whitespace\n%&gt;% should always have a space before it, and should usually be followed by a new line. After the first step, each line should be indented by two spaces. This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.\n\n# Good\niris %&gt;%\n  group_by(Species) %&gt;%\n  summarize_if(is.numeric, mean) %&gt;%\n  ungroup() %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(value)\n\n# Bad\niris %&gt;% group_by(Species) %&gt;% summarize_all(mean) %&gt;% \nungroup() %&gt;% gather(measure, value, -Species) %&gt;%\narrange(value)"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.4-short-pipes-i",
+    "href": "style_guide.html#rule-4.4-short-pipes-i",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.4 Rule 4.4: short pipes I",
+    "text": "4.4 Rule 4.4: short pipes I\nIt is ok to keep a one-step pipe in one line:\n\n# Good\niris %&gt;% arrange(Species)\n\n# Mediocre\niris %&gt;%\n  arrange(Species)\n\narrange(iris, Species)"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.4-short-pipes-ii",
+    "href": "style_guide.html#rule-4.4-short-pipes-ii",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.5 Rule 4.4: short pipes II",
+    "text": "4.5 Rule 4.4: short pipes II\n\n# Bad\nx %&gt;%\n  select(a, b, w) %&gt;%\n  left_join(\n    y %&gt;% filter(!u) %&gt;% gather(a, v, -b) %&gt;% select(a, b, v),\n    by = c(\"a\", \"b\")\n  )"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.4-short-pipes-iii",
+    "href": "style_guide.html#rule-4.4-short-pipes-iii",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.6 Rule 4.4: short pipes III",
+    "text": "4.6 Rule 4.4: short pipes III\n\n# Good\nx %&gt;%\n  select(a, b, w) %&gt;%\n  left_join(y %&gt;% select(a, b, v), by = c(\"a\", \"b\"))\n\nx_join &lt;-\n  x %&gt;%\n  select(a, b, w)\ny_join &lt;-\n  y %&gt;%\n  filter(!u) %&gt;%\n  gather(a, v, -b) %&gt;%\n  select(a, b, v)\nleft_join(x_join, y_join, by = c(\"a\", \"b\"))"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.5-no-arguments",
+    "href": "style_guide.html#rule-4.5-no-arguments",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.7 Rule 4.5: No arguments",
+    "text": "4.7 Rule 4.5: No arguments\nmagrittr allows you to omit () on functions that don’t have arguments. Avoid this. This way data objects never have parentheses and functions always do.\n\n# Good\nx %&gt;%\n  unique() %&gt;%\n  sort()\n\n# Bad\nx %&gt;%\n  unique %&gt;%\n  sort"
+  },
+  {
+    "objectID": "style_guide.html#rule-4.6-assignment",
+    "href": "style_guide.html#rule-4.6-assignment",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.8 Rule 4.6: Assignment",
+    "text": "4.8 Rule 4.6: Assignment\nUse a separate line for the target of the assignment followed by &lt;-.\n\n# Good\niris_long &lt;-\n  iris %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(-value)\n\n# Bad\niris_long &lt;- iris %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(-value)"
+  },
+  {
+    "objectID": "style_guide.html#pipes-summary",
+    "href": "style_guide.html#pipes-summary",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "4.9 Pipes %>% summary",
+    "text": "4.9 Pipes %&gt;% summary\n\npipes are awesome\nuse whitespace\nshort pipes can be on one line\nuse parentheses even if there are no arguments\nassignment on a separate line\n\nSkipped rule 4.3 since redundant to prior chapter"
+  },
+  {
+    "objectID": "style_guide.html#code-style-summary",
+    "href": "style_guide.html#code-style-summary",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "1.5 Code style summary",
+    "text": "1.5 Code style summary\n\nStyle is awesome. Save a future researcher from spending two months trying to disentangle your spaghetti!\nYou don’t need to memorize these rules! Just as you have spell check and grammarly on your computer for prose, there is a package styler to help you follow the code style guide.\nJust as you still need to learn to spell (since spell checker doesn’t capture everything), you need to learn these rules as well.\n\nIn closing:\n\n“Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.” –Hadley Wickham"
+  },
+  {
+    "objectID": "style_guide.html#names-style-guide-rule-2.1",
+    "href": "style_guide.html#names-style-guide-rule-2.1",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "1.2 names (style guide rule 2.1)",
+    "text": "1.2 names (style guide rule 2.1)\n\n1.2.1 Rule 2.1: Naming\n\n“There are only two hard things in Computer Science: cache invalidation and naming things.” —Phil Karlton\n\n\nVariable and function names should be lowercase.\nUse an underscore to separate words within a name.\nGenerally, variable names should be nouns and function names should be verbs.\n\n\n# Good\nday_one\nfirst_day\n\n# Bad\nfirst_day_of_the_month\nDayOne\ndayone\ndjm1\n\n\n\n1.2.2 Rule 2.2: Don’t use common names\n\n# Bad\nTRUE &lt;- FALSE\npi &lt;- 10\nmean &lt;- function(x) sum(x)\n\n\n\n1.2.3 Example: winsorization\n\n# Good\nwinsor_upper &lt;- 0.99\nwinsor_lower &lt;- 0.01\ndiamonds &lt;-\n  diamonds %&gt;%\n  mutate(y_winsor = winsorize(y, probs = c(winsor_lower, winsor_upper)))\n\n# Mediocre\ndiamonds_clean &lt;-\n  diamonds %&gt;%\n  mutate(y = winsorize(y, probs = c(0.01, 0.99)))\n\n\n\n1.2.4 Naming summary\n\nPrinciple: Ideally, your names should be self-explanatory and your code should be “self-documenting.”\nA few specific tips\n\nNever use numbers to store versions of a data frame\nBy default, names for variables, functions, files, etc. should consist of complete words. (dest_short is an exception since it explicitly builds on source var dest) Source: Code and Data for the Social Sciences: A Practitioner’s Guide, Gentzkow and Shapiro\n\nThis is hard. more art than science."
+  },
+  {
+    "objectID": "style_guide.html#syntax",
+    "href": "style_guide.html#syntax",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "1.3 Syntax",
+    "text": "1.3 Syntax\n\n1.3.1 syntax: roadmap\n\nnaming\nspaces\nargument names\nline length\nassignment\nquotes\ncomments\n\n\n\n1.3.2 Rule 2.2: Spaces (I)\n\nPut a space before and after = when naming arguments in function calls.\nAlways put a space after a comma, and never before (just like in regular English).\n\n\n# Good\naverage &lt;- mean(x, na.rm = TRUE)\n\n# Also good\naverage &lt;- mean( x, na.rm = TRUE )\n\n# Bad\naverage&lt;-mean(x, na.rm = TRUE)\naverage &lt;- mean(x ,na.rm = TRUE)\n\n\n\n1.3.3 Rule 2.2: Spaces (II)\n\nMost infix operators (==, +, -, &lt;-, etc.) should be surrounded by spaces.\nThe exception are those with relatively high precedence: ^, :, ::, and :::. (“High precedence” means that these operators are evaluated first, like multiplication goes before addition.)\n\n\n# Good\nheight &lt;- (feet * 12) + inches\nsqrt(x^2 + y^2)\nx &lt;- 1:10\nbase::get\n\n# Bad\nheight&lt;-feet*12 + inches\nsqrt(x ^ 2 + y ^ 2)\nx &lt;- 1 : 10\nbase :: get\n\n\n\n1.3.4 Rule 2.2: Spaces (III)\nExtra spacing (i.e., more than one space in a row) is ok if it improves alignment of equal signs or assignments (&lt;-).\n\n# Good\nlist(\n  total = a + b + c,\n  mean  = (a + b + c) / n\n)\n\n# Less good, but livable\nlist(\n  total = a + b + c,\n  mean = (a + b + c) / n\n)\n\n\n\n1.3.5 Rule 2.3: Argument names\nFunction arguments: data to compute on and details of computation.\nOmit names of common arguments (e.g. data, aes)\nIf you override the default value of an argument, use the full name:\n\n# Good\nmean(1:10, na.rm = TRUE)\n\n# Bad\nmean(x = 1:10, , FALSE)\nmean(, TRUE, x = c(1:10, NA))\n\n\n\n1.3.6 Rule 2.5: Line length: 80 characters\n\nuse one line each for the function name, each argument, and the closing )\n\n\n# Good\ndo_something_very_complicated(\n  something = \"that\",\n  requires = many,\n  arguments = \"some of which may be long\"\n)\n\n# Very bad\ndo_something_very_complicated(\"that\", requires, many, arguments, \"some of which may be long\")\n\n# Still bad\ndo_something_very_complicated(\n  \"that\", requires, many,\n  arguments,\n  \"some of which may be long\"\n)\n\n# Yup, still bad\ndo_something_very_complicated(\n  \"that\", requires, many, arguments,\n  \"some of which may be long\"\n)\n\n\n\n1.3.7 Rule 2.5: Line length\nException: short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.\n\nmap(x, f,\n  extra_argument_a = 10,\n  extra_argument_b = c(1, 43, 390, 210209)\n)\n\n\n\n1.3.8 Rule 2.6: Assignment (if you are prissy)\nUse &lt;-, not =, for assignment.\n\n# Good\nx &lt;- 5\n\n# Bad\nx = 5\n\n\n\n1.3.9 Rule 2.8: Quotes\nUse \", not ', for quoting text. The only exception is when the text already contains double quotes and no single quotes.\n\n# Good\n\"Text\"\n'Text with \"quotes\"'\n'&lt;a href=\"http://style.tidyverse.org\"&gt;A link&lt;/a&gt;'\n\n# Bad\n\"Text\"\n'Text with \"double\" and \\'single\\' quotes'\n\n\n\n1.3.10 Rule 2.9: Comments\nIf you need comments to explain what your code is doing, rewrite your code.\nRemarks\n\nThis is counter-intuitive! The problem with comments is that you can change your code without changing the comments. So when you go back and make a change to the code (as is very often necessary), then your comment becomes a source of confusion rather than clarity.\n30535: You can use text in the markdown document to explain what your code is doing in plain English. Use complete sentences. But it is better if you just write the code well.\nLife post 30535: There are times when comments are useful, but I try to use them sparingly.\n\n\n\n1.3.11 Syntax summary\n\nuse whitespace\narguments: data before details\nline length: 80 characters\nassignment: &lt;-\nuse double quotes\navoid comments\nI skipped 2.4 and 2.7 because they relate to material we haven’t learned yet"
+  },
+  {
+    "objectID": "style_guide.html#pipes-with-magrittr",
+    "href": "style_guide.html#pipes-with-magrittr",
+    "title": "1  A R Code Style (Miratrix version)",
+    "section": "1.4 pipes with magrittr",
+    "text": "1.4 pipes with magrittr\n\n1.4.1 pipes %&gt;%: roadmap\n\nintro\nwhitespace\nlong lines\nshort pipes\nno arguments\nassignment\n\n\n\n1.4.2 Rule 4.1: intro\nUse %&gt;% (or |&gt;, if you are modern) to emphasise a sequence of actions, rather than the object that the actions are being performed on.\nAvoid using the pipe when:\n\nYou need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.\nThere are meaningful intermediate objects that could be given informative names (cf rule 2.9).\n\n\n\n1.4.3 Rule 4.2: whitespace\n%&gt;% should always have a space before it, and should usually be followed by a new line. After the first step, each line should be indented by two spaces. This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.\n\n# Good\niris %&gt;%\n  group_by(Species) %&gt;%\n  summarize_if(is.numeric, mean) %&gt;%\n  ungroup() %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(value)\n\n# Bad\niris %&gt;% group_by(Species) %&gt;% summarize_all(mean) %&gt;% \nungroup() %&gt;% gather(measure, value, -Species) %&gt;%\narrange(value)\n\n\n\n1.4.4 Rule 4.4: short pipes I\nIt is ok to keep a one-step pipe in one line:\n\n# Good\niris %&gt;% arrange(Species)\n\n# Mediocre\niris %&gt;%\n  arrange(Species)\n\narrange(iris, Species)\n\n\n\n1.4.5 Rule 4.4: short pipes II\n\n# Bad\nx %&gt;%\n  select(a, b, w) %&gt;%\n  left_join(\n    y %&gt;% filter(!u) %&gt;% gather(a, v, -b) %&gt;% select(a, b, v),\n    by = c(\"a\", \"b\")\n  )\n\n\n\n1.4.6 Rule 4.4: short pipes III\n\n# Good\nx %&gt;%\n  select(a, b, w) %&gt;%\n  left_join(y %&gt;% select(a, b, v), by = c(\"a\", \"b\"))\n\nx_join &lt;-\n  x %&gt;%\n  select(a, b, w)\ny_join &lt;-\n  y %&gt;%\n  filter(!u) %&gt;%\n  gather(a, v, -b) %&gt;%\n  select(a, b, v)\nleft_join(x_join, y_join, by = c(\"a\", \"b\"))\n\n\n\n1.4.7 Rule 4.5: No arguments\nmagrittr allows you to omit () on functions that don’t have arguments. Avoid this. This way data objects never have parentheses and functions always do.\n\n# Good\nx %&gt;%\n  unique() %&gt;%\n  sort()\n\n# Bad\nx %&gt;%\n  unique %&gt;%\n  sort\n\n\n\n1.4.8 Rule 4.6: Assignment\nUse a separate line for the target of the assignment followed by &lt;-.\n\n# Good\niris_long &lt;-\n  iris %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(-value)\n\n# Bad\niris_long &lt;- iris %&gt;%\n  gather(measure, value, -Species) %&gt;%\n  arrange(-value)\n\n\n\n1.4.9 Pipes %&gt;% summary\n\npipes are awesome\nuse whitespace\nshort pipes can be on one line\nuse parentheses even if there are no arguments\nassignment on a separate line\n\nSkipped rule 4.3 since redundant to prior chapter"
   }
 ]

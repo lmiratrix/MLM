@@ -41,7 +41,9 @@ packages <- c("Amelia",
               "tableone",
               "texreg",
               "tidyverse",
-              "VIM")
+              "VIM",
+              "nycflights13"
+              )
 
 for(p in packages) {
   tryCatch(test <- require(p,character.only=T), 
