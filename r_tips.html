@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 10&nbsp; Tips, Tricks, and Debugging in R</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 12&nbsp; Tips, Tricks, and Debugging in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_markdown.html">R &amp; R MARKDOWN</a></li><li class="breadcrumb-item"><a href="./r_tips.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./style_guide.html">R &amp; R MARKDOWN</a></li><li class="breadcrumb-item"><a href="./r_tips.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -157,6 +157,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Assignment Formatting Guidelines</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./self_grading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Self Grading Instructions</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -168,62 +174,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./style_guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A R Code Style (Miratrix version)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./intro_markdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Intro to R Markdown</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro to R Markdown</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./configuring_code_chunks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Configuring Rmarkdown chunks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro to Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple tables, plots, and model diagnostics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./making_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./math_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">A Math Reference: Sample Modeling Equations to Borrow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pivot_wider.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><code>pivot_longer</code> and <code>pivot_wider</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_missing_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./r_tips.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></span></a>
   </div>
 </li>
       </ul>
@@ -240,25 +258,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_ggplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./plot_expand_grid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example of making plots with <code>expand.grid</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ggeffects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./double_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span></a>
   </div>
 </li>
       </ul>
@@ -275,85 +293,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./broom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Extracting information from fitted <code>lmer</code> models with <code>broom</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Extracting information from fitted <code>lmer</code> models with <code>broom</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_extract.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Extrating information from fitted <code>lmer</code> models using base R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Extrating information from fitted <code>lmer</code> models using base R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_coefficients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Interpreting Coefficients</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./within_v_between.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reg_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_representations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Model Representations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model_cheat_sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./growth_models_predictors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interpreting_glms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aic_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey_weights.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
   </div>
 </li>
       </ul>
@@ -370,25 +388,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fe_crve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./robust_mlm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,25 +423,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./faraway_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./perf_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kenya_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
   </div>
 </li>
       </ul>
@@ -440,25 +458,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rand_slopes_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rewb_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -475,31 +493,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -520,22 +538,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#some-principles-to-live-by" id="toc-some-principles-to-live-by" class="nav-link active" data-scroll-target="#some-principles-to-live-by"><span class="header-section-number">10.1</span> Some principles to live by</a>
+  <li><a href="#some-principles-to-live-by" id="toc-some-principles-to-live-by" class="nav-link active" data-scroll-target="#some-principles-to-live-by"><span class="header-section-number">12.1</span> Some principles to live by</a>
   <ul class="collapse">
-  <li><a href="#watch-tricky-letter-and-number-confusion-in-code" id="toc-watch-tricky-letter-and-number-confusion-in-code" class="nav-link" data-scroll-target="#watch-tricky-letter-and-number-confusion-in-code"><span class="header-section-number">10.1.1</span> Watch Tricky letter and number confusion in code</a></li>
-  <li><a href="#write-in-a-good-r-style" id="toc-write-in-a-good-r-style" class="nav-link" data-scroll-target="#write-in-a-good-r-style"><span class="header-section-number">10.1.2</span> Write in a good R style</a></li>
-  <li><a href="#save-and-load-r-objects-to-save-time" id="toc-save-and-load-r-objects-to-save-time" class="nav-link" data-scroll-target="#save-and-load-r-objects-to-save-time"><span class="header-section-number">10.1.3</span> Save and load R objects to save time</a></li>
-  <li><a href="#reproduce-randomness-with-set.seed" id="toc-reproduce-randomness-with-set.seed" class="nav-link" data-scroll-target="#reproduce-randomness-with-set.seed"><span class="header-section-number">10.1.4</span> Reproduce randomness with <code>set.seed</code></a></li>
-  <li><a href="#keep-your-files-organized" id="toc-keep-your-files-organized" class="nav-link" data-scroll-target="#keep-your-files-organized"><span class="header-section-number">10.1.5</span> Keep your files organized</a></li>
-  <li><a href="#make-sure-your-data-are-numeric" id="toc-make-sure-your-data-are-numeric" class="nav-link" data-scroll-target="#make-sure-your-data-are-numeric"><span class="header-section-number">10.1.6</span> Make sure your data are numeric</a></li>
-  <li><a href="#categories-should-be-words" id="toc-categories-should-be-words" class="nav-link" data-scroll-target="#categories-should-be-words"><span class="header-section-number">10.1.7</span> Categories should be words</a></li>
+  <li><a href="#watch-tricky-letter-and-number-confusion-in-code" id="toc-watch-tricky-letter-and-number-confusion-in-code" class="nav-link" data-scroll-target="#watch-tricky-letter-and-number-confusion-in-code"><span class="header-section-number">12.1.1</span> Watch Tricky letter and number confusion in code</a></li>
+  <li><a href="#write-in-a-good-r-style" id="toc-write-in-a-good-r-style" class="nav-link" data-scroll-target="#write-in-a-good-r-style"><span class="header-section-number">12.1.2</span> Write in a good R style</a></li>
+  <li><a href="#save-and-load-r-objects-to-save-time" id="toc-save-and-load-r-objects-to-save-time" class="nav-link" data-scroll-target="#save-and-load-r-objects-to-save-time"><span class="header-section-number">12.1.3</span> Save and load R objects to save time</a></li>
+  <li><a href="#reproduce-randomness-with-set.seed" id="toc-reproduce-randomness-with-set.seed" class="nav-link" data-scroll-target="#reproduce-randomness-with-set.seed"><span class="header-section-number">12.1.4</span> Reproduce randomness with <code>set.seed</code></a></li>
+  <li><a href="#keep-your-files-organized" id="toc-keep-your-files-organized" class="nav-link" data-scroll-target="#keep-your-files-organized"><span class="header-section-number">12.1.5</span> Keep your files organized</a></li>
+  <li><a href="#make-sure-your-data-are-numeric" id="toc-make-sure-your-data-are-numeric" class="nav-link" data-scroll-target="#make-sure-your-data-are-numeric"><span class="header-section-number">12.1.6</span> Make sure your data are numeric</a></li>
+  <li><a href="#categories-should-be-words" id="toc-categories-should-be-words" class="nav-link" data-scroll-target="#categories-should-be-words"><span class="header-section-number">12.1.7</span> Categories should be words</a></li>
   </ul></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">10.2</span> Data Wrangling</a>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">12.2</span> Data Wrangling</a>
   <ul class="collapse">
-  <li><a href="#handling-lagged-data" id="toc-handling-lagged-data" class="nav-link" data-scroll-target="#handling-lagged-data"><span class="header-section-number">10.2.1</span> Handling Lagged Data</a></li>
-  <li><a href="#quick-overview-of-merging-data" id="toc-quick-overview-of-merging-data" class="nav-link" data-scroll-target="#quick-overview-of-merging-data"><span class="header-section-number">10.2.2</span> Quick overview of merging data</a></li>
-  <li><a href="#summarizingaggregating-data" id="toc-summarizingaggregating-data" class="nav-link" data-scroll-target="#summarizingaggregating-data"><span class="header-section-number">10.2.3</span> Summarizing/aggregating Data</a></li>
-  <li><a href="#making-data-frames-on-the-fly" id="toc-making-data-frames-on-the-fly" class="nav-link" data-scroll-target="#making-data-frames-on-the-fly"><span class="header-section-number">10.2.4</span> Making Data Frames on the fly</a></li>
+  <li><a href="#handling-lagged-data" id="toc-handling-lagged-data" class="nav-link" data-scroll-target="#handling-lagged-data"><span class="header-section-number">12.2.1</span> Handling Lagged Data</a></li>
+  <li><a href="#quick-overview-of-merging-data" id="toc-quick-overview-of-merging-data" class="nav-link" data-scroll-target="#quick-overview-of-merging-data"><span class="header-section-number">12.2.2</span> Quick overview of merging data</a></li>
+  <li><a href="#summarizingaggregating-data" id="toc-summarizingaggregating-data" class="nav-link" data-scroll-target="#summarizingaggregating-data"><span class="header-section-number">12.2.3</span> Summarizing/aggregating Data</a></li>
+  <li><a href="#making-data-frames-on-the-fly" id="toc-making-data-frames-on-the-fly" class="nav-link" data-scroll-target="#making-data-frames-on-the-fly"><span class="header-section-number">12.2.4</span> Making Data Frames on the fly</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -545,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Tips, Tricks, and Debugging in R</span></h1>
 </div>
 
 
@@ -563,14 +581,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This chapter is a complete hodge-podge of small things that tend to bite students, especially when they are dealing with messy data that they might have for final projects.</p>
 <p>In particular, as you learn R, there’s lots of good tricks you’ll never know about until somebody shows you. Clean code is one such good trick; consider the following: “Your most important collaborator is you from 6 months ago. Unfortunately, you can’t ask that-you any questions, because they don’t answer their email.”</p>
 <p>So onwards with a few things that you may find useful, either now or later.</p>
-<section id="some-principles-to-live-by" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="some-principles-to-live-by"><span class="header-section-number">10.1</span> Some principles to live by</h2>
-<section id="watch-tricky-letter-and-number-confusion-in-code" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="watch-tricky-letter-and-number-confusion-in-code"><span class="header-section-number">10.1.1</span> Watch Tricky letter and number confusion in code</h3>
+<section id="some-principles-to-live-by" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="some-principles-to-live-by"><span class="header-section-number">12.1</span> Some principles to live by</h2>
+<section id="watch-tricky-letter-and-number-confusion-in-code" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="watch-tricky-letter-and-number-confusion-in-code"><span class="header-section-number">12.1.1</span> Watch Tricky letter and number confusion in code</h3>
 <p>The letter “l” looks like the number “1”—watch out for that. Things like “mylm” are usually all letters, with “lm” standing for linear model.</p>
 </section>
-<section id="write-in-a-good-r-style" class="level3" data-number="10.1.2">
-<h3 data-number="10.1.2" class="anchored" data-anchor-id="write-in-a-good-r-style"><span class="header-section-number">10.1.2</span> Write in a good R style</h3>
+<section id="write-in-a-good-r-style" class="level3" data-number="12.1.2">
+<h3 data-number="12.1.2" class="anchored" data-anchor-id="write-in-a-good-r-style"><span class="header-section-number">12.1.2</span> Write in a good R style</h3>
 <p>Try to do the following</p>
 <ul>
 <li>Comment your code!</li>
@@ -588,8 +606,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Never use <code>attach()</code></li>
 </ul>
 </section>
-<section id="save-and-load-r-objects-to-save-time" class="level3" data-number="10.1.3">
-<h3 data-number="10.1.3" class="anchored" data-anchor-id="save-and-load-r-objects-to-save-time"><span class="header-section-number">10.1.3</span> Save and load R objects to save time</h3>
+<section id="save-and-load-r-objects-to-save-time" class="level3" data-number="12.1.3">
+<h3 data-number="12.1.3" class="anchored" data-anchor-id="save-and-load-r-objects-to-save-time"><span class="header-section-number">12.1.3</span> Save and load R objects to save time</h3>
 <p>If you have the result of something that took awhile to run (e.g., a big multilevel model fit to a lot of data) you can try saving it like so:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>myBigThing <span class="ot">=</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data=</span>mtcars) <span class="co">#something slow</span></span>
@@ -599,14 +617,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>myBigThing <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(savedPath)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="reproduce-randomness-with-set.seed" class="level3" data-number="10.1.4">
-<h3 data-number="10.1.4" class="anchored" data-anchor-id="reproduce-randomness-with-set.seed"><span class="header-section-number">10.1.4</span> Reproduce randomness with <code>set.seed</code></h3>
+<section id="reproduce-randomness-with-set.seed" class="level3" data-number="12.1.4">
+<h3 data-number="12.1.4" class="anchored" data-anchor-id="reproduce-randomness-with-set.seed"><span class="header-section-number">12.1.4</span> Reproduce randomness with <code>set.seed</code></h3>
 <p>If your code uses random numbers, then you should set your seed, which makes your script always generate the same sequence of random numbers.</p>
 <p>For example, say your code had this:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({(<span class="dv">1</span><span class="sc">:</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)[<span class="fu">rpois</span>(<span class="dv">1</span>, <span class="dv">3</span>)])}, <span class="at">error=</span><span class="cf">function</span>(e){(e)}) <span class="co">#works?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 2 3 4</code></pre>
+<pre><code>[1] 1 2</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">97</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({(<span class="dv">1</span><span class="sc">:</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)[<span class="fu">rpois</span>(<span class="dv">1</span>, <span class="dv">3</span>)])}, <span class="at">error=</span><span class="cf">function</span>(e){(e)}) <span class="co">#fails!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -622,8 +640,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Using your name as a seed says "nothing up my sleeve"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="keep-your-files-organized" class="level3" data-number="10.1.5">
-<h3 data-number="10.1.5" class="anchored" data-anchor-id="keep-your-files-organized"><span class="header-section-number">10.1.5</span> Keep your files organized</h3>
+<section id="keep-your-files-organized" class="level3" data-number="12.1.5">
+<h3 data-number="12.1.5" class="anchored" data-anchor-id="keep-your-files-organized"><span class="header-section-number">12.1.5</span> Keep your files organized</h3>
 <p>Ever seen this?</p>
 <ul>
 <li>/My Documents
@@ -660,8 +678,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Your <code>readme.txt</code> might have informational notes such as “Got data from bit.ly/XYZ.” to remind you of what you were up to.</p>
 <p>Your <code>figures</code> folder should be full of figures you can easily regenerate with code in your <code>code</code> folder.</p>
 </section>
-<section id="make-sure-your-data-are-numeric" class="level3" data-number="10.1.6">
-<h3 data-number="10.1.6" class="anchored" data-anchor-id="make-sure-your-data-are-numeric"><span class="header-section-number">10.1.6</span> Make sure your data are numeric</h3>
+<section id="make-sure-your-data-are-numeric" class="level3" data-number="12.1.6">
+<h3 data-number="12.1.6" class="anchored" data-anchor-id="make-sure-your-data-are-numeric"><span class="header-section-number">12.1.6</span> Make sure your data are numeric</h3>
 <p>Sometimes when you load data in, R does weird things like decide all your numbers are actually words. This happens if some of your entries are not numbers. Then R makes them all not numbers. You can check this with the <code>str()</code> function:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>( exp.dat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -709,8 +727,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="categories-should-be-words" class="level3" data-number="10.1.7">
-<h3 data-number="10.1.7" class="anchored" data-anchor-id="categories-should-be-words"><span class="header-section-number">10.1.7</span> Categories should be words</h3>
+<section id="categories-should-be-words" class="level3" data-number="12.1.7">
+<h3 data-number="12.1.7" class="anchored" data-anchor-id="categories-should-be-words"><span class="header-section-number">12.1.7</span> Categories should be words</h3>
 <p>For categorical variables, don’t use numbers, if at all possible. E.g.,</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"Low"</span>, <span class="st">"Middle"</span>, <span class="st">"High"</span>, <span class="cn">NA</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -721,11 +739,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="data-wrangling" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">10.2</span> Data Wrangling</h2>
+<section id="data-wrangling" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">12.2</span> Data Wrangling</h2>
 <p>We next give some high level data wrangling advice. But really, check out R for DS for much more and much better on the merging and summarizing topics.</p>
-<section id="handling-lagged-data" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="handling-lagged-data"><span class="header-section-number">10.2.1</span> Handling Lagged Data</h3>
+<section id="handling-lagged-data" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="handling-lagged-data"><span class="header-section-number">12.2.1</span> Handling Lagged Data</h3>
 <p>Sometimes you have multiple times for your units (think country or state), and you want to regress, say, future X on current X. Then you want to have both future and current X for each case.</p>
 <p>Here think of a case as a Country at a point in time. E.g., we might have data like this:</p>
 <div class="cell" data-layout-align="center">
@@ -832,8 +850,8 @@ print( dt, n = 11 )
 ````
 -->
 </section>
-<section id="quick-overview-of-merging-data" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="quick-overview-of-merging-data"><span class="header-section-number">10.2.2</span> Quick overview of merging data</h3>
+<section id="quick-overview-of-merging-data" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="quick-overview-of-merging-data"><span class="header-section-number">12.2.2</span> Quick overview of merging data</h3>
 <p>Often you have two datasets that you want to merge. For example, say you want to merge some data you have on a few states with some SAT information from the mosaic package.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( mosaicData )</span>
@@ -871,8 +889,8 @@ print( dt, n = 11 )
 <p>The “all.x” means keep all records from your first dataframe (here df) even if there is no match. If you added “all.y=TRUE” then you would get all 50 states from the SAT dataframe even though df doesn’t have most of them. Try it!</p>
 <p>You can merge on more than one variable. I.e., if you said \verb|by=c(“A”,“B”)| then it would match records if they had the same value for both A and B. See below for an example on this.</p>
 </section>
-<section id="summarizingaggregating-data" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="summarizingaggregating-data"><span class="header-section-number">10.2.3</span> Summarizing/aggregating Data</h3>
+<section id="summarizingaggregating-data" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="summarizingaggregating-data"><span class="header-section-number">12.2.3</span> Summarizing/aggregating Data</h3>
 <p>Sometimes you want to collapse several cases into one. This is called aggregating. If you install a package called “dplyr” (Run <code>install.packages( "dplyr" )</code> once to install, or better yet simply install <code>tidyverse</code>) then you will have great power.</p>
 <p>Using <code>newdt</code> from above, we can summarize countries across all their time points:</p>
 <div class="cell" data-layout-align="center">
@@ -908,8 +926,8 @@ print( dt, n = 11 )
 </div>
 </div>
 </section>
-<section id="making-data-frames-on-the-fly" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="making-data-frames-on-the-fly"><span class="header-section-number">10.2.4</span> Making Data Frames on the fly</h3>
+<section id="making-data-frames-on-the-fly" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="making-data-frames-on-the-fly"><span class="header-section-number">12.2.4</span> Making Data Frames on the fly</h3>
 <p>For small datasets, you can type in data the hard way like so:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>exp.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">ID=</span><span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>,<span class="st">"d"</span>), </span>
@@ -1175,12 +1193,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./intro_missing_data.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Missing Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./intro_ggplot.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Intro to <code>ggplot</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
