@@ -1,7 +1,7 @@
 {
-  "hash": "681e2dfcf9fb50a8d77a7a0ecf13d2ab",
+  "hash": "21bb50715f8be34373c1d3b652957023",
   "result": {
-    "markdown": "---\ntitle: \"ICC Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output .cell-output-stderr}\n```\nPhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.\n```\n:::\n\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_icc_viz/?showcase=0\" width=\"100%\" height=\"1000px\" data-external=\"1\"></iframe>\n:::\n",
+    "markdown": "---\ntitle: \"ICC Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n\n\nThe intraclass correlation (ICC) is the ratio of the level 2 variance to the total variance.\nIt is a measure of **between group differences**, as it answers the question, \"what proportion of total variance is accounted for by the level 2 units?\" It is simultaneously a measure of **within group similarity**, answering the question, \"what is the expected correlation in the outcome between pairs of observations drawn from the same cluster?\" The ICC is also closely related to **reliability** in measurement, with a high ICC indicating more reliable measures (e.g., student test scores, inter-rater reliability, etc.)\n\nThe shiny app below allows you to set the number of level 1 units, level 2 units, and the ICC, using students in schools as the context.\nTo build your intuitions, make a prediction for what the graph will look like with an ICC of 0, and an ICC of 1, then test them out by manipulating the ICC slider.\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n[![](icc_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_icc_viz/)\n:::\n:::\n",
     "supporting": [
       "icc_viz_files"
     ],
