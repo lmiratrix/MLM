@@ -545,7 +545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>You might want to make tables. Usually you should probably make charts instead, but every so often a table is a nice thing to have. This chapter is about making generic tables. For regression tables, see <a href="reg_table_demo.html"><span>Chapter&nbsp;5</span></a>.</p>
+<p>You might want to make tables. Usually you should probably make charts instead, but every so often a table is a nice thing to have. This chapter is about making generic tables. For regression tables, see <a href="#sec-make-regression-tables"><span class="quarto-unresolved-ref">sec-make-regression-tables</span></a>.</p>
 <p>To illustrate, I make some fake data</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tidyverse )</span>
@@ -567,13 +567,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sdat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-  G           EY    pT   sdY
-  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 A     -0.00201 0.562 0.841
-2 B      0.0664  0.571 0.850
-3 C      0.117   0.565 1.04 
-4 D      0.134   0.316 1.36 
-5 E     -0.00747 0.524 1.10 </code></pre>
+  G          EY    pT   sdY
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 A      0.237  0.588 1.07 
+2 B      0.449  0.667 0.964
+3 C      0.246  0.389 0.837
+4 D     -0.137  0.545 0.974
+5 E     -0.0891 0.44  0.882</code></pre>
 </div>
 </div>
 <p>Say our grouping variable is a set of codes for something more special. We can merge in better names by first making a small “cross-walk” of the ID codes to the full names, and then merging them to our results:</p>
@@ -619,37 +619,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">fred</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">1.07</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">doug</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.57</td>
-<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.96</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">xiao</td>
 <td style="text-align: left;">C</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.57</td>
-<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.84</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">lily</td>
 <td style="text-align: left;">D</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.32</td>
-<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">-0.14</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">0.97</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">unknown</td>
 <td style="text-align: left;">E</td>
-<td style="text-align: right;">-0.01</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">-0.09</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.88</td>
 </tr>
 </tbody>
 </table>
@@ -667,16 +667,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"G"</span>, <span class="st">"Z"</span>, <span class="st">"X"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               
-                Overall      
-  n               100        
-  G (%)                      
-     A             16 (16.0) 
-     B             21 (21.0) 
-     C             23 (23.0) 
-     D             19 (19.0) 
-     E             21 (21.0) 
-  Z = tx (%)       51 (51.0) 
-  X (mean (SD)) -0.12 (1.00) </code></pre>
+                Overall     
+  n              100        
+  G (%)                     
+     A            17 (17.0) 
+     B            18 (18.0) 
+     C            18 (18.0) 
+     D            22 (22.0) 
+     E            25 (25.0) 
+  Z = tx (%)      52 (52.0) 
+  X (mean (SD)) 0.07 (0.92) </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you can also stratify by a variables of interest</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">data =</span> dat,</span>
@@ -685,16 +685,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Stratified by Z
-                co            tx           p      test
-  n                49           51                    
-  X (mean (SD)) -0.24 (0.91)  0.00 (1.07)   0.228     
-  G (%)                                     0.454     
-     A              7 (14.3)     9 (17.6)             
-     B              9 (18.4)    12 (23.5)             
-     C             10 (20.4)    13 (25.5)             
-     D             13 (26.5)     6 (11.8)             
-     E             10 (20.4)    11 (21.6)             
-  Y (mean (SD))  0.07 (1.08)  0.06 (1.01)   0.937     </code></pre>
+                co           tx           p      test
+  n               48           52                    
+  X (mean (SD)) 0.14 (0.95)  0.01 (0.89)   0.503     
+  G (%)                                    0.433     
+     A             7 (14.6)    10 (19.2)             
+     B             6 (12.5)    12 (23.1)             
+     C            11 (22.9)     7 (13.5)             
+     D            10 (20.8)    12 (23.1)             
+     E            14 (29.2)    11 (21.2)             
+  Y (mean (SD)) 0.16 (1.07)  0.07 (0.84)   0.669     </code></pre>
 </div>
 </div>
 <p>You can then use <code>kable</code> as so:</p>
@@ -715,23 +715,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">n</td>
-<td style="text-align: left;">49</td>
-<td style="text-align: left;">51</td>
+<td style="text-align: left;">48</td>
+<td style="text-align: left;">52</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">X (mean (SD))</td>
-<td style="text-align: left;">-0.24 (0.91)</td>
-<td style="text-align: left;">0.00 (1.07)</td>
-<td style="text-align: left;">0.228</td>
+<td style="text-align: left;">0.14 (0.95)</td>
+<td style="text-align: left;">0.01 (0.89)</td>
+<td style="text-align: left;">0.503</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Y (mean (SD))</td>
-<td style="text-align: left;">0.07 (1.08)</td>
-<td style="text-align: left;">0.06 (1.01)</td>
-<td style="text-align: left;">0.937</td>
+<td style="text-align: left;">0.16 (1.07)</td>
+<td style="text-align: left;">0.07 (0.84)</td>
+<td style="text-align: left;">0.669</td>
 <td style="text-align: left;"></td>
 </tr>
 </tbody>
@@ -748,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(<span class="fu">as.data.frame</span>(dat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com % Date and time: Tue, Sep 05, 2023 - 11:41:38
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com % Date and time: Sun, Sep 10, 2023 - 22:29:33
 </div>
 <p>You can include only some of the variables and omit stats that are not of interest:</p>
 <div class="cell" data-layout-align="center" data-messages="false">
