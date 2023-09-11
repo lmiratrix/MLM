@@ -1300,5 +1300,33 @@
     "title": "References",
     "section": "",
     "text": "Antonakis, John, Nicolas Bastardoz, and Mikko Rönkkö. 2019. “On\nIgnoring the Random Effects Assumption in Multilevel Models: Review,\nCritique, and Recommendations.” Organizational Research\nMethods 24 (2): 443–83. https://doi.org/10.1177/1094428119877457."
+  },
+  {
+    "objectID": "configuring_code_chunks.html#options-for-includingsuppressing-code-and-output",
+    "href": "configuring_code_chunks.html#options-for-includingsuppressing-code-and-output",
+    "title": "3  Configuring Rmarkdown chunks",
+    "section": "3.1 Options for including/suppressing code and output",
+    "text": "3.1 Options for including/suppressing code and output\ninclude: Should chunk be included in knit file? Defaults to TRUE. If FALSE, code chunk is run, but chunk and any output is not included in the knit file.\neval: Should chunk be evaluated by R? Defaults to TRUE. If FALSE, code chunk is included in the knit file, but not run.\necho: Should the code from this chunk be included in knit file along with output? Defaults to TRUE. If FALSE, the output from the chunk is included, but the code that created it is not. Most useful for plots."
+  },
+  {
+    "objectID": "configuring_code_chunks.html#options-for-includingsuppressing-r-messages",
+    "href": "configuring_code_chunks.html#options-for-includingsuppressing-r-messages",
+    "title": "3  Configuring Rmarkdown chunks",
+    "section": "3.2 Options for including/suppressing R messages",
+    "text": "3.2 Options for including/suppressing R messages\nR has “errors” meaning it could not run your code, “warnings” meaning that the code was wrong, but there are some potential issues with it, and “messages” which are simply information about what your code ran. You can include or suppress each of these types of message.\nerror: Should R continue knitting if code produces an error? Defaults to FALSE. Generally don’t want to change this because it means you can miss serious issues with your code.\nwarning: Should R include warnings in knit file? Defaults to TRUE.\nmessage: Should R include informational messages in knit file? Defaults to TRUE. Easy way to clean up your markdowns.\n\n#This code produces an error\ndat %&gt;%\n  filter(dest = 1)\n\nError in `filter()`:\n! We detected a named input.\nℹ This usually means that you've used `=` instead of `==`.\nℹ Did you mean `dest == 1`?\n\n#Example warning\nparse_number(c(\"1\", \"$3432\", \"tomato\"))\n\n[1]    1 3432   NA\nattr(,\"problems\")\n# A tibble: 1 × 4\n    row   col expected actual\n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; \n1     3    NA a number tomato\n\n#Example message\nlibrary(gridExtra)"
+  },
+  {
+    "objectID": "configuring_code_chunks.html#options-for-modifying-figure-outputs",
+    "href": "configuring_code_chunks.html#options-for-modifying-figure-outputs",
+    "title": "3  Configuring Rmarkdown chunks",
+    "section": "3.3 Options for modifying figure outputs",
+    "text": "3.3 Options for modifying figure outputs\nYou can control figure size and shape (see more in ?sec-plot-tips).\nIn particular, consider these:\nout.width: What percentage of the page width should output take?\nfig.height: What should be the height of figures?\nfig.width: What should be the width of figures?\nfig.asp: What should be the aspect ratio of figures?\nfig.align: How should figures be aligned?\nWe might want a bigger plot for this:\n\n\n\n\n\nAnd a smaller plot for this:\n\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\n\n\n$x\n[1] \"Minutes of delay\"\n\n$y\n[1] \"Destimations\"\n\nattr(,\"class\")\n[1] \"labels\""
+  },
+  {
+    "objectID": "configuring_code_chunks.html#changing-your-defaults",
+    "href": "configuring_code_chunks.html#changing-your-defaults",
+    "title": "3  Configuring Rmarkdown chunks",
+    "section": "3.4 Changing your defaults",
+    "text": "3.4 Changing your defaults\nAt the beginning of your code, you can set custom defaults so all your chunks will render the same way (unless you override by specifically adding arguments to a chunk itself). This is handy in that you will then not need to repeat the custom arguments in each code chunk. For example, you can set a default figure size.\nHere is an example:\n\n knitr::opts_chunk$set(echo = TRUE, \n                       fig.width = 5,\n                       fig.height = 3,\n                       out.width = \"5in\", \n                       out.height = \"3in\", fig.align = \"center\")"
   }
 ]

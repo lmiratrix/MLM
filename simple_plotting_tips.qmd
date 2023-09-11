@@ -1,10 +1,11 @@
 ---
-title: "Simple plotting tips"
 author: "Luke Miratrix"
 output: pdf_document
 editor_options: 
   chunk_output_type: console
 ---
+
+# Simple plotting tips {#sec-plot-tips}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, 

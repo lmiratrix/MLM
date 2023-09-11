@@ -15,6 +15,7 @@ book:
       chapters:
           - style_guide.qmd
           - intro_markdown.qmd
+          - configuring_code_chunks.qmd
           - intro_linear_regression.qmd
           - summary_plots.qmd
           - making_tables.qmd

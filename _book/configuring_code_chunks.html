@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jonathan Seiden">
+<meta name="dcterms.date" content="2022-03-13">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - Self Grading Instructions</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 3&nbsp; Configuring Rmarkdown chunks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./style_guide.html" rel="next">
-<link href="./assignment_guidelines.html" rel="prev">
+<link href="./intro_linear_regression.html" rel="next">
+<link href="./intro_markdown.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -74,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./self_grading.html">Self Grading Instructions</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./style_guide.html">R &amp; R MARKDOWN</a></li><li class="breadcrumb-item"><a href="./configuring_code_chunks.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Configuring Rmarkdown chunks</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./self_grading.html" class="sidebar-item-text sidebar-link active">
+  <a href="./self_grading.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Self Grading Instructions</span></a>
   </div>
 </li>
@@ -152,7 +188,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./configuring_code_chunks.html" class="sidebar-item-text sidebar-link">
+  <a href="./configuring_code_chunks.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Configuring Rmarkdown chunks</span></span></a>
   </div>
 </li>
@@ -504,7 +540,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#acknowledgement" id="toc-acknowledgement" class="nav-link active" data-scroll-target="#acknowledgement">Acknowledgement:</a></li>
+  <li><a href="#options-for-includingsuppressing-code-and-output" id="toc-options-for-includingsuppressing-code-and-output" class="nav-link active" data-scroll-target="#options-for-includingsuppressing-code-and-output"><span class="header-section-number">3.1</span> Options for including/suppressing code and output</a></li>
+  <li><a href="#options-for-includingsuppressing-r-messages" id="toc-options-for-includingsuppressing-r-messages" class="nav-link" data-scroll-target="#options-for-includingsuppressing-r-messages"><span class="header-section-number">3.2</span> Options for including/suppressing R messages</a></li>
+  <li><a href="#options-for-modifying-figure-outputs" id="toc-options-for-modifying-figure-outputs" class="nav-link" data-scroll-target="#options-for-modifying-figure-outputs"><span class="header-section-number">3.3</span> Options for modifying figure outputs</a></li>
+  <li><a href="#changing-your-defaults" id="toc-changing-your-defaults" class="nav-link" data-scroll-target="#changing-your-defaults"><span class="header-section-number">3.4</span> Changing your defaults</a></li>
   </ul>
 </nav>
     </div>
@@ -513,14 +552,26 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Self Grading Instructions</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Configuring Rmarkdown chunks</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jonathan Seiden </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 13, 2022</p>
+    </div>
+  </div>
   
     
   </div>
@@ -528,20 +579,94 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>To self-grade an assignment, go through the solutions and compare the answer to your own work.</p>
-<p>Grade each piece as following</p>
-<ul>
-<li>“+” - 1 point, basically nailed it.</li>
-<li>“check” - Half point, did at least part of it, but had some problems.</li>
-<li>“X” - zero points, didn’t get it.</li>
-</ul>
-<p>As you go through, see if you can figure out where you went wrong, if you did so. If you still don’t understand a problem, make a note as to problem number.</p>
-<p>For the next ready-for-class check-in you will be asked to then enter your score (this score just helps me understand how folks are doing with these mini assignments), how you feel about it, and some further commentary.</p>
-<p>This feedback should include a sentence or two on what was tripping you up (list the items), if you got things wrong, and whether things are not making sense, even with the solutions.</p>
-<p><strong>NOTE:</strong> We are grading miniassignments on completion, meaning you will get full credit if you (1) do the mini-assignment and (2) self-grade the miniassignment (regardless of the score you give yourself, as long as the score is above 50% of the possible points).</p>
-<section id="acknowledgement" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgement">Acknowledgement:</h2>
-<p>This idea of self-grading was inspired by Cora Wigger. She used to have some stuff on twitter, but she appears to have removed her account. <!--See [her twitter post](https://twitter.com/cjlwig/status/1450925261831168008).--></p>
+<p>When you write R Markdown (or Quarto) reports, you are going to have a lot of “chunks” of code. These are the things that start with “```{r chunk_name, blah}” or “```{r, blah}.” When you render your report, these are run and the output is then taken and put in your report depending on how the chunk is configured.</p>
+<p>This file gives some options for how to control these chunks.</p>
+<section id="options-for-includingsuppressing-code-and-output" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="options-for-includingsuppressing-code-and-output"><span class="header-section-number">3.1</span> Options for including/suppressing code and output</h2>
+<p><code>include</code>: Should chunk be included in knit file? Defaults to <code>TRUE</code>. If <code>FALSE</code>, code chunk is run, but chunk and any output is not included in the knit file.</p>
+<p><code>eval</code>: Should chunk be evaluated by R? Defaults to <code>TRUE</code>. If <code>FALSE</code>, code chunk is included in the knit file, but not run.</p>
+<p><code>echo</code>: Should the code from this chunk be included in knit file along with output? Defaults to <code>TRUE</code>. If <code>FALSE</code>, the output from the chunk is included, but the code that created it is not. Most useful for plots.</p>
+</section>
+<section id="options-for-includingsuppressing-r-messages" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="options-for-includingsuppressing-r-messages"><span class="header-section-number">3.2</span> Options for including/suppressing R messages</h2>
+<p>R has “errors” meaning it could not run your code, “warnings” meaning that the code was wrong, but there are some potential issues with it, and “messages” which are simply information about what your code ran. You can include or suppress each of these types of message.</p>
+<p><code>error</code>: Should R continue knitting if code produces an error? Defaults to <code>FALSE</code>. Generally don’t want to change this because it means you can miss serious issues with your code.</p>
+<p><code>warning</code>: Should R include warnings in knit file? Defaults to <code>TRUE</code>.</p>
+<p><code>message</code>: Should R include informational messages in knit file? Defaults to <code>TRUE</code>. Easy way to clean up your markdowns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#This code produces an error</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="at">dest =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `filter()`:
+! We detected a named input.
+ℹ This usually means that you've used `=` instead of `==`.
+ℹ Did you mean `dest == 1`?</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Example warning</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"$3432"</span>, <span class="st">"tomato"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    1 3432   NA
+attr(,"problems")
+# A tibble: 1 × 4
+    row   col expected actual
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; 
+1     3    NA a number tomato</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Example message</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="options-for-modifying-figure-outputs" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="options-for-modifying-figure-outputs"><span class="header-section-number">3.3</span> Options for modifying figure outputs</h2>
+<p>You can control figure size and shape (see more in <span class="quarto-unresolved-ref">?sec-plot-tips</span>).</p>
+<p>In particular, consider these:</p>
+<p><code>out.width</code>: What percentage of the page width should output take?</p>
+<p><code>fig.height</code>: What should be the height of figures?</p>
+<p><code>fig.width</code>: What should be the width of figures?</p>
+<p><code>fig.asp</code>: What should be the aspect ratio of figures?</p>
+<p><code>fig.align</code>: How should figures be aligned?</p>
+<p>We might want a bigger plot for this:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="configuring_code_chunks_files/figure-html/plot1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And a smaller plot for this:</p>
+<div class="cell" data-layout-align="left">
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="configuring_code_chunks_files/figure-html/plot2-1.png" class="img-fluid figure-img" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$x
+[1] "Minutes of delay"
+
+$y
+[1] "Destimations"
+
+attr(,"class")
+[1] "labels"</code></pre>
+</div>
+</div>
+</section>
+<section id="changing-your-defaults" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="changing-your-defaults"><span class="header-section-number">3.4</span> Changing your defaults</h2>
+<p>At the beginning of your code, you can set custom defaults so all your chunks will render the same way (unless you override by specifically adding arguments to a chunk itself). This is handy in that you will then not need to repeat the custom arguments in each code chunk. For example, you can set a default figure size.</p>
+<p>Here is an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fig.width =</span> <span class="dv">5</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fig.height =</span> <span class="dv">3</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">out.width =</span> <span class="st">"5in"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">out.height =</span> <span class="st">"3in"</span>, <span class="at">fig.align =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -782,13 +907,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./assignment_guidelines.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Assignment Formatting Guidelines</span>
+      <a href="./intro_markdown.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro to R Markdown</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./style_guide.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A R Code Style (Miratrix version)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./intro_linear_regression.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
