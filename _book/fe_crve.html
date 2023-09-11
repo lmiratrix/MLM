@@ -521,16 +521,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#aggregation" id="toc-aggregation" class="nav-link active" data-scroll-target="#aggregation"><span class="header-section-number">32</span> Aggregation</a></li>
-  <li><a href="#student-level-regression-and-cluster-robust-ses" id="toc-student-level-regression-and-cluster-robust-ses" class="nav-link" data-scroll-target="#student-level-regression-and-cluster-robust-ses"><span class="header-section-number">33</span> Student level regression and cluster robust SES</a>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link active" data-scroll-target="#aggregation"><span class="header-section-number">31.1</span> Aggregation</a></li>
+  <li><a href="#student-level-regression-and-cluster-robust-ses" id="toc-student-level-regression-and-cluster-robust-ses" class="nav-link" data-scroll-target="#student-level-regression-and-cluster-robust-ses"><span class="header-section-number">31.2</span> Student level regression and cluster robust SES</a>
   <ul class="collapse">
-  <li><a href="#getting-the-right-standard-errors" id="toc-getting-the-right-standard-errors" class="nav-link" data-scroll-target="#getting-the-right-standard-errors"><span class="header-section-number">33.1</span> Getting the right standard errors</a></li>
+  <li><a href="#getting-the-right-standard-errors" id="toc-getting-the-right-standard-errors" class="nav-link" data-scroll-target="#getting-the-right-standard-errors"><span class="header-section-number">31.2.1</span> Getting the right standard errors</a></li>
   </ul></li>
-  <li><a href="#and-fixed-effects" id="toc-and-fixed-effects" class="nav-link" data-scroll-target="#and-fixed-effects"><span class="header-section-number">34</span> And fixed effects?</a>
+  <li><a href="#and-fixed-effects" id="toc-and-fixed-effects" class="nav-link" data-scroll-target="#and-fixed-effects"><span class="header-section-number">31.3</span> And fixed effects?</a>
   <ul class="collapse">
-  <li><a href="#the-problem-of-fixed-effects-and-dummy-variables" id="toc-the-problem-of-fixed-effects-and-dummy-variables" class="nav-link" data-scroll-target="#the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">34.1</span> The problem of fixed effects and dummy variables</a></li>
-  <li><a href="#using-fixed-effects-to-handle-clustering" id="toc-using-fixed-effects-to-handle-clustering" class="nav-link" data-scroll-target="#using-fixed-effects-to-handle-clustering"><span class="header-section-number">34.2</span> Using fixed effects to handle clustering</a></li>
-  <li><a href="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" id="toc-bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="nav-link" data-scroll-target="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">34.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</a></li>
+  <li><a href="#the-problem-of-fixed-effects-and-dummy-variables" id="toc-the-problem-of-fixed-effects-and-dummy-variables" class="nav-link" data-scroll-target="#the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">31.3.1</span> The problem of fixed effects and dummy variables</a></li>
+  <li><a href="#using-fixed-effects-to-handle-clustering" id="toc-using-fixed-effects-to-handle-clustering" class="nav-link" data-scroll-target="#using-fixed-effects-to-handle-clustering"><span class="header-section-number">31.3.2</span> Using fixed effects to handle clustering</a></li>
+  <li><a href="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" id="toc-bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="nav-link" data-scroll-target="#bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">31.3.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -564,8 +564,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This brief handout will walk through fixed effects and cluster robust standard errors, with a stop at aggregation and heteroskedastic standard errors.</p>
 <p>Consider the following research question:</p>
 <p>RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?</p>
-<section id="aggregation" class="level1" data-number="32">
-<h1 data-number="32"><span class="header-section-number">32</span> Aggregation</h1>
+<section id="aggregation" class="level2" data-number="31.1">
+<h2 data-number="31.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">31.1</span> Aggregation</h2>
 <p>One way forward is to aggregate our HS&amp;B data and merge it into our school-level data, and then analyze the result.</p>
 <p>We aggregate as so:</p>
 <div class="cell">
@@ -618,8 +618,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>We use heteroskedastic robust standard errors to take into account possible heteroskedasticity due to, for example, some school outcomes being based on smaller numbers of students (and thus having more variation) than other school outcomes.</p>
 <p>In this regression we are controlling for school mean SES, not student SES. If anything is going on <em>within school</em> between SES and math achievement, and that is maybe different for different sectors, we might be missing it.</p>
 </section>
-<section id="student-level-regression-and-cluster-robust-ses" class="level1" data-number="33">
-<h1 data-number="33"><span class="header-section-number">33</span> Student level regression and cluster robust SES</h1>
+<section id="student-level-regression-and-cluster-robust-ses" class="level2" data-number="31.2">
+<h2 data-number="31.2" class="anchored" data-anchor-id="student-level-regression-and-cluster-robust-ses"><span class="header-section-number">31.2</span> Student level regression and cluster robust SES</h2>
 <p>Instead of using our aggregated data, we can merge our <em>school-level</em> variables into the studnet data and run a student level regression:</p>
 <p>The merge brings in level 2 variables, repeating them for each student in a school:</p>
 <div class="cell">
@@ -668,8 +668,8 @@ Multiple R-squared:  0.1492,    Adjusted R-squared:  0.149
 F-statistic: 629.8 on 2 and 7182 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<section id="getting-the-right-standard-errors" class="level2" data-number="33.1">
-<h2 data-number="33.1" class="anchored" data-anchor-id="getting-the-right-standard-errors"><span class="header-section-number">33.1</span> Getting the right standard errors</h2>
+<section id="getting-the-right-standard-errors" class="level3" data-number="31.2.1">
+<h3 data-number="31.2.1" class="anchored" data-anchor-id="getting-the-right-standard-errors"><span class="header-section-number">31.2.1</span> Getting the right standard errors</h3>
 <p>The standard errors for the above regression, however, is <strong>wrong</strong>: we are not taking the clustering into account. We can fix this with cluster-robust standard errors:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>( Mstud, <span class="at">vcov. =</span> vcovCL, <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -734,11 +734,11 @@ meanses     0.3281858 0.5361825</code></pre>
 <p>The difference between Catholic and public schools is somewhere between 0.10 and 0.27 standard deviations, beyond what can be explained by ses.</p>
 </section>
 </section>
-<section id="and-fixed-effects" class="level1" data-number="34">
-<h1 data-number="34"><span class="header-section-number">34</span> And fixed effects?</h1>
+<section id="and-fixed-effects" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="and-fixed-effects"><span class="header-section-number">31.3</span> And fixed effects?</h2>
 <p>We can combine fixed effects and cluster robust standard errors quite easily, but we cannot combine fixed effects and level 2 covariates at all. We next look at this latter problem, and then see what combining these options looks like when asking questions that do not rely on level 2 variables for main effects.</p>
-<section id="the-problem-of-fixed-effects-and-dummy-variables" class="level2" data-number="34.1">
-<h2 data-number="34.1" class="anchored" data-anchor-id="the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">34.1</span> The problem of fixed effects and dummy variables</h2>
+<section id="the-problem-of-fixed-effects-and-dummy-variables" class="level3" data-number="31.3.1">
+<h3 data-number="31.3.1" class="anchored" data-anchor-id="the-problem-of-fixed-effects-and-dummy-variables"><span class="header-section-number">31.3.1</span> The problem of fixed effects and dummy variables</h3>
 <p>Fixed effects cannot be used to take into account school differences if we are interested in level 2 variables, because the fixed effects and level 2 variables are <em>co-linear</em>. Put another way, if we let each school have its own mean outcome (represented by the coefficient for a dummy variable for that school), then we can’t have a variable like <code>sector</code> to measure how Catholic schools are different from public schools, conditioned on all the school mean outcomes. There is nothing left to explain as, by construction, there are no differences in school mean outcomes once we “control for” the individual school mean outcomes via fixed effects!</p>
 <p>What R will do when you give colinear variables is drop the extra ones. Here is a mini-example fake dataset of 4 schools with 3 students in each school:</p>
 <div class="cell">
@@ -752,18 +752,18 @@ meanses     0.3281858 0.5361825</code></pre>
 <pre><code># A tibble: 12 × 4
    id    mathach     ses sector
    &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 1      -0.267 -0.525       0
- 2 1       0.964 -0.918       0
- 3 1      -0.691  1.26        0
- 4 2       0.111  0.906       1
- 5 2       0.681  0.875       1
- 6 2      -1.10  -0.249       1
- 7 3       0.942 -0.0183      0
- 8 3       0.178  2.29        0
- 9 3       2.09  -1.30        0
-10 4      -0.389 -1.61        1
-11 4      -0.660  0.288       1
-12 4       0.254  0.0502      1</code></pre>
+ 1 1     -1.91   -0.0645      0
+ 2 1      1.26    1.11        0
+ 3 1      0.954   0.0602      0
+ 4 2     -0.945  -0.439       1
+ 5 2     -0.407  -0.253       1
+ 6 2     -0.742  -1.77        1
+ 7 3     -1.45    0.0787      0
+ 8 3      2.12    1.50        0
+ 9 3     -0.550   1.40        0
+10 4     -0.0564  0.504       1
+11 4     -1.27   -0.321       1
+12 4     -1.04    0.583       1</code></pre>
 </div>
 </div>
 <p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
@@ -775,14 +775,14 @@ Call:
 lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
-     id1       id2       id3       id4       ses    sector  
--0.01632   0.05277   1.17039  -0.39459  -0.30409        NA  </code></pre>
+    id1      id2      id3      id4      ses   sector  
+-0.2847   0.1582  -0.9992  -1.0551   1.0447       NA  </code></pre>
 </div>
 </div>
 <p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>
 </section>
-<section id="using-fixed-effects-to-handle-clustering" class="level2" data-number="34.2">
-<h2 data-number="34.2" class="anchored" data-anchor-id="using-fixed-effects-to-handle-clustering"><span class="header-section-number">34.2</span> Using fixed effects to handle clustering</h2>
+<section id="using-fixed-effects-to-handle-clustering" class="level3" data-number="31.3.2">
+<h3 data-number="31.3.2" class="anchored" data-anchor-id="using-fixed-effects-to-handle-clustering"><span class="header-section-number">31.3.2</span> Using fixed effects to handle clustering</h3>
 <p>That being said, fixed effects are an excellent way to control for school differences when looking at <em>within-school relationships</em>. For example, we can ask how math relates to SES within schools, controlling for systematic differences across schools.</p>
 <p>Here is the no fixed effect regression, and the fixed effect regression:</p>
 <div class="cell">
@@ -841,8 +841,8 @@ Num. obs.    7185         7185
 <li>The standard errors are even larger when we include CRVE. It is more fully accounting for the clustering, and the fact that the clusters themselves could vary. In general, one should typically use CRVE in addition to fixed effects, if one wants to view the clusters as representative of a larger population (in this case a larger population of schools).</li>
 </ul>
 </section>
-<section id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="level2" data-number="34.3">
-<h2 data-number="34.3" class="anchored" data-anchor-id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">34.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</h2>
+<section id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects" class="level3" data-number="31.3.3">
+<h3 data-number="31.3.3" class="anchored" data-anchor-id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">31.3.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</h3>
 <p>If we want to see if the <em>relationship</em> of math and SES is different between schools, we can get tricky like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Mstud4 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, <span class="at">data=</span>dat )</span>

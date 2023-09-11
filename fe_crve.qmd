@@ -35,7 +35,7 @@ Consider the following research question:
 
 RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?
 
-# Aggregation
+## Aggregation
 
 One way forward is to aggregate our HS&B data and merge it into our school-level data, and then analyze the result.
 
@@ -70,7 +70,7 @@ We use heteroskedastic robust standard errors to take into account possible hete
 In this regression we are controlling for school mean SES, not student SES.
 If anything is going on *within school* between SES and math achievement, and that is maybe different for different sectors, we might be missing it.
 
-# Student level regression and cluster robust SES
+## Student level regression and cluster robust SES
 
 Instead of using our aggregated data, we can merge our *school-level* variables into the studnet data and run a student level regression:
 
@@ -88,7 +88,7 @@ Mstud = lm( mathach ~ 1 + sector + ses, data = dat )
 summary( Mstud )
 ```
 
-## Getting the right standard errors
+### Getting the right standard errors
 
 The standard errors for the above regression, however, is **wrong**: we are not taking the clustering into account.
 We can fix this with cluster-robust standard errors:
@@ -125,12 +125,12 @@ coefci(Mstud2, vcov. = vcovCL, cluster = dat$id ) / sd_math
 
 The difference between Catholic and public schools is somewhere between 0.10 and 0.27 standard deviations, beyond what can be explained by ses.
 
-# And fixed effects?
+## And fixed effects?
 
 We can combine fixed effects and cluster robust standard errors quite easily, but we cannot combine fixed effects and level 2 covariates at all.
 We next look at this latter problem, and then see what combining these options looks like when asking questions that do not rely on level 2 variables for main effects.
 
-## The problem of fixed effects and dummy variables
+### The problem of fixed effects and dummy variables
 
 Fixed effects cannot be used to take into account school differences if we are interested in level 2 variables, because the fixed effects and level 2 variables are *co-linear*.
 Put another way, if we let each school have its own mean outcome (represented by the coefficient for a dummy variable for that school), then we can't have a variable like `sector` to measure how Catholic schools are different from public schools, conditioned on all the school mean outcomes.
@@ -157,7 +157,7 @@ lm( mathach ~ 0 + id + ses + sector, data = fake )
 Note the `NA` for sector!
 We cannot estimate it due to colinearity, so it got dropped.
 
-## Using fixed effects to handle clustering
+### Using fixed effects to handle clustering
 
 That being said, fixed effects are an excellent way to control for school differences when looking at *within-school relationships*.
 For example, we can ask how math relates to SES within schools, controlling for systematic differences across schools.
@@ -201,7 +201,7 @@ A few things to note:
 -   The standard errors are larger once we include fixed effects; the fixed effects are partially accounting for clustering.
 -   The standard errors are even larger when we include CRVE. It is more fully accounting for the clustering, and the fact that the clusters themselves could vary. In general, one should typically use CRVE in addition to fixed effects, if one wants to view the clusters as representative of a larger population (in this case a larger population of schools).
 
-## Bonus: Interactions with level-2 variables are OK, even with fixed effects
+### Bonus: Interactions with level-2 variables are OK, even with fixed effects
 
 If we want to see if the *relationship* of math and SES is different between schools, we can get tricky like so:
 
