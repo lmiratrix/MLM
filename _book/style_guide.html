@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Luke Miratrix, adapted from Peter Ganong via Avi Feller">
-<meta name="dcterms.date" content="2023-09-10">
+<meta name="dcterms.date" content="2023-09-11">
 
 <title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 1&nbsp; A R Code Style (Miratrix version)</title>
 <style>
@@ -556,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#rule-2.9-comments" id="toc-rule-2.9-comments" class="nav-link" data-scroll-target="#rule-2.9-comments"><span class="header-section-number">1.3.10</span> Rule 2.9: Comments</a></li>
   <li><a href="#syntax-summary" id="toc-syntax-summary" class="nav-link" data-scroll-target="#syntax-summary"><span class="header-section-number">1.3.11</span> Syntax summary</a></li>
   </ul></li>
-  <li><a href="#pipes-with-magrittr" id="toc-pipes-with-magrittr" class="nav-link" data-scroll-target="#pipes-with-magrittr"><span class="header-section-number">1.4</span> pipes with <code>magrittr</code></a>
+  <li><a href="#pipes-with-magrittr" id="toc-pipes-with-magrittr" class="nav-link" data-scroll-target="#pipes-with-magrittr"><span class="header-section-number">1.4</span> Pipes with <code>magrittr</code></a>
   <ul class="collapse">
   <li><a href="#pipes-roadmap" id="toc-pipes-roadmap" class="nav-link" data-scroll-target="#pipes-roadmap"><span class="header-section-number">1.4.1</span> pipes <code>%&gt;%</code>: roadmap</a></li>
   <li><a href="#rule-4.1-intro" id="toc-rule-4.1-intro" class="nav-link" data-scroll-target="#rule-4.1-intro"><span class="header-section-number">1.4.2</span> Rule 4.1: intro</a></li>
@@ -594,7 +594,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 10, 2023</p>
+      <p class="date">September 11, 2023</p>
     </div>
   </div>
   
@@ -675,7 +675,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="naming-summary"><span class="header-section-number">1.2.4</span> Naming summary</h3>
 <ul>
 <li>Principle: Ideally, your names should be self-explanatory and your code should be “self-documenting.”</li>
-<li>A few specific tips
+<li>A few specific tips:
 <ul>
 <li>Never use numbers to store versions of a data frame</li>
 <li>By default, names for variables, functions, files, etc. should consist of complete words. (<code>dest_short</code> is an exception since it explicitly builds on source var <code>dest</code>) <em>Source: <a href="https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf">Code and Data for the Social Sciences: A Practitioner’s Guide</a>, Gentzkow and Shapiro</em></li>
@@ -856,7 +856,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="pipes-with-magrittr" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="pipes-with-magrittr"><span class="header-section-number">1.4</span> pipes with <code>magrittr</code></h2>
+<h2 data-number="1.4" class="anchored" data-anchor-id="pipes-with-magrittr"><span class="header-section-number">1.4</span> Pipes with <code>magrittr</code></h2>
 <section id="pipes-roadmap" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="pipes-roadmap"><span class="header-section-number">1.4.1</span> pipes <code>%&gt;%</code>: roadmap</h3>
 <ol type="1">
