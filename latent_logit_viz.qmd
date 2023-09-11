@@ -6,6 +6,21 @@ editor:
     wrap: sentence
 ---
 
+Often in education research, dichotomous variables are not really dichotomies (e.g., struck by lightning, not struck by lightning), but rather, **dichotomized** continuous variables, such as passing or failing a test.
+That is, a test score is a continuous measure of proficiency, but we can define a **cut score** above which you "pass" and below which you "fail".
+This practice, while common, has many pitfalls (Ho, 2008) and can distort our understanding of trends and relationships.
+Fortunately the logit model (and its cousin the probit model) can help un-distort our vision!
+
+In the shiny app below, we are imagining a distribution of test scores that rises over time.
+When the distribution is normal, on the left, the **observed proportion of passing scores is non-linear**, even though the trend in the test scores themselves is linear.
+Because a normal distribution has most of its mass in the center, this results in the classic s-shape of the logit model.
+When we fit a linear regression, we are implicitly assuming that the underlying ("latent") distribution is **uniform**, resulting in the graph on the right.
+This is rarely the case empirically.
+
+When the cut score is at the average (0 in this case), this doesn't make much of a difference.
+But things really start to break down when we shift the cut score to a more extreme value.
+Try moving it to a standard deviation of +1, and see which model performs better!
+
 ```{r, echo = FALSE}
 library(knitr)
 include_app("https://s43dnt-josh-gilbert.shinyapps.io/s43_latent_logit_viz/", height = "1000px")

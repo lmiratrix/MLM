@@ -6,6 +6,18 @@ editor:
     wrap: sentence
 ---
 
+The shiny app below allows you to set the various parameters of a random slopes multilevel model to see how they are reflected in the data.
+I often find it easiest to think of random slopes models in longitudinal contexts, so the app here asks for "people" and "timepoints", but the same logic applies to cross sectional contexts, such as students nested within schools.
+
+Exercises:
+
+-   Before manipulating a slider, make a prediction for what will change in the graph, then verify by moving the slider
+
+-   What parameter needs to be changed (and to what value) to generate a random intercepts model?
+    Verify using the app.
+
+-   Select parameters to generate a collection of students ranging from no growth to strong positive growth, where the lower growth schools had higher initial achievement.
+
 ```{r, echo = FALSE}
 library(knitr)
 include_app("https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/", height = "1500px")

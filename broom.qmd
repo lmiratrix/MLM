@@ -5,7 +5,7 @@ editor:
     wrap: sentence
 ---
 
-# Extracting information from fitted \`lmer\` models with \`broom\` {#sec-broom}
+# Extracting information from fitted `lmer` models with `broom` {#sec-broom}
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)

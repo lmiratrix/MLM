@@ -6,6 +6,12 @@ editor:
     wrap: sentence
 ---
 
+The intraclass correlation (ICC) is the ratio of the level 2 variance to the total variance.
+It is a measure of **between group differences**, as it answers the question, "what proportion of total variance is accounted for by the level 2 units?" It is simultaneously a measure of **within group similarity**, answering the question, "what is the expected correlation in the outcome between pairs of observations drawn from the same cluster?" The ICC is also closely related to **reliability** in measurement, with a high ICC indicating more reliable measures (e.g., student test scores, inter-rater reliability, etc.)
+
+The shiny app below allows you to set the number of level 1 units, level 2 units, and the ICC, using students in schools as the context.
+To build your intuitions, make a prediction for what the graph will look like with an ICC of 0, and an ICC of 1, then test them out by manipulating the ICC slider.
+
 ```{r, echo = FALSE}
 library(knitr)
 include_app("https://s43dnt-josh-gilbert.shinyapps.io/s43_icc_viz/", height = "1000px")

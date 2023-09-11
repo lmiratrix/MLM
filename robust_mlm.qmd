@@ -38,7 +38,7 @@ In STATA, you just write "`, robust`" in your modeling command.
 In R, you have to use the `clubSandwich` package.
 Let's illustrate with the High School and Beyond data.
 
-# Robust standard errors without multilevel modeling
+## Robust standard errors without multilevel modeling
 
 As a reminder, here is how to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):
 
@@ -67,7 +67,7 @@ M1 = lm( mathach ~ 1 + ses + sector, data = dat )
 lmtest::coeftest( M1, type = "CL", cluster = dat$id )
 ```
 
-# CRSE + Multilevel Modeling
+## CRSE + Multilevel Modeling
 
 Ok, so we have seen how to get robust standard errors in the above; how do we combine them with multilevel modeling?
 First, let's fit our multilevel model:
@@ -117,7 +117,7 @@ rbind( club$SE, se.fixef(M2) )
 
 We see that the SEs did not change much from the homoskedastic- and within-cluster-independence-assuming standard errors of the vanilla lmer call in this circumstance.
 
-## Misspecified how?
+### Misspecified how?
 
 The sorts of misspecification that we might be worried about are things such as the following:
 
@@ -132,7 +132,7 @@ You can also diagnose them with residual plots, and see if you are seeing more s
 
 Regardless, if you are worried about these things, then the above will give you improved standard errors.
 
-# Some technical notes
+## Some technical notes
 
 So what is this thing even doing?
 In the following I describe a rough approximation.
@@ -168,7 +168,7 @@ The key idea is cluster-robust methods take a weighted average of $J$ very badly
 The main advantage of the `clubSandwich` package is it will take our multilevel model and do this cluster-roboust standard error calculation.
 Even better, however, is it will (using "CR2" adjustment) try to improve the basic sandwich estimator by 1) adjusting the residuals (the $\hat{u}_j$) a bit so that the variance estimator is exactly unbiased if the working model is exactly correct and b) using Satterthwaite degrees of freedom (or generalizations thereof) for tests/confidence intervals, also derived under the assumption that the working model is exactly correct.
 
-# Acknowledgements
+## Acknowledgements
 
 Thanks to James Pustejovsky, the creator of the `clubSandwich` package, for the help in thinking this through.
 Much of these notes, in particular the reasons for misspecification and much of the technical notes, are liberally stolen from emails with this fine colleague.
