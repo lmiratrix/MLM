@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library( tidyverse )
 library( sandwich )
+library( estimatr )
 library( texreg )
 library( lmtest )
 
@@ -30,10 +31,11 @@ nrow( sdat )
 ```
 
 This brief handout will walk through fixed effects and cluster robust standard errors, with a stop at aggregation and heteroskedastic standard errors.
+We do regression using `lm_robust()` from the `estimatr` package.
 
-Consider the following research question:
+Consider the following research question as our motiviating question:
 
-RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?
+*RQ: Are there differences in math achievement for Catholic vs public schools, controlling for differences in SES?*
 
 ## Aggregation
 
@@ -55,24 +57,23 @@ head( sdat )
 
 ```
 
-We can now answer our research question with a school-level regression:
+We can now answer our research question with a school-level regression with `lm_robust()`, that calculates heteroskedastic-robust standard errors:
 
 ```{r}
-Magg = lm( mean.ach ~ 1 + sector + mean.ses, data=sdat )
+library( estimatr )
+Magg = lm_robust( mean.ach ~ 1 + sector + mean.ses, data=sdat )
 
-library( sandwich )
-library( lmtest )
-coeftest( Magg, vcov. = vcovHC, type = "HC0" )
+tidy( Magg )
 ```
 
-We use heteroskedastic robust standard errors to take into account possible heteroskedasticity due to, for example, some school outcomes being based on smaller numbers of students (and thus having more variation) than other school outcomes.
+The `lm_robust()` method gives heteroskedastic robust standard errors that take into account possible heteroskedasticity due to, for example, some school outcomes being based on smaller numbers of students (and thus having more variation) than other school outcomes.
 
 In this regression we are controlling for school mean SES, not student SES.
-If anything is going on *within school* between SES and math achievement, and that is maybe different for different sectors, we might be missing it.
+If anything is going on *within school* between SES and math achievement, in a way that could be different for different sectors, we might be missing it.
 
 ## Student level regression and cluster robust SES
 
-Instead of using our aggregated data, we can merge our *school-level* variables into the studnet data and run a student level regression:
+Instead of using our aggregated data, we can merge our *school-level* variables into the student data and run a student level regression:
 
 The merge brings in level 2 variables, repeating them for each student in a school:
 
@@ -81,7 +82,7 @@ dat = merge( dat, sdat, by="id" )
 head( dat )
 ```
 
-And now our regression
+And now our regression (without handling our clustering, so this is giving us wrong standard errors):
 
 ```{r}
 Mstud = lm( mathach ~ 1 + sector + ses, data = dat )
@@ -91,39 +92,44 @@ summary( Mstud )
 ### Getting the right standard errors
 
 The standard errors for the above regression, however, is **wrong**: we are not taking the clustering into account.
-We can fix this with cluster-robust standard errors:
+We can fix this with cluster-robust standard errors.
+The `lm_robust()` method comes to the rescue:
 
 ```{r}
-coeftest( Mstud, vcov. = vcovCL, cluster = dat$id )
+Mstud <- lm_robust( mathach ~ 1 + sector + ses, 
+                       data = dat,
+                       clusters = dat$id )
+summary( Mstud )
 ```
 
-Catholic schools score 2 points higher than Public, on average, beyond individual level SES.
+We specify the clustering and `lm_robust()` does the rest; note that we would normally not even run the original `lm()` command.
+This replaces it.
+
+For our research question, we see that Catholic schools score 2 points higher than Public, on average, beyond individual level SES.
 
 We can further control for school mean SES, like with aggregation:
 
 ```{r}
-Mstud2 = lm( mathach ~ 1 + sector + ses + meanses, data = dat )
-coeftest( Mstud2, vcov. = vcovCL, cluster = dat$id )
+Mstud2 = lm_robust( mathach ~ 1 + sector + ses + meanses, 
+                    data = dat,
+                    cluster = dat$id )
+summary( Mstud2 )
 ```
 
 The contextual value of school mean SES is explaining some of the difference between Catholic and public schools, here: note the reduction of the coefficient for `sector`.
 That being said, and still accounting for clustering, `sector` is still quite significant.
-
-Confidence intervals give:
-
-```{r}
-coefci(Mstud2, vcov. = vcovCL, cluster = dat$id )
-```
+The `lm_robust()` function is also giving us confidence intevals, which is nice: we see anything between 0.7 and 1.9 is possible.
 
 Relative to the overall standard deviation of math achievement we have:
 
 ```{r}
 sd_math = sd( dat$mathach )
 sd_math
-coefci(Mstud2, vcov. = vcovCL, cluster = dat$id ) / sd_math
+confint(Mstud2, vcov. = vcovCL, cluster = dat$id ) / sd_math
 ```
 
 The difference between Catholic and public schools is somewhere between 0.10 and 0.27 standard deviations, beyond what can be explained by ses.
+This is a fairly sizable effect, in education.
 
 ## And fixed effects?
 
@@ -179,8 +185,10 @@ For our standard errors, etc., we can further account for clustering of our resi
 So we use our cluster-robust standard errors as so:
 
 ```{r}
-coefs <- coeftest( Mstud3, vcov. = vcovCL, cluster = dat$id )
-head( coefs )
+Mstud3_rob <- lm_robust( mathach ~ 0 + ses + id, 
+                         data=dat,
+                         cluster = dat$id )
+head( tidy( Mstud3_rob ) )
 ```
 
 We have again used `head()` to just get the first lines.
@@ -190,8 +198,9 @@ Let's compare our three models (note the way we omit coefficients with `id` to d
 
 ```{r}
 library( texreg )
-screenreg( list( `No FE`=Mstud3_noFE, `FE` = Mstud3, `FE + CRVE`=coefs ), 
-           omit.coef="id" )
+screenreg( list( `No FE`=Mstud3_noFE, `FE` = Mstud3, `FE + CRVE`=Mstud3_rob ), 
+           omit.coef="id",
+           include.ci = FALSE )
 
 ```
 
@@ -206,7 +215,9 @@ A few things to note:
 If we want to see if the *relationship* of math and SES is different between schools, we can get tricky like so:
 
 ```{r}
-Mstud4 = lm( mathach ~ 0 + ses + ses:sector + id, data=dat )
+Mstud4 = lm_robust( mathach ~ 0 + ses + ses:sector + id, 
+                    data=dat,
+                    cluster = id )
 head( coef( Mstud4 ) )
 tail( coef( Mstud4 ) )
 ```
@@ -214,13 +225,14 @@ tail( coef( Mstud4 ) )
 Note interaction terms always get pushed to the end of the list of estimates by R.
 So we have to pull them out with `tail()`.
 
-In the following we compare SEs.
+In the following we compare SEs to if we hadn't used cluster robust SEs.
 
 ```{r}
-a <- coeftest( Mstud4, vcov. = vcovCL, cluster = dat$id )
-library( texreg )
-screenreg( list( wrong=Mstud4, adjusted=a ), 
-           omit.coef="id", single.row = TRUE )
+a <- lm( mathach ~ 0 + ses + ses:sector + id, 
+                    data=dat )
+screenreg( list( wrong=a, adjusted=Mstud4 ), 
+           omit.coef="id", single.row = TRUE,
+           include.ci=FALSE )
 ```
 
 In our second column we are accounting for our clustering with our cluster robust SEs.
