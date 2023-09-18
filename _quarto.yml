@@ -64,6 +64,7 @@ book:
           - icc_viz.qmd
           - rand_slopes_viz.qmd
           - rewb_viz.qmd
+          - centering_viz.qmd
           - latent_logit_viz.qmd
     - part: "MATH DERIVATIONS"
       chapters:
