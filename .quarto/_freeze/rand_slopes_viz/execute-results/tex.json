@@ -1,7 +1,7 @@
 {
-  "hash": "63dca958b2b8dd0cb34df3406a493859",
+  "hash": "1ef2b97df893d015686d938b8aa6dc7e",
   "result": {
-    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n::: {.cell}\n::: {.cell-output .cell-output-stderr}\n```\nPhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.\n```\n:::\n\n<iframe src=\"https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/?showcase=0\" width=\"100%\" height=\"1500px\" data-external=\"1\"></iframe>\n:::\n",
+    "markdown": "---\ntitle: \"Random Slopes Visualization\"\nauthor: \"Josh Gilbert\"\neditor: \n  markdown: \n    wrap: sentence\n---\n\n\n\nThe shiny app below allows you to set the various parameters of a random slopes multilevel model to see how they are reflected in the data.\nI often find it easiest to think of random slopes models in longitudinal contexts, so the app here asks for \"people\" and \"timepoints\", but the same logic applies to cross sectional contexts, such as students nested within schools.\n\nExercises:\n\n-   Before manipulating a slider, make a prediction for what will change in the graph, then verify by moving the slider\n\n-   What parameter needs to be changed (and to what value) to generate a random intercepts model?\n    Verify using the app.\n\n-   Select parameters to generate a collection of students ranging from no growth to strong positive growth, where the lower growth schools had higher initial achievement.\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n[![](rand_slopes_viz_files/figure-pdf/unnamed-chunk-1-1.pdf)](https://s43dnt-josh-gilbert.shinyapps.io/s43_rand_slopes_viz/)\n:::\n:::\n",
     "supporting": [
       "rand_slopes_viz_files"
     ],

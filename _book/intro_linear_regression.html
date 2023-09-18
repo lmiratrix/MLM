@@ -478,8 +478,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -496,31 +502,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -725,6 +731,10 @@ F-statistic:  263 on 3 and 153 DF,  p-value: &lt;2e-16</code></pre>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph model 2, with Bill on X, Credit as color, and Guests held constant at the mean</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggeffect</span>(tip.mod, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"Bill"</span>, <span class="st">"Credit"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">add.data =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Data points may overlap. Use the `jitter` argument to add some amount of
+  random variation to the location of data points and avoid overplotting.</code></pre>
+</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -733,7 +743,7 @@ F-statistic:  263 on 3 and 153 DF,  p-value: &lt;2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>For making tables, <a href="reg_table_demo.html"><span>Chapter&nbsp;7</span></a>.</p>
+<p>For making tables, <a href="#sec-make-regression-tables"><span class="quarto-unresolved-ref">sec-make-regression-tables</span></a>.</p>
 </section>
 <section id="categorical-variables-and-factors" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="categorical-variables-and-factors"><span class="header-section-number">4.3</span> Categorical Variables (and Factors)</h2>
@@ -743,24 +753,24 @@ F-statistic:  263 on 3 and 153 DF,  p-value: &lt;2e-16</code></pre>
 <p>If you have multiple levels of a category, but your levels are coded with numbers you have to be a bit careful because R can treat this as a quantitative (continuous) variable by mistake in some cases. You will know it did this if you only see the single variable on one line of your output. For categorical variables with <span class="math inline">\(k\)</span> categories, you should see <span class="math inline">\(k-1\)</span> lines.</p>
 <p>To make a variable categorical, even if the levels are numbers, convert the variable to a factor with <code>as.factor</code> or <code>factor</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the US states data</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>( USStates )</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert Region to a factor</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>USStates <span class="ot">&lt;-</span> USStates <span class="sc">|&gt;</span> </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Region =</span> <span class="fu">factor</span>(Region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the US states data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>( USStates )</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert Region to a factor</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>USStates <span class="ot">&lt;-</span> USStates <span class="sc">|&gt;</span> </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Region =</span> <span class="fu">factor</span>(Region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="setting-new-baselines." class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="setting-new-baselines."><span class="header-section-number">4.3.2</span> Setting new baselines.</h3>
 <p>We can reorder the levels if desired (the first is our baseline).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( USStates<span class="sc">$</span>Region )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( USStates<span class="sc">$</span>Region )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "MW" "NE" "S"  "W" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>USStates<span class="sc">$</span>Region <span class="ot">=</span> <span class="fu">relevel</span>(USStates<span class="sc">$</span>Region, <span class="st">"S"</span> )</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( USStates<span class="sc">$</span>Region )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>USStates<span class="sc">$</span>Region <span class="ot">=</span> <span class="fu">relevel</span>(USStates<span class="sc">$</span>Region, <span class="st">"S"</span> )</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( USStates<span class="sc">$</span>Region )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "S"  "MW" "NE" "W" </code></pre>
 </div>
@@ -771,8 +781,8 @@ F-statistic:  263 on 3 and 153 DF,  p-value: &lt;2e-16</code></pre>
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="testing-for-significance-of-a-categorical-variable."><span class="header-section-number">4.3.3</span> Testing for significance of a categorical variable.</h3>
 <p>When deciding whether to keep a categorical variable, we need to test how important all the dummy variables for that category are to the model all at once. We do this with ANOVA. Here we examine whether region is useful for predicting the percent vote for Clinton in 2016:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> Region, <span class="at">data=</span>USStates)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( mlm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mlm <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> Region, <span class="at">data=</span>USStates)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( mlm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -787,12 +797,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>It is quite important.</p>
 <p>We can also compare for region beyond some other variable:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mlm2 <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> HouseholdIncome <span class="sc">+</span> HouseholdIncome <span class="sc">+</span> HighSchool <span class="sc">+</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>               EighthGradeMath, <span class="at">data=</span>USStates)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>mlm3 <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> HouseholdIncome <span class="sc">+</span> HouseholdIncome <span class="sc">+</span> HighSchool <span class="sc">+</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               EighthGradeMath <span class="sc">+</span> Region, <span class="at">data=</span>USStates)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( mlm2, mlm3 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mlm2 <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> HouseholdIncome <span class="sc">+</span> HouseholdIncome <span class="sc">+</span> HighSchool <span class="sc">+</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>               EighthGradeMath, <span class="at">data=</span>USStates)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>mlm3 <span class="ot">=</span> <span class="fu">lm</span>( ClintonVote <span class="sc">~</span> HouseholdIncome <span class="sc">+</span> HouseholdIncome <span class="sc">+</span> HighSchool <span class="sc">+</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>               EighthGradeMath <span class="sc">+</span> Region, <span class="at">data=</span>USStates)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( mlm2, mlm3 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -813,12 +823,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 data-number="4.3.4" class="anchored" data-anchor-id="missing-levels-in-a-factor"><span class="header-section-number">4.3.4</span> Missing levels in a factor</h3>
 <p>R often treats categorical variables as factors. This is often useful, but sometimes annoying. A factor has different <strong>levels</strong> which are the different values it can be. For example:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(FishGills3)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(FishGills3)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ""       "High"   "Low"    "Medium"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
          High    Low Medium 
@@ -827,17 +837,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Note the weird nameless level; it also has no actual observations in it. Nevertheless, if you make a boxplot, you will get an empty plot in addition to the other three. This error was likely due to some past data entry issue. You can drop the unused level:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>FishGills3<span class="sc">$</span>Calcium <span class="ot">=</span> <span class="fu">droplevels</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>FishGills3<span class="sc">$</span>Calcium <span class="ot">=</span> <span class="fu">droplevels</span>(FishGills3<span class="sc">$</span>Calcium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can also turn a categorical variable into a numeric one like so:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( FishGills3<span class="sc">$</span>Calcium )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( FishGills3<span class="sc">$</span>Calcium )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  High    Low Medium 
     30     30     30 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>asnum <span class="ot">=</span> <span class="fu">as.numeric</span>( FishGills3<span class="sc">$</span>Calcium )</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>asnum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>asnum <span class="ot">=</span> <span class="fu">as.numeric</span>( FishGills3<span class="sc">$</span>Calcium )</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>asnum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
 [39] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -846,8 +856,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Regression on only a categorical variable is fine:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">=</span> <span class="fu">lm</span>( GillRate <span class="sc">~</span> Calcium, <span class="at">data=</span>FishGills3 )</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mylm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">=</span> <span class="fu">lm</span>( GillRate <span class="sc">~</span> Calcium, <span class="at">data=</span>FishGills3 )</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>mylm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -860,8 +870,8 @@ Coefficients:
 </div>
 <p>R has made you a bunch of dummy variables automatically. Here “high” is the baseline, selected automatically. We can also force it so there is no baseline by removing the intercept, in which case the coefficients are the means of each group.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mymm <span class="ot">=</span> <span class="fu">lm</span>( GillRate <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Calcium, <span class="at">data=</span>FishGills3 )</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mymm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mymm <span class="ot">=</span> <span class="fu">lm</span>( GillRate <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Calcium, <span class="at">data=</span>FishGills3 )</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>mymm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -880,7 +890,7 @@ Coefficients:
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">4.4.1</span> Confidence Intervals</h3>
 <p>To get confidence intervals around each parameter in your model, try this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(tip.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(tip.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             2.5 % 97.5 %
 (Intercept) -0.655  0.146
@@ -891,10 +901,10 @@ Credity     -0.319  0.403</code></pre>
 </div>
 <p>You can also create them easily using <code>tidy</code> and <code>mutate</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tip.mod <span class="sc">|&gt;</span> </span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upper =</span> estimate <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">lower =</span> estimate <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>tip.mod <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upper =</span> estimate <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">lower =</span> estimate <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 7
   term        estimate std.error statistic  p.value upper  lower
@@ -910,8 +920,8 @@ Credity     -0.319  0.403</code></pre>
 <h3 data-number="4.4.2" class="anchored" data-anchor-id="prediction"><span class="header-section-number">4.4.2</span> Prediction</h3>
 <p>Suppose a server at this bistro is about to deliver a $20 bill, and wants to predict their tip. They can get a predicted value and 95% (this is the default level, change with level) prediction interval with</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>) )</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod,new.dat,<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>) )</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod,new.dat,<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   fit  lwr  upr
 1 3.35 1.41 5.29</code></pre>
@@ -920,8 +930,8 @@ Credity     -0.319  0.403</code></pre>
 <p>They should expect a tip somewhere between $1.41 and $5.30.</p>
 <p>If we know a bit more we can use our more complex model called <code>tip.mod</code> from above:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>), <span class="at">Guests=</span><span class="fu">c</span>(<span class="dv">1</span>), <span class="at">Credit=</span><span class="fu">c</span>(<span class="st">"n"</span>) )</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tip.mod,new.dat,<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>), <span class="at">Guests=</span><span class="fu">c</span>(<span class="dv">1</span>), <span class="at">Credit=</span><span class="fu">c</span>(<span class="st">"n"</span>) )</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tip.mod,new.dat,<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   fit  lwr  upr
 1 3.37 1.41 5.34</code></pre>
@@ -930,8 +940,8 @@ Credity     -0.319  0.403</code></pre>
 <p>This is the predicted tip for one guest paying with cash for a $20 tip. It is wider than our original interval because our model is a bit more unstable (it turns out guest number and credit card aren’t that relevant or helpful).</p>
 <p>Compare the prediction interval to the confidence interval</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>), <span class="at">Guests=</span><span class="fu">c</span>(<span class="dv">1</span>), <span class="at">Credit=</span><span class="fu">c</span>(<span class="st">"n"</span>) )</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tip.mod, new.dat, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>new.dat <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">Bill =</span> <span class="fu">c</span>(<span class="dv">20</span>), <span class="at">Guests=</span><span class="fu">c</span>(<span class="dv">1</span>), <span class="at">Credit=</span><span class="fu">c</span>(<span class="st">"n"</span>) )</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tip.mod, new.dat, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   fit  lwr  upr
 1 3.37 3.09 3.65</code></pre>
@@ -943,22 +953,22 @@ Credity     -0.319  0.403</code></pre>
 <h3 data-number="4.4.3" class="anchored" data-anchor-id="removing-outliers"><span class="header-section-number">4.4.3</span> Removing Outliers</h3>
 <p>If you can identify which rows the outliers are on, you can do this by hand (say the rows are 5, 10, 12).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>new.data <span class="ot">=</span> old.data[ <span class="sc">-</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">12</span>), ]</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( Y <span class="sc">~</span> X, <span class="at">data=</span>new.data )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>new.data <span class="ot">=</span> old.data[ <span class="sc">-</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">12</span>), ]</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( Y <span class="sc">~</span> X, <span class="at">data=</span>new.data )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Some technical details: The <code>c(5,10,12)</code> is a list of 3 numbers. The <code>c()</code> is the concatenation function that takes things makes lists out of them. The “-list” notation means give me my old data, but without rows 5, 10, and 12. Note the comma after the list. This is because we identify elements in a dataframe with row, column notation. So <code>old.data[1,3]</code> would be row 1, column 3.</p>
 <p>If you notice your points all have X bigger than some value, say 20.5, you could use filtering to keep everything less than some value:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>new.data <span class="ot">=</span> <span class="fu">filter</span>( old.data, X <span class="sc">&lt;=</span> <span class="fl">20.5</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>new.data <span class="ot">=</span> <span class="fu">filter</span>( old.data, X <span class="sc">&lt;=</span> <span class="fl">20.5</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="missing-data" class="level3" data-number="4.4.4">
 <h3 data-number="4.4.4" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">4.4.4</span> Missing data</h3>
 <p>If you have missing data, <code>lm</code> will automatically drop those cases because it doesn’t know what else to do. It will tell you this, however, with the <code>summary</code> command.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(AllCountries)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>dev.lm <span class="ot">=</span> <span class="fu">lm</span>( BirthRate <span class="sc">~</span> Rural <span class="sc">+</span> Health <span class="sc">+</span> ElderlyPop, <span class="at">data=</span>AllCountries )</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dev.lm  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(AllCountries)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>dev.lm <span class="ot">=</span> <span class="fu">lm</span>( BirthRate <span class="sc">~</span> Rural <span class="sc">+</span> Health <span class="sc">+</span> ElderlyPop, <span class="at">data=</span>AllCountries )</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dev.lm  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -988,7 +998,7 @@ F-statistic:  114 on 3 and 174 DF,  p-value: &lt;2e-16</code></pre>
 <h3 data-number="4.4.5" class="anchored" data-anchor-id="residual-plots-and-model-fit"><span class="header-section-number">4.4.5</span> Residual plots and model fit</h3>
 <p>If we throw out model into the <code>plot</code> function, we get some nice regression diagnostics.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tip.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tip.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1020,7 +1030,7 @@ F-statistic:  114 on 3 and 174 DF,  p-value: &lt;2e-16</code></pre>
 </div>
 <p>To generate classic model fit diagnostics with more control, we need to calculate residuals, make a residual versus fitted values plot, and make a histogram of the residuals. We can make some quick and dirty plots with <code>qplot</code> (standing for “quick plot”) like so:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(tip.mod<span class="sc">$</span>fit, tip.mod<span class="sc">$</span>residuals )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(tip.mod<span class="sc">$</span>fit, tip.mod<span class="sc">$</span>residuals )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: `qplot()` was deprecated in ggplot2 3.4.0.</code></pre>
 </div>
@@ -1034,7 +1044,7 @@ F-statistic:  114 on 3 and 174 DF,  p-value: &lt;2e-16</code></pre>
 </div>
 <p>and</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(tip.mod<span class="sc">$</span>residuals, <span class="at">bins=</span><span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(tip.mod<span class="sc">$</span>residuals, <span class="at">bins=</span><span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1046,9 +1056,9 @@ F-statistic:  114 on 3 and 174 DF,  p-value: &lt;2e-16</code></pre>
 <p>We see no real pattern other than some extreme outliers. The residual histogram suggests we are not really normally distributed, so we should treat our SEs and <span class="math inline">\(p\)</span>-values with caution. These plots are the canonical “model-checking’’ plots you might use.</p>
 <p>Another is the “fitted outcomes vs.&nbsp;actual outcomes’’ plot of:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm )</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">=</span> dev.lm<span class="sc">$</span>model<span class="sc">$</span>BirthRate</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>( actual, predicted, <span class="at">main=</span><span class="st">"Fit vs. actual Birth Rate"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm )</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">=</span> dev.lm<span class="sc">$</span>model<span class="sc">$</span>BirthRate</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>( actual, predicted, <span class="at">main=</span><span class="st">"Fit vs. actual Birth Rate"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1060,13 +1070,13 @@ F-statistic:  114 on 3 and 174 DF,  p-value: &lt;2e-16</code></pre>
 <p>Note the <code>dev.lm</code> variable has a <code>model</code> variable inside it. This is a data frame of the <strong>used</strong> data for the model (i.e., if cases were dropped due to missingness, they will not be in the model). We then grab the birth rates from this, and make a scatterplot. If we tried to skip this, and use the original data, we would get an error because our original data set has some observations that were dropped.</p>
 <p>Note we can’t just add our predictions to <code>AllCountries</code> since we would get an error due to this dropped data issue:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>AllCountries<span class="sc">$</span>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>AllCountries<span class="sc">$</span>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>Error in `$&lt;-.data.frame`(`*tmp*`, predicted, value = c(`1` = 31.630301617421,  : 
   replacement has 179 rows, data has 217</code></pre>
 <p>We can, however, predict like this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>AllCountries<span class="sc">$</span>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm, <span class="at">newdata=</span>AllCountries )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>AllCountries<span class="sc">$</span>predicted <span class="ot">=</span> <span class="fu">predict</span>( dev.lm, <span class="at">newdata=</span>AllCountries )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>newdata</code> tells predict to generate a prediction for each row in AllCountries rather than each row in the left over data after <code>lm</code> dropped cases with missing values.</p>
 

@@ -478,8 +478,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -496,31 +502,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -589,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This chapter follows Chapter <a href="broom.html"><span>Chapter&nbsp;17</span></a>, and provides an alternate set of ways of pulling information from a fit <code>lmer</code> model. In particular, this document walks through various R code to pull information out of a multilevel model (and OLS models as well, since the methods generally work on everything). For illustration, we will use a random-slope model on the HS&amp;B dataset with some level 1 and level 2 fixed effects.</p>
+<p>This chapter follows Chapter <a href="#sec-broom"><span class="quarto-unresolved-ref">sec-broom</span></a>, and provides an alternate set of ways of pulling information from a fit <code>lmer</code> model. In particular, this document walks through various R code to pull information out of a multilevel model (and OLS models as well, since the methods generally work on everything). For illustration, we will use a random-slope model on the HS&amp;B dataset with some level 1 and level 2 fixed effects.</p>
 <p>We use the following libraries in this file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lme4 )</span>
@@ -861,7 +867,7 @@ $id
 <div class="cell-output cell-output-stdout">
 <pre><code>     (Intercept)         ses
 1224 -0.26204371  0.08765385
-1288  0.03805199  0.11841937
+1288  0.03805199  0.11841938
 1296 -1.91525901  0.03572247
 1308  0.30485682 -0.10500515
 1317 -1.15834807 -0.10815301
@@ -876,7 +882,7 @@ $id
 <div class="cell-output cell-output-stdout">
 <pre><code>              u0          u1   id
 1224 -0.26204371  0.08765385 1224
-1288  0.03805199  0.11841937 1288
+1288  0.03805199  0.11841938 1288
 1296 -1.91525901  0.03572247 1296
 1308  0.30485682 -0.10500515 1308
 1317 -1.15834807 -0.10815301 1317
@@ -941,7 +947,7 @@ $id
              (Intercept)          ses      meanses
 (Intercept)  0.022683560 -0.001465374 -0.001619405
 ses         -0.001465374  0.014846788 -0.011954182
-meanses     -0.001619405 -0.011954182  0.146389292</code></pre>
+meanses     -0.001619405 -0.011954182  0.146389293</code></pre>
 </div>
 </div>
 <p>The standard errors are the diagonal of this matrix, square-rooted. See how they line up?:</p>
@@ -992,12 +998,12 @@ meanses     -0.001619405 -0.011954182  0.146389292</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %     97.5 %
 .sig01       1.4012799  1.8897548
-.sig02      -0.8733603  0.1945989
-.sig03       0.2274189  0.9849964
+.sig02      -0.8761947  0.1946551
+.sig03       0.2165284  0.9849953
 .sigma       5.9659922  6.1689341
 (Intercept) 12.3559620 12.9462385
 ses          1.9512025  2.4296954
-meanses      3.0278219  4.5329237</code></pre>
+meanses      3.0278220  4.5329237</code></pre>
 </div>
 </div>
 </section>
@@ -1090,14 +1096,14 @@ see '?methods' for accessing help and source code</code></pre>
 <pre><code> [1] anova          as.function    coef           confint        cooks.distance
  [6] deviance       df.residual    display        drop1          extractAIC    
 [11] extractDIC     family         fitted         fixef          formula       
-[16] fortify        getData        getL           getME          hatvalues     
-[21] influence      isGLMM         isLMM          isNLMM         isREML        
-[26] logLik         mcsamp         model.frame    model.matrix   ngrps         
-[31] nobs           plot           predict        print          profile       
-[36] ranef          refit          refitML        rePCA          residuals     
-[41] rstudent       se.coef        show           sigma.hat      sigma         
-[46] sim            simulate       standardize    summary        terms         
-[51] update         VarCorr        vcov           weights       
+[16] getData        getL           getME          hatvalues      influence     
+[21] isGLMM         isLMM          isNLMM         isREML         logLik        
+[26] mcsamp         model.frame    model.matrix   ngrps          nobs          
+[31] plot           predict        print          profile        ranef         
+[36] refit          refitML        rePCA          residuals      rstudent      
+[41] se.coef        show           sigma.hat      sigma          sim           
+[46] simulate       standardize    summary        terms          update        
+[51] VarCorr        vcov           weights       
 see '?methods' for accessing help and source code</code></pre>
 </div>
 </div>

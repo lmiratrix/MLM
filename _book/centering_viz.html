@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Luke Miratrix">
+<meta name="author" content="Josh Gilbert">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 24&nbsp; Predictors in Longitudinal Growth Models</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 42&nbsp; Centering Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./interpreting_glms.html" rel="next">
-<link href="./model_cheat_sheet.html" rel="prev">
+<link href="./latent_logit_viz.html" rel="next">
+<link href="./rewb_viz.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./broom.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./growth_models_predictors.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_viz.html">VISUALIZATIONS</a></li><li class="breadcrumb-item"><a href="./centering_viz.html"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -303,7 +303,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./growth_models_predictors.html" class="sidebar-item-text sidebar-link active">
+  <a href="./growth_models_predictors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></span></a>
   </div>
 </li>
@@ -444,7 +444,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
   </div>
 </li>
@@ -509,21 +509,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#tips-for-growth-models" id="toc-tips-for-growth-models" class="nav-link active" data-scroll-target="#tips-for-growth-models"><span class="header-section-number">24.1</span> Tips for growth models</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">24.2</span> Additional Resources</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Predictors in Longitudinal Growth Models</span></h1>
+<h1 class="title"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></h1>
 </div>
 
 
@@ -533,7 +526,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Luke Miratrix </p>
+             <p>Josh Gilbert </p>
           </div>
   </div>
     
@@ -544,43 +537,19 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="tips-for-growth-models" class="level2" data-number="24.1">
-<h2 data-number="24.1" class="anchored" data-anchor-id="tips-for-growth-models"><span class="header-section-number">24.1</span> Tips for growth models</h2>
-<p>Start with an unconditional growth model, i.e., don’t include any level-1 or level-2 predictors. This model provides useful empirical evidence for determining a proper specification of the individual growth equation and baseline statistics for evaluating more complicated level-2 models.</p>
-<p>The nature of the predictor in longitudinal analysis determines where it gets added to the model: Time-invariant predictors always go in level-2 (subject level) model Time-varying predictors can go in level-1 and/or level-2. The level of the predictor dictates which variance component it seeks to describe: Level-2 describes level-2 variances and Level-1 describes level-1 variances. Although the order in which you add these predictors (in a series of successive models) may not ultimately matter, general practice is to add level-2 (time-invariant) predictors first.</p>
-<p>How to decide where to add predictors? One strategy:</p>
+<p>Centering of predictors is an important issue in multilevel modeling. In contrast to single-level regression, how we center variables can really change the interpretation of the slope coefficients. The three main options are:</p>
 <ol type="1">
-<li><p>First fit an unconditional (i.e.&nbsp;no predictors) random intercept model. This isn’t really predictive, but we can use it as a baseline model that partitions variance into between and within-person variances. Singer &amp; Willett (2003) call this the “unconditional means model”.</p></li>
-<li><p>Calculate the ICC</p>
-<ol type="1">
-<li><p>If most of the variance is between-persons in the random intercept (level-2), then you’ll use person-level predictors to reduce that variance (i.e., account for inter-person differences)</p></li>
-<li><p>If most of the variance is within-person (level-1 residual variance), you’ll need time-level predictors to reduce that variance (i.e.&nbsp;account for intra-person differences)</p></li>
-</ol></li>
+<li>No centering: leave <span class="math inline">\(X\)</span> as it is</li>
+<li>Grand mean centering: subtract <span class="math inline">\(\bar{X}\)</span> from every <span class="math inline">\(X\)</span> so that a value of 0 represents the grand mean. The slope has the same interpretation, but our estimates of random effects may change.</li>
+<li>Group mean centering: subtract <span class="math inline">\(\bar{X}_j\)</span> from every <span class="math inline">\(X\)</span> so that a value of 0 represents the cluster mean. The slope now represents the <strong>within-group</strong> relationship (just like fixed effects) because we have removed all between group variation from <span class="math inline">\(X\)</span>.</li>
 </ol>
-<p>Because the time-specific subscript <em>t</em> can only appear in the level-1 model, all time-varying predictors must appear in the level-1 individual growth model. That is, person-specific predictors that vary over time appear at level-1, not level-2. Time-invariant predictors go in level-2. Furthermore, because they are time-invariant, this means they have no within-person variation to allow for a level-2 residual; thus, the level-2 growth rate parameter corresponding to this time-invariant predictor will not have an error term (i.e.&nbsp;it’s assumed to be zero). Interpretation wise, this assumes the effect of a person-specific effect is constant across population members. For a time-varying predictor, however, the associated level-2 growth parameter equation would have a residual term. This allows the effect of the time-varying predictor to vary randomly across the individuals in the population.</p>
-<p>With only a few measurement points per person, we often lack sufficient data to estimate many variance components. Thus, it’s suggested that we resist the temptation to automatically allow the effects of time-varying predictors to vary at level-2 unless you have a good reason, and enough data, to do so.</p>
-<p>So far in class, we’ve seen person-specific variables appear in level-2 submodels as predictors for level-1 growth parameters. You might therefore think that substantive predictors must always appear at level-2, but this isn’t true!</p>
-<p>How inclusion of predictors affect variance components: Generally, when we include time-invariant predictors:</p>
-<ol type="1">
-<li><p>the level-1 variance component, <span class="math inline">\(\sigma^2_e\)</span>, remains pretty stable because time-invariant predictors can’t explain any within-person variation</p></li>
-<li><p>the level-2 variance components, <span class="math inline">\(\tau_{00}\)</span> and <span class="math inline">\(\tau_{01}\)</span>, will decrease if the time-invariant predictors explain some of the between-person variation in initial status or rates of change, respectively.</p></li>
-</ol>
-<p>When we include time-varying predictors:</p>
-<ol type="1">
-<li><p>both level-1 and level-2 variance components might be affected because time-varying predictors vary both within a person and between people</p></li>
-<li><p>we can interpret the resulting decrease in the level-1 variance component as amount of variation in the outcome explained by the time-varying predictors; however, it isn’t meaningful to interpret subsequent changes in level-2 variance components because adding the time-varying predictor changes the meaning of the individual growth parameters, which consequently alters the meaning of the level-2 variances, so it doesn’t make sense to compare the magnitude of these level-2 variances across successive models.</p></li>
-</ol>
-</section>
-<section id="additional-resources" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">24.2</span> Additional Resources</h2>
-<ul>
-<li><p><a href="https://books.google.com/books?i%20d=PpnA1M8VwR8C&amp;pg=PA168&amp;lpg=PA168&amp;dq=longitudinal+data+analysis+level1+level2+predictors&amp;source=bl&amp;ots=N4p8yFdyuL&amp;sig=wWjmaEeqakD040s4B9-QquJF1eE&amp;hl=en&amp;sa=X&amp;ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&amp;q=longitudinal%20data%20analysis%20level1%20level2%20predictors&amp;f=false">https://books.google.com/books?i d=PpnA1M8VwR8C&amp;pg=PA168&amp;lpg=PA168&amp;dq=longitudinal+data+analysis+level1+level2+predictors&amp;source=bl&amp;ots=N4p8yFdyuL&amp;sig=wWjmaEeqakD040s4B9-QquJF1eE&amp;hl=en&amp;sa=X&amp;ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&amp;q=longitudinal%20data%20analysis%20level1%20level2%20predictors&amp;f=false</a></p></li>
-<li><p><a href="http://jonathantemplin.com/files/mlm/mlm12uga/mlm12uga_section06.pdf" class="uri">http://jonathantemplin.com/files/mlm/mlm12uga/mlm12uga_section06.pdf</a></p></li>
-<li><p><a href="http://www.lesahoffman.com/944/944_Lecture07_Time-Invariant.pdf" class="uri">http://www.lesahoffman.com/944/944_Lecture07_Time-Invariant.pdf</a></p></li>
-</ul>
+<p>The visualization below helps us think about centering and why it matters.</p>
+<div class="cell">
+<iframe src="https://s43dnt-josh-gilbert.shinyapps.io/s43_centering_viz/?showcase=0" width="672" height="1500px" data-external="1">
+</iframe>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -818,13 +787,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./model_cheat_sheet.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Connecting the three dots: An HSB Model</span></span>
+      <a href="./rewb_viz.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./interpreting_glms.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Interpreting GLMs</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./latent_logit_viz.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

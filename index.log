@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.5)  10 SEP 2023 22:33
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.17)  18 SEP 2023 16:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -923,40 +923,42 @@ No file index.toc.
 
 ]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.665pt on input line 574.
+(Font)              scaled to size 7.665pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.475pt on input line 574.
+(Font)              scaled to size 5.475pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 574.
+(Font)              scaled to size 10.95099pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.66568pt on input line 574.
+(Font)              scaled to size 7.66568pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.4755pt on input line 574.
+(Font)              scaled to size 5.4755pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 574.
+(Font)              scaled to size 10.94882pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.66417pt on input line 574.
+(Font)              scaled to size 7.66417pt on input line 571.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.47441pt on input line 574.
+(Font)              scaled to size 5.47441pt on input line 571.
 [10] [11
 
 ]
-Overfull \hbox (221.7702pt too wide) in paragraph at lines 718--725
+Overfull \hbox (221.7702pt too wide) in paragraph at lines 715--722
 \TU/lmr/m/n/10.95 reasonable list of case studies to consider on this topic is https://academicguides.waldenu.edu/writingcenter/scholarlyvoice/avoidingbias.
  []
 
 
-Underfull \hbox (badness 2111) in paragraph at lines 718--725
+Underfull \hbox (badness 2111) in paragraph at lines 715--722
 \TU/lmr/m/n/10.95 The APA also has a guide for race at https://apastyle.apa.org/style-grammar-
  []
 
 Missing character: There is no ― (U+2015) in font [lmroman10-regular]:mapping=tex-text;!
-[12] [13]
+[12] [13] [14
+
+]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 742.
-[14
+(scrkbase)              on input line 790.
+[15
 
 ]
 chapter 1.
@@ -975,901 +977,992 @@ Class scrreprt Warning: \float@addtolists detected!
 (scrreprt)              a package that still implements the
 (scrreprt)              deprecated \float@addtolist interface.
 
-[15
+File: image/code_quality.png Graphic file (type bmp)
+<image/code_quality.png>
 
-] [16]
+Overfull \hbox (10.94386pt too wide) in paragraph at lines 796--797
+[] 
+ []
+
+[16
+
+]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 872.
+[17] [18] [19] [20] [21]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1186.
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1190.
+[22] [23] [24] [25]
 chapter 2.
-[17
+[26
 
-] [18] [19]
+] [27]
+chapter 3.
+[28
+
+] [29] [30]
 File: intro_markdown_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use intro_markdown_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[20] [21]
+[31] [32]
 
-LaTeX Warning: Reference `sec-make-tables' on page 22 undefined on input line 1073.
+LaTeX Warning: Reference `sec-make-tables' on page 33 undefined on input line 1724.
 
-[22] [23] [24]
-chapter 3.
+[33] [34] [35]
+chapter 4.
+[36
+
+]
+File: configuring_code_chunks_files/figure-pdf/plot1-1.pdf Graphic file (type pdf)
+<use configuring_code_chunks_files/figure-pdf/plot1-1.pdf>
+[37] [38]
+File: configuring_code_chunks_files/figure-pdf/plot2-1.pdf Graphic file (type pdf)
+<use configuring_code_chunks_files/figure-pdf/plot2-1.pdf>
+[39]
+chapter 5.
 File: intro_linear_regression_files/figure-pdf/RegressionCheck-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/RegressionCheck-1.pdf>
-[25
+[40
 
-] [26] [27]
+] [41] [42]
 File: intro_linear_regression_files/figure-pdf/LinearRegressionPlot-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/LinearRegressionPlot-1.pdf>
-[28]
+[43]
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-3-1.pdf>
-[29]
+[44]
 
-LaTeX Warning: Reference `sec-make-regression-tables' on page 30 undefined on input line 1421.
+LaTeX Warning: Reference `sec-make-regression-tables' on page 45 undefined on input line 2227.
 
-[30] [31] [32]
-Overfull \hbox (13.13986pt too wide) in paragraph at lines 1613--1613
+[45] [46] [47]
+Overfull \hbox (13.13986pt too wide) in paragraph at lines 2419--2419
 [] \TU/lmtt/m/n/10.95 [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3[] 
  []
 
 
-Overfull \hbox (13.13986pt too wide) in paragraph at lines 1613--1613
+Overfull \hbox (13.13986pt too wide) in paragraph at lines 2419--2419
 []\TU/lmtt/m/n/10.95 [39] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1[] 
  []
 
-[33] [34] [35] [36]
+[48] [49] [50] [51]
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-8-1.pdf>
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-8-2.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-8-2.pdf>
-[37]
+[52]
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-8-3.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-8-3.pdf>
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-8-4.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-8-4.pdf>
-[38]
+[53]
 File: intro_linear_regression_files/figure-pdf/ConditionsForRegression-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/ConditionsForRegression-1.pdf>
-[39]
+[54]
 File: intro_linear_regression_files/figure-pdf/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/unnamed-chunk-9-1.pdf>
 File: intro_linear_regression_files/figure-pdf/ConditionsForRegression2-1.pdf Graphic file (type pdf)
 <use intro_linear_regression_files/figure-pdf/ConditionsForRegression2-1.pdf>
-[40]
-Overfull \hbox (18.88861pt too wide) in paragraph at lines 1956--1956
+[55]
+Overfull \hbox (18.88861pt too wide) in paragraph at lines 2762--2762
 []\TU/lmtt/m/n/10.95 Error in []$<-.data.frame[]([]*tmp*[], predicted, value = c([]1[] = 31.630301617421,  :[] 
  []
 
-[41]
-chapter 4.
-[42
+[56]
+chapter 6.
+[57
 
-] [43]
+] [58]
 File: summary_plots_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-3-1.pdf>
 File: summary_plots_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[44] [45] [46]
-Overfull \hbox (70.62735pt too wide) in paragraph at lines 2281--2281
+[59] [60] [61]
+Overfull \hbox (70.62735pt too wide) in paragraph at lines 3087--3087
 [] \TU/lmtt/m/n/10.95 Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.[] 
  []
 
-[47] [48]
+[62] [63]
 File: summary_plots_files/figure-pdf/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-13-1.pdf>
-[49]
+[64]
 File: summary_plots_files/figure-pdf/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-14-1.pdf>
-[50]
+[65]
 File: summary_plots_files/figure-pdf/unnamed-chunk-16-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-16-1.pdf>
 File: summary_plots_files/figure-pdf/unnamed-chunk-16-2.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-16-2.pdf>
-[51]
+[66]
 File: summary_plots_files/figure-pdf/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-17-1.pdf>
-[52]
+[67]
 File: summary_plots_files/figure-pdf/unnamed-chunk-18-1.pdf Graphic file (type pdf)
 <use summary_plots_files/figure-pdf/unnamed-chunk-18-1.pdf>
-[53] [54]
-chapter 5.
-
-LaTeX Warning: Reference `sec-make-regression-tables' on page 55 undefined on input line 2569.
-
-[55
-
-]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 5.1 on input line 2673.
-
-[56] [57]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 5.2 on input line 2753.
-
-[58] [59]
-chapter 6.
-[60
-
-] [61]
-Overfull \hbox (7.39108pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 ===============================================================================[] 
- []
-
-
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 2970--2970
-[]                    \TU/lmtt/m/n/10.95 -----------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 -------------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 -------------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 F Statistic         0.009 (df = 1; 110) 1.241 (df = 2; 109) 1.861 (df = 3; 108)[] 
- []
-
-
-Overfull \hbox (7.39108pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 ===============================================================================[] 
- []
-
-
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 2970--2970
-[]\TU/lmtt/m/n/10.95 Note:                                               *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-[62] [63] [64]
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 3147.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 3147.
-[65] [66] [67] [68]
-Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
-[69]
+[68] [69]
 chapter 7.
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <20.74> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 3371.
+
+LaTeX Warning: Reference `sec-make-regression-tables' on page 70 undefined on input line 3375.
+
 [70
 
 ]
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 7.1 on input line 3459.
-
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 3463.
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 7.2 on input line 3487.
+(longtable)                in table 7.1 on input line 3479.
 
 [71] [72]
-chapter 8.
-[73
-
-] [74]
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 8.1 on input line 3569.
+(longtable)                in table 7.2 on input line 3559.
 
-[75] [76] [77]
-Overfull \hbox (76.3761pt too wide) in paragraph at lines 3731--3731
+[73] [74]
+chapter 8.
+[75
+
+] [76]
+Overfull \hbox (7.39108pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 ===============================================================================[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 3776--3776
+[]                    \TU/lmtt/m/n/10.95 -----------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 -------------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 -------------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 F Statistic         0.009 (df = 1; 110) 1.241 (df = 2; 109) 1.861 (df = 3; 108)[] 
+ []
+
+
+Overfull \hbox (7.39108pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 ===============================================================================[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 3776--3776
+[]\TU/lmtt/m/n/10.95 Note:                                               *p<0.1; **p<0.05; ***p<0.01[] 
+ []
+
+[77] [78] [79]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.00073pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.99915pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 3953.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 3953.
+[80] [81] [82] [83]
+Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
+[84]
+chapter 9.
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <20.74> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 4177.
+[85
+
+]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 9.1 on input line 4265.
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 9.2 on input line 4293.
+
+[86] [87]
+chapter 10.
+[88
+
+] [89]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 10.1 on input line 4375.
+
+[90] [91] [92]
+Overfull \hbox (76.3761pt too wide) in paragraph at lines 4537--4537
 []\TU/lmtt/m/n/10.95 y_{i} = \gamma_{0} + \gamma_{1} sector_{j[i]} + \beta_{1} ses_{i} + u_{j[i]} + \epsilon_{i}[] 
  []
 
 
-Overfull \hbox (30.38611pt too wide) in paragraph at lines 3743--3743
+Overfull \hbox (30.38611pt too wide) in paragraph at lines 4549--4549
 []\TU/lmtt/m/n/10.95 \epsilon_i \sim N( 0, \sigma^2_y ), \mbox{ and } u_{j} \sim N( 0, \sigma^2_\alpha )[] 
  []
 
-[78] [79]
-Overfull \hbox (59.12985pt too wide) in paragraph at lines 3860--3860
+[93] [94]
+Overfull \hbox (59.12985pt too wide) in paragraph at lines 4666--4666
 []  \TU/lmtt/m/n/10.95 \gamma_{11} sector_j ses_{ij} + \left(u_{0j} + u_{1j} ses_{ij} + \epsilon_{ij} \right)[] 
  []
 
-[80] [81] [82]
-chapter 9.
-[83
+[95] [96] [97]
+chapter 11.
+[98
 
-] [84] [85] [86] [87] [88]
-chapter 10.
-[89
+] [99] [100] [101] [102] [103]
+chapter 12.
+[104
 
-] [90]
+] [105]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-3-1.pdf>
-[91]
+[106]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[92]
+[107]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-6-1.pdf>
-[93] [94]
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 4604--4604
+[108] [109]
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 5410--5410
 []  \TU/lmtt/m/n/10.95 5  10  25  26  27  32  33  34  35  36  37  39  42  43  45  46  52  53  54  55[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 4604--4604
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 5410--5410
 []  \TU/lmtt/m/n/10.95 5  10  25  26  27  32  33  34  35  36  37  39  42  43  45  46  52  53  54  55[] 
  []
 
-[95] [96]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 4694.
-[97] [98] [99]
+[110] [111] [112] [113] [114]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-21-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-21-1.pdf>
-[100]
+[115]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-21-2.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-21-2.pdf>
-[101] [102] [103]
+[116] [117] [118]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-28-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-28-1.pdf>
-[104]
+[119]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-28-2.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-28-2.pdf>
-[105] [106]
+[120] [121]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-30-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-30-1.pdf>
-[107]
+[122]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-30-2.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-30-2.pdf>
-[108] [109] [110] [111] [112] [113] [114] [115] [116] [117] [118]
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 5915--5915
+[123] [124] [125] [126] [127] [128] [129] [130] [131] [132] [133]
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 6721--6721
 []\TU/lmtt/m/n/10.95 XXXXXXX XXXXX.X XXXX.XX XXX.... X...... XXXXX.. XXXX... XX..... XXX.XXX XXXXXX.[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 5915--5915
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 6721--6721
 []    \TU/lmtt/m/n/10.95 224      21      10       6       5       5       4       3       3       3[] 
  []
 
-[119] [120]
+[134] [135]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-47-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-47-1.pdf>
-[121] [122] [123] [124] [125] [126] [127]
-Overfull \hbox (13.13986pt too wide) in paragraph at lines 6352--6352
+[136] [137] [138] [139] [140] [141] [142]
+Overfull \hbox (13.13986pt too wide) in paragraph at lines 7158--7158
 [] \TU/lmtt/m/n/10.95 [1]   6  12  14  37  11  65  22  13  63  23  24  64 115  66  44  23  20  59  40[] 
  []
 
-[128]
+[143]
 File: intro_missing_data_files/figure-pdf/amelia-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/amelia-1.pdf>
-[129] [130]
+[144] [145]
 File: intro_missing_data_files/figure-pdf/unnamed-chunk-56-1.pdf Graphic file (type pdf)
 <use intro_missing_data_files/figure-pdf/unnamed-chunk-56-1.pdf>
-[131] [132]
-chapter 11.
-[133
+[146] [147]
+chapter 13.
+[148
 
-]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 6648.
-[134] [135] [136] [137] [138] [139] [140] [141] [142]
+] [149] [150] [151] [152] [153] [154] [155] [156] [157]
 part II.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 7169.
-[143
+(scrkbase)              on input line 7975.
+[158
 
 ]
-chapter 12.
+chapter 14.
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]  \TU/lmtt/m/n/10.95 minority female     ses mathach  size sector pracad disclim himinty schoolid[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]     \TU/lmtt/m/n/10.95 <dbl>  <dbl>   <dbl>   <dbl> <dbl>  <dbl>  <dbl>   <dbl>   <dbl>    <dbl>[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 1        0      1 -1.53      5.88   842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 2        0      1 -0.588    19.7    842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 3        0      0 -0.528    20.3    842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 4        0      0 -0.668     8.78   842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 5        0      0 -0.158    17.9    842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 6        0      0  0.0220    4.58   842      0  0.350    1.60       0     1224[] 
+ []
+
+
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 8020--8020
+[]\TU/lmtt/m/n/10.95 #   t2alt <dbl>, pickone <dbl>, mmses <dbl>, mnses <dbl>, xb <dbl>, resid <dbl>[] 
+ []
+
+[159
+
+]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-2-1.pdf>
-[144
-
-]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-3-1.pdf>
-[145]
+[160]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[146]
+[161]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[147]
+[162]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-6-1.pdf>
-[148]
+[163]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-7-1.pdf>
-[149]
+[164]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-8-1.pdf>
-[150]
+[165]
 File: intro_ggplot_files/figure-pdf/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 <use intro_ggplot_files/figure-pdf/unnamed-chunk-10-1.pdf>
-[151] [152]
-chapter 13.
-[153
+[166] [167]
+chapter 15.
+[168
 
 ]
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 7554--7554
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 8370--8370
 []\TU/lmtt/m/n/10.95 Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 7554--7554
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 8370--8370
 []\TU/lmtt/m/n/10.95 Model failed to converge with max|grad| = 0.00578925 (tol = 0.002, component 1)[] 
  []
 
-[154] [155]
+[169] [170]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-6-1.pdf>
-[156] [157]
+[171] [172]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-9-1.pdf>
-[158] [159]
+[173] [174]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-12-1.pdf>
-[160] [161]
+[175] [176]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-14-1.pdf>
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-15-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-15-1.pdf>
-[162] [163]
+[177] [178]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-20-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-20-1.pdf>
-[164]
+[179]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-21-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-21-1.pdf>
-[165] [166]
+[180] [181]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-24-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-24-1.pdf>
-[167]
+[182]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-25-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-25-1.pdf>
-[168] [169] [170]
+[183] [184] [185]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-28-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-28-1.pdf>
-[171] [172]
+[186] [187]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-31-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-31-1.pdf>
-[173]
+[188]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-32-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-32-1.pdf>
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 8389--8389
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 9205--9205
 [][]\TU/lmtt/m/n/10.95 summarise()[] has grouped output by []GENDER[], []RACEETH[]. You can override using[] 
  []
 
-[174]
+[189]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-33-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-33-1.pdf>
-[175]
+[190]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-34-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-34-1.pdf>
-[176] [177]
+[191] [192]
 File: plot_expand_grid_files/figure-pdf/unnamed-chunk-37-1.pdf Graphic file (type pdf)
 <use plot_expand_grid_files/figure-pdf/unnamed-chunk-37-1.pdf>
-[178] [179]
-chapter 14.
-[180
+[193] [194]
+chapter 16.
+[195
 
-] [181]
+] [196]
 Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
-[182]
+[197]
 Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
-[183]
+[198]
 File: ggeffects_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use ggeffects_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[184]
+[199]
 File: ggeffects_files/figure-pdf/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use ggeffects_files/figure-pdf/unnamed-chunk-6-1.pdf>
-[185]
+[200]
 File: ggeffects_files/figure-pdf/unnamed-chunk-6-2.pdf Graphic file (type pdf)
 <use ggeffects_files/figure-pdf/unnamed-chunk-6-2.pdf>
-[186]
+[201]
 File: ggeffects_files/figure-pdf/unnamed-chunk-6-3.pdf Graphic file (type pdf)
 <use ggeffects_files/figure-pdf/unnamed-chunk-6-3.pdf>
-[187]
-chapter 15.
+[202]
+chapter 17.
 File: double_plot_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use double_plot_files/figure-pdf/unnamed-chunk-3-1.pdf>
-[188
+[203
 
 ]
 File: double_plot_files/figure-pdf/unnamed-chunk-3-2.pdf Graphic file (type pdf)
 <use double_plot_files/figure-pdf/unnamed-chunk-3-2.pdf>
-[189]
+[204]
 File: double_plot_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use double_plot_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[190]
+[205]
 part III.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 8966.
-[191
+(scrkbase)              on input line 9782.
+[206
 
 ]
-chapter 16.
-[192
+chapter 18.
+[207
 
-] [193]
+] [208]
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 16.1 on input line 9081.
+(longtable)                in table 18.1 on input line 9897.
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 9122--9122
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 9938--9938
 []  \TU/lmtt/m/n/10.95 r.squared adj.r.squared sigma statistic   p.value    df  logLik    AIC    BIC[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 9122--9122
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 9938--9938
 []      \TU/lmtt/m/n/10.95 <dbl>         <dbl> <dbl>     <dbl>     <dbl> <dbl>   <dbl>  <dbl>  <dbl>[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 9122--9122
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 9938--9938
 []\TU/lmtt/m/n/10.95 1     0.130         0.130  6.42     1075. 8.71e-220     1 -23549. 47104. 47125.[] 
  []
 
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 16.2 on input line 9139.
+(longtable)                in table 18.2 on input line 9955.
 
-[194] [195] [196] [197]
+[209] [210] [211] [212]
 File: broom_files/figure-pdf/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 <use broom_files/figure-pdf/unnamed-chunk-10-1.pdf>
-[198]
+[213]
 File: broom_files/figure-pdf/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 <use broom_files/figure-pdf/unnamed-chunk-11-1.pdf>
-[199]
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+[214]
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []  \TU/lmtt/m/n/10.95 mathach     ses  mnses schoolid .fitted .resid   .hat   .cooksd .fixed   .mu[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []    \TU/lmtt/m/n/10.95 <dbl>   <dbl>  <dbl>    <dbl>   <dbl>  <dbl>  <dbl>     <dbl>  <dbl> <dbl>[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []\TU/lmtt/m/n/10.95 1    5.88 -1.53   -0.434     1224    7.29 -1.41  0.0325 0.000629    7.68  7.29[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []\TU/lmtt/m/n/10.95 2   19.7  -0.588  -0.434     1224    9.43 10.3   0.0177 0.0175      9.74  9.43[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []\TU/lmtt/m/n/10.95 3   20.3  -0.528  -0.434     1224    9.57 10.8   0.0173 0.0188      9.87  9.57[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 9448--9448
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 10264--10264
 []\TU/lmtt/m/n/10.95 4    8.78 -0.668  -0.434     1224    9.25 -0.468 0.0183 0.0000376   9.57  9.25[] 
  []
 
 File: broom_files/figure-pdf/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use broom_files/figure-pdf/unnamed-chunk-12-1.pdf>
-[200]
+[215]
 File: broom_files/figure-pdf/unnamed-chunk-12-2.pdf Graphic file (type pdf)
 <use broom_files/figure-pdf/unnamed-chunk-12-2.pdf>
-[201]
-chapter 17.
+[216]
+chapter 19.
 
-LaTeX Warning: Reference `sec-broom' on page 202 undefined on input line 9502.
+LaTeX Warning: Reference `sec-broom' on page 217 undefined on input line 10318.
 
-[202
+[217
 
-] [203] [204] [205] [206] [207] [208] [209] [210] [211] [212] [213]
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 10326--10326
+] [218] [219] [220] [221] [222] [223] [224] [225] [226] [227] [228]
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 11142--11142
 [] \TU/lmtt/m/n/10.95 [1] anova          as.function    coef           confint        cooks.distance[] 
  []
 
-[214] [215]
-chapter 18.
-[216
-
-] [217] [218] [219]
-chapter 19.
-[220
-
-] [221]
-Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
-[222]
-Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
-[223] [224] [225] [226]
+[229] [230]
 chapter 20.
-[227
+[231
+
+] [232] [233] [234]
+chapter 21.
+[235
+
+] [236]
+Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
+[237]
+Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
+[238] [239] [240] [241]
+chapter 22.
+[242
 
 ]
-Overfull \hbox (4.425pt too wide) in paragraph at lines 10989--10989
+Overfull \hbox (4.425pt too wide) in paragraph at lines 11805--11805
 []|\TU/lmr/m/n/10.95 100|  
  []
 
 
-Overfull \hbox (4.425pt too wide) in paragraph at lines 10991--10991
+Overfull \hbox (4.425pt too wide) in paragraph at lines 11807--11807
 []|\TU/lmr/m/n/10.95 100|  
  []
 
 
-Overfull \hbox (12.67035pt too wide) in paragraph at lines 10994--10994
+Overfull \hbox (12.67035pt too wide) in paragraph at lines 11810--11810
 []|\TU/lmr/m/n/10.95 0.856 
  []
 
 
-Overfull \hbox (12.94409pt too wide) in paragraph at lines 10994--10994
+Overfull \hbox (12.94409pt too wide) in paragraph at lines 11810--11810
 \TU/lmr/m/n/10.95 0.853|  
  []
 
 
-Overfull \hbox (12.56084pt too wide) in paragraph at lines 10996--10996
+Overfull \hbox (12.56084pt too wide) in paragraph at lines 11812--11812
 []|\TU/lmr/m/n/10.95 0.584 
  []
 
 
-Overfull \hbox (12.94409pt too wide) in paragraph at lines 10996--10996
+Overfull \hbox (12.94409pt too wide) in paragraph at lines 11812--11812
 \TU/lmr/m/n/10.95 0.580|  
  []
 
 
-Overfull \hbox (2.6766pt too wide) in paragraph at lines 10998--10998
+Overfull \hbox (2.6766pt too wide) in paragraph at lines 11814--11814
  \TU/lmr/m/n/10.95 p<0.05   **
  []
 
 
-Overfull \hbox (8.15161pt too wide) in paragraph at lines 10998--10998
+Overfull \hbox (8.15161pt too wide) in paragraph at lines 11814--11814
  \TU/lmr/m/n/10.95 p<0.01   ***
  []
 
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 20.1 on input line 10999.
+(longtable)                in table 22.1 on input line 11815.
 
 File: reg_assumptions_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use reg_assumptions_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[228] [229]
-Underfull \hbox (badness 10000) in paragraph at lines 11088--11102
+[243] [244]
+Underfull \hbox (badness 10000) in paragraph at lines 11904--11918
 \TU/lmr/m/n/10.95 https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-
  []
 
-[230] [231]
-chapter 21.
-[232
+[245] [246]
+chapter 23.
+[247
 
-] [233] [234] [235] [236] [237]
-chapter 22.
+] [248] [249] [250] [251] [252]
+chapter 24.
 
-Overfull \hbox (55.87231pt too wide) detected at line 11511
+Overfull \hbox (55.87231pt too wide) detected at line 12327
 [][]
  []
 
-[238
+[253
 
-] [239] [240]
-chapter 23.
-[241
+] [254] [255]
+chapter 25.
+[256
 
 ]
-Overfull \hbox (553.14984pt too wide) in paragraph at lines 11724--11726
+Overfull \hbox (553.14984pt too wide) in paragraph at lines 12540--12542
 [][][]\TU/lmr/m/n/10.95 https://books.google.com/books?i d=PpnA1M8VwR8C&pg=PA168&lpg=PA168&dq=longitudinal+data+analysis+level1+level2+predictors&source=bl&ots=N4p8yFdyuL&sig=wWjmaEeqakD040s4B9-
  []
 
 
-Overfull \hbox (454.05238pt too wide) in paragraph at lines 11724--11726
+Overfull \hbox (454.05238pt too wide) in paragraph at lines 12540--12542
 \TU/lmr/m/n/10.95 QquJF1eE&hl=en&sa=X&ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&q=longitudinal%20data%20analysis%20level1%20level2%20predictors&f=false[][] 
  []
 
-[242]
-chapter 24.
-[243
+[257]
+chapter 26.
+[258
 
-] [244] [245]
-chapter 25.
+] [259] [260]
+chapter 27.
 File: glm_vs_transform_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use glm_vs_transform_files/figure-pdf/unnamed-chunk-3-1.pdf>
-[246
+[261
 
 ]
 File: glm_vs_transform_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use glm_vs_transform_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[247] [248]
-Overfull \hbox (36.51944pt too wide) in paragraph at lines 12011--12011
+[262] [263]
+Overfull \hbox (36.51944pt too wide) in paragraph at lines 12827--12827
  []|\TU/lmr/m/n/10.95 Log(Y+1)| 
  []
 
 
-Overfull \hbox (23.86124pt too wide) in paragraph at lines 12013--12013
+Overfull \hbox (23.86124pt too wide) in paragraph at lines 12829--12829
  []|\TU/lmr/m/n/10.95 Poisson| 
  []
 
 
-Overfull \hbox (9.9pt too wide) in paragraph at lines 12021--12021
+Overfull \hbox (9.9pt too wide) in paragraph at lines 12837--12837
 []|\TU/lmr/m/n/10.95 1000|  
  []
 
 
-Overfull \hbox (9.9pt too wide) in paragraph at lines 12023--12023
+Overfull \hbox (9.9pt too wide) in paragraph at lines 12839--12839
 []|\TU/lmr/m/n/10.95 1000|  
  []
 
 
-Overfull \hbox (11.84909pt too wide) in paragraph at lines 12026--12026
+Overfull \hbox (11.84909pt too wide) in paragraph at lines 12842--12842
 []|\TU/lmr/m/n/10.95 0.631 
  []
 
 
-Overfull \hbox (12.94409pt too wide) in paragraph at lines 12026--12026
+Overfull \hbox (12.94409pt too wide) in paragraph at lines 12842--12842
 \TU/lmr/m/n/10.95 0.631|  
  []
 
 
-Overfull \hbox (12.94409pt too wide) in paragraph at lines 12028--12028
+Overfull \hbox (12.94409pt too wide) in paragraph at lines 12844--12844
 []|\TU/lmr/m/n/10.95 0.906|  
  []
 
 
-Overfull \hbox (2.6766pt too wide) in paragraph at lines 12030--12030
+Overfull \hbox (2.6766pt too wide) in paragraph at lines 12846--12846
  \TU/lmr/m/n/10.95 p<0.05   **
  []
 
 
-Overfull \hbox (8.15161pt too wide) in paragraph at lines 12030--12030
+Overfull \hbox (8.15161pt too wide) in paragraph at lines 12846--12846
  \TU/lmr/m/n/10.95 p<0.01   ***
  []
 
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 25.1 on input line 12031.
+(longtable)                in table 27.1 on input line 12847.
 
-[249]
-Overfull \hbox (48.49352pt too wide) in paragraph at lines 12126--12127
+[264]
+Overfull \hbox (48.49352pt too wide) in paragraph at lines 12942--12943
 [][]$[][][][][] [] [] [] [][][] [] [][][][][][][][][][][][][][][][][] [] [][][] [] [][][] [][] [][][][][][][][][][] [][] [][][][][][][] [][] [][][][] [][] [][][][][][][][][] [][] [][][] [][] [][][][] [][] [][][][][][][][][][][][][][][][]$[][] 
  []
 
-[250]
-chapter 26.
-[251
+[265]
+chapter 28.
+[266
 
-] [252]
+] [267]
 Missing character: There is no σ (U+03C3) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no τ (U+03C4) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no ρ (U+03C1) in font [lmroman10-regular]:mapping=tex-text;!
-[253] [254] [255]
-chapter 27.
-[256
+[268] [269] [270]
+chapter 29.
+[271
 
 ]
-Overfull \hbox (116.61731pt too wide) in paragraph at lines 12468--12468
+Overfull \hbox (116.61731pt too wide) in paragraph at lines 13284--13284
 []\TU/lmtt/m/n/10.95 Working directory is /Users/jog1638/Library/CloudStorage/Dropbox/HGSE/HGSE PhD/2023F/S043/MLM_book[] 
  []
 
-[257] [258]
-chapter 28.
+[272] [273]
+chapter 30.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 12576.
+(Font)              scaled to size 9.0pt on input line 13392.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 12576.
+(Font)              scaled to size 9.00082pt on input line 13392.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 12576.
-[259
+(Font)              scaled to size 8.99904pt on input line 13392.
+[274
 
-] [260] [261] [262] [263]
-chapter 29.
-[264
+] [275] [276] [277] [278]
+chapter 31.
+[279
 
-] [265] [266] [267]
+] [280] [281] [282]
 part IV.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 12940.
-[268
+(scrkbase)              on input line 13756.
+[283
 
 ]
-chapter 30.
-[269
-
-] [270] [271]
-chapter 31.
-[272
-
-] [273] [274]
-File: fixed_effects_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use fixed_effects_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[275] [276] [277]
 chapter 32.
-[278
+[284
 
-] [279] [280] [281] [282] [283] [284] [285] [286]
+] [285] [286]
 chapter 33.
 [287
 
-] [288] [289] [290] [291] [292]
-part V.
-Package scrkbase Info: You've told me to use the font selection of the element
-(scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 14194.
+] [288] [289]
+File: fixed_effects_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use fixed_effects_files/figure-pdf/unnamed-chunk-4-1.pdf>
+[290] [291] [292]
+chapter 34.
 [293
 
 ]
-chapter 34.
-[294
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 14251--14251
+[]         \TU/lmtt/m/n/10.95 term  estimate std.error statistic       p.value   conf.low conf.high[] 
+ []
 
-] [295] [296] [297]
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 14251--14251
+[]\TU/lmtt/m/n/10.95 1 (Intercept) 12.119496 0.1890070 64.121943 1.628760e-114 11.7461711 12.492820[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 14251--14251
+[]\TU/lmtt/m/n/10.95 2      sector  1.221944 0.3226998  3.786627  2.170049e-04  0.5845507  1.859337[] 
+ []
+
+
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 14251--14251
+[]\TU/lmtt/m/n/10.95 3    mean.ses  5.387377 0.3423555 15.736205  4.289753e-34  4.7111599  6.063594[] 
+ []
+
+[294] [295]
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 14363--14363
+[]\TU/lmtt/m/n/10.95 lm_robust(formula = mathach ~ 1 + sector + ses, data = dat, clusters = dat$id)[] 
+ []
+
+[296] [297] [298] [299] [300] [301] [302]
+chapter 35.
+[303
+
+] [304] [305] [306] [307] [308]
+part V.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 15038.
+[309
+
+]
+chapter 36.
+[310
+
+] [311] [312] [313]
 File: hsb_ex_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use hsb_ex_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[298] [299] [300] [301] [302] [303] [304] [305] [306]
-Overfull \hbox (64.8786pt too wide) in paragraph at lines 15004--15004
+[314] [315] [316] [317] [318] [319] [320] [321] [322]
+Overfull \hbox (64.8786pt too wide) in paragraph at lines 15848--15848
 []\TU/lmtt/m/n/10.95 mod4.5.null: mathach ~ 1 + meanses + ses_grpcenter * (meanses) + (1 + ses_grpcenter | id)[] 
  []
 
 
-Overfull \hbox (139.61234pt too wide) in paragraph at lines 15004--15004
+Overfull \hbox (139.61234pt too wide) in paragraph at lines 15848--15848
 []\TU/lmtt/m/n/10.95 mod4.5: mathach ~ 1 + meanses + sector + ses_grpcenter * (meanses + sector) + (1 + ses_grpcenter | id)[] 
  []
 
 
-Overfull \hbox (110.86859pt too wide) in paragraph at lines 15023--15023
+Overfull \hbox (110.86859pt too wide) in paragraph at lines 15867--15867
 []\TU/lmtt/m/n/10.95 mod4.5.null.slope: mathach ~ 1 + meanses + sector + ses_grpcenter * (meanses + sector) + (1 | id)[] 
  []
 
 
-Overfull \hbox (139.61234pt too wide) in paragraph at lines 15023--15023
+Overfull \hbox (139.61234pt too wide) in paragraph at lines 15867--15867
 []\TU/lmtt/m/n/10.95 mod4.5: mathach ~ 1 + meanses + sector + ses_grpcenter * (meanses + sector) + (1 + ses_grpcenter | id)[] 
  []
 
-[307]
+[323]
 File: hsb_ex_files/figure-pdf/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use hsb_ex_files/figure-pdf/unnamed-chunk-9-1.pdf>
-[308] [309] [310] [311] [312]
+[324] [325] [326] [327] [328]
 File: hsb_ex_files/figure-pdf/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use hsb_ex_files/figure-pdf/unnamed-chunk-12-1.pdf>
-[313] [314]
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+[329] [330]
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []  \TU/lmtt/m/n/10.95 b1_uncond   b0_cond  b1_cond      u0_ols      u1_ols     u0_cond      u1_cond[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 1  2.262837  9.740146 2.489033 -0.09807014  0.01445354 -0.07337107 -0.005095579[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 2  2.375964 13.234409 3.112156  0.73219201  0.18368221  0.45580075  0.040389349[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 3  1.872247  8.145275 2.307720 -2.22022179 -1.42648036 -1.71090544 -0.194719194[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 4  2.050193 16.201317 1.835985  0.08528223 -1.72492410  0.03109939 -0.014963432[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 5  1.997129 13.663596 1.528623 -2.01661001 -0.38691354 -1.53070178 -0.132203128[] 
  []
 
 
-Overfull \hbox (7.39111pt too wide) in paragraph at lines 15361--15361
+Overfull \hbox (7.39111pt too wide) in paragraph at lines 16205--16205
 []\TU/lmtt/m/n/10.95 6  2.738390 11.530341 2.946721 -0.81510320  2.14376861 -0.49099553  0.022480378[] 
  []
 
 File: hsb_ex_files/figure-pdf/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 <use hsb_ex_files/figure-pdf/unnamed-chunk-13-1.pdf>
-[315]
+[331]
 File: hsb_ex_files/figure-pdf/unnamed-chunk-13-2.pdf Graphic file (type pdf)
 <use hsb_ex_files/figure-pdf/unnamed-chunk-13-2.pdf>
-[316] [317] [318]
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15540--15540
+[332] [333] [334]
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16384--16384
 []      \TU/lmtt/m/n/10.95 id meanses sector n_j    b0_ols     b1_ols se_b0_ols se_b1_ols b0_uncond[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15540--15540
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16384--16384
 []\TU/lmtt/m/n/10.95 22  2305  -0.622      1  67 11.137761 -0.7821112 0.6138468  0.943289 11.222551[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15540--15540
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16384--16384
 []\TU/lmtt/m/n/10.95 135 8367   0.032      0  14  4.552786  0.2503748 1.2299413  1.689668  6.423938[] 
  []
 
-[319]
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15605--15605
+[335]
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16449--16449
 []  \TU/lmtt/m/n/10.95 CI.low.ols CI.high.ols CI.low.uncond CI.high.uncond CI.low.cond CI.high.cond[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15605--15605
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16449--16449
 []\TU/lmtt/m/n/10.95 1   9.934621   12.340901      9.815648      12.629455    9.579800     12.19340[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15605--15605
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16449--16449
 []\TU/lmtt/m/n/10.95 2   2.142101    6.963471      3.642797       9.205078    6.361492     10.73652[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15625--15625
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16469--16469
 []  \TU/lmtt/m/n/10.95 CI.low.ols CI.high.ols CI.low.uncond CI.high.uncond CI.low.cond CI.high.cond[] 
  []
 
-[320]
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15625--15625
+[336]
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16469--16469
 []\TU/lmtt/m/n/10.95 1  -2.630958    1.066735    -0.1675367       2.466647   0.0629627     1.192321[] 
  []
 
 
-Overfull \hbox (1.64236pt too wide) in paragraph at lines 15625--15625
+Overfull \hbox (1.64236pt too wide) in paragraph at lines 16469--16469
 []\TU/lmtt/m/n/10.95 2  -3.061375    3.562124     0.3960110       3.453795   2.0356645     3.225745[] 
  []
 
-[321]
-chapter 35.
-[322
+[337]
+chapter 37.
+[338
 
 ]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-3-1.pdf>
 File: faraway_ex_files/figure-pdf/unnamed-chunk-3-2.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-3-2.pdf>
-[323] [324]
+[339] [340]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-3-3.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-3-3.pdf>
 File: faraway_ex_files/figure-pdf/unnamed-chunk-3-4.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-3-4.pdf>
-[325]
-Overfull \hbox (93.62234pt too wide) in paragraph at lines 15794--15794
+[341]
+Overfull \hbox (93.62234pt too wide) in paragraph at lines 16638--16638
 []\TU/lmtt/m/n/10.95 alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0[] 
  []
 
-[326]
-Overfull \hbox (93.62234pt too wide) in paragraph at lines 15815--15815
+[342]
+Overfull \hbox (93.62234pt too wide) in paragraph at lines 16659--16659
 []\TU/lmtt/m/n/10.95 alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0[] 
  []
 
-[327] [328]
+[343] [344]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-5-1.pdf>
-[329]
+[345]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-5-2.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-5-2.pdf>
-[330]
+[346]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-6-1.pdf>
 File: faraway_ex_files/figure-pdf/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-7-1.pdf>
-[331]
+[347]
 File: faraway_ex_files/figure-pdf/unnamed-chunk-7-2.pdf Graphic file (type pdf)
 <use faraway_ex_files/figure-pdf/unnamed-chunk-7-2.pdf>
-[332] [333]
-chapter 36.
-[334
+[348] [349]
+chapter 38.
+[350
 
-] [335] [336]
+] [351] [352]
 File: perf_ex_files/figure-pdf/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use perf_ex_files/figure-pdf/unnamed-chunk-7-1.pdf>
 Missing character: There is no 𝛽 (U+1D6FD) in font [lmroman10-regular]:mapping=tex-text;!
@@ -1878,25 +1971,25 @@ Missing character: There is no 𝜖 (U+1D716) in font [lmroman10-regular]:mappin
 Missing character: There is no 𝛽 (U+1D6FD) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 𝛾 (U+1D6FE) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 𝛾 (U+1D6FE) in font [lmroman10-regular]:mapping=tex-text;!
-[337]
+[353]
 Missing character: There is no 𝛾 (U+1D6FE) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 𝜇 (U+1D707) in font [lmroman10-regular]:mapping=tex-text;!
-[338]
+[354]
 File: perf_ex_files/figure-pdf/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use perf_ex_files/figure-pdf/unnamed-chunk-9-1.pdf>
-[339] [340]
-chapter 37.
-[341
+[355] [356]
+chapter 39.
+[357
 
 ]
 File: kenya_ex_files/figure-pdf/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use kenya_ex_files/figure-pdf/unnamed-chunk-2-1.pdf>
-[342]
+[358]
 File: kenya_ex_files/figure-pdf/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use kenya_ex_files/figure-pdf/unnamed-chunk-3-1.pdf>
 File: kenya_ex_files/figure-pdf/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use kenya_ex_files/figure-pdf/unnamed-chunk-4-1.pdf>
-[343] [344]
+[359] [360]
 Missing character: There is no 𝛽 (U+1D6FD) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 𝛽 (U+1D6FD) in font [lmroman10-regular]:mapping=tex-text;!
 Missing character: There is no 𝜖 (U+1D716) in font [lmroman10-regular]:mapping=tex-text;!
@@ -1916,15 +2009,15 @@ Missing character: There is no 𝜇 (U+1D707) in font [lmroman10-regular]:mappin
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.16598 \begin{pmatrix}
+l.17442 \begin{pmatrix}
                        w_{j0}\\ 
 Here is how much of TeX's memory you used:
- 25194 strings out of 477570
- 511698 string characters out of 5816931
+ 25261 strings out of 477570
+ 513230 string characters out of 5816930
  1943438 words of memory out of 5000000
- 46013 multiletter control sequences out of 15000+600000
+ 46074 multiletter control sequences out of 15000+600000
  568461 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  108i,18n,120p,10900b,568s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on index.pdf (344 pages).
+Output written on index.pdf (360 pages).

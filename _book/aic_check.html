@@ -476,8 +476,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -494,31 +500,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -573,13 +579,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">=</span> <span class="fu">generate_multilevel_data</span>( <span class="at">J =</span> <span class="dv">40</span> )</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dd )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  sid         Y0         Y1 Z       Yobs        W
-1   1 -0.5256219 -0.3412467 0 -0.5256219 1.091875
-2   1  0.9365283  1.1209035 1  1.1209035 1.091875
-3   1  0.7503816  0.9347569 1  0.9347569 1.091875
-4   1  0.7015619  0.8859371 1  0.8859371 1.091875
-5   1  0.8950875  1.0794627 1  1.0794627 1.091875
-6   1  1.2976620  1.4820372 1  1.4820372 1.091875</code></pre>
+<pre><code>  sid          Y0          Y1 Z        Yobs           W
+1   1 -1.38384748 -1.37858057 0 -1.38384748 -0.01887214
+2   1  0.37716512  0.38243202 0  0.37716512 -0.01887214
+3   1 -0.52499025 -0.51972334 0 -0.52499025 -0.01887214
+4   1 -0.17556737 -0.17030047 1 -0.17030047 -0.01887214
+5   1 -1.08693975 -1.08167285 1 -1.08167285 -0.01887214
+6   1 -0.09468946 -0.08942256 1 -0.08942256 -0.01887214</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X1 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X2 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
@@ -608,40 +614,40 @@ Attaching package: 'MASS'</code></pre>
 arm (Version 1.13-1, built: 2022-8-25)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Working directory is /Users/lmiratrix/Dropbox/MLM Course F2023/MLM textbook</code></pre>
+<pre><code>Working directory is /Users/jog1638/Library/CloudStorage/Dropbox/HGSE/HGSE PhD/2023F/S043/MLM_book</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + (1 | sid), data = dd)
 coef.est  coef.se 
-    0.12     0.14 
+    0.23     0.12 
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.86    
- Residual             0.62    
+ sid      (Intercept) 0.72    
+ Residual             0.59    
 ---
-number of obs: 425, groups: sid, 40
-AIC = 924, DIC = 913.7
-deviance = 915.8 </code></pre>
+number of obs: 380, groups: sid, 40
+AIC = 787.4, DIC = 776.5
+deviance = 779.0 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + X1 + X2 + X3 + (1 | sid), data = dd)
             coef.est coef.se
-(Intercept)  0.12     0.14  
+(Intercept)  0.23     0.12  
 X1          -0.03     0.03  
-X2          -0.04     0.03  
-X3           0.06     0.03  
+X2           0.03     0.03  
+X3           0.01     0.03  
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.85    
- Residual             0.61    
+ sid      (Intercept) 0.72    
+ Residual             0.59    
 ---
-number of obs: 425, groups: sid, 40
-AIC = 939, DIC = 891.6
-deviance = 909.3 </code></pre>
+number of obs: 380, groups: sid, 40
+AIC = 806.9, DIC = 759.9
+deviance = 777.4 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -656,26 +662,26 @@ Please cite the JSS article in your publications -- see citation("texreg").</cod
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ======================================================
-                      Model 1   Model 2    Model 3    
+                      Model 1    Model 2   Model 3    
 ------------------------------------------------------
-(Intercept)              0.12      0.12       0.08    
-                        (0.14)    (0.14)     (0.10)   
-X1                                -0.03      -0.01    
-                                  (0.03)     (0.02)   
-X2                                -0.04      -0.04    
-                                  (0.03)     (0.02)   
-X3                                 0.06 *     0.07 ** 
-                                  (0.03)     (0.02)   
-X4                                            0.30 ***
+(Intercept)              0.23 *     0.23      0.16    
+                        (0.12)     (0.12)    (0.09)   
+X1                                 -0.03     -0.00    
+                                   (0.03)    (0.03)   
+X2                                  0.03     -0.00    
+                                   (0.03)    (0.03)   
+X3                                  0.01      0.02    
+                                   (0.03)    (0.03)   
+X4                                            0.27 ***
                                              (0.02)   
 ------------------------------------------------------
-AIC                    923.96    938.98     768.39    
-BIC                    936.12    963.29     796.76    
-Log Likelihood        -458.98   -463.49    -377.20    
-Num. obs.              425       425        425       
-Num. groups: sid        40        40         40       
-Var: sid (Intercept)     0.73      0.72       0.37    
-Var: Residual            0.38      0.38       0.25    
+AIC                    787.44     806.85    712.14    
+BIC                    799.26     830.49    739.72    
+Log Likelihood        -390.72    -397.43   -349.07    
+Num. obs.              380        380       380       
+Num. groups: sid        40         40        40       
+Var: sid (Intercept)     0.51       0.52      0.28    
+Var: Residual            0.34       0.35      0.27    
 ======================================================
 *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
 </div>

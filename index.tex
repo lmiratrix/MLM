@@ -228,11 +228,8 @@ This online book has a bunch of resources for S-043: Multilevel and
 Longitudinal Models. The book is written in
 \href{https://quarto.org/}{Quarto}, and is basically a bunch of handouts
 stapled together. It is very much a work in progress. If you notice
-errors, please notify us at:
-
-lmiratrix@gse.harvard.edu
-
-joshua\_gilbert@g.harvard.edu
+errors, please notify luke\_miratrix@gse.harvard.edu or
+joshua\_gilbert@g.harvard.edu.
 
 \hypertarget{overview}{%
 \section*{Overview}\label{overview}}
@@ -241,7 +238,7 @@ joshua\_gilbert@g.harvard.edu
 \markright{Overview}
 
 There are several parts to the book, loosely arranged by type of
-handout. We list the parts next, with some brief overview.
+handout. We give an overview of all the parts next:
 
 \hypertarget{r-r-markdown}{%
 \subsection*{R \& R Markdown}\label{r-r-markdown}}
@@ -739,7 +736,661 @@ principle. It is not an exhaustive list.
   \emph{``Brevity is the soul of wit.''} --Hamlet
 \end{itemize}
 
+\bookmarksetup{startatroot}
+
+\hypertarget{self-grading-instructions}{%
+\chapter*{Self Grading Instructions}\label{self-grading-instructions}}
+\addcontentsline{toc}{chapter}{Self Grading Instructions}
+
+\markboth{Self Grading Instructions}{Self Grading Instructions}
+
+To self-grade an assignment, go through the solutions and compare the
+answer to your own work.
+
+Grade each piece as following
+
+\begin{itemize}
+\tightlist
+\item
+  ``+'' - 1 point, basically nailed it.
+\item
+  ``check'' - Half point, did at least part of it, but had some
+  problems.
+\item
+  ``X'' - zero points, didn't get it.
+\end{itemize}
+
+As you go through, see if you can figure out where you went wrong, if
+you did so. If you still don't understand a problem, make a note as to
+problem number.
+
+For the next ready-for-class check-in you will be asked to then enter
+your score (this score just helps me understand how folks are doing with
+these mini assignments), how you feel about it, and some further
+commentary.
+
+This feedback should include a sentence or two on what was tripping you
+up (list the items), if you got things wrong, and whether things are not
+making sense, even with the solutions.
+
+\textbf{NOTE:} We are grading miniassignments on completion, meaning you
+will get full credit if you (1) do the mini-assignment and (2)
+self-grade the miniassignment (regardless of the score you give
+yourself, as long as the score is above 50\% of the possible points).
+
+\hypertarget{acknowledgement}{%
+\section*{Acknowledgement:}\label{acknowledgement}}
+\addcontentsline{toc}{section}{Acknowledgement:}
+
+\markright{Acknowledgement:}
+
+This idea of self-grading was inspired by Cora Wigger. She used to have
+some stuff on twitter, but she appears to have removed her account.
+
 \part{R \& R MARKDOWN}
+
+\hypertarget{a-r-code-style-miratrix-version}{%
+\chapter{A R Code Style (Miratrix
+version)}\label{a-r-code-style-miratrix-version}}
+
+\includegraphics[width=1\textwidth,height=\textheight]{image/code_quality.png}
+
+\hypertarget{why-have-coding-style}{%
+\section{Why have coding style?}\label{why-have-coding-style}}
+
+\begin{itemize}
+\tightlist
+\item
+  Many style decisions are arbitrary.
+\item
+  Why bother?
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    it makes your code readable
+  \item
+    it means you can focus on writing good code
+  \item
+    you will be looked down on if you use bad style
+  \end{enumerate}
+\end{itemize}
+
+Much of this is from the Tidyverse style guide at
+\url{http://style.tidyverse.org}; we are primarily focusing on Chapters
+2 and 4. Cartoon is \href{https://xkcd.com/}{xkcd}; read those if you
+want to be an awesome nerd.
+
+\hypertarget{names-style-guide-rule-2.1}{%
+\section{names (style guide rule
+2.1)}\label{names-style-guide-rule-2.1}}
+
+\hypertarget{rule-2.1-naming}{%
+\subsection{Rule 2.1: Naming}\label{rule-2.1-naming}}
+
+\begin{quote}
+\textbf{``There are only two hard things in Computer Science:
+\href{https://en.wikipedia.org/wiki/Cache_invalidation}{cache
+invalidation} and naming things.''} ---Phil Karlton
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  Variable and function names should be lowercase.
+\item
+  Use an underscore to separate words within a name.
+\item
+  Generally, variable names should be nouns and function names should be
+  verbs.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{day\_one}
+\NormalTok{first\_day}
+
+\CommentTok{\# Bad}
+\NormalTok{first\_day\_of\_the\_month}
+\NormalTok{DayOne}
+\NormalTok{dayone}
+\NormalTok{djm1}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.2-dont-use-common-names}{%
+\subsection{Rule 2.2: Don't use common
+names}\label{rule-2.2-dont-use-common-names}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Bad}
+\ConstantTok{TRUE} \OtherTok{\textless{}{-}} \ConstantTok{FALSE}
+\NormalTok{pi }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{mean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sum}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{example-winsorization}{%
+\subsection{Example: winsorization}\label{example-winsorization}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{winsor\_upper }\OtherTok{\textless{}{-}} \FloatTok{0.99}
+\NormalTok{winsor\_lower }\OtherTok{\textless{}{-}} \FloatTok{0.01}
+\NormalTok{diamonds }\OtherTok{\textless{}{-}}
+\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y\_winsor =} \FunctionTok{winsorize}\NormalTok{(y, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(winsor\_lower, winsor\_upper)))}
+
+\CommentTok{\# Mediocre}
+\NormalTok{diamonds\_clean }\OtherTok{\textless{}{-}}
+\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{winsorize}\NormalTok{(y, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.99}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{naming-summary}{%
+\subsection{Naming summary}\label{naming-summary}}
+
+\begin{itemize}
+\tightlist
+\item
+  Principle: Ideally, your names should be self-explanatory and your
+  code should be ``self-documenting.''
+\item
+  A few specific tips:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Never use numbers to store versions of a data frame
+  \item
+    By default, names for variables, functions, files, etc. should
+    consist of complete words. (\texttt{dest\_short} is an exception
+    since it explicitly builds on source var \texttt{dest})
+    \emph{Source:
+    \href{https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf}{Code
+    and Data for the Social Sciences: A Practitioner's Guide}, Gentzkow
+    and Shapiro}
+  \end{itemize}
+\item
+  This is hard. more art than science.
+\end{itemize}
+
+\hypertarget{syntax}{%
+\section{Syntax}\label{syntax}}
+
+\hypertarget{syntax-roadmap}{%
+\subsection{syntax: roadmap}\label{syntax-roadmap}}
+
+\begin{itemize}
+\tightlist
+\item
+  naming
+\item
+  spaces
+\item
+  argument names
+\item
+  line length
+\item
+  assignment
+\item
+  quotes
+\item
+  comments
+\end{itemize}
+
+\hypertarget{rule-2.2-spaces-i}{%
+\subsection{Rule 2.2: Spaces (I)}\label{rule-2.2-spaces-i}}
+
+\begin{itemize}
+\tightlist
+\item
+  Put a space before and after \texttt{=} when naming arguments in
+  function calls.
+\item
+  Always put a space after a comma, and never before (just like in
+  regular English).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{average }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Also good}
+\NormalTok{average }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{( x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{ )}
+
+\CommentTok{\# Bad}
+\NormalTok{average}\OtherTok{\textless{}{-}}\FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{average }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x ,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.2-spaces-ii}{%
+\subsection{Rule 2.2: Spaces (II)}\label{rule-2.2-spaces-ii}}
+
+\begin{itemize}
+\tightlist
+\item
+  Most infix operators (\texttt{==}, \texttt{+}, \texttt{-},
+  \texttt{\textless{}-}, etc.) should be surrounded by spaces.
+\item
+  The exception are those with relatively
+  \href{http://stat.ethz.ch/R-manual/R-patched/library/base/html/Syntax.html}{high
+  precedence}: \texttt{\^{}}, \texttt{:}, \texttt{::}, and \texttt{:::}.
+  (``High precedence'' means that these operators are evaluated first,
+  like multiplication goes before addition.)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{height }\OtherTok{\textless{}{-}}\NormalTok{ (feet }\SpecialCharTok{*} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ inches}
+\FunctionTok{sqrt}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ y}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+\NormalTok{base}\SpecialCharTok{::}\NormalTok{get}
+
+\CommentTok{\# Bad}
+\NormalTok{height}\OtherTok{\textless{}{-}}\NormalTok{feet}\SpecialCharTok{*}\DecValTok{12} \SpecialCharTok{+}\NormalTok{ inches}
+\FunctionTok{sqrt}\NormalTok{(x }\SpecialCharTok{\^{}} \DecValTok{2} \SpecialCharTok{+}\NormalTok{ y }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{:} \DecValTok{10}
+\NormalTok{base }\SpecialCharTok{::}\NormalTok{ get}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.2-spaces-iii}{%
+\subsection{Rule 2.2: Spaces (III)}\label{rule-2.2-spaces-iii}}
+
+Extra spacing (i.e., more than one space in a row) is ok if it improves
+alignment of equal signs or assignments (\textless-).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\FunctionTok{list}\NormalTok{(}
+  \AttributeTok{total =}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ c,}
+  \AttributeTok{mean  =}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ c) }\SpecialCharTok{/}\NormalTok{ n}
+\NormalTok{)}
+
+\CommentTok{\# Less good, but livable}
+\FunctionTok{list}\NormalTok{(}
+  \AttributeTok{total =}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ c,}
+  \AttributeTok{mean =}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ c) }\SpecialCharTok{/}\NormalTok{ n}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.3-argument-names}{%
+\subsection{Rule 2.3: Argument names}\label{rule-2.3-argument-names}}
+
+Function arguments: \textbf{data} to compute on and \textbf{details} of
+computation.
+
+Omit names of common arguments (e.g.~\texttt{data}, \texttt{aes})
+
+If you override the default value of an argument, use the full name:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\FunctionTok{mean}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Bad}
+\FunctionTok{mean}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, , }\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{mean}\NormalTok{(, }\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\ConstantTok{NA}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.5-line-length-80-characters}{%
+\subsection{Rule 2.5: Line length: 80
+characters}\label{rule-2.5-line-length-80-characters}}
+
+\begin{itemize}
+\tightlist
+\item
+  use one line each for the function name, each argument, and the
+  closing \texttt{)}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\FunctionTok{do\_something\_very\_complicated}\NormalTok{(}
+  \AttributeTok{something =} \StringTok{"that"}\NormalTok{,}
+  \AttributeTok{requires =}\NormalTok{ many,}
+  \AttributeTok{arguments =} \StringTok{"some of which may be long"}
+\NormalTok{)}
+
+\CommentTok{\# Very bad}
+\FunctionTok{do\_something\_very\_complicated}\NormalTok{(}\StringTok{"that"}\NormalTok{, requires, many, arguments, }\StringTok{"some of which may be long"}\NormalTok{)}
+
+\CommentTok{\# Still bad}
+\FunctionTok{do\_something\_very\_complicated}\NormalTok{(}
+  \StringTok{"that"}\NormalTok{, requires, many,}
+\NormalTok{  arguments,}
+  \StringTok{"some of which may be long"}
+\NormalTok{)}
+
+\CommentTok{\# Yup, still bad}
+\FunctionTok{do\_something\_very\_complicated}\NormalTok{(}
+  \StringTok{"that"}\NormalTok{, requires, many, arguments,}
+  \StringTok{"some of which may be long"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.5-line-length}{%
+\subsection{Rule 2.5: Line length}\label{rule-2.5-line-length}}
+
+Exception: short unnamed arguments can also go on the same line as the
+function name, even if the whole function call spans multiple lines.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{map}\NormalTok{(x, f,}
+  \AttributeTok{extra\_argument\_a =} \DecValTok{10}\NormalTok{,}
+  \AttributeTok{extra\_argument\_b =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{390}\NormalTok{, }\DecValTok{210209}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.6-assignment-if-you-are-prissy}{%
+\subsection{Rule 2.6: Assignment (if you are
+prissy)}\label{rule-2.6-assignment-if-you-are-prissy}}
+
+Use \texttt{\textless{}-}, not \texttt{=}, for assignment.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{5}
+
+\CommentTok{\# Bad}
+\NormalTok{x }\OtherTok{=} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.8-quotes}{%
+\subsection{Rule 2.8: Quotes}\label{rule-2.8-quotes}}
+
+Use \texttt{"}, not \texttt{\textquotesingle{}}, for quoting text. The
+only exception is when the text already contains double quotes and no
+single quotes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\StringTok{"Text"}
+\StringTok{\textquotesingle{}Text with "quotes"\textquotesingle{}}
+\StringTok{\textquotesingle{}\textless{}a href="http://style.tidyverse.org"\textgreater{}A link\textless{}/a\textgreater{}\textquotesingle{}}
+
+\CommentTok{\# Bad}
+\StringTok{"Text"}
+\StringTok{\textquotesingle{}Text with "double" and }\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{single}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{ quotes\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-2.9-comments}{%
+\subsection{Rule 2.9: Comments}\label{rule-2.9-comments}}
+
+If you need comments to explain what your code is doing, rewrite your
+code.
+
+Remarks
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  This is counter-intuitive! The problem with comments is that you can
+  change your code without changing the comments. So when you go back
+  and make a change to the code (as is very often necessary), then your
+  comment becomes a source of confusion rather than clarity.
+\item
+  30535: You can use text in the markdown document to explain what your
+  code is doing in plain English. Use complete sentences. But it is
+  better if you just write the code well.
+\item
+  Life post 30535: There are times when comments are useful, but I try
+  to use them sparingly.
+\end{enumerate}
+
+\hypertarget{syntax-summary}{%
+\subsection{Syntax summary}\label{syntax-summary}}
+
+\begin{itemize}
+\tightlist
+\item
+  use whitespace
+\item
+  arguments: data before details
+\item
+  line length: 80 characters
+\item
+  assignment: \texttt{\textless{}-}
+\item
+  use double quotes
+\item
+  avoid comments
+\item
+  I skipped 2.4 and 2.7 because they relate to material we haven't
+  learned yet
+\end{itemize}
+
+\hypertarget{pipes-with-magrittr}{%
+\section{\texorpdfstring{Pipes with
+\texttt{magrittr}}{Pipes with magrittr}}\label{pipes-with-magrittr}}
+
+\hypertarget{pipes-roadmap}{%
+\subsection{\texorpdfstring{pipes \texttt{\%\textgreater{}\%}:
+roadmap}{pipes \%\textgreater\%: roadmap}}\label{pipes-roadmap}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  intro
+\item
+  whitespace
+\item
+  long lines
+\item
+  short pipes
+\item
+  no arguments
+\item
+  assignment
+\end{enumerate}
+
+\hypertarget{rule-4.1-intro}{%
+\subsection{Rule 4.1: intro}\label{rule-4.1-intro}}
+
+Use \texttt{\%\textgreater{}\%} (or \texttt{\textbar{}\textgreater{}},
+if you are modern) to emphasise a sequence of actions, rather than the
+object that the actions are being performed on.
+
+Avoid using the pipe when:
+
+\begin{itemize}
+\item
+  You need to manipulate more than one object at a time. Reserve pipes
+  for a sequence of steps applied to one primary object.
+\item
+  There are meaningful intermediate objects that could be given
+  informative names (cf rule 2.9).
+\end{itemize}
+
+\hypertarget{rule-4.2-whitespace}{%
+\subsection{Rule 4.2: whitespace}\label{rule-4.2-whitespace}}
+
+\texttt{\%\textgreater{}\%} should always have a space before it, and
+should usually be followed by a new line. After the first step, each
+line should be indented by two spaces. This structure makes it easier to
+add new steps (or rearrange existing steps) and harder to overlook a
+step.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize\_if}\NormalTok{(is.numeric, mean) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(measure, value, }\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(value)}
+
+\CommentTok{\# Bad}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarize\_all}\NormalTok{(mean) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{gather}\NormalTok{(measure, value, }\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{arrange}\NormalTok{(value)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-4.4-short-pipes-i}{%
+\subsection{Rule 4.4: short pipes I}\label{rule-4.4-short-pipes-i}}
+
+It is ok to keep a one-step pipe in one line:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(Species)}
+
+\CommentTok{\# Mediocre}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(Species)}
+
+\FunctionTok{arrange}\NormalTok{(iris, Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-4.4-short-pipes-ii}{%
+\subsection{Rule 4.4: short pipes II}\label{rule-4.4-short-pipes-ii}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Bad}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(a, b, w) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    y }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{u) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{gather}\NormalTok{(a, v, }\SpecialCharTok{{-}}\NormalTok{b) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(a, b, v),}
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-4.4-short-pipes-iii}{%
+\subsection{Rule 4.4: short pipes III}\label{rule-4.4-short-pipes-iii}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(a, b, w) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(y }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(a, b, v), }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{))}
+
+\NormalTok{x\_join }\OtherTok{\textless{}{-}}
+\NormalTok{  x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(a, b, w)}
+\NormalTok{y\_join }\OtherTok{\textless{}{-}}
+\NormalTok{  y }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{u) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(a, v, }\SpecialCharTok{{-}}\NormalTok{b) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(a, b, v)}
+\FunctionTok{left\_join}\NormalTok{(x\_join, y\_join, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-4.5-no-arguments}{%
+\subsection{Rule 4.5: No arguments}\label{rule-4.5-no-arguments}}
+
+magrittr allows you to omit \texttt{()} on functions that don't have
+arguments. Avoid this. This way data objects never have parentheses and
+functions always do.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unique}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{sort}\NormalTok{()}
+
+\CommentTok{\# Bad}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  unique }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  sort}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rule-4.6-assignment}{%
+\subsection{Rule 4.6: Assignment}\label{rule-4.6-assignment}}
+
+Use a separate line for the target of the assignment followed by
+\texttt{\textless{}-}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good}
+\NormalTok{iris\_long }\OtherTok{\textless{}{-}}
+\NormalTok{  iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(measure, value, }\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{value)}
+
+\CommentTok{\# Bad}
+\NormalTok{iris\_long }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(measure, value, }\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{value)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{pipes-summary}{%
+\subsection{\texorpdfstring{Pipes \texttt{\%\textgreater{}\%}
+summary}{Pipes \%\textgreater\% summary}}\label{pipes-summary}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  pipes are awesome
+\item
+  use whitespace
+\item
+  short pipes can be on one line
+\item
+  use parentheses even if there are no arguments
+\item
+  assignment on a separate line
+\end{enumerate}
+
+Skipped rule 4.3 since redundant to prior chapter
+
+\hypertarget{code-style-summary}{%
+\section{Code style summary}\label{code-style-summary}}
+
+\begin{itemize}
+\tightlist
+\item
+  Style is awesome. Save a future researcher from spending two months
+  trying to disentangle your spaghetti!
+\item
+  You don't need to memorize these rules! Just as you have spell check
+  and grammarly on your computer for prose, there is a package
+  \texttt{styler} to help you follow the code style guide.
+\item
+  Just as you still need to learn to spell (since spell checker doesn't
+  capture everything), you need to learn these rules as well.
+\end{itemize}
+
+In closing:
+
+\begin{quote}
+\emph{``Good coding style is like correct punctuation: you can manage
+without it, butitsuremakesthingseasiertoread.''} --Hadley Wickham
+\end{quote}
 
 \hypertarget{intro-to-r-markdown}{%
 \chapter{Intro to R Markdown}\label{intro-to-r-markdown}}
@@ -1055,8 +1706,8 @@ You can use these packages to create a descriptive table. For example:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy
-Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Sun, Sep
-10, 2023 - 22:29:17
+Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Mon, Sep
+18, 2023 - 16:22:31
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -1163,6 +1814,160 @@ make for much more readable reports.
 
 \hypertarget{section}{%
 \subsection{}\label{section}}
+
+\hypertarget{configuring-rmarkdown-chunks}{%
+\chapter{Configuring Rmarkdown
+chunks}\label{configuring-rmarkdown-chunks}}
+
+When you write R Markdown (or Quarto) reports, you are going to have a
+lot of ``chunks'' of code. These are the things that start with `````\{r
+chunk\_name, blah\}'' or `````\{r, blah\}.'' When you render your
+report, these are run and the output is then taken and put in your
+report depending on how the chunk is configured.
+
+This file gives some options for how to control these chunks.
+
+\hypertarget{options-for-includingsuppressing-code-and-output}{%
+\section{Options for including/suppressing code and
+output}\label{options-for-includingsuppressing-code-and-output}}
+
+\texttt{include}: Should chunk be included in knit file? Defaults to
+\texttt{TRUE}. If \texttt{FALSE}, code chunk is run, but chunk and any
+output is not included in the knit file.
+
+\texttt{eval}: Should chunk be evaluated by R? Defaults to
+\texttt{TRUE}. If \texttt{FALSE}, code chunk is included in the knit
+file, but not run.
+
+\texttt{echo}: Should the code from this chunk be included in knit file
+along with output? Defaults to \texttt{TRUE}. If \texttt{FALSE}, the
+output from the chunk is included, but the code that created it is not.
+Most useful for plots.
+
+\hypertarget{options-for-includingsuppressing-r-messages}{%
+\section{Options for including/suppressing R
+messages}\label{options-for-includingsuppressing-r-messages}}
+
+R has ``errors'' meaning it could not run your code, ``warnings''
+meaning that the code was wrong, but there are some potential issues
+with it, and ``messages'' which are simply information about what your
+code ran. You can include or suppress each of these types of message.
+
+\texttt{error}: Should R continue knitting if code produces an error?
+Defaults to \texttt{FALSE}. Generally don't want to change this because
+it means you can miss serious issues with your code.
+
+\texttt{warning}: Should R include warnings in knit file? Defaults to
+\texttt{TRUE}.
+
+\texttt{message}: Should R include informational messages in knit file?
+Defaults to \texttt{TRUE}. Easy way to clean up your markdowns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#This code produces an error}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\AttributeTok{dest =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in `filter()`:
+! We detected a named input.
+i This usually means that you've used `=` instead of `==`.
+i Did you mean `dest == 1`?
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Example warning}
+\FunctionTok{parse\_number}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"$3432"}\NormalTok{, }\StringTok{"tomato"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]    1 3432   NA
+attr(,"problems")
+# A tibble: 1 x 4
+    row   col expected actual
+  <int> <int> <chr>    <chr> 
+1     3    NA a number tomato
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Example message}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{options-for-modifying-figure-outputs}{%
+\section{Options for modifying figure
+outputs}\label{options-for-modifying-figure-outputs}}
+
+You can control figure size and shape (see more in
+\textbf{?@sec-plot-tips}).
+
+In particular, consider these:
+
+\texttt{out.width}: What percentage of the page width should output
+take?
+
+\texttt{fig.height}: What should be the height of figures?
+
+\texttt{fig.width}: What should be the width of figures?
+
+\texttt{fig.asp}: What should be the aspect ratio of figures?
+
+\texttt{fig.align}: How should figures be aligned?
+
+We might want a bigger plot for this:
+
+\includegraphics{configuring_code_chunks_files/figure-pdf/plot1-1.pdf}
+
+And a smaller plot for this:
+
+\begin{verbatim}
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{figure}
+
+\includegraphics[width=0.3\textwidth,height=\textheight]{configuring_code_chunks_files/figure-pdf/plot2-1.pdf} \hfill{}
+
+\end{figure}
+
+\begin{verbatim}
+$x
+[1] "Minutes of delay"
+
+$y
+[1] "Destimations"
+
+attr(,"class")
+[1] "labels"
+\end{verbatim}
+
+\hypertarget{changing-your-defaults}{%
+\section{Changing your defaults}\label{changing-your-defaults}}
+
+At the beginning of your code, you can set custom defaults so all your
+chunks will render the same way (unless you override by specifically
+adding arguments to a chunk itself). This is handy in that you will then
+not need to repeat the custom arguments in each code chunk. For example,
+you can set a default figure size.
+
+Here is an example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{, }
+                       \AttributeTok{fig.width =} \DecValTok{5}\NormalTok{,}
+                       \AttributeTok{fig.height =} \DecValTok{3}\NormalTok{,}
+                       \AttributeTok{out.width =} \StringTok{"5in"}\NormalTok{, }
+                       \AttributeTok{out.height =} \StringTok{"3in"}\NormalTok{, }\AttributeTok{fig.align =} \StringTok{"center"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{intro-to-regression}{%
 \chapter{Intro to Regression}\label{intro-to-regression}}
@@ -1407,7 +2212,8 @@ regression graph, try \texttt{ggeffects}:
 \end{Shaded}
 
 \begin{verbatim}
-Raw data not available.
+Data points may overlap. Use the `jitter` argument to add some amount of
+  random variation to the location of data points and avoid overplotting.
 \end{verbatim}
 
 \begin{figure}[H]
@@ -2602,13 +3408,13 @@ Our intermediate results:
 
 \begin{verbatim}
 # A tibble: 5 x 4
-  G          EY    pT   sdY
-  <chr>   <dbl> <dbl> <dbl>
-1 A     -0.406  0.684 1.34 
-2 B      0.320  0.476 1.04 
-3 C      0.0159 0.471 1.09 
-4 D     -0.0101 0.684 0.911
-5 E      0.0167 0.667 0.929
+  G         EY    pT   sdY
+  <chr>  <dbl> <dbl> <dbl>
+1 A      0.183 0.455 0.917
+2 B      0.170 0.478 0.920
+3 C     -0.196 0.667 0.997
+4 D     -0.452 0.438 0.883
+5 E      0.379 0.8   0.829
 \end{verbatim}
 
 Say our grouping variable is a set of codes for something more special.
@@ -2665,11 +3471,11 @@ name & G & EY & pT & sdY \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-fred & A & -0.41 & 0.68 & 1.34 \\
-doug & B & 0.32 & 0.48 & 1.04 \\
-xiao & C & 0.02 & 0.47 & 1.09 \\
-lily & D & -0.01 & 0.68 & 0.91 \\
-unknown & E & 0.02 & 0.67 & 0.93 \\
+fred & A & 0.18 & 0.45 & 0.92 \\
+doug & B & 0.17 & 0.48 & 0.92 \\
+xiao & C & -0.20 & 0.67 & 1.00 \\
+lily & D & -0.45 & 0.44 & 0.88 \\
+unknown & E & 0.38 & 0.80 & 0.83 \\
 \end{longtable}
 
 This is a great workhorse table-making tool! There are expansion R
@@ -2698,13 +3504,13 @@ general means of different variables for different groups. The
                 Overall     
   n              100        
   G (%)                     
-     A            19 (19.0) 
-     B            21 (21.0) 
-     C            17 (17.0) 
-     D            19 (19.0) 
-     E            24 (24.0) 
-  Z = tx (%)      60 (60.0) 
-  X (mean (SD)) 0.08 (1.03) 
+     A            22 (22.0) 
+     B            23 (23.0) 
+     C            24 (24.0) 
+     D            16 (16.0) 
+     E            15 (15.0) 
+  Z = tx (%)      56 (56.0) 
+  X (mean (SD)) 0.00 (1.05) 
 \end{verbatim}
 
 \begin{Shaded}
@@ -2719,16 +3525,16 @@ general means of different variables for different groups. The
 
 \begin{verbatim}
                Stratified by Z
-                co           tx            p      test
-  n               40            60                    
-  X (mean (SD)) 0.02 (0.96)   0.13 (1.08)   0.606     
-  G (%)                                     0.393     
-     A             6 (15.0)     13 (21.7)             
-     B            11 (27.5)     10 (16.7)             
-     C             9 (22.5)      8 (13.3)             
-     D             6 (15.0)     13 (21.7)             
-     E             8 (20.0)     16 (26.7)             
-  Y (mean (SD)) 0.09 (1.03)  -0.07 (1.10)   0.456     
+                co            tx           p      test
+  n                44           56                    
+  X (mean (SD)) -0.22 (1.14)  0.17 (0.95)   0.070     
+  G (%)                                     0.125     
+     A             12 (27.3)    10 (17.9)             
+     B             12 (27.3)    11 (19.6)             
+     C              8 (18.2)    16 (28.6)             
+     D              9 (20.5)     7 (12.5)             
+     E              3 ( 6.8)    12 (21.4)             
+  Y (mean (SD)) -0.13 (0.95)  0.13 (0.94)   0.182     
 \end{verbatim}
 
 You can then use \texttt{kable} as so:
@@ -2747,9 +3553,9 @@ You can then use \texttt{kable} as so:
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-n & 40 & 60 & & \\
-X (mean (SD)) & 0.02 (0.96) & 0.13 (1.08) & 0.606 & \\
-Y (mean (SD)) & 0.09 (1.03) & -0.07 (1.10) & 0.456 & \\
+n & 44 & 56 & & \\
+X (mean (SD)) & -0.22 (1.14) & 0.17 (0.95) & 0.070 & \\
+Y (mean (SD)) & -0.13 (0.95) & 0.13 (0.94) & 0.182 & \\
 \end{longtable}
 
 \hypertarget{table-of-summary-stats-1}{%
@@ -2773,8 +3579,8 @@ so the output of stargazer gets formatted properly in your R Markdown.
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy
-Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Sun, Sep
-10, 2023 - 22:29:36
+Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Mon, Sep
+18, 2023 - 16:22:54
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -2784,8 +3590,8 @@ Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Sun, Sep
 \hline \\[-1.8ex] 
 Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
 \hline \\[-1.8ex] 
-X & 100 & 0.084 & 1.027 & $-$2.822 & 2.393 \\ 
-Y & 100 & $-$0.005 & 1.068 & $-$2.783 & 2.693 \\ 
+X & 100 & $-$0.001 & 1.048 & $-$2.483 & 2.940 \\ 
+Y & 100 & 0.017 & 0.944 & $-$2.107 & 2.494 \\ 
 \hline \\[-1.8ex] 
 \end{tabular} 
 \end{table}
@@ -2810,8 +3616,8 @@ of interest:
 \hline \\[-1.8ex] 
 Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} \\ 
 \hline \\[-1.8ex] 
-X & 100 & 0.084 & 1.027 \\ 
-Y & 100 & $-$0.005 & 1.068 \\ 
+X & 100 & $-$0.001 & 1.048 \\ 
+Y & 100 & 0.017 & 0.944 \\ 
 \hline \\[-1.8ex] 
 \end{tabular} 
 \end{table}
@@ -2849,12 +3655,12 @@ Our data look like this:
 
 \begin{verbatim}
   ID    esafe grade gender     disc race_white
-1  1 3.428571     8   Male 1.444444          1
-2  1 4.000000     5   Male 1.000000          1
-3  1 3.857143     7 Female 1.888889          1
-4  1 2.428571     7 Female 2.222222          1
-5  1 4.000000     5 Female 1.000000          1
-6  1 4.000000     7 Female 1.000000          1
+1  1 3.000000     5   Male 1.777778          1
+2  1 4.000000     8   Male 1.444444          1
+3  1 4.000000     7 Female 1.000000          1
+4  1 4.000000     5 Female 1.222222          0
+5  1 3.428571     8 Female 1.000000          1
+6  1 4.000000     8 Female 1.000000          1
 \end{verbatim}
 
 We fit some models:
@@ -3431,9 +4237,9 @@ Analysis of Variance Table
 
 Model 1: Y ~ A
 Model 2: Y ~ A + B
-  Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-1     98 128.50                                  
-2     97 105.64  1    22.859 20.989 1.374e-05 ***
+  Res.Df     RSS Df Sum of Sq      F    Pr(>F)    
+1     98 117.232                                  
+2     97  87.188  1    30.044 33.425 9.008e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
@@ -3453,9 +4259,9 @@ term & df.residual & rss & df & sumsq & statistic & p.value \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Y \textasciitilde{} A & 98 & 128.5030 & NA & NA & NA & NA \\
-Y \textasciitilde{} A + B & 97 & 105.6436 & 1 & 22.8594 & 20.98907 &
-1.37e-05 \\
+Y \textasciitilde{} A & 98 & 117.23213 & NA & NA & NA & NA \\
+Y \textasciitilde{} A + B & 97 & 87.18845 & 1 & 30.04368 & 33.42458 &
+1e-07 \\
 \end{longtable}
 
 \hypertarget{compare-to-the-significance-test-on-b}{%
@@ -3481,9 +4287,9 @@ term & estimate & std.error & statistic & p.value \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-(Intercept) & -0.1743460 & 0.1053419 & -1.6550482 & 0.1011469 \\
-A & 0.1048881 & 0.1076018 & 0.9747807 & 0.3320937 \\
-B & 0.4397691 & 0.0959905 & 4.5813829 & 0.0000137 \\
+(Intercept) & 0.0154179 & 0.0950287 & 0.1622451 & 0.8714503 \\
+A & 0.1911102 & 0.0864925 & 2.2095577 & 0.0294885 \\
+B & 0.5815579 & 0.1005912 & 5.7813995 & 0.0000001 \\
 \end{longtable}
 
 \hypertarget{a-math-reference-sample-modeling-equations-to-borrow}{%
@@ -6659,7 +7465,7 @@ For example, say your code had this:
 \end{Shaded}
 
 \begin{verbatim}
-[1] 1 2 3
+[1] 1
 \end{verbatim}
 
 \begin{Shaded}
@@ -7172,8 +7978,8 @@ As you can see, data can get a bit complicated!
 \chapter{\texorpdfstring{Intro to
 \texttt{ggplot}}{Intro to ggplot}}\label{intro-to-ggplot}}
 
-This is a simple script demonstrating some powerful features of a
-plotting package \texttt{ggplot2}.
+This chapter demonstrates some powerful features of \texttt{ggplot2},
+the plotting package that we use most in this course.
 
 \texttt{ggplot} can initially seem like a nightmare to some, but once
 you wrestle it to the ground it is one of the most powerful
@@ -7193,16 +7999,24 @@ Happily, when you load data, it usually is. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read\_dta}\NormalTok{(}\StringTok{"data/hsb.dta"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
-  \FunctionTok{select}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
-
-\FunctionTok{names}\NormalTok{( dat )}
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read\_dta}\NormalTok{(}\StringTok{"data/hsb.dta"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{( dat )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
- [1] "minority" "female"   "ses"      "mathach"  "size"     "sector"  
- [7] "pracad"   "disclim"  "himinty"  "schoolid"
+# A tibble: 6 x 26
+  minority female     ses mathach  size sector pracad disclim himinty schoolid
+     <dbl>  <dbl>   <dbl>   <dbl> <dbl>  <dbl>  <dbl>   <dbl>   <dbl>    <dbl>
+1        0      1 -1.53      5.88   842      0  0.350    1.60       0     1224
+2        0      1 -0.588    19.7    842      0  0.350    1.60       0     1224
+3        0      0 -0.528    20.3    842      0  0.350    1.60       0     1224
+4        0      0 -0.668     8.78   842      0  0.350    1.60       0     1224
+5        0      0 -0.158    17.9    842      0  0.350    1.60       0     1224
+6        0      0  0.0220    4.58   842      0  0.350    1.60       0     1224
+# i 16 more variables: mean <dbl>, sd <dbl>, sdalt <dbl>, junk <dbl>,
+#   sdalt2 <dbl>, num <dbl>, se <dbl>, sealt <dbl>, sealt2 <dbl>, t2 <dbl>,
+#   t2alt <dbl>, pickone <dbl>, mmses <dbl>, mnses <dbl>, xb <dbl>, resid <dbl>
 \end{verbatim}
 
 The easiest full plot to make has two elements. The first gives what
@@ -7225,8 +8039,8 @@ your variables are, and the second says how to plot them:
 
 So far, nothing too scary, right? The
 \texttt{ggplot(\ dat,\ aes(x=mathach,\ y=ses)\ )} says ``My plot is
-going to use \texttt{dat} for my data, and my y-axis is the
-\texttt{mathach} variable and my x-axis is \texttt{ses}.'' The
+going to use \texttt{dat} for my data, and my \(y\)-axis is the
+\texttt{mathach} variable and my \(x\)-axis is \texttt{ses}.'' The
 \texttt{aes()} bit is ``aesthetics''--it is a way of tying variables to
 different kinds of things you could have on your plot: x location, y
 location, color, plotting symbol, and a few other things.
@@ -7309,8 +8123,9 @@ elements, it will not appear:
 \end{figure}
 
 Here we also added some uncertainty bars around the regression lines by
-not saying \texttt{se\ =\ FALSE}. (Including uncertainty is the
-default.)
+not saying \texttt{se\ =\ FALSE}. (Including uncertainty is the default;
+this uncertainty is not to be trusted, especially in this course, as it
+is not taking clustering into account.)
 
 \hypertarget{grouping}{%
 \section{Grouping}\label{grouping}}
@@ -7320,7 +8135,7 @@ Combining these ideas we can make a trend line for each school:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{my.plot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{( dat, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{mathach, }\AttributeTok{x=}\NormalTok{ses, }\AttributeTok{col=}\NormalTok{sector, }\AttributeTok{group=}\NormalTok{schoolid ) ) }\SpecialCharTok{+} 
-    \FunctionTok{stat\_smooth}\NormalTok{( }\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{ )}
+    \FunctionTok{stat\_smooth}\NormalTok{( }\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{ )}
 
 \NormalTok{my.plot}
 \end{Highlighting}
@@ -7383,9 +8198,10 @@ Or,
 \NormalTok{sch }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{( }\FunctionTok{unique}\NormalTok{( dat}\SpecialCharTok{$}\NormalTok{schoolid ), }\DecValTok{6}\NormalTok{ )}
 
 \CommentTok{\# pipe into ggplot }
-\NormalTok{my.six.plot }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{|\textgreater{}} 
-  \FunctionTok{filter}\NormalTok{(schoolid }\SpecialCharTok{\%in\%}\NormalTok{ sch) }\SpecialCharTok{|\textgreater{}} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{mathach, }\AttributeTok{x=}\NormalTok{ses, }\AttributeTok{col=}\NormalTok{sector ) ) }\SpecialCharTok{+} 
+\NormalTok{sch.six }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(schoolid }\SpecialCharTok{\%in\%}\NormalTok{ sch)}
+
+\NormalTok{my.six.plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{( sch.six, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{mathach, }\AttributeTok{x=}\NormalTok{ses, }\AttributeTok{col=}\NormalTok{sector ) ) }\SpecialCharTok{+} 
     \FunctionTok{facet\_wrap}\NormalTok{( }\SpecialCharTok{\textasciitilde{}}\NormalTok{ schoolid, }\AttributeTok{ncol=}\DecValTok{3}\NormalTok{ ) }\SpecialCharTok{+} 
     \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{stat\_smooth}\NormalTok{( }\AttributeTok{method=}\StringTok{"lm"}\NormalTok{ )}
 
@@ -7405,7 +8221,7 @@ Or,
 
 \end{figure}
 
-Also shown are adding titles.
+Also shown in the above are adding titles.
 
 \hypertarget{themes}{%
 \section{Themes}\label{themes}}
@@ -12419,13 +13235,13 @@ To install a ``working package'' we use \texttt{devtools}:
 \end{Shaded}
 
 \begin{verbatim}
-  sid       Y0        Y1 Z     Yobs         W
-1   1 2.903243 2.1125852 1 2.112585 -1.008438
-2   1 1.704167 0.9135087 0 1.704167 -1.008438
-3   1 1.358634 0.5679754 0 1.358634 -1.008438
-4   1 2.104877 1.3142190 0 2.104877 -1.008438
-5   1 1.404675 0.6140171 0 1.404675 -1.008438
-6   1 2.610360 1.8197016 1 1.819702 -1.008438
+  sid        Y0        Y1 Z      Yobs        W
+1   1 0.2705272 0.6718364 1 0.6718364 1.375171
+2   1 0.1053858 0.5066951 1 0.5066951 1.375171
+3   1 0.3564895 0.7577988 0 0.3564895 1.375171
+4   1 0.6257695 1.0270787 0 0.6257695 1.375171
+5   1 0.5384408 0.9397501 1 0.9397501 1.375171
+6   1 1.0825364 1.4838457 0 1.0825364 1.375171
 \end{verbatim}
 
 \begin{Shaded}
@@ -12476,16 +13292,16 @@ Working directory is /Users/jog1638/Library/CloudStorage/Dropbox/HGSE/HGSE PhD/2
 \begin{verbatim}
 lmer(formula = Yobs ~ 1 + (1 | sid), data = dd)
 coef.est  coef.se 
-    0.20     0.14 
+    0.06     0.12 
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.84    
+ sid      (Intercept) 0.75    
  Residual             0.61    
 ---
-number of obs: 422, groups: sid, 40
-AIC = 906.6, DIC = 896.3
-deviance = 898.5 
+number of obs: 389, groups: sid, 40
+AIC = 839.1, DIC = 828.4
+deviance = 830.7 
 \end{verbatim}
 
 \begin{Shaded}
@@ -12497,19 +13313,19 @@ deviance = 898.5
 \begin{verbatim}
 lmer(formula = Yobs ~ 1 + X1 + X2 + X3 + (1 | sid), data = dd)
             coef.est coef.se
-(Intercept)  0.20     0.14  
-X1          -0.04     0.03  
-X2           0.04     0.03  
-X3          -0.01     0.03  
+(Intercept)  0.06     0.12  
+X1          -0.01     0.03  
+X2           0.03     0.03  
+X3           0.05     0.03  
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.84    
+ sid      (Intercept) 0.75    
  Residual             0.61    
 ---
-number of obs: 422, groups: sid, 40
-AIC = 924.3, DIC = 877.3
-deviance = 894.8 
+number of obs: 389, groups: sid, 40
+AIC = 856.6, DIC = 809.6
+deviance = 827.1 
 \end{verbatim}
 
 \begin{Shaded}
@@ -12538,24 +13354,24 @@ Please cite the JSS article in your publications -- see citation("texreg").
 =====================================================
                       Model 1   Model 2   Model 3    
 -----------------------------------------------------
-(Intercept)              0.20      0.20      0.11    
-                        (0.14)    (0.14)    (0.09)   
-X1                                -0.04     -0.02    
+(Intercept)              0.06      0.06      0.05    
+                        (0.12)    (0.12)    (0.08)   
+X1                                -0.01     -0.01    
                                   (0.03)    (0.03)   
-X2                                 0.04      0.03    
-                                  (0.03)    (0.03)   
-X3                                -0.01     -0.01    
+X2                                 0.03      0.04    
                                   (0.03)    (0.02)   
-X4                                           0.34 ***
+X3                                 0.05      0.04    
+                                  (0.03)    (0.03)   
+X4                                           0.33 ***
                                             (0.02)   
 -----------------------------------------------------
-AIC                    906.64    924.33    748.94    
-BIC                    918.78    948.60    777.25    
-Log Likelihood        -450.32   -456.16   -367.47    
-Num. obs.              422       422       422       
+AIC                    839.06    856.64    692.33    
+BIC                    850.95    880.42    720.07    
+Log Likelihood        -416.53   -422.32   -339.16    
+Num. obs.              389       389       389       
 Num. groups: sid        40        40        40       
-Var: sid (Intercept)     0.71      0.71      0.29    
-Var: Residual            0.37      0.37      0.25    
+Var: sid (Intercept)     0.57      0.57      0.24    
+Var: Residual            0.38      0.38      0.25    
 =====================================================
 *** p < 0.001; ** p < 0.01; * p < 0.05
 \end{verbatim}
@@ -13362,12 +14178,13 @@ SEs}\label{a-tour-of-fixed-effects-and-cluster-robust-ses}}
 
 This brief handout will walk through fixed effects and cluster robust
 standard errors, with a stop at aggregation and heteroskedastic standard
-errors.
+errors. We do regression using \texttt{lm\_robust()} from the
+\texttt{estimatr} package.
 
-Consider the following research question:
+Consider the following research question as our motiviating question:
 
-RQ: Are there differences in math achievement for Catholic vs public
-schools, controlling for differences in SES?
+\emph{RQ: Are there differences in math achievement for Catholic vs
+public schools, controlling for differences in SES?}
 
 \hypertarget{aggregation}{%
 \section{Aggregation}\label{aggregation}}
@@ -13409,46 +14226,46 @@ We aggregate as so:
 6 -0.01966667 11.206233     30
 \end{verbatim}
 
-We can now answer our research question with a school-level regression:
+We can now answer our research question with a school-level regression
+with \texttt{lm\_robust()}, that calculates heteroskedastic-robust
+standard errors:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Magg }\OtherTok{=} \FunctionTok{lm}\NormalTok{( mean.ach }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ sector }\SpecialCharTok{+}\NormalTok{ mean.ses, }\AttributeTok{data=}\NormalTok{sdat )}
+\FunctionTok{library}\NormalTok{( estimatr )}
+\NormalTok{Magg }\OtherTok{=} \FunctionTok{lm\_robust}\NormalTok{( mean.ach }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ sector }\SpecialCharTok{+}\NormalTok{ mean.ses, }\AttributeTok{data=}\NormalTok{sdat )}
 
-\FunctionTok{library}\NormalTok{( sandwich )}
-\FunctionTok{library}\NormalTok{( lmtest )}
-\FunctionTok{coeftest}\NormalTok{( Magg, }\AttributeTok{vcov. =}\NormalTok{ vcovHC, }\AttributeTok{type =} \StringTok{"HC0"}\NormalTok{ )}
+\FunctionTok{tidy}\NormalTok{( Magg )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-
-t test of coefficients:
-
-            Estimate Std. Error t value  Pr(>|t|)    
-(Intercept) 12.11950    0.18743 64.6605 < 2.2e-16 ***
-sector       1.22194    0.31959  3.8235 0.0001894 ***
-mean.ses     5.38738    0.33769 15.9538 < 2.2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+         term  estimate std.error statistic       p.value   conf.low conf.high
+1 (Intercept) 12.119496 0.1890070 64.121943 1.628760e-114 11.7461711 12.492820
+2      sector  1.221944 0.3226998  3.786627  2.170049e-04  0.5845507  1.859337
+3    mean.ses  5.387377 0.3423555 15.736205  4.289753e-34  4.7111599  6.063594
+   df  outcome
+1 157 mean.ach
+2 157 mean.ach
+3 157 mean.ach
 \end{verbatim}
 
-We use heteroskedastic robust standard errors to take into account
-possible heteroskedasticity due to, for example, some school outcomes
-being based on smaller numbers of students (and thus having more
-variation) than other school outcomes.
+The \texttt{lm\_robust()} method gives heteroskedastic robust standard
+errors that take into account possible heteroskedasticity due to, for
+example, some school outcomes being based on smaller numbers of students
+(and thus having more variation) than other school outcomes.
 
 In this regression we are controlling for school mean SES, not student
 SES. If anything is going on \emph{within school} between SES and math
-achievement, and that is maybe different for different sectors, we might
-be missing it.
+achievement, in a way that could be different for different sectors, we
+might be missing it.
 
 \hypertarget{student-level-regression-and-cluster-robust-ses}{%
 \section{Student level regression and cluster robust
 SES}\label{student-level-regression-and-cluster-robust-ses}}
 
 Instead of using our aggregated data, we can merge our
-\emph{school-level} variables into the studnet data and run a student
+\emph{school-level} variables into the student data and run a student
 level regression:
 
 The merge brings in level 2 variables, repeating them for each student
@@ -13478,7 +14295,8 @@ in a school:
 6  -0.428 0.5957447 0.08510638 -0.434383 9.715447     47
 \end{verbatim}
 
-And now our regression
+And now our regression (without handling our clustering, so this is
+giving us wrong standard errors):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13515,71 +14333,79 @@ errors}\label{getting-the-right-standard-errors}}
 
 The standard errors for the above regression, however, is
 \textbf{wrong}: we are not taking the clustering into account. We can
-fix this with cluster-robust standard errors:
+fix this with cluster-robust standard errors. The \texttt{lm\_robust()}
+method comes to the rescue:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{coeftest}\NormalTok{( Mstud, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
+\NormalTok{Mstud }\OtherTok{\textless{}{-}} \FunctionTok{lm\_robust}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ sector }\SpecialCharTok{+}\NormalTok{ ses, }
+                       \AttributeTok{data =}\NormalTok{ dat,}
+                       \AttributeTok{clusters =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
+\FunctionTok{summary}\NormalTok{( Mstud )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 
-t test of coefficients:
+Call:
+lm_robust(formula = mathach ~ 1 + sector + ses, data = dat, clusters = dat$id)
 
-            Estimate Std. Error t value  Pr(>|t|)    
-(Intercept) 11.79325    0.20315 58.0532 < 2.2e-16 ***
-sector       1.93501    0.31718  6.1007 1.111e-09 ***
-ses          2.94856    0.12794 23.0469 < 2.2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Standard error type:  CR2 
+
+Coefficients:
+            Estimate Std. Error t value  Pr(>|t|) CI Lower CI Upper     DF
+(Intercept)   11.793     0.2038  57.854 1.608e-69   11.388   12.199  84.12
+sector         1.935     0.3185   6.076 1.082e-08    1.305    2.565 141.46
+ses            2.949     0.1285  22.951 4.478e-48    2.694    3.203 132.91
+
+Multiple R-squared:  0.1492 ,   Adjusted R-squared:  0.149 
+F-statistic: 351.6 on 2 and 159 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
-Catholic schools score 2 points higher than Public, on average, beyond
-individual level SES.
+We specify the clustering and \texttt{lm\_robust()} does the rest; note
+that we would normally not even run the original \texttt{lm()} command.
+This replaces it.
+
+For our research question, we see that Catholic schools score 2 points
+higher than Public, on average, beyond individual level SES.
 
 We can further control for school mean SES, like with aggregation:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Mstud2 }\OtherTok{=} \FunctionTok{lm}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ sector }\SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ meanses, }\AttributeTok{data =}\NormalTok{ dat )}
-\FunctionTok{coeftest}\NormalTok{( Mstud2, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
+\NormalTok{Mstud2 }\OtherTok{=} \FunctionTok{lm\_robust}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ sector }\SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ meanses, }
+                    \AttributeTok{data =}\NormalTok{ dat,}
+                    \AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
+\FunctionTok{summary}\NormalTok{( Mstud2 )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 
-t test of coefficients:
+Call:
+lm_robust(formula = mathach ~ 1 + sector + ses + meanses, data = dat, 
+    clusters = dat$id)
 
-            Estimate Std. Error t value  Pr(>|t|)    
-(Intercept) 12.09792    0.17024 71.0629 < 2.2e-16 ***
-sector       1.28039    0.30008  4.2669 2.008e-05 ***
-ses          2.19116    0.12981 16.8802 < 2.2e-16 ***
-meanses      2.97267    0.36491  8.1464 4.388e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Standard error type:  CR2 
+
+Coefficients:
+            Estimate Std. Error t value  Pr(>|t|) CI Lower CI Upper     DF
+(Intercept)   12.098     0.1712  70.654 6.309e-75  11.7573   12.439  81.55
+sector         1.280     0.3022   4.237 5.240e-05   0.6804    1.880  95.16
+ses            2.191     0.1299  16.874 1.246e-35   1.9344    2.448 140.83
+meanses        2.973     0.3683   8.072 8.367e-12   2.2391    3.706  75.50
+
+Multiple R-squared:   0.17 ,    Adjusted R-squared:  0.1696 
+F-statistic: 246.2 on 3 and 159 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 The contextual value of school mean SES is explaining some of the
 difference between Catholic and public schools, here: note the reduction
 of the coefficient for \texttt{sector}. That being said, and still
 accounting for clustering, \texttt{sector} is still quite significant.
-
-Confidence intervals give:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{coefci}\NormalTok{(Mstud2, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-                 2.5 %    97.5 %
-(Intercept) 11.7641926 12.431643
-sector       0.6921486  1.868627
-ses          1.9367009  2.445618
-meanses      2.2573428  3.687995
-\end{verbatim}
+The \texttt{lm\_robust()} function is also giving us confidence
+intevals, which is nice: we see anything between 0.7 and 1.9 is
+possible.
 
 Relative to the overall standard deviation of math achievement we have:
 
@@ -13596,20 +14422,21 @@ Relative to the overall standard deviation of math achievement we have:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{coefci}\NormalTok{(Mstud2, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id ) }\SpecialCharTok{/}\NormalTok{ sd\_math}
+\FunctionTok{confint}\NormalTok{(Mstud2, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id ) }\SpecialCharTok{/}\NormalTok{ sd\_math}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-                2.5 %    97.5 %
-(Intercept) 1.7103478 1.8073858
-sector      0.1006286 0.2716720
-ses         0.2815690 0.3555583
-meanses     0.3281858 0.5361825
+                 2.5 %    97.5 %
+(Intercept) 1.70934019 1.8083934
+sector      0.09892687 0.2733738
+ses         0.28124044 0.3558869
+meanses     0.32553097 0.5388374
 \end{verbatim}
 
 The difference between Catholic and public schools is somewhere between
 0.10 and 0.27 standard deviations, beyond what can be explained by ses.
+This is a fairly sizable effect, in education.
 
 \hypertarget{and-fixed-effects}{%
 \section{And fixed effects?}\label{and-fixed-effects}}
@@ -13652,20 +14479,20 @@ school:
 
 \begin{verbatim}
 # A tibble: 12 x 4
-   id     mathach    ses sector
-   <fct>    <dbl>  <dbl>  <dbl>
- 1 1      0.0372  -0.607      0
- 2 1     -0.189    1.68       0
- 3 1     -2.47    -0.494      0
- 4 2      1.41    -0.533      1
- 5 2     -0.913    1.84       1
- 6 2     -1.68     1.60       1
- 7 3     -0.296    0.608      0
- 8 3      0.00987  1.79       0
- 9 3      0.695    0.528      0
-10 4     -0.618   -0.188      1
-11 4      0.449   -1.34       1
-12 4      0.0944   0.543      1
+   id    mathach    ses sector
+   <fct>   <dbl>  <dbl>  <dbl>
+ 1 1       1.63  -0.876      0
+ 2 1       1.05  -0.480      0
+ 3 1      -1.39   1.14       0
+ 4 2      -0.380  2.24       1
+ 5 2      -0.721 -0.853      1
+ 6 2      -0.334  0.307      1
+ 7 3      -0.543 -1.01       0
+ 8 3      -0.786  1.46       0
+ 9 3      -0.471 -1.31       0
+10 4      -3.37   1.88       1
+11 4       0.731 -1.75       1
+12 4      -0.210 -1.16       1
 \end{verbatim}
 
 And our regression model with fixed effects for school plus our
@@ -13683,8 +14510,8 @@ Call:
 lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
-     id1       id2       id3       id4       ses    sector  
--0.80703  -0.06465   0.46942  -0.13658  -0.34088        NA  
+    id1      id2      id3      id4      ses   sector  
+ 0.3872  -0.1345  -0.7735  -1.1583  -0.6079       NA  
 \end{verbatim}
 
 Note the \texttt{NA} for sector! We cannot estimate it due to
@@ -13730,19 +14557,28 @@ cluster-robust standard errors as so:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coefs }\OtherTok{\textless{}{-}} \FunctionTok{coeftest}\NormalTok{( Mstud3, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
-\FunctionTok{head}\NormalTok{( coefs )}
+\NormalTok{Mstud3\_rob }\OtherTok{\textless{}{-}} \FunctionTok{lm\_robust}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ id, }
+                         \AttributeTok{data=}\NormalTok{dat,}
+                         \AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
+\FunctionTok{head}\NormalTok{( }\FunctionTok{tidy}\NormalTok{( Mstud3\_rob ) )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-        Estimate Std. Error   t value     Pr(>|t|)
-ses     2.191172 0.13124281  16.69556 2.130074e-61
-id1224 10.667255 0.05700964 187.11316 0.000000e+00
-id1288 13.244353 0.01595913 829.89215 0.000000e+00
-id1296  8.568302 0.05584382 153.43332 0.000000e+00
-id1308 15.098561 0.06929621 217.88439 0.000000e+00
-id1317 12.421003 0.04532252 274.05809 0.000000e+00
+    term  estimate  std.error statistic       p.value  conf.low conf.high
+1    ses  2.191172 0.12984948  16.87471  1.239339e-35  1.934466  2.447878
+2 id1224 10.667255 0.05640441 189.12095 2.389336e-171 10.555746 10.778763
+3 id1288 13.244353 0.01578970 838.79718 2.446556e-262 13.213138 13.275569
+4 id1296  8.568302 0.05525096 155.07971 2.866668e-159  8.459073  8.677531
+5 id1308 15.098561 0.06856053 220.22236 1.252769e-180 14.963020 15.234102
+6 id1317 12.421003 0.04484136 276.99883 1.263605e-194 12.332354 12.509652
+        df outcome
+1 140.8263 mathach
+2 140.8263 mathach
+3 140.8263 mathach
+4 140.8263 mathach
+5 140.8263 mathach
+6 140.8263 mathach
 \end{verbatim}
 
 We have again used \texttt{head()} to just get the first lines. The
@@ -13754,25 +14590,28 @@ Let's compare our three models (note the way we omit coefficients with
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{( texreg )}
-\FunctionTok{screenreg}\NormalTok{( }\FunctionTok{list}\NormalTok{( }\StringTok{\textasciigrave{}}\AttributeTok{No FE}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{Mstud3\_noFE, }\StringTok{\textasciigrave{}}\AttributeTok{FE}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Mstud3, }\StringTok{\textasciigrave{}}\AttributeTok{FE + CRVE}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{coefs ), }
-           \AttributeTok{omit.coef=}\StringTok{"id"}\NormalTok{ )}
+\FunctionTok{screenreg}\NormalTok{( }\FunctionTok{list}\NormalTok{( }\StringTok{\textasciigrave{}}\AttributeTok{No FE}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{Mstud3\_noFE, }\StringTok{\textasciigrave{}}\AttributeTok{FE}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Mstud3, }\StringTok{\textasciigrave{}}\AttributeTok{FE + CRVE}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{Mstud3\_rob ), }
+           \AttributeTok{omit.coef=}\StringTok{"id"}\NormalTok{,}
+           \AttributeTok{include.ci =} \ConstantTok{FALSE}\NormalTok{ )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 
-================================================
-             No FE        FE           FE + CRVE
-------------------------------------------------
-(Intercept)    12.75 ***                        
-               (0.08)                           
-ses             3.18 ***     2.19 ***   2.19 ***
-               (0.10)       (0.11)     (0.13)   
-------------------------------------------------
-R^2             0.13         0.83               
-Adj. R^2        0.13         0.82               
-Num. obs.    7185         7185                  
-================================================
+==================================================
+             No FE        FE           FE + CRVE  
+--------------------------------------------------
+(Intercept)    12.75 ***                          
+               (0.08)                             
+ses             3.18 ***     2.19 ***     2.19 ***
+               (0.10)       (0.11)       (0.13)   
+--------------------------------------------------
+R^2             0.13         0.83         0.83    
+Adj. R^2        0.13         0.82         0.82    
+Num. obs.    7185         7185         7185       
+RMSE                                      6.08    
+N Clusters                              160       
+==================================================
 *** p < 0.001; ** p < 0.01; * p < 0.05
 \end{verbatim}
 
@@ -13807,7 +14646,9 @@ different between schools, we can get tricky like so:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Mstud4 }\OtherTok{=} \FunctionTok{lm}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ ses}\SpecialCharTok{:}\NormalTok{sector }\SpecialCharTok{+}\NormalTok{ id, }\AttributeTok{data=}\NormalTok{dat )}
+\NormalTok{Mstud4 }\OtherTok{=} \FunctionTok{lm\_robust}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ ses}\SpecialCharTok{:}\NormalTok{sector }\SpecialCharTok{+}\NormalTok{ id, }
+                    \AttributeTok{data=}\NormalTok{dat,}
+                    \AttributeTok{cluster =}\NormalTok{ id )}
 \FunctionTok{head}\NormalTok{( }\FunctionTok{coef}\NormalTok{( Mstud4 ) )}
 \end{Highlighting}
 \end{Shaded}
@@ -13831,29 +14672,32 @@ different between schools, we can get tricky like so:
 Note interaction terms always get pushed to the end of the list of
 estimates by R. So we have to pull them out with \texttt{tail()}.
 
-In the following we compare SEs.
+In the following we compare SEs to if we hadn't used cluster robust SEs.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{coeftest}\NormalTok{( Mstud4, }\AttributeTok{vcov. =}\NormalTok{ vcovCL, }\AttributeTok{cluster =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{id )}
-\FunctionTok{library}\NormalTok{( texreg )}
-\FunctionTok{screenreg}\NormalTok{( }\FunctionTok{list}\NormalTok{( }\AttributeTok{wrong=}\NormalTok{Mstud4, }\AttributeTok{adjusted=}\NormalTok{a ), }
-           \AttributeTok{omit.coef=}\StringTok{"id"}\NormalTok{, }\AttributeTok{single.row =} \ConstantTok{TRUE}\NormalTok{ )}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{( mathach }\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ ses}\SpecialCharTok{:}\NormalTok{sector }\SpecialCharTok{+}\NormalTok{ id, }
+                    \AttributeTok{data=}\NormalTok{dat )}
+\FunctionTok{screenreg}\NormalTok{( }\FunctionTok{list}\NormalTok{( }\AttributeTok{wrong=}\NormalTok{a, }\AttributeTok{adjusted=}\NormalTok{Mstud4 ), }
+           \AttributeTok{omit.coef=}\StringTok{"id"}\NormalTok{, }\AttributeTok{single.row =} \ConstantTok{TRUE}\NormalTok{,}
+           \AttributeTok{include.ci=}\ConstantTok{FALSE}\NormalTok{ )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 
-================================================
-            wrong               adjusted        
-------------------------------------------------
-ses            2.78 (0.14) ***   2.78 (0.16) ***
-ses:sector    -1.35 (0.22) ***  -1.35 (0.24) ***
-------------------------------------------------
-R^2            0.83                             
-Adj. R^2       0.82                             
-Num. obs.   7185                                
-================================================
+==================================================
+            wrong               adjusted          
+--------------------------------------------------
+ses            2.78 (0.14) ***     2.78 (0.16) ***
+ses:sector    -1.35 (0.22) ***    -1.35 (0.23) ***
+--------------------------------------------------
+R^2            0.83                0.83           
+Adj. R^2       0.82                0.82           
+Num. obs.   7185                7185              
+RMSE                               6.07           
+N Clusters                       160              
+==================================================
 *** p < 0.001; ** p < 0.01; * p < 0.05
 \end{verbatim}
 
@@ -16486,7 +17330,7 @@ Warning: Removed 114 rows containing missing values (`geom_line()`).
 \end{Shaded}
 
 \begin{verbatim}
-Warning: Removed 2 rows containing missing values (`geom_line()`).
+Warning: Removed 1 row containing missing values (`geom_line()`).
 \end{verbatim}
 
 \begin{figure}[H]
@@ -16937,6 +17781,43 @@ Exercises:
 {\centering 
 
 \href{https://s43dnt-josh-gilbert.shinyapps.io/s43_rewb_viz/}{\includegraphics{rewb_viz_files/figure-pdf/unnamed-chunk-1-1.pdf}}
+
+}
+
+\end{figure}
+
+\hypertarget{centering-visualization}{%
+\chapter{Centering Visualization}\label{centering-visualization}}
+
+Centering of predictors is an important issue in multilevel modeling. In
+contrast to single-level regression, how we center variables can really
+change the interpretation of the slope coefficients. The three main
+options are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  No centering: leave \(X\) as it is
+\item
+  Grand mean centering: subtract \(\bar{X}\) from every \(X\) so that a
+  value of 0 represents the grand mean. The slope has the same
+  interpretation, but our estimates of random effects may change.
+\item
+  Group mean centering: subtract \(\bar{X}_j\) from every \(X\) so that
+  a value of 0 represents the cluster mean. The slope now represents the
+  \textbf{within-group} relationship (just like fixed effects) because
+  we have removed all between group variation from \(X\).
+\end{enumerate}
+
+The visualization below helps us think about centering and why it
+matters.
+
+\begin{figure}
+
+{\centering 
+
+\href{https://s43dnt-josh-gilbert.shinyapps.io/s43_centering_viz/}{\includegraphics{centering_viz_files/figure-pdf/unnamed-chunk-1-1.pdf}}
 
 }
 
