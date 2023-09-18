@@ -1,0 +1,22 @@
+---
+title: "Centering Visualization"
+author: "Josh Gilbert"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+Centering of predictors is an important issue in multilevel modeling.
+In contrast to single-level regression, how we center variables can really change the interpretation of the slope coefficients.
+The three main options are:
+
+1.  No centering: leave $X$ as it is
+2.  Grand mean centering: subtract $\bar{X}$ from every $X$ so that a value of 0 represents the grand mean. The slope has the same interpretation, but our estimates of random effects may change.
+3.  Group mean centering: subtract $\bar{X}_j$ from every $X$ so that a value of 0 represents the cluster mean. The slope now represents the **within-group** relationship (just like fixed effects) because we have removed all between group variation from $X$.
+
+The visualization below helps us think about centering and why it matters.
+
+```{r, echo = FALSE}
+library(knitr)
+include_app("https://s43dnt-josh-gilbert.shinyapps.io/s43_centering_viz/", height = "1500px")
+```
