@@ -476,8 +476,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -494,31 +500,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -828,7 +834,7 @@ deviance = 46959.1 </code></pre>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(mod4<span class="fl">.3</span>)) <span class="co"># gives us all the fixed effect statistics we could want</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error       df  t value      Pr(&gt;|t|)
-(Intercept) 12.649435  0.1492801 153.7425 84.73622 6.032591e-131
+(Intercept) 12.649435  0.1492801 153.7425 84.73622 6.032590e-131
 meanses      5.863538  0.3614580 153.4067 16.22191  4.267894e-35</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the [ ] is called "indexing" - it's a way of subsetting data by telling R</span></span>
@@ -966,7 +972,7 @@ deviance = 46711.0 </code></pre>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(mod4<span class="fl">.4</span>)) <span class="co">#this reproduces the whole first panel, though methods used above also work</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Estimate Std. Error       df  t value      Pr(&gt;|t|)
-(Intercept)   12.636193  0.2445047 156.7512 51.68077 2.286892e-100
+(Intercept)   12.636193  0.2445047 156.7512 51.68077 2.286893e-100
 ses_grpcenter  2.193196  0.1282589 155.2166 17.09976  1.582355e-37</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the variance components</span></span>
@@ -1038,12 +1044,12 @@ deviance = 46496.4 </code></pre>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(mod4<span class="fl">.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       Estimate Std. Error       df   t value      Pr(&gt;|t|)
-(Intercept)           12.095997  0.1987329 159.9143 60.865590 1.625101e-112
+(Intercept)           12.095997  0.1987329 159.9143 60.865589 1.625102e-112
 meanses                5.332898  0.3691567 150.9836 14.446161  2.944282e-30
 sector                 1.226453  0.3062674 149.6139  4.004518  9.756638e-05
-ses_grpcenter          2.938785  0.1550889 139.2934 18.949039  2.197495e-40
+ses_grpcenter          2.938785  0.1550889 139.2935 18.949039  2.197480e-40
 meanses:ses_grpcenter  1.038918  0.2988941 160.5429  3.475873  6.550388e-04
-sector:ses_grpcenter  -1.642619  0.2397854 143.3351 -6.850371  2.009492e-10</code></pre>
+sector:ses_grpcenter  -1.642619  0.2397854 143.3351 -6.850371  2.009491e-10</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: there is a slight descrepancy in the estimate for meanses:ses_grpcenter and </span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the t-statistics for meanses:ses_grpcenter and sector:ses_grpcenter; nothing that </span></span>
@@ -1339,7 +1345,7 @@ mod4.5              10 46516 46585 -23248    46496 1.0039  2     0.6054</code></
   b1_uncond   b0_cond  b1_cond      u0_ols      u1_ols     u0_cond      u1_cond
 1  2.262837  9.740146 2.489033 -0.09807014  0.01445354 -0.07337107 -0.005095579
 2  2.375964 13.234409 3.112156  0.73219201  0.18368221  0.45580075  0.040389349
-3  1.872247  8.145275 2.307720 -2.22022179 -1.42648036 -1.71090544 -0.194719195
+3  1.872247  8.145275 2.307720 -2.22022179 -1.42648036 -1.71090544 -0.194719194
 4  2.050193 16.201317 1.835985  0.08528223 -1.72492410  0.03109939 -0.014963432
 5  1.997129 13.663596 1.528623 -2.01661001 -0.38691354 -1.53070178 -0.132203128
 6  2.738390 11.530341 2.946721 -0.81510320  2.14376861 -0.49099553  0.022480378</code></pre>
