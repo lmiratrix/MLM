@@ -30,6 +30,7 @@ book:
           - intro_ggplot.qmd
           - plot_expand_grid.qmd
           - ggeffects.qmd
+          - coefficient_plots.qmd
           - double_plot.qmd
     - part: "MODEL FITTING & INTERPRETATION"
       chapters:

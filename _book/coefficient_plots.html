@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - Self Grading Instructions</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 16&nbsp; Coefficient Plots</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./style_guide.html" rel="next">
-<link href="./assignment_guidelines.html" rel="prev">
+<link href="./double_plot.html" rel="next">
+<link href="./ggeffects.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -74,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./self_grading.html">Self Grading Instructions</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_ggplot.html">USING ggPLOT</a></li><li class="breadcrumb-item"><a href="./coefficient_plots.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Coefficient Plots</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./self_grading.html" class="sidebar-item-text sidebar-link active">
+  <a href="./self_grading.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Self Grading Instructions</span></a>
   </div>
 </li>
@@ -241,7 +275,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coefficient_plots.html" class="sidebar-item-text sidebar-link">
+  <a href="./coefficient_plots.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Coefficient Plots</span></span></a>
   </div>
 </li>
@@ -506,20 +540,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#acknowledgement" id="toc-acknowledgement" class="nav-link active" data-scroll-target="#acknowledgement">Acknowledgement:</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Self Grading Instructions</h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Coefficient Plots</span></h1>
 </div>
 
 
@@ -534,23 +562,124 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>To self-grade an assignment, go through the solutions and compare the answer to your own work.</p>
-<p>Grade each piece as following</p>
-<ul>
-<li>“+” - 1 point, basically nailed it.</li>
-<li>“check” - Half point, did at least part of it, but had some problems.</li>
-<li>“X” - zero points, didn’t get it.</li>
-</ul>
-<p>A “piece” is each item of a problem. So if you had 1(a), 1(b), and 1(c), that would be three pieces for a maximum total of three points.</p>
-<p>As you go through the solutions, see if you can figure out where you went wrong, if you did so. If you still don’t understand a problem, make a note as to problem number.</p>
-<p>Then, for the next ready-for-class check-in you will be asked to enter your score (this score just helps me understand how folks are doing with these mini assignments), how you feel about it, and some further commentary. In your commentary please include a sentence or two on what was tripping you up (list the items), if you got things wrong. Also note whether things are not making sense, even with the solutions.</p>
-<p><strong>NOTE:</strong> We grade miniassignments on completion, meaning you will get full credit if you (1) do the mini-assignment and (2) self-grade the miniassignment (regardless of the score you give yourself, as long as the score is above 50% of the possible points).</p>
-<section id="acknowledgement" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgement">Acknowledgement:</h2>
-<p>This idea of self-grading was inspired by Cora Wigger. She used to have some stuff on twitter, but she appears to have removed her account. <!--See [her twitter post](https://twitter.com/cjlwig/status/1450925261831168008).--></p>
+<p>Coefficient plots provide a visually intuitive way to present the results of regression models. By displaying each coefficient along with its confidence interval, we can quickly discern the significance and magnitude of each coefficient.</p>
+<p>As usual, we will turn to the tidyverse to make our plots. We will use the <code>broom.mixed</code> package to quickly get our coefficients, and then <code>ggplot</code> to make a nice plot of them. This is a great plot for a lot of final projects.</p>
+<p>To illustrate, say we have a fit multilevel model such as this one on the Making Caring Common Data (the specific model here is not the best choice for doing actual research):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>arm<span class="sc">::</span><span class="fu">display</span>( fit )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lmer(formula = esafe ~ age + grade + gender + happy + care + 
+    (1 | ID), data = dat)
+                coef.est coef.se
+(Intercept)      3.50     0.20  
+age              0.00     0.01  
+grade11th        0.01     0.03  
+grade12th        0.07     0.04  
+grade5th        -0.16     0.08  
+grade6th        -0.13     0.06  
+grade7th        -0.12     0.05  
+grade8th        -0.06     0.04  
+grade9th         0.01     0.03  
+genderno reveal -0.28     0.05  
+genderOther     -0.40     0.06  
+genderFemale    -0.05     0.02  
+happy           -0.01     0.01  
+care            -0.01     0.01  
+
+Error terms:
+ Groups   Name        Std.Dev.
+ ID       (Intercept) 0.25    
+ Residual             0.65    
+---
+number of obs: 7666, groups: ID, 39
+AIC = 15291.2, DIC = 15103.4
+deviance = 15181.3 </code></pre>
+</div>
+</div>
+<p>We first tidy up the model output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( broom.mixed )</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tidy_fit <span class="ot">&lt;-</span> <span class="fu">tidy</span>(fit)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tidy_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 6
+   effect   group    term             estimate std.error statistic
+   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 fixed    &lt;NA&gt;     (Intercept)      3.50       0.204     17.2   
+ 2 fixed    &lt;NA&gt;     age             -0.000331   0.0126    -0.0261
+ 3 fixed    &lt;NA&gt;     grade11th        0.0130     0.0311     0.417 
+ 4 fixed    &lt;NA&gt;     grade12th        0.0674     0.0386     1.74  
+ 5 fixed    &lt;NA&gt;     grade5th        -0.157      0.0822    -1.91  
+ 6 fixed    &lt;NA&gt;     grade6th        -0.126      0.0600    -2.11  
+ 7 fixed    &lt;NA&gt;     grade7th        -0.116      0.0494    -2.34  
+ 8 fixed    &lt;NA&gt;     grade8th        -0.0620     0.0395    -1.57  
+ 9 fixed    &lt;NA&gt;     grade9th         0.00762    0.0297     0.257 
+10 fixed    &lt;NA&gt;     genderno reveal -0.283      0.0502    -5.64  
+11 fixed    &lt;NA&gt;     genderOther     -0.401      0.0561    -7.15  
+12 fixed    &lt;NA&gt;     genderFemale    -0.0547     0.0165    -3.32  
+13 fixed    &lt;NA&gt;     happy           -0.00805    0.00980   -0.821 
+14 fixed    &lt;NA&gt;     care            -0.00613    0.0112    -0.548 
+15 ran_pars ID       sd__(Intercept)  0.249     NA         NA     
+16 ran_pars Residual sd__Observation  0.647     NA         NA     </code></pre>
+</div>
+</div>
+<p>We then select which coefficients we want on our plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tidy_fit <span class="ot">=</span> <span class="fu">filter</span>( tidy_fit,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">is.na</span>(group),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                   term <span class="sc">!=</span> <span class="st">"(Intercept)"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we make the coefficient plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_fit, <span class="fu">aes</span>(<span class="at">x=</span>term, <span class="at">y=</span>estimate)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>estimate <span class="sc">-</span> std.error, <span class="at">ymax=</span>estimate <span class="sc">+</span> std.error), <span class="at">width=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Coefficient Plot"</span>, <span class="at">y=</span><span class="st">"Estimate"</span>, <span class="at">x=</span><span class="st">"Variable"</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>( <span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">col=</span><span class="st">"blue"</span> ) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="coefficient_plots_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Coefficient Plot for mtcars dataset</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In general you will want to make sure your plotted variables are on a similar scale, e.g., all categorical levels or, if continuous, standardized on some scale. Otherwise the points will be hard to compare to one another.</p>
+<p>To do this we might standardsize continuous variables like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span><span class="fu">is.na</span>(bully), <span class="sc">!</span><span class="fu">is.na</span>(psafe), <span class="sc">!</span><span class="fu">is.na</span>(esafe) ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(  <span class="at">esafe.std =</span> (esafe <span class="sc">-</span> <span class="fu">mean</span>(esafe) <span class="sc">/</span> <span class="fu">sd</span>(esafe) ),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">bully.std =</span> (bully <span class="sc">-</span> <span class="fu">mean</span>(bully) <span class="sc">/</span> <span class="fu">sd</span>(bully) ),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">psafe.std =</span> (psafe <span class="sc">-</span> <span class="fu">mean</span>(psafe) <span class="sc">/</span> <span class="fu">sd</span>(psafe) ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can then fit a new coefficient plot for a new model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lmer</span>( esafe.std <span class="sc">~</span> gender <span class="sc">+</span> bully.std <span class="sc">+</span> psafe.std <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>psafe<span class="sc">|</span>ID),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data=</span>dat )</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>tidy_fit <span class="ot">&lt;-</span> <span class="fu">tidy</span>(fit)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>tidy_fit <span class="ot">=</span> <span class="fu">filter</span>( tidy_fit,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                   term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                   term <span class="sc">!=</span> <span class="st">"cor__(Intercept).psafe"</span> )</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_fit, <span class="fu">aes</span>(<span class="at">x=</span>term, <span class="at">y=</span>estimate)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>estimate <span class="sc">-</span> std.error, <span class="at">ymax=</span>estimate <span class="sc">+</span> std.error), <span class="at">width=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Coefficient Plot"</span>, <span class="at">y=</span><span class="st">"Estimate"</span>, <span class="at">x=</span><span class="st">"Variable"</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>( <span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">col=</span><span class="st">"blue"</span> ) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="coefficient_plots_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here we left our residual variances on to get some scale. E.g., the schools vary more than the girl-boy gap (boys are our reference category). We can now say things like a one standard deviation increase in bullying corresponds to a -0.3 standard deviation change in emotional safety. Physical safety, not unsurprisingly, is heavily predictive of emotional safety.</p>
+<p>The small group size of those who chose not reveal their gender makes the confidence interval wider than for the other coefficents. Overall, this large survey is giving us good precision.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -788,13 +917,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./assignment_guidelines.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Assignment Formatting Guidelines</span>
+      <a href="./ggeffects.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Easy Graphing with <code>ggeffects</code></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./style_guide.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A R Code Style (Miratrix version)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./double_plot.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

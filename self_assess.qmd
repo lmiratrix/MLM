@@ -1,4 +1,4 @@
-# Do I take S-043? A self-assessment  {.unnumbered}
+# Do I take S-043? A self-assessment {.unnumbered}
 
 I received numerous inquiries as to whether a given background is enough to take this course. Let me elaborate at length. The stated prerequisite to this course is S052, Stat 139, or equivalent, i.e., you have gone a bit beyond an applied course on linear regression (S040). Technically, if you have taken S040 or equivalent, you could take this course; the "a bit beyond" part is just wanting a bit more comfort with these foundational skills. More specifically, we greatly prefer you to have the following skills as a prerequisite for this course:
 

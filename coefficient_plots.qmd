@@ -1,0 +1,95 @@
+---
+title: "Coefficient Plots"
+---
+
+Coefficient plots provide a visually intuitive way to present the results of regression models. By displaying each coefficient along with its confidence interval, we can quickly discern the significance and magnitude of each coefficient.
+
+As usual, we will turn to the tidyverse to make our plots. We will use the `broom.mixed` package to quickly get our coefficients, and then `ggplot` to make a nice plot of them.
+This is a great plot for a lot of final projects.
+
+```{r, include=FALSE}
+library( broom.mixed )
+dat = read.csv("data/MCC_students.csv")
+head( dat )
+library( tidyverse )
+table(dat$gender)
+dat$gender = fct_recode( dat$gender,
+                         `no reveal` = "I choose not to identify.",
+                         `Other` = "Another way:",
+                         `no reveal` = "" )
+dat$gender = fct_relevel(dat$gender, "Male" )
+library( lme4 )
+dat$age = as.numeric(dat$age)
+fit = lmer( esafe ~ age + grade + gender + happy + care + (1|ID),
+          data=dat )
+library( arm )
+```
+
+To illustrate, say we have a fit multilevel model such as this one on the Making Caring Common Data (the specific model here is not the best choice for doing actual research):
+
+```{r}
+arm::display( fit )
+```
+
+We first tidy up the model output:
+
+```{r}
+library( broom.mixed )
+tidy_fit <- tidy(fit)
+tidy_fit
+```
+
+We then select which coefficients we want on our plot:
+```{r}
+tidy_fit = filter( tidy_fit,
+                   is.na(group),
+                   term != "(Intercept)" )
+```
+
+Finally, we make the coefficient plot:
+
+```{r, fig.cap="Coefficient Plot for mtcars dataset"}
+ggplot(tidy_fit, aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=estimate - std.error, ymax=estimate + std.error), width=0.25) +
+  coord_flip() +
+  labs(title="Coefficient Plot", y="Estimate", x="Variable") +
+  geom_hline( yintercept = 0, col="blue" ) +
+  theme_minimal()
+```
+
+In general you will want to make sure your plotted variables are on a similar scale, e.g., all categorical levels or, if continuous, standardized on some scale. Otherwise the points will be hard to compare to one another.
+
+To do this we might standardsize continuous variables like so:
+```{r}
+dat <- dat %>%
+  filter( !is.na(bully), !is.na(psafe), !is.na(esafe) ) %>%
+  mutate(  esafe.std = (esafe - mean(esafe) / sd(esafe) ),
+           bully.std = (bully - mean(bully) / sd(bully) ),
+               psafe.std = (psafe - mean(psafe) / sd(psafe) ) )
+
+```
+We can then fit a new coefficient plot for a new model:
+```{r}
+fit = lmer( esafe.std ~ gender + bully.std + psafe.std + (1+psafe|ID),
+          data=dat )
+tidy_fit <- tidy(fit)
+tidy_fit = filter( tidy_fit,
+                   term != "(Intercept)",
+                   term != "cor__(Intercept).psafe" )
+
+ggplot(tidy_fit, aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=estimate - std.error, ymax=estimate + std.error), width=0.25) +
+  coord_flip() +
+  labs(title="Coefficient Plot", y="Estimate", x="Variable") +
+  geom_hline( yintercept = 0, col="blue" ) +
+  theme_minimal()
+
+```
+Here we left our residual variances on to get some scale. E.g., the schools vary more than the girl-boy gap (boys are our reference category).
+We can now say things like a one standard deviation increase in bullying corresponds to a -0.3 standard deviation change in emotional safety.  Physical safety, not unsurprisingly, is heavily predictive of emotional safety.
+
+The small group size of those who chose not reveal their gender makes the confidence interval wider than for the other coefficents.
+Overall, this large survey is giving us good precision.
+
