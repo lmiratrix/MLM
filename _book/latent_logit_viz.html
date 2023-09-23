@@ -8,7 +8,7 @@
 
 <meta name="author" content="Josh Gilbert">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 43&nbsp; Latent Logit/LPM Visualization</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 44&nbsp; Latent Logit/LPM Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./icc_derivation.html" rel="next">
-<link href="./rewb_viz.html" rel="prev">
+<link href="./centering_viz.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -75,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_viz.html">VISUALIZATIONS</a></li><li class="breadcrumb-item"><a href="./latent_logit_viz.html"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_viz.html">VISUALIZATIONS</a></li><li class="breadcrumb-item"><a href="./latent_logit_viz.html"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -448,8 +448,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -466,31 +472,31 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -514,7 +520,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></h1>
+<h1 class="title"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></h1>
 </div>
 
 
@@ -781,13 +787,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rewb_viz.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span>
+      <a href="./centering_viz.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./icc_derivation.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

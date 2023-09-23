@@ -482,8 +482,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -500,31 +506,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -778,20 +784,20 @@ meanses     0.32553097 0.5388374</code></pre>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>fake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
-   id      mathach     ses sector
-   &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 1      0.330    -0.960       0
- 2 1      0.0717   -1.26        0
- 3 1     -0.425    -1.06        0
- 4 2     -0.786    -0.313       1
- 5 2     -0.979    -0.517       1
- 6 2      0.000330  0.325       1
- 7 3     -2.58     -0.0253      0
- 8 3     -1.27      0.845       0
- 9 3     -0.772     0.151       0
-10 4      0.802    -1.11        1
-11 4      0.664    -0.963       1
-12 4     -0.743    -0.101       1</code></pre>
+   id    mathach     ses sector
+   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 1      0.611   0.823       0
+ 2 1     -1.18   -0.325       0
+ 3 1      1.11    0.538       0
+ 4 2     -1.23   -0.197       1
+ 5 2      0.797  -0.619       1
+ 6 2     -1.66   -1.55        1
+ 7 3     -0.0961  1.43        0
+ 8 3     -0.947  -0.300       0
+ 9 3     -0.0831  0.0485      0
+10 4      0.878   0.0476      1
+11 4     -0.152   0.984       1
+12 4     -1.01   -0.771       1</code></pre>
 </div>
 </div>
 <p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
@@ -804,7 +810,7 @@ lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
      id1       id2       id3       id4       ses    sector  
--0.06936  -0.59756  -1.52257   0.20026  -0.05623        NA  </code></pre>
+-0.04776  -0.17293  -0.63569  -0.15074   0.66367        NA  </code></pre>
 </div>
 </div>
 <p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>

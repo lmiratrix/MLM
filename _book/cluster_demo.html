@@ -8,7 +8,7 @@
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 48&nbsp; Walk-through of calculating robust standard errors</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 49&nbsp; Walk-through of calculating robust standard errors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_derivation.html">MATH DERIVATIONS</a></li><li class="breadcrumb-item"><a href="./cluster_demo.html"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_derivation.html">MATH DERIVATIONS</a></li><li class="breadcrumb-item"><a href="./cluster_demo.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -484,8 +484,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -502,31 +508,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -547,14 +553,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#robust-errors-no-clustering" id="toc-robust-errors-no-clustering" class="nav-link active" data-scroll-target="#robust-errors-no-clustering"><span class="header-section-number">48.1</span> Robust errors (no clustering)</a>
+  <li><a href="#robust-errors-no-clustering" id="toc-robust-errors-no-clustering" class="nav-link active" data-scroll-target="#robust-errors-no-clustering"><span class="header-section-number">49.1</span> Robust errors (no clustering)</a>
   <ul class="collapse">
-  <li><a href="#r-packages-to-do-all-this-for-you" id="toc-r-packages-to-do-all-this-for-you" class="nav-link" data-scroll-target="#r-packages-to-do-all-this-for-you"><span class="header-section-number">48.1.1</span> R Packages to do all this for you</a></li>
+  <li><a href="#r-packages-to-do-all-this-for-you" id="toc-r-packages-to-do-all-this-for-you" class="nav-link" data-scroll-target="#r-packages-to-do-all-this-for-you"><span class="header-section-number">49.1.1</span> R Packages to do all this for you</a></li>
   </ul></li>
-  <li><a href="#cluster-robust-standard-errors" id="toc-cluster-robust-standard-errors" class="nav-link" data-scroll-target="#cluster-robust-standard-errors"><span class="header-section-number">48.2</span> Cluster Robust Standard Errors</a>
+  <li><a href="#cluster-robust-standard-errors" id="toc-cluster-robust-standard-errors" class="nav-link" data-scroll-target="#cluster-robust-standard-errors"><span class="header-section-number">49.2</span> Cluster Robust Standard Errors</a>
   <ul class="collapse">
-  <li><a href="#using-r-packages" id="toc-using-r-packages" class="nav-link" data-scroll-target="#using-r-packages"><span class="header-section-number">48.2.1</span> Using R Packages</a></li>
-  <li><a href="#aside-making-your-own-function" id="toc-aside-making-your-own-function" class="nav-link" data-scroll-target="#aside-making-your-own-function"><span class="header-section-number">48.2.2</span> Aside: Making your own function</a></li>
+  <li><a href="#using-r-packages" id="toc-using-r-packages" class="nav-link" data-scroll-target="#using-r-packages"><span class="header-section-number">49.2.1</span> Using R Packages</a></li>
+  <li><a href="#aside-making-your-own-function" id="toc-aside-making-your-own-function" class="nav-link" data-scroll-target="#aside-making-your-own-function"><span class="header-section-number">49.2.2</span> Aside: Making your own function</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -564,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></h1>
+<h1 class="title"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></h1>
 </div>
 
 
@@ -589,8 +595,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The goal is to show you how to use <em>cluster-robust standard errors</em> to correct for biased standard errors introduced by working with clustered data. We’ll also show you how you can implement some model-fitting techniques using the matrix operations in R.</p>
 <p>We’ll be working with data we’ve seen before (The High School and Beyond dataset.)</p>
 <p>While this document shows how to calculate things by hand, it also shows the relevant R packages to automate it so you don’t have to bother. The “by-hand” stuff is for interest, and to see what is happening under the hood.</p>
-<section id="robust-errors-no-clustering" class="level2" data-number="48.1">
-<h2 data-number="48.1" class="anchored" data-anchor-id="robust-errors-no-clustering"><span class="header-section-number">48.1</span> Robust errors (no clustering)</h2>
+<section id="robust-errors-no-clustering" class="level2" data-number="49.1">
+<h2 data-number="49.1" class="anchored" data-anchor-id="robust-errors-no-clustering"><span class="header-section-number">49.1</span> Robust errors (no clustering)</h2>
 <p>The (no clustering, ordinary) linear regression model assumes that</p>
 <p><span class="math display">\[y = X\beta + \varepsilon\]</span></p>
 <p>with the <span class="math inline">\(\varepsilon\)</span>’s independently and identically normally distributed with variance <span class="math inline">\(\sigma^2\)</span>. Here <span class="math inline">\(\beta\)</span> is a column vector of regression coefficients, <span class="math inline">\((\beta_0, \beta_1)\)</span> in our example. <span class="math inline">\(y\)</span> is a vector of the outcomes and <span class="math inline">\(\varepsilon\)</span> is a vector of the residuals. <span class="math inline">\(X\)</span> is a <span class="math inline">\(n\)</span> by <span class="math inline">\(p\)</span> matrix referred to as the <em>model matrix</em> (p is the number of predictors, including the intercept). In this example, the first column of the matrix is all 1’s, for the intercept, and the second column is each person’s value for ses. The third is each person’s value for sector (which will be the same for all students in a single school).</p>
@@ -746,8 +752,8 @@ sector      -0.012535538 -0.003992666  0.023942897</code></pre>
  0.10610213  0.09783058  0.15249341 </code></pre>
 </div>
 </div>
-<section id="r-packages-to-do-all-this-for-you" class="level3" data-number="48.1.1">
-<h3 data-number="48.1.1" class="anchored" data-anchor-id="r-packages-to-do-all-this-for-you"><span class="header-section-number">48.1.1</span> R Packages to do all this for you</h3>
+<section id="r-packages-to-do-all-this-for-you" class="level3" data-number="49.1.1">
+<h3 data-number="49.1.1" class="anchored" data-anchor-id="r-packages-to-do-all-this-for-you"><span class="header-section-number">49.1.1</span> R Packages to do all this for you</h3>
 <p>There is an R package to do all of this for us. The following gives us the “Variance Covariance” matrix:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
@@ -811,8 +817,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>All this is well and good, but everything we have done so far is <strong>WRONG</strong> because we have failed to account for the clustering of students within schools. Huber-White (Sandwich) corrections only deal with heteroskedasticity, not clustering. We extend these ideas to do clustering next.</p>
 </section>
 </section>
-<section id="cluster-robust-standard-errors" class="level2" data-number="48.2">
-<h2 data-number="48.2" class="anchored" data-anchor-id="cluster-robust-standard-errors"><span class="header-section-number">48.2</span> Cluster Robust Standard Errors</h2>
+<section id="cluster-robust-standard-errors" class="level2" data-number="49.2">
+<h2 data-number="49.2" class="anchored" data-anchor-id="cluster-robust-standard-errors"><span class="header-section-number">49.2</span> Cluster Robust Standard Errors</h2>
 <p>The next step is to get standard errors which allow the residuals to be correlated within clusters and to have non-0 means within clusters (which violates the assumption of independence of residuals). The math here is harder to explain. We start by calculating <span class="math inline">\(X*\varepsilon\)</span>, multiplying each row in <span class="math inline">\(X\)</span> by the associated residual. Then we take the column sum of <span class="math inline">\(X\)</span> within each cluster. This is easiest to understand for the intercept column, where the sum is simply equal to the sum of the residuals in that cluster. If all of the residuals in a cluster are large and positive (or large and negative), then this sum will be very large; if the residuals are close to mean 0 in a cluster, the sum will be small. We then bind the results into a <span class="math inline">\(M\)</span> by <span class="math inline">\(K\)</span> matrix, where <span class="math inline">\(M\)</span> is the number of clusters, each row corresponds to a cluster, and each column corresponds to a coefficient, which we’ll call <span class="math inline">\(U\)</span>. This is the meat which we sandwich with <span class="math inline">\(V\)</span>. Finally, we take</p>
 <p><span class="math display">\[\sqrt{ diag( \frac{M}{M-1}\frac{N-1}{N-K} VU^TUV)}\]</span></p>
 <p>which gives us estimated standard errors for the regression coefficients.</p>
@@ -851,8 +857,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>These are a lot higher than before; there’s a lot of within-cluster correlation, and our OLS-based estimated standard errors are unrealistically small.</p>
 <p>You can use these standard errors in general if you’re not interested in modeling what’s happening at the cluster level and just want to get the right standard errors for your fixed effects.</p>
-<section id="using-r-packages" class="level3" data-number="48.2.1">
-<h3 data-number="48.2.1" class="anchored" data-anchor-id="using-r-packages"><span class="header-section-number">48.2.1</span> Using R Packages</h3>
+<section id="using-r-packages" class="level3" data-number="49.2.1">
+<h3 data-number="49.2.1" class="anchored" data-anchor-id="using-r-packages"><span class="header-section-number">49.2.1</span> Using R Packages</h3>
 <p>There is a package that gives you the cluster-robust estimate of the variance-covariance matrix. You can then use this matrix to get your adjusted standard errors:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( multiwayvcov )</span>
@@ -908,8 +914,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Up to rounding errors, we are the same!</p>
 </section>
-<section id="aside-making-your-own-function" class="level3" data-number="48.2.2">
-<h3 data-number="48.2.2" class="anchored" data-anchor-id="aside-making-your-own-function"><span class="header-section-number">48.2.2</span> Aside: Making your own function</h3>
+<section id="aside-making-your-own-function" class="level3" data-number="49.2.2">
+<h3 data-number="49.2.2" class="anchored" data-anchor-id="aside-making-your-own-function"><span class="header-section-number">49.2.2</span> Aside: Making your own function</h3>
 <p>The following is code to generate the var-cor matrix more efficiently. For reference (or to ignore):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a> cl <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, fm, cluster){</span>
@@ -1181,7 +1187,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./complex_error.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

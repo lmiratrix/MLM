@@ -482,8 +482,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -500,31 +506,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cov_matrix_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -616,9 +622,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 Model 1: Y ~ A
 Model 2: Y ~ A + B
-  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
-1     98 111.051                                  
-2     97  97.115  1    13.936 13.919 0.0003215 ***
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)    
+1     98 85.580                                 
+2     97 73.598  1    11.982 15.792 0.000136 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -642,7 +648,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <tr class="odd">
 <td style="text-align: left;">Y ~ A</td>
 <td style="text-align: right;">98</td>
-<td style="text-align: right;">111.05119</td>
+<td style="text-align: right;">85.58021</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -651,11 +657,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <tr class="even">
 <td style="text-align: left;">Y ~ A + B</td>
 <td style="text-align: right;">97</td>
-<td style="text-align: right;">97.11539</td>
+<td style="text-align: right;">73.59818</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">13.9358</td>
-<td style="text-align: right;">13.91924</td>
-<td style="text-align: right;">0.0003215</td>
+<td style="text-align: right;">11.98203</td>
+<td style="text-align: right;">15.79192</td>
+<td style="text-align: right;">0.000136</td>
 </tr>
 </tbody>
 </table>
@@ -683,24 +689,24 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0006555</td>
-<td style="text-align: right;">0.1001849</td>
-<td style="text-align: right;">0.0065433</td>
-<td style="text-align: right;">0.9947927</td>
+<td style="text-align: right;">0.0815248</td>
+<td style="text-align: right;">0.0877238</td>
+<td style="text-align: right;">0.9293349</td>
+<td style="text-align: right;">0.3550225</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.3425099</td>
-<td style="text-align: right;">0.1041237</td>
-<td style="text-align: right;">3.2894515</td>
-<td style="text-align: right;">0.0013997</td>
+<td style="text-align: right;">0.1854484</td>
+<td style="text-align: right;">0.0900338</td>
+<td style="text-align: right;">2.0597640</td>
+<td style="text-align: right;">0.0420997</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.4137939</td>
-<td style="text-align: right;">0.1109114</td>
-<td style="text-align: right;">3.7308504</td>
-<td style="text-align: right;">0.0003215</td>
+<td style="text-align: right;">0.3816899</td>
+<td style="text-align: right;">0.0960491</td>
+<td style="text-align: right;">3.9739051</td>
+<td style="text-align: right;">0.0001360</td>
 </tr>
 </tbody>
 </table>
