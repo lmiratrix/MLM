@@ -1,0 +1,298 @@
+---
+title: "A visual guide to parameters"
+author: "Miratrix"
+date: "2023-10-05"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load the required libraries
+library(tidyverse)
+library(MASS)  # for mvrnorm
+
+set.seed(435345)
+knitr::opts_chunk$set(fig.align = "center")
+
+GAMMA_00 = 1.75
+GAMMA_01 = 1
+GAMMA_11 = 0.25
+GAMMA_10 = 0.75
+
+make_data <- function(gamma_00 = GAMMA_00, gamma_01 = GAMMA_01, gamma_10 = GAMMA_10, gamma_11 = GAMMA_11, 
+                      tau_00 = 0.5^2, tau_11 = 0.2^2, tau_01 = 0, 
+                      n_sectors = 20 ) {
+  # Generate sectors
+  sector_data <- tibble(
+    sector_id = 1:n_sectors,
+    sector = sample(c(0, 1), n_sectors, replace = TRUE)  # Binary sector variable
+  )
+  
+  # Variance-covariance matrix for u_0j and u_1j
+  Sigma <- matrix(c(tau_00, tau_01, tau_01, tau_11), 2)
+  colnames(Sigma) <- rownames(Sigma) <- c("u_0j", "u_1j")
+  
+  # Generate random effects
+  random_effects <- as_tibble(mvrnorm(n_sectors, mu = c(0, 0), Sigma = Sigma))
+  
+  # Combine sector and random effects
+  combined_data <- bind_cols(sector_data, random_effects)
+  
+  # Calculate beta_0j and beta_1j
+  combined_data <- combined_data %>%
+    mutate(
+      beta_0j = gamma_00 + gamma_01 * sector + u_0j,
+      beta_1j = gamma_10 + gamma_11 * sector + u_1j
+    )
+  combined_data$sector = as.factor(combined_data$sector)
+  
+  combined_data
+}
+
+make_ggplot <- function( res, main="" ) {
+  plt <- ggplot( res, aes( col = sector ) ) +
+    geom_hline( yintercept = 0, col="black" ) +
+    geom_vline( xintercept = 0, col="black" ) +
+    geom_abline( aes( col = sector, intercept=beta_0j, slope=beta_1j ) ) +
+    coord_fixed(xlim = c( -5, 7 ),
+                    ylim = c( -1,7  ) ) +
+    labs( title = main, y = "math", x ="ses" ) +
+    theme_minimal()
+  
+    plt
+}
+
+make_and_plot <- function( ..., main="" ) {
+  res = make_data( ... )
+
+  make_ggplot( res, main=main )
+}
+
+plt <- make_and_plot( main = "Baseline" )
+print( plt )
+
+# Test the function
+generated_data <- make_data(5, 2, 3, 2,
+                            1, 1, 0.5)
+generated_data
+
+
+setA = make_data(2, 2, 1, 0,
+                 0.75, 0.05, 0)
+setB = make_data(2, 2, 1, 0,
+                 0.75, 0, 0)
+setC = make_data(2, 2, 0, 0,
+                 0.75,  0.05, 0)
+
+res = bind_rows( setA = setA,
+                 setB = setB,
+                 setC = setC, .id="set" )
+res
+
+ggplot( res, aes( col = sector ) ) +
+  facet_wrap( ~ set, nrow = 1 ) +
+  geom_abline( aes( col = sector, intercept=beta_0j, slope=beta_1j ) ) +
+  coord_fixed(xlim = c( -5, 5 ),
+                  ylim = c( -1,7  ) ) +
+  geom_hline( yintercept = 0, col="red" ) +
+  geom_vline( xintercept = 0, col="red" ) +
+  labs( y = "math", x ="ses" ) +
+  theme_minimal()
+
+
+```
+
+In this guide I am going to generate a different collection of datasets for a variety of different null hypothesis so we can see what each hypothesis means.
+
+The main model, in the classic two-level hierarchical linear model form, is as follows:
+
+Level-1 Model (Within-Group):
+$$
+Y_{ij} = \beta_{0j} + \beta_{1j} SES_{ij} + \epsilon_{ij}
+$$
+where $Y_{ij}$ is the outcome and $SES_{ij}$ is the predictor for individual $i$ in school $j$, and $\epsilon_{ij}$ is the student residual (normally distributed, etc.).
+
+Level-2 Model (Between-Group):
+$$
+\begin{aligned}
+\beta_{0j} &= \gamma_{00} + \gamma_{01} \text{sector}_{j} + u_{0j} \\
+\beta_{1j} &= \gamma_{10} + \gamma_{11} \text{sector}_{j} + u_{1j}
+\end{aligned}
+$$
+where $ \text{sector}_{j} $ is the indicator for Catholic or public for school $j$, and $u_{0j}$ and $u_{1j}$ are the random effects for intercept and slope, respectively, for school $j$.
+
+The random effects $ (u_{0j}, u_{1j}) $ are assumed to be multivariate normal with a mean of zero and a covariance matrix $\Sigma$:
+$$
+\begin{pmatrix}
+u_{0j} \\
+u_{1j}
+\end{pmatrix}
+\sim N \left(
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix},
+\begin{pmatrix}
+\tau_{00} & \tau_{01} \\
+\tau_{01} & \tau_{11}
+\end{pmatrix}
+\right)
+$$
+
+We are going to look at a collection of 20 schools with the following parameter values for our level 2 models:
+
+```{r, include=FALSE}
+GAMMA_00
+GAMMA_01
+GAMMA_10
+GAMMA_11
+```
+
+$$
+\begin{aligned}
+\beta_{0j} &= 1.75 + 1 \cdot \text{sector}_{j} + u_{0j} \\
+\beta_{1j} &= 0.5 + 0.75 \cdot \text{sector}_{j} + u_{1j}
+\end{aligned}
+$$
+
+with
+
+$$
+\begin{pmatrix}
+u_{0j} \\
+u_{1j}
+\end{pmatrix}
+\sim N \left(
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix},
+\begin{pmatrix}
+0.5^2 & 0 \\
+ & 0.2^2
+\end{pmatrix}
+\right)
+$$
+For this model, with the parameters listed above, we get this:
+
+```{r, fig.width = 4}
+plt <- make_and_plot( main = "Our Starting Model" )
+print( plt  +
+  geom_abline( slope=GAMMA_10, intercept = GAMMA_00, lwd=1, lty=2 ) +
+  geom_abline( slope=GAMMA_10 + GAMMA_11, intercept = GAMMA_00 + GAMMA_01, lwd=1, lty=2 ) )
+```
+
+Each line represents the regression line of math achievement on SES for that school (assuming we had infinite number of students in that school so we knew the line perfectly).  The dashed lines show the overall public and Catholic regression lines.
+Our model says our schools are from two groups, and that the schools themselves vary by group (due to the random intercepts and slopes).
+
+
+
+
+## Null hypotheses on slopes
+
+Now consider three different null hypothesis for the slope:
+
+ * $\tau_{11} = 0$: This removes the random slope term.  Note that this also implies $\tau_{01}$ = 0.
+ * $\gamma_{10} = 0$: This removes the overall average slope. We still allow individual schools to vary, and also for Catholic schools to be  systematically different from public.
+ * $\gamma_{11} = 0$: This removes systematic differences between Catholic and public schools.
+
+We are going to generate data where everything is as the original model except for the null.  We will then see how the data look different.
+Witness!
+
+```{r}
+set.seed( 40404 )
+setA = make_data( tau_11 = 0, tau_01 = 0 )
+setB = make_data( gamma_10 = 0 )
+setC = make_data( gamma_11 = 0 )
+res = bind_rows( setA = setA,
+                 setB = setB,
+                 setC = setC,
+                 .id="set" )
+res$set = fct_recode( res$set,
+                      `No random slope` = "setA",
+                 `No overall avg slope` = "setB",
+                 `No Catholic-public diff` = "setC")
+
+plt = make_ggplot(res, main="Three constraints on slopes" ) +
+  facet_wrap( ~ set )
+plt
+```
+
+No random slope still gives different lines for each school, but they are very similar.  First, our catholic schools all have one slope and the public schools another.  The only difference is we allow the intercepts to vary, which gives the two bundles of lines.
+
+No _average_ slope means our public school slopes are 0, on average.  Note the Catholic schools have a positive slope on average--this is due to the $\gamma_{11}$ term.
+
+Finally, if $\gamma_{11} = 0$, then our Catholic and public slopes are all centered around the average slope of $\gamma_{10}$--but each school still has its own slope and the Catholic schools are still shifted higher 
+
+## And what about intercepts?
+
+Let's do things to the school level intercepts:
+
+ * $\tau_{00} = 0$: This removes the random intercept, but still lets the slopes vary.  This is not something we would normally think would happen in practice, but it helps us see how the different parameters matter.
+ * $\gamma_{01} = 0$: This means there is no shift in _intercepts_ between Catholic and public schools.
+ * $\gamma_{00} = 0$: This means that the public schools overall grand intercept is 0.
+
+In all of the above, we are leaving the slope part of our model alone.  Each school's intercept is calculated from the grand intercept, the shift due to being Catholic, and the random intercept.  Changing them changes things like this:
+
+```{r}
+set.seed( 40404 )
+setA = make_data( tau_00 = 0, tau_01 = 0 )
+setB = make_data( gamma_01 = 0 )
+setC = make_data( gamma_00 = 0 )
+res = bind_rows( setA = setA,
+                 setB = setB,
+                 setC = setC,
+                 .id="set" )
+res$set = fct_recode( res$set,
+                      `No random intercept` = "setA",
+                 `No diff in intercept` = "setB",
+                 `No grand intercept` = "setC")
+
+plt = make_ggplot(res, main="Constraints on intercepts" ) +
+  facet_wrap( ~ set )
+plt
+```
+
+In the first plot, note how all the lines go through the same intercept point.  The varying slopes give different lines.
+
+The second plot has the Catholic and public schools sharing the same intercepts, but the Catholic schools have steeper slopes in general.
+
+The third plot lowers the schools so the _public_ school intercepts are 0 on average.  The Catholic schools are still shifted higher by $\gamma_{01}$.
+
+
+## And what are the taus?
+
+Let's drop all the Catholic and public differences (i.e., $\gamma_{01} = \gamma_{11} = 0$) and crank up the $tau$ values:
+
+ * $\tau_{00} = BIG$: The intercepts vary a lot.
+ * $\tau_{11} = BIG$: The slopes vary a lot.
+ * $\tau_{01} = BIG$: The covariance is large (i.e., the correlation of the random intercepts and slopes is very positive)
+ 
+ 
+```{r}
+set.seed( 40404 )
+setA = make_data( tau_00 = 5, gamma_01 = 0, gamma_11 = 0 )
+setB = make_data( tau_11 = 1, gamma_01 = 0, gamma_11 = 0 )
+setC = make_data( tau_01 = 1*0.5*0.2, gamma_01 = 0, gamma_11 = 0 )
+res = bind_rows( setA = setA,
+                 setB = setB,
+                 setC = setC,
+                 .id="set" )
+res$set = fct_recode( res$set,
+                      `Intercepts vary` = "setA",
+                 `Slopes vary` = "setB",
+                 `Correlation is 1` = "setC")
+
+plt = make_ggplot(res, main="Varying the taus" ) +
+  facet_wrap( ~ set )
+plt
+```
+
+In the first plot, our lines are scattered vertically a lot, and in the second plot our slopes are all over the place.
+In the third plot, the steepest slope has the highest intercept.
+
+
+

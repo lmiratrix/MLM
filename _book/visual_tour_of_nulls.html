@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Miratrix">
+<meta name="dcterms.date" content="2023-10-05">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 7&nbsp; Making Regression Tables</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 23&nbsp; A visual guide to parameters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +32,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./anova.html" rel="next">
-<link href="./making_tables.html" rel="prev">
+<link href="./reg_assumptions.html" rel="next">
+<link href="./within_v_between.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./style_guide.html">R &amp; R MARKDOWN</a></li><li class="breadcrumb-item"><a href="./reg_table_demo.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./visual_tour_of_nulls.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">A visual guide to parameters</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -212,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link active">
+  <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></a>
   </div>
 </li>
@@ -330,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./visual_tour_of_nulls.html" class="sidebar-item-text sidebar-link">
+  <a href="./visual_tour_of_nulls.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">A visual guide to parameters</span></span></a>
   </div>
 </li>
@@ -564,19 +532,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-basics-of-regression-tables" id="toc-the-basics-of-regression-tables" class="nav-link active" data-scroll-target="#the-basics-of-regression-tables"><span class="header-section-number">7.1</span> The basics of regression tables</a></li>
-  <li><a href="#extending-to-the-multilevel-model" id="toc-extending-to-the-multilevel-model" class="nav-link" data-scroll-target="#extending-to-the-multilevel-model"><span class="header-section-number">7.2</span> Extending to the multilevel model</a></li>
-  <li><a href="#getting-p-values-for-lmer-output" id="toc-getting-p-values-for-lmer-output" class="nav-link" data-scroll-target="#getting-p-values-for-lmer-output"><span class="header-section-number">7.3</span> Getting p-values for lmer output</a></li>
-  <li><a href="#the-texreg-package" id="toc-the-texreg-package" class="nav-link" data-scroll-target="#the-texreg-package"><span class="header-section-number">7.4</span> The texreg package</a>
-  <ul class="collapse">
-  <li><a href="#using-screenreg" id="toc-using-screenreg" class="nav-link" data-scroll-target="#using-screenreg"><span class="header-section-number">7.4.1</span> Using screenreg()</a></li>
-  <li><a href="#using-texreg-and-tex" id="toc-using-texreg-and-tex" class="nav-link" data-scroll-target="#using-texreg-and-tex"><span class="header-section-number">7.4.2</span> Using texreg() and TeX</a></li>
-  </ul></li>
-  <li><a href="#the-stargazer-package" id="toc-the-stargazer-package" class="nav-link" data-scroll-target="#the-stargazer-package"><span class="header-section-number">7.5</span> The stargazer package</a>
-  <ul class="collapse">
-  <li><a href="#stargazer-with-lmertest" id="toc-stargazer-with-lmertest" class="nav-link" data-scroll-target="#stargazer-with-lmertest"><span class="header-section-number">7.5.1</span> Stargazer with lmerTest</a></li>
-  <li><a href="#the-sjplot-package" id="toc-the-sjplot-package" class="nav-link" data-scroll-target="#the-sjplot-package"><span class="header-section-number">7.5.2</span> The sjPlot package</a></li>
-  </ul></li>
+  <li><a href="#null-hypotheses-on-slopes" id="toc-null-hypotheses-on-slopes" class="nav-link active" data-scroll-target="#null-hypotheses-on-slopes"><span class="header-section-number">23.1</span> Null hypotheses on slopes</a></li>
+  <li><a href="#and-what-about-intercepts" id="toc-and-what-about-intercepts" class="nav-link" data-scroll-target="#and-what-about-intercepts"><span class="header-section-number">23.2</span> And what about intercepts?</a></li>
+  <li><a href="#and-what-are-the-taus" id="toc-and-what-are-the-taus" class="nav-link" data-scroll-target="#and-what-are-the-taus"><span class="header-section-number">23.3</span> And what are the taus?</a></li>
   </ul>
 </nav>
     </div>
@@ -585,14 +543,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-make-regression-tables" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></h1>
+<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">A visual guide to parameters</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Miratrix </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 5, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -600,328 +570,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>For publication-ready tables and graphics, R has many wonderful packages to automate the process. Some of these packages are good for html documents (websites) and some are good for making PDF documents (reports and papers). This document demonstrates different ways of making regression tables in your reports, and talks about some weird wrinkles with using them with multilevel modeling.</p>
-<section id="the-basics-of-regression-tables" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="the-basics-of-regression-tables"><span class="header-section-number">7.1</span> The basics of regression tables</h2>
-<p>For the basics we quickly illustrate regression tables using a subset of the Making Caring Common dataset, which we will eventually discuss in class. This dataset has a measure of emotional safety (our outcome) and we want to see, in a specific school, if this is predicted by gender and/or grade.</p>
-<p>Our data look like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>( sch1, <span class="dv">6</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  ID    esafe grade gender     disc race_white
-1  1 3.285714     5   Male 1.000000          0
-2  1 4.000000     8   Male 1.000000          1
-3  1 2.000000     7 Female 3.000000          0
-4  1 4.000000     7   Male 1.111111          0
-5  1 3.714286     6 Female 1.000000          0
-6  1 4.000000     5   Male 1.000000          1</code></pre>
-</div>
-</div>
-<p>We fit some models:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M_A <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade, <span class="at">data =</span> sch1 )</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>M_B <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade <span class="sc">+</span> gender, <span class="at">data =</span> sch1 )</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>M_C <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade <span class="sc">*</span> gender, <span class="at">data =</span> sch1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Ok, we have fit our regression models. We can look at big complex printout of a single model like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( M_C )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = esafe ~ grade * gender, data = sch1)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.7894 -0.1570  0.1550  0.2662  0.4938 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       4.12733    0.37946  10.877   &lt;2e-16 ***
-grade            -0.07764    0.05859  -1.325   0.1879    
-genderMale       -0.72735    0.49762  -1.462   0.1467    
-grade:genderMale  0.13327    0.07627   1.747   0.0834 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4333 on 108 degrees of freedom
-Multiple R-squared:  0.04914,   Adjusted R-squared:  0.02273 
-F-statistic: 1.861 on 3 and 108 DF,  p-value: 0.1406</code></pre>
-</div>
-</div>
-<p>Or we can make <em>regression tables</em>. Consider these two packages, the first being <code>texreg</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(M_A, M_B, M_C))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-====================================================
-                  Model 1     Model 2     Model 3   
-----------------------------------------------------
-(Intercept)         3.68 ***    3.62 ***    4.13 ***
-                   (0.25)      (0.25)      (0.38)   
-grade               0.00        0.00       -0.08    
-                   (0.04)      (0.04)      (0.06)   
-genderMale                      0.13       -0.73    
-                               (0.08)      (0.50)   
-grade:genderMale                            0.13    
-                                           (0.08)   
-----------------------------------------------------
-R^2                 0.00        0.02        0.05    
-Adj. R^2           -0.01        0.00        0.02    
-Num. obs.         112         112         112       
-====================================================
-*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
-</div>
-</div>
-<p>Another is <code>stargazer</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>( M_A, M_B, M_C, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'text'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-===============================================================================
-                                        Dependent variable:                    
-                    -----------------------------------------------------------
-                                               esafe                           
-                            (1)                 (2)                 (3)        
--------------------------------------------------------------------------------
-grade                      0.004               0.001              -0.078       
-                          (0.038)             (0.038)             (0.059)      
-                                                                               
-genderMale                                     0.130              -0.727       
-                                              (0.083)             (0.498)      
-                                                                               
-grade:genderMale                                                  0.133*       
-                                                                  (0.076)      
-                                                                               
-Constant                 3.676***            3.624***            4.127***      
-                          (0.249)             (0.250)             (0.379)      
-                                                                               
--------------------------------------------------------------------------------
-Observations                112                 112                 112        
-R2                        0.0001               0.022               0.049       
-Adjusted R2               -0.009               0.004               0.023       
-Residual Std. Error  0.440 (df = 110)    0.437 (df = 109)    0.433 (df = 108)  
-F Statistic         0.009 (df = 1; 110) 1.241 (df = 2; 109) 1.861 (df = 3; 108)
-===============================================================================
-Note:                                               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-</div>
-</div>
-</section>
-<section id="extending-to-the-multilevel-model" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="extending-to-the-multilevel-model"><span class="header-section-number">7.2</span> Extending to the multilevel model</h2>
-<p>For our multilevel examples, we use the Making Caring Common data from Project A, and fit data to the 8th grade students only, but do it for all schools. We have made a High School dummy variable.</p>
-<p>Our two models we use for demo purposes have a HS term and no HS term:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modA <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>modB <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> HS <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In the next sections we first show how to get better summary output (according to some folks) and then we walk through making regression tables in a bit more detail than above.</p>
-</section>
-<section id="getting-p-values-for-lmer-output" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="getting-p-values-for-lmer-output"><span class="header-section-number">7.3</span> Getting p-values for lmer output</h2>
-<p>The <code>lmerTest</code> package is a way of making R give you more complete output. We are going to load it, and then put the new lmer models into new variables so we can see how the different model fitting packages work with the regression table packages below.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lmerTest )</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>modB.T <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> HS <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>modA.T <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modB.T )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
-Formula: esafe ~ 1 + HS + (1 | ID)
-   Data: dat.g8
-
-REML criterion at convergence: 2746.8
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.3883 -0.6156  0.2021  0.7628  1.7331 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- ID       (Intercept) 0.04809  0.2193  
- Residual             0.46459  0.6816  
-Number of obs: 1305, groups:  ID, 26
-
-Fixed effects:
-            Estimate Std. Error       df t value Pr(&gt;|t|)    
-(Intercept)  3.52798    0.08637 29.91033  40.846   &lt;2e-16 ***
-HSTRUE      -0.29480    0.10787 25.77814  -2.733   0.0112 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-       (Intr)
-HSTRUE -0.801</code></pre>
-</div>
-</div>
-</section>
-<section id="the-texreg-package" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="the-texreg-package"><span class="header-section-number">7.4</span> The texreg package</h2>
-<p>In <code>texreg</code> there are two primary functions for table making, one is <code>screenreg()</code> and the other is <code>texreg()</code>.</p>
-<section id="using-screenreg" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="using-screenreg"><span class="header-section-number">7.4.1</span> Using screenreg()</h3>
-<p>Screenreg is fine for MLMs. It looks a bit like raw output, but it is clear and clean. It will take models fit using lmer or lmerTest, no problem.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(modA,modB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-===============================================
-                     Model 1       Model 2     
------------------------------------------------
-(Intercept)              3.35 ***      3.53 ***
-                        (0.06)        (0.09)   
-HSTRUE                                -0.29 ** 
-                                      (0.11)   
------------------------------------------------
-AIC                   2756.78       2754.79    
-BIC                   2772.30       2775.49    
-Log Likelihood       -1375.39      -1373.40    
-Num. obs.             1305          1305       
-Num. groups: ID         26            26       
-Var: ID (Intercept)      0.07          0.05    
-Var: Residual            0.46          0.46    
-===============================================
-*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
-</div>
-</div>
-<p><em>Comment:</em> Note that the number of stars are different for the display vs the summary output! (Look at the HS coefficient for example.) Not good, it would seem.</p>
-<p>This is because the <span class="math inline">\(p\)</span>-values are calculated using the normal approximation by the screenreg command, and using the <span class="math inline">\(t\)</span>-test with approximate degrees of freedom by <code>lmerTest</code>. This makes a difference. Consider the following, using the <span class="math inline">\(t\)</span> statistics for the HS variable:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span><span class="fl">2.733</span>, <span class="at">df=</span><span class="fl">25.77814</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0111831</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>( <span class="sc">-</span><span class="fl">2.733</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.006276033</code></pre>
-</div>
-</div>
-<p>One is below 0.01, and one is not. An extra star!</p>
-</section>
-<section id="using-texreg-and-tex" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="using-texreg-and-tex"><span class="header-section-number">7.4.2</span> Using texreg() and TeX</h3>
-<p>The <code>texreg</code> command is part of the <code>texreg</code> package and can be integrated with latex (which you would need to install). Once you do this, when you compile to a pdf, all is well. In the R code chunk you need to include <code>results="asis"</code> to get the latex to compile right. E.g., “<code>r, results="asis"</code>” when you declare a code chunk.</p>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">texreg</span>(<span class="fu">list</span>(modA,modB), <span class="at">table=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that the <code>table=FALSE</code> puts the table right where you want it, not at some random spot latex things is nice. Latex likes to have “floating tables,” where it puts the table where there is space; this makes it easier to make the entire formatted page look nice.</p>
-</section>
-</section>
-<section id="the-stargazer-package" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="the-stargazer-package"><span class="header-section-number">7.5</span> The stargazer package</h2>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modA, modB, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'latex'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>One issue is stargazer does not include the random effect variances, so the output is quite limited for multilevel modeling. It also has less stringent conditions for when to put down stars. One star is below 0.10, two is below 0.05, and three is below 0.01. This is quite generous. Also it is using the normal approximation.</p>
-<section id="stargazer-with-lmertest" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="stargazer-with-lmertest"><span class="header-section-number">7.5.1</span> Stargazer with lmerTest</h3>
-<p>Stargazer with lmerTest is a bit fussy. This shows how to make it work if you have loaded the lmerTest package. Recall the lmerTest package makes your lmer commands have p-values and whatnot. But this means your new <code>lmer()</code> command is not quite the same as the old—and stargazer is expecting the old. You gix this by lying to R, telling it the new thing is the old thing. This basically works.</p>
-<p>Now for stargazer, we need to tell it that our models are the right type. First note:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "lmerMod"
-attr(,"package")
-[1] "lme4"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "lmerModLmerTest"
-attr(,"package")
-[1] "lmerTest"</code></pre>
-</div>
-</div>
-<p>So we fix as follows:</p>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB.T ) <span class="ot">=</span> <span class="st">"lmerMod"</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modA.T ) <span class="ot">=</span> <span class="st">"lmerMod"</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modA.T, modB.T, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'latex'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="the-sjplot-package" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="the-sjplot-package"><span class="header-section-number">7.5.2</span> The sjPlot package</h3>
-<p>One function, <code>tab_model</code> from <code>sjPlot</code>, makes nice regression tables:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate the results of our two tip models</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( sjPlot )</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(modA.T, modB.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this guide I am going to generate a different collection of datasets for a variety of different null hypothesis so we can see what each hypothesis means.</p>
+<p>The main model, in the classic two-level hierarchical linear model form, is as follows:</p>
+<p>Level-1 Model (Within-Group): <span class="math display">\[
+Y_{ij} = \beta_{0j} + \beta_{1j} SES_{ij} + \epsilon_{ij}
+\]</span> where <span class="math inline">\(Y_{ij}\)</span> is the outcome and <span class="math inline">\(SES_{ij}\)</span> is the predictor for individual <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>, and <span class="math inline">\(\epsilon_{ij}\)</span> is the student residual (normally distributed, etc.).</p>
+<p>Level-2 Model (Between-Group): <span class="math display">\[
+\begin{aligned}
+\beta_{0j} &amp;= \gamma_{00} + \gamma_{01} \text{sector}_{j} + u_{0j} \\
+\beta_{1j} &amp;= \gamma_{10} + \gamma_{11} \text{sector}_{j} + u_{1j}
+\end{aligned}
+\]</span> where $ _{j} $ is the indicator for Catholic or public for school <span class="math inline">\(j\)</span>, and <span class="math inline">\(u_{0j}\)</span> and <span class="math inline">\(u_{1j}\)</span> are the random effects for intercept and slope, respectively, for school <span class="math inline">\(j\)</span>.</p>
+<p>The random effects $ (u_{0j}, u_{1j}) $ are assumed to be multivariate normal with a mean of zero and a covariance matrix <span class="math inline">\(\Sigma\)</span>: <span class="math display">\[
+\begin{pmatrix}
+u_{0j} \\
+u_{1j}
+\end{pmatrix}
+\sim N \left(
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix},
+\begin{pmatrix}
+\tau_{00} &amp; \tau_{01} \\
+\tau_{01} &amp; \tau_{11}
+\end{pmatrix}
+\right)
+\]</span></p>
+<p>We are going to look at a collection of 20 schools with the following parameter values for our level 2 models:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_{0j} &amp;= 1.75 + 1 \cdot \text{sector}_{j} + u_{0j} \\
+\beta_{1j} &amp;= 0.5 + 0.75 \cdot \text{sector}_{j} + u_{1j}
+\end{aligned}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+u_{0j} \\
+u_{1j}
+\end{pmatrix}
+\sim N \left(
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix},
+\begin{pmatrix}
+0.5^2 &amp; 0 \\
+&amp; 0.2^2
+\end{pmatrix}
+\right)
+\]</span> For this model, with the parameters listed above, we get this:</p>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-
-<table style="border-collapse:collapse; border:none;">
-<tbody><tr>
-<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
-<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">esafe</th>
-<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">esafe</th>
-</tr>
-<tr>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.35</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.23&nbsp;–&nbsp;3.46</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.53</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.36&nbsp;–&nbsp;3.70</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">HSTRUE</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.29</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.51&nbsp;–&nbsp;-0.08</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.006</strong></td>
-</tr>
-<tr>
-<td colspan="7" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
-</tr>
-
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.46</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.46</td>
-</tr>
-
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.07 <sub>ID</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.05 <sub>ID</sub></td>
-
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.12</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.09</td>
-
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">26 <sub>ID</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">26 <sub>ID</sub></td>
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">1305</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">1305</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.000 / 0.125</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.028 / 0.119</td>
-</tr>
-
-</tbody></table>
-
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visual_tour_of_nulls_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
 </div>
 </div>
-
-
+</div>
+<p>Each line represents the regression line of math achievement on SES for that school (assuming we had infinite number of students in that school so we knew the line perfectly). The dashed lines show the overall public and Catholic regression lines. Our model says our schools are from two groups, and that the schools themselves vary by group (due to the random intercepts and slopes).</p>
+<section id="null-hypotheses-on-slopes" class="level2" data-number="23.1">
+<h2 data-number="23.1" class="anchored" data-anchor-id="null-hypotheses-on-slopes"><span class="header-section-number">23.1</span> Null hypotheses on slopes</h2>
+<p>Now consider three different null hypothesis for the slope:</p>
+<ul>
+<li><span class="math inline">\(\tau_{11} = 0\)</span>: This removes the random slope term. Note that this also implies <span class="math inline">\(\tau_{01}\)</span> = 0.</li>
+<li><span class="math inline">\(\gamma_{10} = 0\)</span>: This removes the overall average slope. We still allow individual schools to vary, and also for Catholic schools to be systematically different from public.</li>
+<li><span class="math inline">\(\gamma_{11} = 0\)</span>: This removes systematic differences between Catholic and public schools.</li>
+</ul>
+<p>We are going to generate data where everything is as the original model except for the null. We will then see how the data look different. Witness!</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visual_tour_of_nulls_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>No random slope still gives different lines for each school, but they are very similar. First, our catholic schools all have one slope and the public schools another. The only difference is we allow the intercepts to vary, which gives the two bundles of lines.</p>
+<p>No <em>average</em> slope means our public school slopes are 0, on average. Note the Catholic schools have a positive slope on average–this is due to the <span class="math inline">\(\gamma_{11}\)</span> term.</p>
+<p>Finally, if <span class="math inline">\(\gamma_{11} = 0\)</span>, then our Catholic and public slopes are all centered around the average slope of <span class="math inline">\(\gamma_{10}\)</span>–but each school still has its own slope and the Catholic schools are still shifted higher</p>
 </section>
+<section id="and-what-about-intercepts" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="and-what-about-intercepts"><span class="header-section-number">23.2</span> And what about intercepts?</h2>
+<p>Let’s do things to the school level intercepts:</p>
+<ul>
+<li><span class="math inline">\(\tau_{00} = 0\)</span>: This removes the random intercept, but still lets the slopes vary. This is not something we would normally think would happen in practice, but it helps us see how the different parameters matter.</li>
+<li><span class="math inline">\(\gamma_{01} = 0\)</span>: This means there is no shift in <em>intercepts</em> between Catholic and public schools.</li>
+<li><span class="math inline">\(\gamma_{00} = 0\)</span>: This means that the public schools overall grand intercept is 0.</li>
+</ul>
+<p>In all of the above, we are leaving the slope part of our model alone. Each school’s intercept is calculated from the grand intercept, the shift due to being Catholic, and the random intercept. Changing them changes things like this:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visual_tour_of_nulls_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the first plot, note how all the lines go through the same intercept point. The varying slopes give different lines.</p>
+<p>The second plot has the Catholic and public schools sharing the same intercepts, but the Catholic schools have steeper slopes in general.</p>
+<p>The third plot lowers the schools so the <em>public</em> school intercepts are 0 on average. The Catholic schools are still shifted higher by <span class="math inline">\(\gamma_{01}\)</span>.</p>
+</section>
+<section id="and-what-are-the-taus" class="level2" data-number="23.3">
+<h2 data-number="23.3" class="anchored" data-anchor-id="and-what-are-the-taus"><span class="header-section-number">23.3</span> And what are the taus?</h2>
+<p>Let’s drop all the Catholic and public differences (i.e., <span class="math inline">\(\gamma_{01} = \gamma_{11} = 0\)</span>) and crank up the <span class="math inline">\(tau\)</span> values:</p>
+<ul>
+<li><span class="math inline">\(\tau_{00} = BIG\)</span>: The intercepts vary a lot.</li>
+<li><span class="math inline">\(\tau_{11} = BIG\)</span>: The slopes vary a lot.</li>
+<li><span class="math inline">\(\tau_{01} = BIG\)</span>: The covariance is large (i.e., the correlation of the random intercepts and slopes is very positive)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visual_tour_of_nulls_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the first plot, our lines are scattered vertically a lot, and in the second plot our slopes are all over the place. In the third plot, the steepest slope has the highest intercept.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1158,16 +931,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./making_tables.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span>
+      <a href="./within_v_between.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Within, Between, and Contextual Effects</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./anova.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reg_assumptions.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">MLM Assumptions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

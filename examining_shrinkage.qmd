@@ -1,0 +1,157 @@
+---
+title: "How Empirical Bayes over shrinks"
+author: "Miratrix"
+date: "2023-09-26"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Using our high school and beyond dataset, we are going to fit a random slope model and then examine how the empirical bayes estimates operate.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# various libraries
+library( arm )
+library( foreign )
+library( tidyverse )
+library( broom.mixed )
+knitr::opts_chunk$set(echo = TRUE, 
+                      fig.width = 5,
+                      fig.height = 3,
+                      out.width = "75%", 
+                      fig.align = "center")
+options(list(dplyr.summarise.inform = FALSE))
+theme_set( theme_classic() )
+
+# read student data
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+head( dat )
+
+# read school data
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+head( sdat )
+
+```
+
+We first fit the model:
+
+```{r}
+library( lme4 )
+
+M1 = lmer( mathach ~ 1 + ses + (1 + ses|id), data=dat )
+
+display( M1 )
+```
+
+We then can get Empirical Bayes estimates for all the random intercepts and slopes:
+
+```{r}
+res = coef( M1 )$id
+names( res ) = c( "beta0", "beta1" )
+res <- rownames_to_column(res, "id")
+head( res )
+```
+
+Each row corresponds to a different school, and gives our estimated intercept and slope for that school. These estimates are shrunken towards the overall population. To illustrate, consider these three schools:
+
+```{r, echo=FALSE }
+# Get three schools
+sids = c( 3377, 9397, 2655 )
+subdat = subset( dat, id %in% sids )
+ss = filter( res, id %in% sids )
+ggplot( subdat, aes( ses, mathach ) ) +
+  facet_wrap( ~ id ) +
+  geom_point( alpha=0.25 ) +
+  geom_smooth( aes( col="Fixed Effect" ), method="lm", formula = y ~ x,
+               se=FALSE, lty=2 ) +
+  geom_vline( xintercept = 0, lty=2, col="darkgrey" ) +
+  geom_hline( yintercept = 0, lty=2, col="darkgrey" ) +
+  geom_abline( data=ss, aes( intercept = beta0, slope=beta1, col="Empirical Bayes" ) ) +
+  geom_abline( intercept=fixef(M1)["(Intercept)"], slope=fixef(M1)["ses"], lwd=2 ) +
+  theme( legend.position="bottom",
+legend.direction="horizontal", legend.key.width=unit(1,"cm"),
+panel.border = element_blank() )
+```
+
+The dotted lines are if we just ran a regression for the data in that school. The thick black line is the overall population average line (averaged across all schools, from our MLM). The red line is the Empirical Bayes line--we are shrinking the dotted lines toward the thick black line, and we shrink depending on the amount of data, and how informative the data is, in each school. For example, school 3377 has a lot of shrinkage of slope, and a bit of intercept. School 9397 is basically unchanged. We see the slopes are getting shrunk much more than the intercepts--this is because we are less certain about the slopes; we shrink more for things we are uncertain about.
+
+Remember our Radon and counties example: we shrunk small counties MORE than large counties, when estimating intercepts. We are now estimating the pair of intercept and slope, and how well we estimate the slope depends on amount of data, but also the spread of the data on the x-axis and a few other things. But the intuition is the same: everything is pulled towards the grand average *line*.
+
+## Comparing the model to the estimates
+
+We can measure how much variation there is in the Empirical Bayes estimated intercepts and slopes, along with the correlation of these effects:
+
+```{r}
+eb_ests = c( sd_int = sd( res$beta0 ),
+             sd_slope = sd( res$beta1 ),
+             cor = cor( res$beta0, res$beta1 ) )
+```
+
+We display these estimates alongside the model estimates:
+
+```{r, echo=FALSE}
+td = tidy( M1 )
+ests = tribble( ~ parameter, ~`model estimate`, ~ `Emp Bayes estimate`,
+                "stdev intercept", td$estimate[[3]], sd( res$beta0 ),
+                "stdev slope", td$estimate[[5]], sd( res$beta1 ),
+                "correlation", td$estimate[[4]], cor( res$beta0, res$beta1 ) )
+knitr::kable(ests, digits = 2)
+```
+
+If we compare the variation in the empirical Bayes estimates to the model estimates, we see that the standard deviations are smaller and the correlation is estimated as larger in magnitude. Importantly, our model does a good job, in general, estimating how much variation in random intercepts and slopes there is; it is the empirical estimates that are over shrunk. Trust the model, not the spread of the empirical estimates.
+
+In short, the empirical estimates are good for predicting individual values, but the distribution of the empirical estimates is generally too tidy and narrow, as compared to the truth. The model is what best estimates the population characteristics. That being said, the empirical Bayes estimates are *far better* than the raw estimates (in the above, for example, trust the red lines more than the dashed lines).
+
+## Plotting the individual schools
+
+When looking at individual schools we have this:
+
+```{r}
+ggplot( data=res ) +
+    scale_x_continuous(limits=range( dat$ses ) ) +
+    scale_y_continuous(limits=range( dat$mathach ) ) +
+  geom_abline( aes( intercept = beta0, slope=beta1 ), alpha=0.25) +
+  labs( x="SES", y="Math Achievment" ) +
+  theme_minimal()
+```
+
+Compare that to the messy (and incorrect) raw estimates, that are generated by running a interacted fixed effect regression of:
+
+```{r}
+M = lm( mathach ~ 0 + ses*id - ses, data=dat )
+cc = coef(M)
+head(cc)
+tail(cc)
+length(cc)
+schools = tibble( beta0 = cc[1:160],
+                  beta1 = cc[161:320] )
+
+ggplot( data=schools ) +
+    scale_x_continuous(limits=range( dat$ses ) ) +
+    scale_y_continuous(limits=range( dat$mathach ) ) +
+    geom_abline( aes( intercept = beta0, slope=beta1 ), alpha=0.25) +
+    labs( x="SES", y="Math Achievment" ) +
+  theme_minimal()
+```
+
+The raw estimates are over dispersed; the measurement error is giving a bad picture.
+
+## Simulation to get a just-right picture
+
+As discussed in class, empirical Bayes is too smooth. Raw is too disperse. If we want to see a picture of what the population of schools might look like, we can make a plot of 160 NEW schools generated from our model (to see how our partially pooled (Empirical Bayes) estimates are OVER SHRUNK/OVER SMOOTHED).
+
+We simulate from our model; we are *not* using the empirical bayes estimates at all. See the slides and script for Packet 2.4 for how to do this simulation.
+
+```{r, echo=FALSE}
+res.fake = mvrnorm( 160, mu=fixef( M1 ), Sigma=VarCorr( M1 )$id  )
+res.fake = data.frame( res.fake )
+names( res.fake ) = c( "beta0", "beta1" )
+
+ggplot( data=res.fake ) +
+    scale_x_continuous(limits=range( dat$ses ) ) +
+    scale_y_continuous(limits=range( dat$mathach ) ) +
+    geom_abline( aes( intercept = beta0, slope=beta1 ), alpha=0.25) +
+    labs( x="SES", y="Math Achievment" ) +
+  theme_minimal()
+```

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Miratrix">
+<meta name="dcterms.date" content="2023-09-26">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 7&nbsp; Making Regression Tables</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 18&nbsp; How Empirical Bayes over shrinks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +66,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./anova.html" rel="next">
-<link href="./making_tables.html" rel="prev">
+<link href="./broom.html" rel="next">
+<link href="./double_plot.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -95,8 +97,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./style_guide.html">R &amp; R MARKDOWN</a></li><li class="breadcrumb-item"><a href="./reg_table_demo.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./examining_shrinkage.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">How Empirical Bayes over shrinks</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -212,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link active">
+  <a href="./reg_table_demo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></a>
   </div>
 </li>
@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examining_shrinkage.html" class="sidebar-item-text sidebar-link">
+  <a href="./examining_shrinkage.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">How Empirical Bayes over shrinks</span></span></a>
   </div>
 </li>
@@ -564,19 +564,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-basics-of-regression-tables" id="toc-the-basics-of-regression-tables" class="nav-link active" data-scroll-target="#the-basics-of-regression-tables"><span class="header-section-number">7.1</span> The basics of regression tables</a></li>
-  <li><a href="#extending-to-the-multilevel-model" id="toc-extending-to-the-multilevel-model" class="nav-link" data-scroll-target="#extending-to-the-multilevel-model"><span class="header-section-number">7.2</span> Extending to the multilevel model</a></li>
-  <li><a href="#getting-p-values-for-lmer-output" id="toc-getting-p-values-for-lmer-output" class="nav-link" data-scroll-target="#getting-p-values-for-lmer-output"><span class="header-section-number">7.3</span> Getting p-values for lmer output</a></li>
-  <li><a href="#the-texreg-package" id="toc-the-texreg-package" class="nav-link" data-scroll-target="#the-texreg-package"><span class="header-section-number">7.4</span> The texreg package</a>
-  <ul class="collapse">
-  <li><a href="#using-screenreg" id="toc-using-screenreg" class="nav-link" data-scroll-target="#using-screenreg"><span class="header-section-number">7.4.1</span> Using screenreg()</a></li>
-  <li><a href="#using-texreg-and-tex" id="toc-using-texreg-and-tex" class="nav-link" data-scroll-target="#using-texreg-and-tex"><span class="header-section-number">7.4.2</span> Using texreg() and TeX</a></li>
-  </ul></li>
-  <li><a href="#the-stargazer-package" id="toc-the-stargazer-package" class="nav-link" data-scroll-target="#the-stargazer-package"><span class="header-section-number">7.5</span> The stargazer package</a>
-  <ul class="collapse">
-  <li><a href="#stargazer-with-lmertest" id="toc-stargazer-with-lmertest" class="nav-link" data-scroll-target="#stargazer-with-lmertest"><span class="header-section-number">7.5.1</span> Stargazer with lmerTest</a></li>
-  <li><a href="#the-sjplot-package" id="toc-the-sjplot-package" class="nav-link" data-scroll-target="#the-sjplot-package"><span class="header-section-number">7.5.2</span> The sjPlot package</a></li>
-  </ul></li>
+  <li><a href="#comparing-the-model-to-the-estimates" id="toc-comparing-the-model-to-the-estimates" class="nav-link active" data-scroll-target="#comparing-the-model-to-the-estimates"><span class="header-section-number">18.1</span> Comparing the model to the estimates</a></li>
+  <li><a href="#plotting-the-individual-schools" id="toc-plotting-the-individual-schools" class="nav-link" data-scroll-target="#plotting-the-individual-schools"><span class="header-section-number">18.2</span> Plotting the individual schools</a></li>
+  <li><a href="#simulation-to-get-a-just-right-picture" id="toc-simulation-to-get-a-just-right-picture" class="nav-link" data-scroll-target="#simulation-to-get-a-just-right-picture"><span class="header-section-number">18.3</span> Simulation to get a just-right picture</a></li>
   </ul>
 </nav>
     </div>
@@ -585,14 +575,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-make-regression-tables" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Making Regression Tables</span></span></h1>
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">How Empirical Bayes over shrinks</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Miratrix </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 26, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -600,328 +602,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>For publication-ready tables and graphics, R has many wonderful packages to automate the process. Some of these packages are good for html documents (websites) and some are good for making PDF documents (reports and papers). This document demonstrates different ways of making regression tables in your reports, and talks about some weird wrinkles with using them with multilevel modeling.</p>
-<section id="the-basics-of-regression-tables" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="the-basics-of-regression-tables"><span class="header-section-number">7.1</span> The basics of regression tables</h2>
-<p>For the basics we quickly illustrate regression tables using a subset of the Making Caring Common dataset, which we will eventually discuss in class. This dataset has a measure of emotional safety (our outcome) and we want to see, in a specific school, if this is predicted by gender and/or grade.</p>
-<p>Our data look like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>( sch1, <span class="dv">6</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using our high school and beyond dataset, we are going to fit a random slope model and then examine how the empirical bayes estimates operate.</p>
+<p>We first fit the model:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lme4 )</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lmer</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ses<span class="sc">|</span>id), <span class="at">data=</span>dat )</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>( M1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  ID    esafe grade gender     disc race_white
-1  1 3.285714     5   Male 1.000000          0
-2  1 4.000000     8   Male 1.000000          1
-3  1 2.000000     7 Female 3.000000          0
-4  1 4.000000     7   Male 1.111111          0
-5  1 3.714286     6 Female 1.000000          0
-6  1 4.000000     5   Male 1.000000          1</code></pre>
-</div>
-</div>
-<p>We fit some models:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M_A <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade, <span class="at">data =</span> sch1 )</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>M_B <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade <span class="sc">+</span> gender, <span class="at">data =</span> sch1 )</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>M_C <span class="ot">=</span> <span class="fu">lm</span>( esafe <span class="sc">~</span> grade <span class="sc">*</span> gender, <span class="at">data =</span> sch1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Ok, we have fit our regression models. We can look at big complex printout of a single model like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( M_C )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = esafe ~ grade * gender, data = sch1)
+<pre><code>lmer(formula = mathach ~ 1 + ses + (1 + ses | id), data = dat)
+            coef.est coef.se
+(Intercept) 12.67     0.19  
+ses          2.39     0.12  
 
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.7894 -0.1570  0.1550  0.2662  0.4938 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       4.12733    0.37946  10.877   &lt;2e-16 ***
-grade            -0.07764    0.05859  -1.325   0.1879    
-genderMale       -0.72735    0.49762  -1.462   0.1467    
-grade:genderMale  0.13327    0.07627   1.747   0.0834 .  
+Error terms:
+ Groups   Name        Std.Dev. Corr  
+ id       (Intercept) 2.20           
+          ses         0.64     -0.11 
+ Residual             6.07           
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4333 on 108 degrees of freedom
-Multiple R-squared:  0.04914,   Adjusted R-squared:  0.02273 
-F-statistic: 1.861 on 3 and 108 DF,  p-value: 0.1406</code></pre>
+number of obs: 7185, groups: id, 160
+AIC = 46652.4, DIC = 46632.5
+deviance = 46636.5 </code></pre>
 </div>
 </div>
-<p>Or we can make <em>regression tables</em>. Consider these two packages, the first being <code>texreg</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(M_A, M_B, M_C))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We then can get Empirical Bayes estimates for all the random intercepts and slopes:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">coef</span>( M1 )<span class="sc">$</span>id</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>( res ) <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"beta0"</span>, <span class="st">"beta1"</span> )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rownames_to_column</span>(res, <span class="st">"id"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( res )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-====================================================
-                  Model 1     Model 2     Model 3   
-----------------------------------------------------
-(Intercept)         3.68 ***    3.62 ***    4.13 ***
-                   (0.25)      (0.25)      (0.38)   
-grade               0.00        0.00       -0.08    
-                   (0.04)      (0.04)      (0.06)   
-genderMale                      0.13       -0.73    
-                               (0.08)      (0.50)   
-grade:genderMale                            0.13    
-                                           (0.08)   
-----------------------------------------------------
-R^2                 0.00        0.02        0.05    
-Adj. R^2           -0.01        0.00        0.02    
-Num. obs.         112         112         112       
-====================================================
-*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+<pre><code>    id     beta0    beta1
+1 1224 11.060022 2.504083
+2 1288 13.073615 2.477930
+3 1296  9.197291 2.352981
+4 1308 14.384652 2.309294
+5 1317 12.449142 2.237431
+6 1358 11.520351 2.753447</code></pre>
 </div>
 </div>
-<p>Another is <code>stargazer</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>( M_A, M_B, M_C, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'text'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-===============================================================================
-                                        Dependent variable:                    
-                    -----------------------------------------------------------
-                                               esafe                           
-                            (1)                 (2)                 (3)        
--------------------------------------------------------------------------------
-grade                      0.004               0.001              -0.078       
-                          (0.038)             (0.038)             (0.059)      
-                                                                               
-genderMale                                     0.130              -0.727       
-                                              (0.083)             (0.498)      
-                                                                               
-grade:genderMale                                                  0.133*       
-                                                                  (0.076)      
-                                                                               
-Constant                 3.676***            3.624***            4.127***      
-                          (0.249)             (0.250)             (0.379)      
-                                                                               
--------------------------------------------------------------------------------
-Observations                112                 112                 112        
-R2                        0.0001               0.022               0.049       
-Adjusted R2               -0.009               0.004               0.023       
-Residual Std. Error  0.440 (df = 110)    0.437 (df = 109)    0.433 (df = 108)  
-F Statistic         0.009 (df = 1; 110) 1.241 (df = 2; 109) 1.861 (df = 3; 108)
-===============================================================================
-Note:                                               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-</div>
-</div>
-</section>
-<section id="extending-to-the-multilevel-model" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="extending-to-the-multilevel-model"><span class="header-section-number">7.2</span> Extending to the multilevel model</h2>
-<p>For our multilevel examples, we use the Making Caring Common data from Project A, and fit data to the 8th grade students only, but do it for all schools. We have made a High School dummy variable.</p>
-<p>Our two models we use for demo purposes have a HS term and no HS term:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modA <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>modB <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> HS <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In the next sections we first show how to get better summary output (according to some folks) and then we walk through making regression tables in a bit more detail than above.</p>
-</section>
-<section id="getting-p-values-for-lmer-output" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="getting-p-values-for-lmer-output"><span class="header-section-number">7.3</span> Getting p-values for lmer output</h2>
-<p>The <code>lmerTest</code> package is a way of making R give you more complete output. We are going to load it, and then put the new lmer models into new variables so we can see how the different model fitting packages work with the regression table packages below.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lmerTest )</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>modB.T <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> HS <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>modA.T <span class="ot">&lt;-</span> <span class="fu">lmer</span>( esafe <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>dat.g8)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modB.T )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
-Formula: esafe ~ 1 + HS + (1 | ID)
-   Data: dat.g8
-
-REML criterion at convergence: 2746.8
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.3883 -0.6156  0.2021  0.7628  1.7331 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- ID       (Intercept) 0.04809  0.2193  
- Residual             0.46459  0.6816  
-Number of obs: 1305, groups:  ID, 26
-
-Fixed effects:
-            Estimate Std. Error       df t value Pr(&gt;|t|)    
-(Intercept)  3.52798    0.08637 29.91033  40.846   &lt;2e-16 ***
-HSTRUE      -0.29480    0.10787 25.77814  -2.733   0.0112 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-       (Intr)
-HSTRUE -0.801</code></pre>
-</div>
-</div>
-</section>
-<section id="the-texreg-package" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="the-texreg-package"><span class="header-section-number">7.4</span> The texreg package</h2>
-<p>In <code>texreg</code> there are two primary functions for table making, one is <code>screenreg()</code> and the other is <code>texreg()</code>.</p>
-<section id="using-screenreg" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="using-screenreg"><span class="header-section-number">7.4.1</span> Using screenreg()</h3>
-<p>Screenreg is fine for MLMs. It looks a bit like raw output, but it is clear and clean. It will take models fit using lmer or lmerTest, no problem.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(modA,modB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-===============================================
-                     Model 1       Model 2     
------------------------------------------------
-(Intercept)              3.35 ***      3.53 ***
-                        (0.06)        (0.09)   
-HSTRUE                                -0.29 ** 
-                                      (0.11)   
------------------------------------------------
-AIC                   2756.78       2754.79    
-BIC                   2772.30       2775.49    
-Log Likelihood       -1375.39      -1373.40    
-Num. obs.             1305          1305       
-Num. groups: ID         26            26       
-Var: ID (Intercept)      0.07          0.05    
-Var: Residual            0.46          0.46    
-===============================================
-*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
-</div>
-</div>
-<p><em>Comment:</em> Note that the number of stars are different for the display vs the summary output! (Look at the HS coefficient for example.) Not good, it would seem.</p>
-<p>This is because the <span class="math inline">\(p\)</span>-values are calculated using the normal approximation by the screenreg command, and using the <span class="math inline">\(t\)</span>-test with approximate degrees of freedom by <code>lmerTest</code>. This makes a difference. Consider the following, using the <span class="math inline">\(t\)</span> statistics for the HS variable:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span><span class="fl">2.733</span>, <span class="at">df=</span><span class="fl">25.77814</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0111831</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>( <span class="sc">-</span><span class="fl">2.733</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.006276033</code></pre>
-</div>
-</div>
-<p>One is below 0.01, and one is not. An extra star!</p>
-</section>
-<section id="using-texreg-and-tex" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="using-texreg-and-tex"><span class="header-section-number">7.4.2</span> Using texreg() and TeX</h3>
-<p>The <code>texreg</code> command is part of the <code>texreg</code> package and can be integrated with latex (which you would need to install). Once you do this, when you compile to a pdf, all is well. In the R code chunk you need to include <code>results="asis"</code> to get the latex to compile right. E.g., “<code>r, results="asis"</code>” when you declare a code chunk.</p>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">texreg</span>(<span class="fu">list</span>(modA,modB), <span class="at">table=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that the <code>table=FALSE</code> puts the table right where you want it, not at some random spot latex things is nice. Latex likes to have “floating tables,” where it puts the table where there is space; this makes it easier to make the entire formatted page look nice.</p>
-</section>
-</section>
-<section id="the-stargazer-package" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="the-stargazer-package"><span class="header-section-number">7.5</span> The stargazer package</h2>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modA, modB, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'latex'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>One issue is stargazer does not include the random effect variances, so the output is quite limited for multilevel modeling. It also has less stringent conditions for when to put down stars. One star is below 0.10, two is below 0.05, and three is below 0.01. This is quite generous. Also it is using the normal approximation.</p>
-<section id="stargazer-with-lmertest" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="stargazer-with-lmertest"><span class="header-section-number">7.5.1</span> Stargazer with lmerTest</h3>
-<p>Stargazer with lmerTest is a bit fussy. This shows how to make it work if you have loaded the lmerTest package. Recall the lmerTest package makes your lmer commands have p-values and whatnot. But this means your new <code>lmer()</code> command is not quite the same as the old—and stargazer is expecting the old. You gix this by lying to R, telling it the new thing is the old thing. This basically works.</p>
-<p>Now for stargazer, we need to tell it that our models are the right type. First note:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "lmerMod"
-attr(,"package")
-[1] "lme4"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "lmerModLmerTest"
-attr(,"package")
-[1] "lmerTest"</code></pre>
-</div>
-</div>
-<p>So we fix as follows:</p>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( stargazer )</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modB.T ) <span class="ot">=</span> <span class="st">"lmerMod"</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( modA.T ) <span class="ot">=</span> <span class="st">"lmerMod"</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modA.T, modB.T, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">type=</span><span class="st">'latex'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="the-sjplot-package" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="the-sjplot-package"><span class="header-section-number">7.5.2</span> The sjPlot package</h3>
-<p>One function, <code>tab_model</code> from <code>sjPlot</code>, makes nice regression tables:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate the results of our two tip models</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( sjPlot )</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(modA.T, modB.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each row corresponds to a different school, and gives our estimated intercept and slope for that school. These estimates are shrunken towards the overall population. To illustrate, consider these three schools:</p>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-
-<table style="border-collapse:collapse; border:none;">
-<tbody><tr>
-<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
-<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">esafe</th>
-<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">esafe</th>
-</tr>
-<tr>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.35</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.23&nbsp;–&nbsp;3.46</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.53</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.36&nbsp;–&nbsp;3.70</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">HSTRUE</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.29</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.51&nbsp;–&nbsp;-0.08</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.006</strong></td>
-</tr>
-<tr>
-<td colspan="7" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
-</tr>
-
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.46</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.46</td>
-</tr>
-
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.07 <sub>ID</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.05 <sub>ID</sub></td>
-
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.12</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.09</td>
-
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">26 <sub>ID</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">26 <sub>ID</sub></td>
-</tr><tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">1305</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">1305</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.000 / 0.125</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.028 / 0.119</td>
-</tr>
-
-</tbody></table>
-
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examining_shrinkage_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
 </div>
 </div>
-
-
+</div>
+<p>The dotted lines are if we just ran a regression for the data in that school. The thick black line is the overall population average line (averaged across all schools, from our MLM). The red line is the Empirical Bayes line–we are shrinking the dotted lines toward the thick black line, and we shrink depending on the amount of data, and how informative the data is, in each school. For example, school 3377 has a lot of shrinkage of slope, and a bit of intercept. School 9397 is basically unchanged. We see the slopes are getting shrunk much more than the intercepts–this is because we are less certain about the slopes; we shrink more for things we are uncertain about.</p>
+<p>Remember our Radon and counties example: we shrunk small counties MORE than large counties, when estimating intercepts. We are now estimating the pair of intercept and slope, and how well we estimate the slope depends on amount of data, but also the spread of the data on the x-axis and a few other things. But the intuition is the same: everything is pulled towards the grand average <em>line</em>.</p>
+<section id="comparing-the-model-to-the-estimates" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="comparing-the-model-to-the-estimates"><span class="header-section-number">18.1</span> Comparing the model to the estimates</h2>
+<p>We can measure how much variation there is in the Empirical Bayes estimated intercepts and slopes, along with the correlation of these effects:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eb_ests <span class="ot">=</span> <span class="fu">c</span>( <span class="at">sd_int =</span> <span class="fu">sd</span>( res<span class="sc">$</span>beta0 ),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd_slope =</span> <span class="fu">sd</span>( res<span class="sc">$</span>beta1 ),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">cor =</span> <span class="fu">cor</span>( res<span class="sc">$</span>beta0, res<span class="sc">$</span>beta1 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We display these estimates alongside the model estimates:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">parameter</th>
+<th style="text-align: right;">model estimate</th>
+<th style="text-align: right;">Emp Bayes estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">stdev intercept</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">2.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stdev slope</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">correlation</td>
+<td style="text-align: right;">-0.11</td>
+<td style="text-align: right;">-0.23</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>If we compare the variation in the empirical Bayes estimates to the model estimates, we see that the standard deviations are smaller and the correlation is estimated as larger in magnitude. Importantly, our model does a good job, in general, estimating how much variation in random intercepts and slopes there is; it is the empirical estimates that are over shrunk. Trust the model, not the spread of the empirical estimates.</p>
+<p>In short, the empirical estimates are good for predicting individual values, but the distribution of the empirical estimates is generally too tidy and narrow, as compared to the truth. The model is what best estimates the population characteristics. That being said, the empirical Bayes estimates are <em>far better</em> than the raw estimates (in the above, for example, trust the red lines more than the dashed lines).</p>
 </section>
+<section id="plotting-the-individual-schools" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="plotting-the-individual-schools"><span class="header-section-number">18.2</span> Plotting the individual schools</h2>
+<p>When looking at individual schools we have this:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>res ) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits=</span><span class="fu">range</span>( dat<span class="sc">$</span>ses ) ) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">range</span>( dat<span class="sc">$</span>mathach ) ) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>( <span class="fu">aes</span>( <span class="at">intercept =</span> beta0, <span class="at">slope=</span>beta1 ), <span class="at">alpha=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">x=</span><span class="st">"SES"</span>, <span class="at">y=</span><span class="st">"Math Achievment"</span> ) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examining_shrinkage_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Compare that to the messy (and incorrect) raw estimates, that are generated by running a interacted fixed effect regression of:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id <span class="sc">-</span> ses, <span class="at">data=</span>dat )</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">coef</span>(M)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id1224    id1288    id1296    id1308    id1317    id1358 
+10.805132 13.114937  8.093779 16.188959 12.737763 11.305904 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ses:id9347 ses:id9359 ses:id9397 ses:id9508 ses:id9550 ses:id9586 
+  2.685994  -0.833479   2.446444   3.953791   3.891938   1.672081 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 320</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">=</span> <span class="fu">tibble</span>( <span class="at">beta0 =</span> cc[<span class="dv">1</span><span class="sc">:</span><span class="dv">160</span>],</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">beta1 =</span> cc[<span class="dv">161</span><span class="sc">:</span><span class="dv">320</span>] )</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>schools ) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits=</span><span class="fu">range</span>( dat<span class="sc">$</span>ses ) ) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">range</span>( dat<span class="sc">$</span>mathach ) ) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>( <span class="fu">aes</span>( <span class="at">intercept =</span> beta0, <span class="at">slope=</span>beta1 ), <span class="at">alpha=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">x=</span><span class="st">"SES"</span>, <span class="at">y=</span><span class="st">"Math Achievment"</span> ) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examining_shrinkage_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The raw estimates are over dispersed; the measurement error is giving a bad picture.</p>
+</section>
+<section id="simulation-to-get-a-just-right-picture" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="simulation-to-get-a-just-right-picture"><span class="header-section-number">18.3</span> Simulation to get a just-right picture</h2>
+<p>As discussed in class, empirical Bayes is too smooth. Raw is too disperse. If we want to see a picture of what the population of schools might look like, we can make a plot of 160 NEW schools generated from our model (to see how our partially pooled (Empirical Bayes) estimates are OVER SHRUNK/OVER SMOOTHED).</p>
+<p>We simulate from our model; we are <em>not</em> using the empirical bayes estimates at all. See the slides and script for Packet 2.4 for how to do this simulation.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examining_shrinkage_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1158,16 +1003,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./making_tables.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Making tables in Markdown</span></span>
+      <a href="./double_plot.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Plotting Two Datasets at Once</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./anova.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pretty ANOVA Tables with <code>kable</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./broom.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Extracting information from fitted <code>lmer</code> models with <code>broom</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

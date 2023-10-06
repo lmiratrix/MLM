@@ -34,10 +34,12 @@ book:
           - double_plot.qmd
     - part: "MODEL FITTING & INTERPRETATION"
       chapters:
+          - examining_shrinkage.qmd
           - broom.qmd
           - lmer_extract.qmd
           - interpreting_coefficients.qmd
           - within_v_between.qmd
+          - visual_tour_of_nulls.qmd
           - reg_assumptions.qmd
           - model_representations.qmd
           - model_cheat_sheet.qmd

@@ -163,5 +163,11 @@
   },
   "references.qmd": {
     "references.html": "e9261843"
+  },
+  "examining_shrinkage.qmd": {
+    "examining_shrinkage.html": "cd2e1b56"
+  },
+  "visual_tour_of_nulls.qmd": {
+    "visual_tour_of_nulls.html": "51d5eced"
   }
 }
