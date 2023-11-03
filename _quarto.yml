@@ -45,7 +45,6 @@ book:
           - model_cheat_sheet.qmd
           - growth_models_predictors.qmd
           - interpreting_glms.qmd
-          - glm_vs_transform.qmd
           - lr_test.qmd
           - aic_check.qmd
           - lmer_optimization.qmd

@@ -14,7 +14,9 @@ As you go through the solutions, see if you can figure out where you went wrong,
 
 Then, for the next ready-for-class check-in you will be asked to enter your score (this score just helps me understand how folks are doing with these mini assignments), how you feel about it, and some further commentary. In your commentary please include a sentence or two on what was tripping you up (list the items), if you got things wrong. Also note whether things are not making sense, even with the solutions.
 
-**NOTE:** We grade miniassignments on completion, meaning you will get full credit if you (1) do the mini-assignment and (2) self-grade the miniassignment (regardless of the score you give yourself, as long as the score is above 50% of the possible points).
+For reporting your score, **report total number of points, not percent correct.** For example, if there are two questions, with the first having 3 points and the second 2, you would report a score between 0 and 5.
+
+We grade miniassignments on completion, meaning you will get full credit if you (1) do the mini-assignment and (2) self-grade the miniassignment (regardless of the score you give yourself as long as your work shows reasonable effort).
 
 ## Acknowledgement:
 
