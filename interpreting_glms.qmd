@@ -55,6 +55,7 @@ glmer(Y $\sim$ 1 + X + (1 + X\|grp), family = binomial(link = 'logit'))
 
 In this section, we give some further discussion about logistic regression and interpretation.
 This section supplements Packet 6.2 (logistic and longitudinal, or the toenail data lecture).
+But also see the code supplement for Packet 6.2 for more in-depth analysis and commentary.
 
 
 ```{r setup_toenail, include=FALSE}
@@ -79,8 +80,9 @@ We first fit our toenail data using a random intercept model:
 ```{r}
 M1 = glmer( outcome ~ Tx * month + (1|patient),
             family=binomial,
-            data=toes )
-
+            data=toes, 
+            control=glmerControl(optimizer="bobyqa", 
+                                 optCtrl=list(maxfun=100000) ))
 
 display( M1 )
 ```
@@ -140,11 +142,18 @@ For our two 3 month, treated patients, we have the odds of detachment of
 exp( c( log_odds, log_odds + 4.56 ) )
 ```
 
+Multipliers that are less than 1 correspond to reductions in the odds. A multiplier of 0.67 (the month coefficient) is a 33% reduction, for example.
+For the treatment group, the multipliers get multiplied, giving 0.67 * 0.87 = 0.58, or a 42% reduction.
+We can use these calculations to discuss the impact of treatment. For example, we might say, "We estimate that taking the treatment reduces the odds of detachment by 42% per month, vs. only 33% for the control."
+
+
+
 **Probabilities:** Finally, we have probabilities, which we can calculate directly with `invlogit` in the `arm` package or `plogis` in the base package:
 ```{r}
 plogis( c( log_odds, log_odds + 4.56 ) )
 ```
 Here we have a 1% chance of detachment at baseline for our median patient, and 53% chance for our 1SD above average patient.
+
 
 
 ### Some math formula for reference
@@ -196,7 +205,6 @@ The random slope model is strongly preferred, and also has a larger estimated ef
 What is likely happening is the autoregressive pattern in our outcomes (note how we tend to see 1s followed by 0s, with not a lot of back and forth) coupled with the limited information we have for each patient, makes it hard to nail down differences in individual student growth vs. differences in treatment and control average growth.
 The random intercept model focuses on within-person change, but is an easier to estimate model.
 Due to randomization, it is also trustworthy--we do not have to worry much about the assumptions.
-
 
 
 ## Poisson regression models
