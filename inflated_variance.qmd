@@ -10,8 +10,11 @@ Say we want to estimate the variability of mean math achievement across schools.
 I.e., each school has some average math achievement of its students, and we want to know how different schools are.
 
 The naïve way of doing this is to estimate the mean math achievement for a sample of schools, and take the standard deviation (square root of variance) of this sample as a reasonable estimate.
-In math terms, we would calculate $\bar{Y}_j$ for each school $j$ and then use as our estimate $$\widehat{\tau^2} = var( \bar{Y}_j ) = \frac{1}{n-1} \sum_{j=1}^J \bar{Y}_j .$$ This will give a number that is too big.
-The following is a math derivation on a simple scenario that illustrates why.
+In math terms, we would calculate $\bar{Y}_j$ for each school $j$ and then use as our estimate $$\widehat{\tau^2} = var( \bar{Y}_j ) = \frac{1}{J-1} \sum_{j=1}^J (\bar{Y}_j - \bar{Y})^2,$$
+
+where $\bar{Y}$ is the average of the $\bar{Y}_j$ across our $J$ schools.
+Our estimate, above, will give a number that is too big because the overall variance includes the uncertainty in estimating the individual $\bar{Y}_j$.
+The following is a math derivation on a simple scenario that illustrates why, and by how much.
 
 First, pretend our Data Generation Process (DGP) is Mother Nature making a bunch of schools, and then for each school making a bunch of kids.
 Our model is that the schools are represented by school-level true mean math achievement, and the kids are made by adding an individual kid effect to the mean math achievement of their schools.

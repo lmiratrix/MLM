@@ -71,8 +71,8 @@ book:
     - part: "MATH DERIVATIONS"
       chapters:
           - icc_derivation.qmd
-          - cov_matrix_derivation.qmd
           - inflated_variance.qmd
+          - cov_matrix_derivation.qmd
           - complex_error.qmd
           - cluster_demo.qmd
     - references.qmd
