@@ -6,45 +6,29 @@ editor:
     wrap: sentence
 ---
 
-We have a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11--15):
+In this chapter we lay out some of the derivations on residual matrices.
+We use the running example of the NYS data (see Packet 7).
 
-$$\begin{aligned}
-Y_{ti} &= \pi_{0i} + \pi_{1i} a_t + \tilde{\epsilon}_{ti} \\
-\pi_{0i} &=  \beta_{0} + u_{0i} \\
-\pi_{1i} &= \beta_{1} + u_{1i} \\
-\begin{pmatrix} u_{0j} \\
-u_{1j}
-\end{pmatrix} &\sim  N
-\begin{bmatrix}
-\begin{pmatrix}
-0 \\
-0
-\end{pmatrix}\!\!,&
-\begin{pmatrix}
-\tau_{00} & \tau_{01} \\
-        & \tau_{11} 
-\end{pmatrix}
-\end{bmatrix}
-\end{aligned}$$
+## The student-level residual matrix
 
-Let $\tilde{\epsilon}_i \sim N(0, \sigma^2)$.
-Let our intercept correspond to our first timepoint, so $a_1 = 0, a_2 = 1, ..., a_5 = 4$.
-I.e., our $a_t$ is number of years since onset of study.
-Then $\beta_{0}$ is the average outcome at onset of the study and $\beta_{1}$ is the rate of growth (per year) in the population.
+Following Packet 7.1, let's think about a generic regression equation for a linear growth model with 5 timepoints (this is a simplified version of the NYS model, where each time point is a year of age, 11--15).
 
-The reduced form is $$\begin{aligned}
- Y_{ti} &= \beta_{0}  + \beta_{1}  a_t  + u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti} \\ 
- &= \beta_{0}  + \beta_{1}  a_t  + \epsilon_{ti} 
-\end{aligned}$$ with $\epsilon_{ti} = u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti}$.
+In particular, consider $$
+Y_{ti} = \beta_0 + \beta_1 age_{ti} + u_{ti}
+$$ where $age_{ti}$ is our age from 11 (so an observation at 11 years old would have `age11 = 0`).
+This means our intercept correspond to our first timepoint, with $a_1 = 0, a_2 = 1, ..., a_5 = 4$.
+I.e., our $age_{ti}$ is number of years since onset of study.
 
-Note that $\tilde{\epsilon}_{ti}$ is the specific time-individual residual after the individual random effects, and $\epsilon_{ti}$ is the *overall* residual (deviation from what we expect from the population, or the difference between our observed outcome and the *population* model, not student latent growth curve).
+In this model, $\beta_{0}$ is the average outcome across our population at the onset of the study and $\beta_{1}$ is the average rate of growth (per year) in the population.
 
-Now for any subject $i$, the covariance matrix of their residuals is $$\begin{aligned}
-\begin{pmatrix} \epsilon_{i1} \\
-\epsilon_{i2} \\
-\epsilon_{i3} \\
-\epsilon_{i4} \\
-\epsilon_{i5}
+Now we have 5 observations for each student $i$, so the residuals $(u_{1i}, \ldots, u_{5i})$ are likely correlated with each other.
+For example, a student might just generally have higher levels of outcome, or lower levels, which means the overall residual of one time point would be related to the reisduals of other time points.
+In math, we can write that for any randomly subject $i$, the covariance matrix of their residuals is $$\begin{aligned}
+\begin{pmatrix} u_{i1} \\
+u_{i2} \\
+u_{i3} \\
+u_{i4} \\
+u_{i5}
 \end{pmatrix} &\sim  N
 \begin{bmatrix}
 \begin{pmatrix}
@@ -62,23 +46,154 @@ Now for any subject $i$, the covariance matrix of their residuals is $$\begin{al
          &              &              &            & \delta_{55} 
 \end{pmatrix}
 \end{bmatrix}
+\end{aligned} = N( 0, \Sigma_i)$$
+
+This matrix of residuals for student $i$ is one of the blocks in our $N \times N$ block-diagonal matrix for all our residuals (this would be the giant matrix plugged into our sandwich formula to get standard errors for $\beta_0$ and $\beta_1$), where $N$ is the number of observations.
+Assuming 5 observations per student, multilevel and generalized linear modeling (which we are talking about here) make the assumption that this matrix is the same across students; cluster robust standard errors would not make this assumption.
+(More broadly, MLM and generalized linear modeling make the assumption that we can represent all the $\Sigma_i$ in terms of measured covariates and pre-specified parameters, but in this case we end up with the same matrix for all students with 5 time points. Students with fewer than 5 would be subsets of this matrix corresponding to the time points observed.)
+
+The diagonal of $\Sigma_i$ are our variances at each timepoint (this means, for example, that if our model is good, that if we took the variance of all the observations where $t=5$ across our dataset we should get something close to $\delta_{55}$).
+
+In the remainder of this document, we look at how MLM gives expressions for this matrix.
+
+## Covariance matrix for a random intercept model
+
+Following Packet 7.1, we start with a random intercept model with a completely pooled growth component with 5 timepoints (this is a simplified version of the NYS model, where each time point is a year of age, 11--15).
+In particular, take the model represented by this `lmer()` command:
+
+```{r, eval=FALSE}
+M = lmer( Y ~ 1 + age11 + (1|id), data=nys )
+```
+
+where `age11` is our age from 11 (so an observation at 11 years old would have `age11 = 0`).
+
+In math, this model is $$\begin{aligned}
+Y_{ti} &= \pi_{0i} + \beta_{1} age_ + \epsilon_{ti} \\
+\epsilon_{ti} &\sim N( 0, \sigma^2 ) \\
+\pi_{0i} &=  \beta_{0} + r_{0i} \\
+ r_{0j} & \sim N( 0, \tau_{00} ) \\
 \end{aligned}$$
 
-This matrix is one of the blocks in our block-diagonal matrix for our residuals.
-The diagonal are our variances at each timepoint (this means, for example, that if our model is good, that if we took the variance of all the $t=5$ observations across our dataset we should get something close to $\delta_{55}$).
+The reduced form is $$\begin{aligned}
+ Y_{ti} &= \beta_{0}  + \beta_{1}  a_t  + r_{0i} + \epsilon_{ti} \\ 
+ &= \beta_{0}  + \beta_{1}  a_t  + u_{ti} 
+\end{aligned}$$ with $u_{ti} = r_{0i} + \epsilon_{ti}$.
 
-## Calculating the $\delta_{tt'}$ {#calculating-the-delta_tt .unnumbered}
+Note that $\epsilon_{ti}$ is the specific time-individual residual after the individual random effects, and $u_{ti}$ is the *overall* residual (deviation from what we expect from the population, or the difference between our observed outcome and the *population* model, not student latent growth curve).
+
+Using our model, let's calculate some variances and covariances of the residuals.
+
+First the variance of a residual at time point $t$: $$
+\begin{aligned}
+var( u_{ti} ) &= var( r_{i} + \epsilon_{ti} ) \\
+  &= var( r_{i} ) + var( \epsilon_{ti} ) + cov( r_i, \epsilon_{ti} ) \\
+  &= \tau_{00} + \sigma^2 
+\end{aligned}
+$$ because the residuals are independent, so all covariances of different residuals, such as $r_i$ and $\epsilon_{ti}$ are 0.
+The second line is using the identity $Var( A + B ) = Var( A ) + Var( B ) + 2 Cov( A, B )$.
+
+Second, the covariance of $u_{1i}$ and $u_{2i}$, i.e., time 1 and time 2 for the same person: $$
+\begin{aligned}
+cov( u_{1i}, u_{2i} ) &= cov( r_{i} + \epsilon_{1i}, r_{i} + \epsilon_{2i},  ) \\
+  &= cov( r_{i}, r_{i} ) + cov( r_{i}, \epsilon_{2i} ) + cov( \epsilon_{1i}, r_i ) + cov( \epsilon_{1i}, \epsilon_{2i} ) \\
+  &= \tau_{00}
+\end{aligned}
+$$ The last bit is again because the covariances of different residuals are 0.
+The covariance of something with itself is just the variance.
+The second line comes from $$cov( A + B, C + D ) = cov( A, C ) + cov( A, D ) + cov( B, C ) + cov( B, D ),$$ i.e., you multiply all the bits out.
+The above clearly generalizes so the covariance of any two time points within a student has covariance of $\tau_{00}$.
+
+Finally, looking at two different students, we have $$
+\begin{aligned}
+cov( u_{ti}, u_{t'j} ) &= cov( r_{i} + \epsilon_{ti}, r_{j} + \epsilon_{t'j},  ) \\
+  &= cov( r_{i}, r_{j} ) + cov( r_{i}, \epsilon_{t'j} ) + cov( \epsilon_{ti}, r_j ) + cov( \epsilon_{ti}, \epsilon_{t'j} ) \\
+  &= 0 ,
+\end{aligned}
+$$ because all of the residuals are independent, according to our model.
+This says that all our population residuals from different students are not correlated.
+This gives us our block diagonal structure on our $N \times N$ matrix of residuals.
+For student $i$, the first two results tell us that: $$\begin{aligned}
+\begin{pmatrix} u_{i1} \\
+u_{i2} \\
+u_{i3} \\
+u_{i4} \\
+u_{i5}
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0 \\
+0\\
+0 \\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\tau_{00} + \sigma^2 & \tau_{00} & \tau_{00} & \tau_{00} & \tau_{00} \\
+           & \tau_{00} + \sigma^2 & \tau_{00} & \tau_{00} & \tau_{00} \\
+         &              & \tau_{00} + \sigma^2 & \tau_{00} & \tau_{00} \\
+         &              &             & \tau_{00} + \sigma^2 & \tau_{00} \\
+         &              &              &            & \tau_{00} + \sigma^2 
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned} .$$
+
+Our multilevel model has given us a specific structure for our student-level residual covariance matrix $\Sigma_i$.
+We could just fit a regression at the population level with this matrix specified, without talking about random intercepts or anything.
+We can also tweak this matrix in ways that capture other kinds of variation.
+This is the key to this approach to modeling clustered or non-independent data.
+
+In the next section we repeat this for a random slope model.
+Same idea, more messy math.
+
+## And now for a random slope model
+
+Take a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11--15):
+
+$$
+\begin{aligned}
+Y_{ti} &= \pi_{0i} + \pi_{1i} age_{ti} + \epsilon_{ti} \\
+\pi_{0i} &=  \beta_{0} + r_{0i} \\
+\pi_{1i} &= \beta_{1} + r_{1i} \\
+\begin{pmatrix} r_{0j} \\
+r_{1j}
+\end{pmatrix} &\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}\!\!,&
+\begin{pmatrix}
+\tau_{00} & \tau_{01} \\
+        & \tau_{11} 
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned}
+$$
+
+Let $\epsilon_i \sim N(0, \sigma^2)$.
+Let our intercept correspond to our first timepoint, so $a_1 = 0, a_2 = 1, ..., a_5 = 4$.
+I.e., our $age_{ti}$ is number of years since onset of study.
+Then $\beta_{0}$ is the average outcome at onset of the study and $\beta_{1}$ is the rate of growth (per year) in the population.
+
+The reduced form is $$\begin{aligned}
+ Y_{ti} &= \beta_{0}  + \beta_{1}  age_{ti}  + r_{0i} + r_{1i} age_{ti} + \epsilon_{ti} \\ 
+ &= \beta_{0}  + \beta_{1}  age_{ti}  + u_{ti} 
+\end{aligned}$$ with $u_{ti} = r_{0i} + r_{1i} age_{ti} + \epsilon_{ti}$.
+
+Now let's use this definition of $u_{ti}$ to calculate all the $\delta_{tt'}$ values in the student level covariance matrix $\Sigma_i$.
+
+### Calculating the $\delta_{tt'}$ {#calculating-the-delta_tt .unnumbered}
 
 Let's calculate $\delta_{13} = cov( \epsilon_{i1}, \epsilon_{i2} )$.
 
 First we need a math fact about random quantities $A$, $B$, and $C$: $$cov( A + B, C ) = cov( A, C ) + cov( B, C ) .$$ Also if you multiply something by a constant $k$ you have $$cov( k_1 A, k_2 B ) = k_1 k_2 cov( A, B ) .$$
 
-Also note that $a_1 = 0$ and $a_3 = 2$.
-Then we have: $$\begin{aligned}
-\delta_{13} &= cov( \epsilon_{i1}, \epsilon_{i3} ) \\
-   &= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_3 + \tilde{\epsilon}_{3i} ) \\
-   &= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + 2 u_{1i} + \tilde{\epsilon}_{3i} ) \\
-   &= cov(  u_{0i}, u_{0i} ) + cov( u_{0i}, 2 u_{1i} ) + cov( u_{0i}, \tilde{\epsilon}_{3i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 2 u_{1i} )  + cov( \tilde{\epsilon}_{1i}, \tilde{\epsilon}_{3i}) \\
+Also note that $a_1 = 0$ and $a_3 = 2$, given our coding of age (\$a_1\$ is the time covariate at age 11, which is 0, for example).
+Then we have, plugging in those values: $$\begin{aligned}
+\delta_{13} &= cov( u_{i1}, u_{i3} ) \\
+   &= cov(  r_{0i} + r_{1i} a_1 + \epsilon_{1i},  r_{0i} + r_{1i} a_3 + \epsilon_{3i} ) \\
+   &= cov(  r_{0i}  + \epsilon_{1i},  r_{0i} + 2 r_{1i} + \epsilon_{3i} ) \\
+   &= cov(  r_{0i}, r_{0i} ) + cov( r_{0i}, 2 r_{1i} ) + cov( r_{0i}, \epsilon_{3i} ) + cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i}, 2 r_{1i} )  + cov( \epsilon_{1i}, \epsilon_{3i}) \\
    &= \tau_{00} + 2\tau_{01} + 0 + 0 + 0 + 0 \\
    &= \tau_{00} + 2\tau_{01} 
 \end{aligned}$$
@@ -90,30 +205,31 @@ Fun!
 A core idea here is the independence of the different residual pieces makes a lot of the terms go to 0, giving short(er) expressions than we might have otherwise.
 The random slope model dictates the overall covariance of the residuals.
 
-## Calculating the diagonal terms.
+### Calculating the diagonal terms.
 
 For the variances, you would just calculate covariance of a quantity with itself.
 Let's do $\delta_{11}$, the variance of timepoint 1: $$\begin{aligned}
-\delta_{11} &= var( \epsilon_{i1} ) = cov( \epsilon_{i1}, \epsilon_{i1} ) \\
-   &= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i} ) \\
-   &= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + \tilde{\epsilon}_{1i} ) \\
-   &= cov(  u_{0i}, u_{0i} ) + cov( u_{0i},  \tilde{\epsilon}_{1i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+\delta_{11} &= var( u_{1i} ) = cov( u_{1i}, u_{1i} ) \\
+   &= cov(  r_{0i} + r_{1i} a_1 + \epsilon_{1i},  r_{0i} + r_{1i} a_1 + \epsilon_{1i} ) \\
+   &= cov(  r_{0i}  + \epsilon_{1i},  r_{0i} + \epsilon_{1i} ) \\
+   &= cov(  r_{0i}, r_{0i} ) + cov( r_{0i},  \epsilon_{1i} ) + cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i},\epsilon_{1i} )  \\
    &= \tau_{00} + 0 + 0 + \sigma^2 =  \tau_{00} + \sigma^2
 \end{aligned}$$
 
 Now let's do $\delta_{55}$, the variance of timepoint 5: $$\begin{aligned}
-\delta_{55} &= var( \epsilon_{i5} ) = cov( \epsilon_{i5}, \epsilon_{i5} ) \\
-   &= cov(  u_{0i} + u_{1i} a_5 + \tilde{\epsilon}_{5i},  u_{0i} + u_{5i} a_5 + \tilde{\epsilon}_{5i} ) \\
-   &= cov(  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i},  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i} ) \\
-   &= cov(  u_{0i}, u_{0i} ) + cov(  u_{0i}, 4 u_{1i} )  + cov( u_{0i},  \tilde{\epsilon}_{5i} ) + \\
-    &\qquad cov( 4 u_{1i}, u_{0i} ) + cov( 4 u_{1i}, 4 u_{1i} )  + cov( 4 u_{1i}, \tilde{\epsilon}_{5i} ) \\
-    & \qquad cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 4 u_{1i} )  + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+\delta_{55} &= var( u_{5i} ) = cov( u_{5i}, u_{5i} ) \\
+   &= cov(  r_{0i} + r_{1i} a_5 + \epsilon_{5i},  r_{0i} + r_{5i} a_5 + \epsilon_{5i} ) \\
+   &= cov(  r_{0i} + 4 r_{1i} + \epsilon_{5i},  r_{0i} + 4 r_{1i} + \epsilon_{5i} ) \\
+   &= cov(  r_{0i}, r_{0i} ) + cov(  r_{0i}, 4 r_{1i} )  + cov( r_{0i},  \epsilon_{5i} ) + \\
+    &\qquad cov( 4 r_{1i}, r_{0i} ) + cov( 4 r_{1i}, 4 r_{1i} )  + cov( 4 r_{1i}, \epsilon_{5i} ) \\
+    & \qquad cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i}, 4 r_{1i} )  + cov( \epsilon_{1i},\epsilon_{1i} )  \\
    &= \tau_{00} + 4 \tau_{01} + 0 + 4 \tau_{01} + 16 \tau_{11} + 0 + 0 + 0 + \sigma^2 \\
    &= \tau_{00} + 16 \tau_{11} + 8 \tau_{01} + \sigma^2 .
 \end{aligned}$$
 
-Note how the variance around the intercept (at time 1 where $a_1 = 0$) looks like it would be smaller than far out.
+Note how the variance around the intercept (at time 1 where $a_1 = 0$) looks like it would be smaller than the variance further out.
 That being said, the covariance $\tau_{01}$ could be large and negative, causing the variance at the intercept to be less.
-But, $\tau_{01}$ is positive, the overall variance increases as we move away from the intercept point.
+But, if $\tau_{01}$ is positive, the overall variance increases as we move away from the intercept point.
 
-One interesting aspect of random slope models is the marginal (at each time point) has heteroskedasticity: the variances are each time point can be different because the lines can spread or gather.
+One interesting aspect of random slope models is the marginal (at each time point) variance changes at each time point.
+This is heteroskedasticity: the variances are each time point can be different because the lines can spread or gather.
