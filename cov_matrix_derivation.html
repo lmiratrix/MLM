@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./inflated_variance.html" rel="next">
-<link href="./icc_derivation.html" rel="prev">
+<link href="./complex_error.html" rel="next">
+<link href="./inflated_variance.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -333,32 +367,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aic_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey_weights.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
   </div>
 </li>
       </ul>
@@ -375,25 +403,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fe_crve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./robust_mlm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -410,25 +438,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./faraway_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./perf_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kenya_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
   </div>
 </li>
       </ul>
@@ -445,31 +473,31 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rand_slopes_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rewb_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -486,7 +514,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -497,20 +531,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -531,8 +559,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#calculating-the-delta_tt" id="toc-calculating-the-delta_tt" class="nav-link active" data-scroll-target="#calculating-the-delta_tt">Calculating the <span class="math inline">\(\delta_{tt'}\)</span></a></li>
-  <li><a href="#calculating-the-diagonal-terms." id="toc-calculating-the-diagonal-terms." class="nav-link" data-scroll-target="#calculating-the-diagonal-terms."><span class="header-section-number">48.1</span> Calculating the diagonal terms.</a></li>
+  <li><a href="#the-student-level-residual-matrix" id="toc-the-student-level-residual-matrix" class="nav-link active" data-scroll-target="#the-student-level-residual-matrix"><span class="header-section-number">48.1</span> The student-level residual matrix</a></li>
+  <li><a href="#covariance-matrix-for-a-random-intercept-model" id="toc-covariance-matrix-for-a-random-intercept-model" class="nav-link" data-scroll-target="#covariance-matrix-for-a-random-intercept-model"><span class="header-section-number">48.2</span> Covariance matrix for a random intercept model</a></li>
+  <li><a href="#and-now-for-a-random-slope-model" id="toc-and-now-for-a-random-slope-model" class="nav-link" data-scroll-target="#and-now-for-a-random-slope-model"><span class="header-section-number">48.3</span> And now for a random slope model</a>
+  <ul class="collapse">
+  <li><a href="#calculating-the-delta_tt" id="toc-calculating-the-delta_tt" class="nav-link" data-scroll-target="#calculating-the-delta_tt">Calculating the <span class="math inline">\(\delta_{tt'}\)</span></a></li>
+  <li><a href="#calculating-the-diagonal-terms." id="toc-calculating-the-diagonal-terms." class="nav-link" data-scroll-target="#calculating-the-diagonal-terms."><span class="header-section-number">48.3.1</span> Calculating the diagonal terms.</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -562,37 +595,20 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>We have a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11–15):</p>
-<p><span class="math display">\[\begin{aligned}
-Y_{ti} &amp;= \pi_{0i} + \pi_{1i} a_t + \tilde{\epsilon}_{ti} \\
-\pi_{0i} &amp;=  \beta_{0} + u_{0i} \\
-\pi_{1i} &amp;= \beta_{1} + u_{1i} \\
-\begin{pmatrix} u_{0j} \\
-u_{1j}
-\end{pmatrix} &amp;\sim  N
-\begin{bmatrix}
-\begin{pmatrix}
-0 \\
-0
-\end{pmatrix}\!\!,&amp;
-\begin{pmatrix}
-\tau_{00} &amp; \tau_{01} \\
-        &amp; \tau_{11}
-\end{pmatrix}
-\end{bmatrix}
-\end{aligned}\]</span></p>
-<p>Let <span class="math inline">\(\tilde{\epsilon}_i \sim N(0, \sigma^2)\)</span>. Let our intercept correspond to our first timepoint, so <span class="math inline">\(a_1 = 0, a_2 = 1, ..., a_5 = 4\)</span>. I.e., our <span class="math inline">\(a_t\)</span> is number of years since onset of study. Then <span class="math inline">\(\beta_{0}\)</span> is the average outcome at onset of the study and <span class="math inline">\(\beta_{1}\)</span> is the rate of growth (per year) in the population.</p>
-<p>The reduced form is <span class="math display">\[\begin{aligned}
-Y_{ti} &amp;= \beta_{0}  + \beta_{1}  a_t  + u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti} \\
-&amp;= \beta_{0}  + \beta_{1}  a_t  + \epsilon_{ti}
-\end{aligned}\]</span> with <span class="math inline">\(\epsilon_{ti} = u_{0i} + u_{1i} a_t + \tilde{\epsilon}_{ti}\)</span>.</p>
-<p>Note that <span class="math inline">\(\tilde{\epsilon}_{ti}\)</span> is the specific time-individual residual after the individual random effects, and <span class="math inline">\(\epsilon_{ti}\)</span> is the <em>overall</em> residual (deviation from what we expect from the population, or the difference between our observed outcome and the <em>population</em> model, not student latent growth curve).</p>
-<p>Now for any subject <span class="math inline">\(i\)</span>, the covariance matrix of their residuals is <span class="math display">\[\begin{aligned}
-\begin{pmatrix} \epsilon_{i1} \\
-\epsilon_{i2} \\
-\epsilon_{i3} \\
-\epsilon_{i4} \\
-\epsilon_{i5}
+<p>In this chapter we lay out some of the derivations on residual matrices. We use the running example of the NYS data (see Packet 7).</p>
+<section id="the-student-level-residual-matrix" class="level2" data-number="48.1">
+<h2 data-number="48.1" class="anchored" data-anchor-id="the-student-level-residual-matrix"><span class="header-section-number">48.1</span> The student-level residual matrix</h2>
+<p>Following Packet 7.1, let’s think about a generic regression equation for a linear growth model with 5 timepoints (this is a simplified version of the NYS model, where each time point is a year of age, 11–15).</p>
+<p>In particular, consider <span class="math display">\[
+Y_{ti} = \beta_0 + \beta_1 age_{ti} + u_{ti}
+\]</span> where <span class="math inline">\(age_{ti}\)</span> is our age from 11 (so an observation at 11 years old would have <code>age11 = 0</code>). This means our intercept correspond to our first timepoint, with <span class="math inline">\(a_1 = 0, a_2 = 1, ..., a_5 = 4\)</span>. I.e., our <span class="math inline">\(age_{ti}\)</span> is number of years since onset of study.</p>
+<p>In this model, <span class="math inline">\(\beta_{0}\)</span> is the average outcome across our population at the onset of the study and <span class="math inline">\(\beta_{1}\)</span> is the average rate of growth (per year) in the population.</p>
+<p>Now we have 5 observations for each student <span class="math inline">\(i\)</span>, so the residuals <span class="math inline">\((u_{1i}, \ldots, u_{5i})\)</span> are likely correlated with each other. For example, a student might just generally have higher levels of outcome, or lower levels, which means the overall residual of one time point would be related to the reisduals of other time points. In math, we can write that for any randomly subject <span class="math inline">\(i\)</span>, the covariance matrix of their residuals is <span class="math display">\[\begin{aligned}
+\begin{pmatrix} u_{i1} \\
+u_{i2} \\
+u_{i3} \\
+u_{i4} \\
+u_{i5}
 \end{pmatrix} &amp;\sim  N
 \begin{bmatrix}
 \begin{pmatrix}
@@ -610,46 +626,145 @@ Y_{ti} &amp;= \beta_{0}  + \beta_{1}  a_t  + u_{0i} + u_{1i} a_t + \tilde{\epsil
          &amp;              &amp;              &amp;            &amp; \delta_{55}
 \end{pmatrix}
 \end{bmatrix}
+\end{aligned} = N( 0, \Sigma_i)\]</span></p>
+<p>This matrix of residuals for student <span class="math inline">\(i\)</span> is one of the blocks in our <span class="math inline">\(N \times N\)</span> block-diagonal matrix for all our residuals (this would be the giant matrix plugged into our sandwich formula to get standard errors for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>), where <span class="math inline">\(N\)</span> is the number of observations. Assuming 5 observations per student, multilevel and generalized linear modeling (which we are talking about here) make the assumption that this matrix is the same across students; cluster robust standard errors would not make this assumption. (More broadly, MLM and generalized linear modeling make the assumption that we can represent all the <span class="math inline">\(\Sigma_i\)</span> in terms of measured covariates and pre-specified parameters, but in this case we end up with the same matrix for all students with 5 time points. Students with fewer than 5 would be subsets of this matrix corresponding to the time points observed.)</p>
+<p>The diagonal of <span class="math inline">\(\Sigma_i\)</span> are our variances at each timepoint (this means, for example, that if our model is good, that if we took the variance of all the observations where <span class="math inline">\(t=5\)</span> across our dataset we should get something close to <span class="math inline">\(\delta_{55}\)</span>).</p>
+<p>In the remainder of this document, we look at how MLM gives expressions for this matrix.</p>
+</section>
+<section id="covariance-matrix-for-a-random-intercept-model" class="level2" data-number="48.2">
+<h2 data-number="48.2" class="anchored" data-anchor-id="covariance-matrix-for-a-random-intercept-model"><span class="header-section-number">48.2</span> Covariance matrix for a random intercept model</h2>
+<p>Following Packet 7.1, we start with a random intercept model with a completely pooled growth component with 5 timepoints (this is a simplified version of the NYS model, where each time point is a year of age, 11–15). In particular, take the model represented by this <code>lmer()</code> command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">=</span> <span class="fu">lmer</span>( Y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age11 <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>id), <span class="at">data=</span>nys )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>where <code>age11</code> is our age from 11 (so an observation at 11 years old would have <code>age11 = 0</code>).</p>
+<p>In math, this model is <span class="math display">\[\begin{aligned}
+Y_{ti} &amp;= \pi_{0i} + \beta_{1} age_ + \epsilon_{ti} \\
+\epsilon_{ti} &amp;\sim N( 0, \sigma^2 ) \\
+\pi_{0i} &amp;=  \beta_{0} + r_{0i} \\
+r_{0j} &amp; \sim N( 0, \tau_{00} ) \\
 \end{aligned}\]</span></p>
-<p>This matrix is one of the blocks in our block-diagonal matrix for our residuals. The diagonal are our variances at each timepoint (this means, for example, that if our model is good, that if we took the variance of all the <span class="math inline">\(t=5\)</span> observations across our dataset we should get something close to <span class="math inline">\(\delta_{55}\)</span>).</p>
-<section id="calculating-the-delta_tt" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="calculating-the-delta_tt">Calculating the <span class="math inline">\(\delta_{tt'}\)</span></h2>
+<p>The reduced form is <span class="math display">\[\begin{aligned}
+Y_{ti} &amp;= \beta_{0}  + \beta_{1}  a_t  + r_{0i} + \epsilon_{ti} \\
+&amp;= \beta_{0}  + \beta_{1}  a_t  + u_{ti}
+\end{aligned}\]</span> with <span class="math inline">\(u_{ti} = r_{0i} + \epsilon_{ti}\)</span>.</p>
+<p>Note that <span class="math inline">\(\epsilon_{ti}\)</span> is the specific time-individual residual after the individual random effects, and <span class="math inline">\(u_{ti}\)</span> is the <em>overall</em> residual (deviation from what we expect from the population, or the difference between our observed outcome and the <em>population</em> model, not student latent growth curve).</p>
+<p>Using our model, let’s calculate some variances and covariances of the residuals.</p>
+<p>First the variance of a residual at time point <span class="math inline">\(t\)</span>: <span class="math display">\[
+\begin{aligned}
+var( u_{ti} ) &amp;= var( r_{i} + \epsilon_{ti} ) \\
+  &amp;= var( r_{i} ) + var( \epsilon_{ti} ) + cov( r_i, \epsilon_{ti} ) \\
+  &amp;= \tau_{00} + \sigma^2
+\end{aligned}
+\]</span> because the residuals are independent, so all covariances of different residuals, such as <span class="math inline">\(r_i\)</span> and <span class="math inline">\(\epsilon_{ti}\)</span> are 0. The second line is using the identity <span class="math inline">\(Var( A + B ) = Var( A ) + Var( B ) + 2 Cov( A, B )\)</span>.</p>
+<p>Second, the covariance of <span class="math inline">\(u_{1i}\)</span> and <span class="math inline">\(u_{2i}\)</span>, i.e., time 1 and time 2 for the same person: <span class="math display">\[
+\begin{aligned}
+cov( u_{1i}, u_{2i} ) &amp;= cov( r_{i} + \epsilon_{1i}, r_{i} + \epsilon_{2i},  ) \\
+  &amp;= cov( r_{i}, r_{i} ) + cov( r_{i}, \epsilon_{2i} ) + cov( \epsilon_{1i}, r_i ) + cov( \epsilon_{1i}, \epsilon_{2i} ) \\
+  &amp;= \tau_{00}
+\end{aligned}
+\]</span> The last bit is again because the covariances of different residuals are 0. The covariance of something with itself is just the variance. The second line comes from <span class="math display">\[cov( A + B, C + D ) = cov( A, C ) + cov( A, D ) + cov( B, C ) + cov( B, D ),\]</span> i.e., you multiply all the bits out. The above clearly generalizes so the covariance of any two time points within a student has covariance of <span class="math inline">\(\tau_{00}\)</span>.</p>
+<p>Finally, looking at two different students, we have <span class="math display">\[
+\begin{aligned}
+cov( u_{ti}, u_{t'j} ) &amp;= cov( r_{i} + \epsilon_{ti}, r_{j} + \epsilon_{t'j},  ) \\
+  &amp;= cov( r_{i}, r_{j} ) + cov( r_{i}, \epsilon_{t'j} ) + cov( \epsilon_{ti}, r_j ) + cov( \epsilon_{ti}, \epsilon_{t'j} ) \\
+  &amp;= 0 ,
+\end{aligned}
+\]</span> because all of the residuals are independent, according to our model. This says that all our population residuals from different students are not correlated. This gives us our block diagonal structure on our <span class="math inline">\(N \times N\)</span> matrix of residuals. For student <span class="math inline">\(i\)</span>, the first two results tell us that: <span class="math display">\[\begin{aligned}
+\begin{pmatrix} u_{i1} \\
+u_{i2} \\
+u_{i3} \\
+u_{i4} \\
+u_{i5}
+\end{pmatrix} &amp;\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0 \\
+0\\
+0 \\
+0
+\end{pmatrix}\!\!,&amp;
+\begin{pmatrix}
+\tau_{00} + \sigma^2 &amp; \tau_{00} &amp; \tau_{00} &amp; \tau_{00} &amp; \tau_{00} \\
+           &amp; \tau_{00} + \sigma^2 &amp; \tau_{00} &amp; \tau_{00} &amp; \tau_{00} \\
+         &amp;              &amp; \tau_{00} + \sigma^2 &amp; \tau_{00} &amp; \tau_{00} \\
+         &amp;              &amp;             &amp; \tau_{00} + \sigma^2 &amp; \tau_{00} \\
+         &amp;              &amp;              &amp;            &amp; \tau_{00} + \sigma^2
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned} .\]</span></p>
+<p>Our multilevel model has given us a specific structure for our student-level residual covariance matrix <span class="math inline">\(\Sigma_i\)</span>. We could just fit a regression at the population level with this matrix specified, without talking about random intercepts or anything. We can also tweak this matrix in ways that capture other kinds of variation. This is the key to this approach to modeling clustered or non-independent data.</p>
+<p>In the next section we repeat this for a random slope model. Same idea, more messy math.</p>
+</section>
+<section id="and-now-for-a-random-slope-model" class="level2" data-number="48.3">
+<h2 data-number="48.3" class="anchored" data-anchor-id="and-now-for-a-random-slope-model"><span class="header-section-number">48.3</span> And now for a random slope model</h2>
+<p>Take a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11–15):</p>
+<p><span class="math display">\[
+\begin{aligned}
+Y_{ti} &amp;= \pi_{0i} + \pi_{1i} age_{ti} + \epsilon_{ti} \\
+\pi_{0i} &amp;=  \beta_{0} + r_{0i} \\
+\pi_{1i} &amp;= \beta_{1} + r_{1i} \\
+\begin{pmatrix} r_{0j} \\
+r_{1j}
+\end{pmatrix} &amp;\sim  N
+\begin{bmatrix}
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}\!\!,&amp;
+\begin{pmatrix}
+\tau_{00} &amp; \tau_{01} \\
+        &amp; \tau_{11}
+\end{pmatrix}
+\end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Let <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>. Let our intercept correspond to our first timepoint, so <span class="math inline">\(a_1 = 0, a_2 = 1, ..., a_5 = 4\)</span>. I.e., our <span class="math inline">\(age_{ti}\)</span> is number of years since onset of study. Then <span class="math inline">\(\beta_{0}\)</span> is the average outcome at onset of the study and <span class="math inline">\(\beta_{1}\)</span> is the rate of growth (per year) in the population.</p>
+<p>The reduced form is <span class="math display">\[\begin{aligned}
+Y_{ti} &amp;= \beta_{0}  + \beta_{1}  age_{ti}  + r_{0i} + r_{1i} age_{ti} + \epsilon_{ti} \\
+&amp;= \beta_{0}  + \beta_{1}  age_{ti}  + u_{ti}
+\end{aligned}\]</span> with <span class="math inline">\(u_{ti} = r_{0i} + r_{1i} age_{ti} + \epsilon_{ti}\)</span>.</p>
+<p>Now let’s use this definition of <span class="math inline">\(u_{ti}\)</span> to calculate all the <span class="math inline">\(\delta_{tt'}\)</span> values in the student level covariance matrix <span class="math inline">\(\Sigma_i\)</span>.</p>
+<section id="calculating-the-delta_tt" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="calculating-the-delta_tt">Calculating the <span class="math inline">\(\delta_{tt'}\)</span></h3>
 <p>Let’s calculate <span class="math inline">\(\delta_{13} = cov( \epsilon_{i1}, \epsilon_{i2} )\)</span>.</p>
 <p>First we need a math fact about random quantities <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span>: <span class="math display">\[cov( A + B, C ) = cov( A, C ) + cov( B, C ) .\]</span> Also if you multiply something by a constant <span class="math inline">\(k\)</span> you have <span class="math display">\[cov( k_1 A, k_2 B ) = k_1 k_2 cov( A, B ) .\]</span></p>
-<p>Also note that <span class="math inline">\(a_1 = 0\)</span> and <span class="math inline">\(a_3 = 2\)</span>. Then we have: <span class="math display">\[\begin{aligned}
-\delta_{13} &amp;= cov( \epsilon_{i1}, \epsilon_{i3} ) \\
-   &amp;= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_3 + \tilde{\epsilon}_{3i} ) \\
-   &amp;= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + 2 u_{1i} + \tilde{\epsilon}_{3i} ) \\
-   &amp;= cov(  u_{0i}, u_{0i} ) + cov( u_{0i}, 2 u_{1i} ) + cov( u_{0i}, \tilde{\epsilon}_{3i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 2 u_{1i} )  + cov( \tilde{\epsilon}_{1i}, \tilde{\epsilon}_{3i}) \\
+<p>Also note that <span class="math inline">\(a_1 = 0\)</span> and <span class="math inline">\(a_3 = 2\)</span>, given our coding of age ($a_1$ is the time covariate at age 11, which is 0, for example). Then we have, plugging in those values: <span class="math display">\[\begin{aligned}
+\delta_{13} &amp;= cov( u_{i1}, u_{i3} ) \\
+   &amp;= cov(  r_{0i} + r_{1i} a_1 + \epsilon_{1i},  r_{0i} + r_{1i} a_3 + \epsilon_{3i} ) \\
+   &amp;= cov(  r_{0i}  + \epsilon_{1i},  r_{0i} + 2 r_{1i} + \epsilon_{3i} ) \\
+   &amp;= cov(  r_{0i}, r_{0i} ) + cov( r_{0i}, 2 r_{1i} ) + cov( r_{0i}, \epsilon_{3i} ) + cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i}, 2 r_{1i} )  + cov( \epsilon_{1i}, \epsilon_{3i}) \\
    &amp;= \tau_{00} + 2\tau_{01} + 0 + 0 + 0 + 0 \\
    &amp;= \tau_{00} + 2\tau_{01}
 \end{aligned}\]</span></p>
 <p>Note how we multiple out the individual components, and this gives an expression for the overall covariance of our two residuals. If we did this for each <span class="math inline">\(\delta_{tt'}\)</span> we could fill in our <span class="math inline">\(5 \times 5\)</span> matrix. Fun!</p>
 <p>A core idea here is the independence of the different residual pieces makes a lot of the terms go to 0, giving short(er) expressions than we might have otherwise. The random slope model dictates the overall covariance of the residuals.</p>
 </section>
-<section id="calculating-the-diagonal-terms." class="level2" data-number="48.1">
-<h2 data-number="48.1" class="anchored" data-anchor-id="calculating-the-diagonal-terms."><span class="header-section-number">48.1</span> Calculating the diagonal terms.</h2>
+<section id="calculating-the-diagonal-terms." class="level3" data-number="48.3.1">
+<h3 data-number="48.3.1" class="anchored" data-anchor-id="calculating-the-diagonal-terms."><span class="header-section-number">48.3.1</span> Calculating the diagonal terms.</h3>
 <p>For the variances, you would just calculate covariance of a quantity with itself. Let’s do <span class="math inline">\(\delta_{11}\)</span>, the variance of timepoint 1: <span class="math display">\[\begin{aligned}
-\delta_{11} &amp;= var( \epsilon_{i1} ) = cov( \epsilon_{i1}, \epsilon_{i1} ) \\
-   &amp;= cov(  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i},  u_{0i} + u_{1i} a_1 + \tilde{\epsilon}_{1i} ) \\
-   &amp;= cov(  u_{0i}  + \tilde{\epsilon}_{1i},  u_{0i} + \tilde{\epsilon}_{1i} ) \\
-   &amp;= cov(  u_{0i}, u_{0i} ) + cov( u_{0i},  \tilde{\epsilon}_{1i} ) + cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+\delta_{11} &amp;= var( u_{1i} ) = cov( u_{1i}, u_{1i} ) \\
+   &amp;= cov(  r_{0i} + r_{1i} a_1 + \epsilon_{1i},  r_{0i} + r_{1i} a_1 + \epsilon_{1i} ) \\
+   &amp;= cov(  r_{0i}  + \epsilon_{1i},  r_{0i} + \epsilon_{1i} ) \\
+   &amp;= cov(  r_{0i}, r_{0i} ) + cov( r_{0i},  \epsilon_{1i} ) + cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i},\epsilon_{1i} )  \\
    &amp;= \tau_{00} + 0 + 0 + \sigma^2 =  \tau_{00} + \sigma^2
 \end{aligned}\]</span></p>
 <p>Now let’s do <span class="math inline">\(\delta_{55}\)</span>, the variance of timepoint 5: <span class="math display">\[\begin{aligned}
-\delta_{55} &amp;= var( \epsilon_{i5} ) = cov( \epsilon_{i5}, \epsilon_{i5} ) \\
-   &amp;= cov(  u_{0i} + u_{1i} a_5 + \tilde{\epsilon}_{5i},  u_{0i} + u_{5i} a_5 + \tilde{\epsilon}_{5i} ) \\
-   &amp;= cov(  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i},  u_{0i} + 4 u_{1i} + \tilde{\epsilon}_{5i} ) \\
-   &amp;= cov(  u_{0i}, u_{0i} ) + cov(  u_{0i}, 4 u_{1i} )  + cov( u_{0i},  \tilde{\epsilon}_{5i} ) + \\
-    &amp;\qquad cov( 4 u_{1i}, u_{0i} ) + cov( 4 u_{1i}, 4 u_{1i} )  + cov( 4 u_{1i}, \tilde{\epsilon}_{5i} ) \\
-    &amp; \qquad cov( \tilde{\epsilon}_{1i}, u_{0i}) + cov( \tilde{\epsilon}_{1i}, 4 u_{1i} )  + cov( \tilde{\epsilon}_{1i},\tilde{\epsilon}_{1i} )  \\
+\delta_{55} &amp;= var( u_{5i} ) = cov( u_{5i}, u_{5i} ) \\
+   &amp;= cov(  r_{0i} + r_{1i} a_5 + \epsilon_{5i},  r_{0i} + r_{5i} a_5 + \epsilon_{5i} ) \\
+   &amp;= cov(  r_{0i} + 4 r_{1i} + \epsilon_{5i},  r_{0i} + 4 r_{1i} + \epsilon_{5i} ) \\
+   &amp;= cov(  r_{0i}, r_{0i} ) + cov(  r_{0i}, 4 r_{1i} )  + cov( r_{0i},  \epsilon_{5i} ) + \\
+    &amp;\qquad cov( 4 r_{1i}, r_{0i} ) + cov( 4 r_{1i}, 4 r_{1i} )  + cov( 4 r_{1i}, \epsilon_{5i} ) \\
+    &amp; \qquad cov( \epsilon_{1i}, r_{0i}) + cov( \epsilon_{1i}, 4 r_{1i} )  + cov( \epsilon_{1i},\epsilon_{1i} )  \\
    &amp;= \tau_{00} + 4 \tau_{01} + 0 + 4 \tau_{01} + 16 \tau_{11} + 0 + 0 + 0 + \sigma^2 \\
    &amp;= \tau_{00} + 16 \tau_{11} + 8 \tau_{01} + \sigma^2 .
 \end{aligned}\]</span></p>
-<p>Note how the variance around the intercept (at time 1 where <span class="math inline">\(a_1 = 0\)</span>) looks like it would be smaller than far out. That being said, the covariance <span class="math inline">\(\tau_{01}\)</span> could be large and negative, causing the variance at the intercept to be less. But, <span class="math inline">\(\tau_{01}\)</span> is positive, the overall variance increases as we move away from the intercept point.</p>
-<p>One interesting aspect of random slope models is the marginal (at each time point) has heteroskedasticity: the variances are each time point can be different because the lines can spread or gather.</p>
+<p>Note how the variance around the intercept (at time 1 where <span class="math inline">\(a_1 = 0\)</span>) looks like it would be smaller than the variance further out. That being said, the covariance <span class="math inline">\(\tau_{01}\)</span> could be large and negative, causing the variance at the intercept to be less. But, if <span class="math inline">\(\tau_{01}\)</span> is positive, the overall variance increases as we move away from the intercept point.</p>
+<p>One interesting aspect of random slope models is the marginal (at each time point) variance changes at each time point. This is heteroskedasticity: the variances are each time point can be different because the lines can spread or gather.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -888,13 +1003,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./icc_derivation.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span>
+      <a href="./inflated_variance.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./inflated_variance.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./complex_error.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
