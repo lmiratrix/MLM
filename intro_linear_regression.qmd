@@ -13,6 +13,7 @@ library(knitr)
 library(broom)
 library(ggeffects)
 library(sjPlot)
+library(effects)
 
 knitr::opts_chunk$set(echo = TRUE)
 options( digits = 3 )

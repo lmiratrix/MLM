@@ -92,7 +92,8 @@ Just to get a sense of the data, let's plot each age as a boxplot
 
 ```{r, fig.height=3}
 ggplot( nys1, aes( agefac, ATTIT ) ) +
-  geom_boxplot()
+  geom_boxplot() +
+  theme_minimal()
 ```
 
 Note some features of the data: First, we see that ATTIT goes up over time.
@@ -459,6 +460,8 @@ model1 = lme(fixed=ATTIT ~ AGE11 + EXPO + FEMALE + MINORITY + log(INCOME + 1),
               random=~1 + AGE11|ID,
               correlation=corAR1(),
              control = ctrl )
+
+summary(model1)
 ```
 
 In order to get this model to converge, we had to use the `lmeControl` command above; without it, the model doesn't converge due to not reaching a max in the given number of iterations.  The `lmeControl` with `optim` apparently turns up the juice so it converges without complaint.

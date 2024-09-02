@@ -4,6 +4,8 @@ author: "Luke Miratrix"
 editor: 
   markdown: 
     wrap: sentence
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r loadlibs, echo=FALSE, message=FALSE, warning=FALSE}
@@ -12,15 +14,19 @@ library(nlme)
 library(haven)
 library(lme4)
 library(tableone)
+library(stargazer)
+library(psych)
 
 options( digits=3 )
 knitr::opts_chunk$set( fig.height=3 )
 ```
 
-In this document we give a few simple plots and summary tables that may be useful for final projects and other things as well.
+In this document we give a few simple plots and summary tables for exploring and describing data that may be useful for final projects and other things as well.
 This includes a few simple model diagnostic plots to check for extreme outliers and whatnot.
 
 It is a bit of a hodge-podge, but skimming to get some ideas is definitely worthwhile.
+
+
 
 ## National Youth Survey Example
 
@@ -103,7 +109,7 @@ nys1 |>
 
 Note how we have correlation of residuals: some students have systematically lower trajectories and some students have systematically higher trajectories (although there is a lot of bouncing around).
 
-## Tabulating data (Categorical variables)
+### Tabulating data (Categorical variables)
 
 We can tabulate data as so:
 
@@ -127,7 +133,7 @@ prop.table( table( nys1$MINORITY, nys1$INCOME  ), margin=1 )
 
 The margin determines what adds up to 100%.
 
-## Summary stats (continuous variables)
+### Summary stats (continuous variables)
 
 The `tableone` package is useful:
 
@@ -143,39 +149,96 @@ The `tableone` package is useful:
                  vars = c("ATTIT"), 
                  strata = c("FEMALE"))
   
-# you can also include both binary variables
+# you can also include binary variables
   CreateTableOne(data = nys1, 
-                 vars = c("ATTIT", "agefac"),  # include both binary and continuous variables here
-                 factorVars = c("agefac"), # include only binary variables here
+                 vars = c("ATTIT", "age_fac"),  # include both binary and continuous variables here
+                 factorVars = c("age_fac"), # include only binary variables here
                  strata = c("FEMALE"))
 ```
 
-## Table of summary stats
 
-You can easily make pretty tables using the `stargazer` package:
+## Table of summary stats with `stargazer`
 
-```{r, results="asis", messages=FALSE}
+You can easily make pretty tables using the `stargazer` package, although there is a slight wrinkle in that it gets confused if you give it a "tibble" (from the tidyverse) instead of a "data.frame" (from base R).
+So you have to "cast" your data to data.frames to make it work:
+
+```{r, messages=FALSE}
   library(stargazer)
   
-# to include all variables
-  stargazer(nys1, header = FALSE)
+  # to include all variables
+  stargazer( as.data.frame(nys1), header = FALSE, type="text")
 ```
 
 You can include only some of the variables and omit stats that are not of interest:
 
-```{r, results="asis", messages=FALSE}
+```{r, messages=FALSE}
 # to include only variables of interest
-  stargazer(nys1[2:7], header=FALSE, 
+  stargazer( as.data.frame( nys1[2:7] ), header=FALSE, 
             omit.summary.stat = c("p25", "p75", "min", "max"), # to omit percentiles
-            title = "Table 1: Descriptive statistics")
+            title = "Table 1: Descriptive statistics",
+            type="text")
 
 ```
 
 See the `stargazer` help file for how to set/change more of the options: https://cran.r-project.org/web/packages/stargazer/stargazer.pdf
 
+To use `stargazer` in a PDF report, you would not set `type="text"` but rather `type="latex"` or `type="html"`, and then in the markdown chunk header (the thing that encloses all your R code) you would say "results='asis'".
+
+
+### Descriptive Statistics with the `psych` Package
+
+Another package for obtaining detailed descriptive statistics for your data is the `psych` package in R which has `describe()`, a function that generates a comprehensive summary of each variable in your dataset.
+
+If you haven't already installed the `psych` package, you can do so using `install.packages()`.
+You then load the library as so:
+
+```{r}
+# install.packages("psych")
+library(psych)
+```
+
+The `describe()` function provides descriptive statistics such as mean, standard deviation, skewness, and kurtosis for each variable in your dataset.
+
+Here's an example using a built-in dataset, `iris`:
+```{r}
+summary_stats <- describe(nys1)
+print(summary_stats)
+```
+
+The `describe()` function generates a table with the following columns:
+
+ - **vars**: The variable number.
+ - **n**: Number of valid cases.
+ - **mean**: The mean of the variable.
+ - **sd**: The standard deviation.
+ - **median**: The median of the variable.
+ - **trimmed**: The mean after trimming 10% of the data from both ends.
+ - **mad**: The median absolute deviation (a robust estimate of the variability).
+ - **min**: The minimum value.
+ - **max**: The maximum value.
+ - **range**: The range (max - min).
+ - **skew**: The skewness (measure of asymmetry).
+ - **kurtosis**: The kurtosis (measure of peakedness).
+ - **se**: The standard error.
+
+
+### The `skimr` Package 
+
+Another package that provides a comprehensive summary of your data is the `skimr` package.
+It is more about exploring data in the moment than report generation, however.
+
+One warning is `skimr` can generate special characters that can crash a R markdown report in some cases--so if you are using it, and getting weird errors when trying to render your reports, try commenting out the `skim()` call.
+Using it is simple:
+
+```{r}
+skimr::skim( nys1 )
+```
+
+
+
 ## High School and Beyond Example
 
-For this part, we'll use the HSB data to summarize variables by group/school.
+For this part, we'll use the HSB data to illustrate summarizing variables by group (in our case, school).
 
 ```{r}
 # load data 
