@@ -1,3 +1,10 @@
+
+# This script grabs all the packages listed in the set of qmd files
+# and installs any that are not currently installed.  Good to run
+# before trying to render the book on a local machine.
+
+
+
 # List all qmd files
 qmd_files <- list.files(path = ".", pattern = "\\.qmd$", recursive = TRUE)
 
