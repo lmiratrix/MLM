@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 32&nbsp; Optimization Algorithms for MLMs</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 31&nbsp; Optimization Algorithms for MLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -82,7 +82,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -91,30 +97,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./lmer_optimization.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./lmer_optimization.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -123,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
@@ -367,32 +401,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aic_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_optimization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey_weights.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
   </div>
 </li>
       </ul>
@@ -409,25 +437,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fe_crve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./robust_mlm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -444,25 +472,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./faraway_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./perf_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kenya_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
   </div>
 </li>
       </ul>
@@ -479,31 +507,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rand_slopes_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rewb_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -520,7 +548,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -531,20 +565,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -558,23 +586,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#convergence-and-optimization-algorithms" id="toc-convergence-and-optimization-algorithms" class="nav-link active" data-scroll-target="#convergence-and-optimization-algorithms"><span class="header-section-number">32.1</span> Convergence and optimization algorithms</a></li>
-  <li><a href="#what-to-do-when-your-model-wont-converge" id="toc-what-to-do-when-your-model-wont-converge" class="nav-link" data-scroll-target="#what-to-do-when-your-model-wont-converge"><span class="header-section-number">32.2</span> What to do when your model won’t converge</a></li>
-  <li><a href="#technical-appendix-understanding-the-types-of-optimization-algorithms" id="toc-technical-appendix-understanding-the-types-of-optimization-algorithms" class="nav-link" data-scroll-target="#technical-appendix-understanding-the-types-of-optimization-algorithms"><span class="header-section-number">32.3</span> Technical Appendix: Understanding the Types of Optimization Algorithms</a></li>
-  <li><a href="#newton-methods" id="toc-newton-methods" class="nav-link" data-scroll-target="#newton-methods"><span class="header-section-number">32.4</span> Newton Methods</a></li>
-  <li><a href="#quasi-newton-methods" id="toc-quasi-newton-methods" class="nav-link" data-scroll-target="#quasi-newton-methods"><span class="header-section-number">32.5</span> Quasi-Newton Methods</a></li>
-  <li><a href="#em-expectation-maximiation-algorithm" id="toc-em-expectation-maximiation-algorithm" class="nav-link" data-scroll-target="#em-expectation-maximiation-algorithm"><span class="header-section-number">32.6</span> EM (Expectation-Maximiation) Algorithm</a></li>
-  <li><a href="#implementation-in-different-programs" id="toc-implementation-in-different-programs" class="nav-link" data-scroll-target="#implementation-in-different-programs"><span class="header-section-number">32.7</span> Implementation in Different Programs</a>
+  <li><a href="#convergence-and-optimization-algorithms" id="toc-convergence-and-optimization-algorithms" class="nav-link active" data-scroll-target="#convergence-and-optimization-algorithms"><span class="header-section-number">31.1</span> Convergence and optimization algorithms</a></li>
+  <li><a href="#what-to-do-when-your-model-wont-converge" id="toc-what-to-do-when-your-model-wont-converge" class="nav-link" data-scroll-target="#what-to-do-when-your-model-wont-converge"><span class="header-section-number">31.2</span> What to do when your model won’t converge</a></li>
+  <li><a href="#technical-appendix-understanding-the-types-of-optimization-algorithms" id="toc-technical-appendix-understanding-the-types-of-optimization-algorithms" class="nav-link" data-scroll-target="#technical-appendix-understanding-the-types-of-optimization-algorithms"><span class="header-section-number">31.3</span> Technical Appendix: Understanding the Types of Optimization Algorithms</a></li>
+  <li><a href="#newton-methods" id="toc-newton-methods" class="nav-link" data-scroll-target="#newton-methods"><span class="header-section-number">31.4</span> Newton Methods</a></li>
+  <li><a href="#quasi-newton-methods" id="toc-quasi-newton-methods" class="nav-link" data-scroll-target="#quasi-newton-methods"><span class="header-section-number">31.5</span> Quasi-Newton Methods</a></li>
+  <li><a href="#em-expectation-maximiation-algorithm" id="toc-em-expectation-maximiation-algorithm" class="nav-link" data-scroll-target="#em-expectation-maximiation-algorithm"><span class="header-section-number">31.6</span> EM (Expectation-Maximiation) Algorithm</a></li>
+  <li><a href="#implementation-in-different-programs" id="toc-implementation-in-different-programs" class="nav-link" data-scroll-target="#implementation-in-different-programs"><span class="header-section-number">31.7</span> Implementation in Different Programs</a>
   <ul class="collapse">
-  <li><a href="#statamplushlm" id="toc-statamplushlm" class="nav-link" data-scroll-target="#statamplushlm"><span class="header-section-number">32.7.1</span> Stata/MPlus/HLM</a></li>
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">32.7.2</span> R</a></li>
+  <li><a href="#statamplushlm" id="toc-statamplushlm" class="nav-link" data-scroll-target="#statamplushlm"><span class="header-section-number">31.7.1</span> Stata/MPlus/HLM</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">31.7.2</span> R</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -582,9 +610,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./lmer_optimization.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></h1>
+<h1 class="title"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></h1>
 </div>
 
 
@@ -603,15 +631,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
-<section id="convergence-and-optimization-algorithms" class="level2" data-number="32.1">
-<h2 data-number="32.1" class="anchored" data-anchor-id="convergence-and-optimization-algorithms"><span class="header-section-number">32.1</span> Convergence and optimization algorithms</h2>
+
+<section id="convergence-and-optimization-algorithms" class="level2" data-number="31.1">
+<h2 data-number="31.1" class="anchored" data-anchor-id="convergence-and-optimization-algorithms"><span class="header-section-number">31.1</span> Convergence and optimization algorithms</h2>
 <p>Unlike OLS, which has a simple closed-form solution for parameter estimates, multi-level models are complex and often do not have closed-form solutions.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> As a result, programming languages use optimization algorithms to fit models. These optimization algorithms are typically iterative processes that repeatedly test potential values and eventually converge to the model estimates.</p>
 <p>Typically, optimization algorithms involve approximating the log-likelihood function as a multivariate quadratic function. Sometimes this approximation is easy to find and closely matches the true log-likelihood; in these cases, convergence occurs quickly. However, we’ve seen that convergence is trickier when the log-likelihood function is flat near the maximum; it’s also trickier with more complex and fragile likelihoods, like those created by the link functions from Generalized Least Squares (GLS) models.</p>
 </section>
-<section id="what-to-do-when-your-model-wont-converge" class="level2" data-number="32.2">
-<h2 data-number="32.2" class="anchored" data-anchor-id="what-to-do-when-your-model-wont-converge"><span class="header-section-number">32.2</span> What to do when your model won’t converge</h2>
+<section id="what-to-do-when-your-model-wont-converge" class="level2" data-number="31.2">
+<h2 data-number="31.2" class="anchored" data-anchor-id="what-to-do-when-your-model-wont-converge"><span class="header-section-number">31.2</span> What to do when your model won’t converge</h2>
 <p>If your error won’t converge, you might get a warning message like this:</p>
 <p>Warning message: In checkConv(attr(opt, “derivs”), opt<span class="math inline">\(par, ctrl = control\)</span>checkConv, : Model failed to converge with max|grad| = 0.0463355 (tol = 0.001, component 1)</p>
 <p>This warning message tells us two things. First, remember that we are trying to find the maximum of the likelihood function, or the place where the <code>slope = 0</code>. In the warning, the <code>tol = 0.001</code> tells us that R will be happy if it finds estimates where the <code>slope</code> <span class="math inline">\(\leq\)</span> <code>0.001</code>. It’s also saying that our slope when R stopped converging was <code>0.0463355</code>.</p>
@@ -644,32 +674,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Aside from these examples, there are many other ways to adjust your optimization commands, which can be found here: https://rdrr.io/cran/lme4/man/lmerControl.html</p>
 </section>
-<section id="technical-appendix-understanding-the-types-of-optimization-algorithms" class="level2" data-number="32.3">
-<h2 data-number="32.3" class="anchored" data-anchor-id="technical-appendix-understanding-the-types-of-optimization-algorithms"><span class="header-section-number">32.3</span> Technical Appendix: Understanding the Types of Optimization Algorithms</h2>
+<section id="technical-appendix-understanding-the-types-of-optimization-algorithms" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="technical-appendix-understanding-the-types-of-optimization-algorithms"><span class="header-section-number">31.3</span> Technical Appendix: Understanding the Types of Optimization Algorithms</h2>
 <p>There are generally four “types” of algorithms employed to find MLE/REML solutions:</p>
 </section>
-<section id="newton-methods" class="level2" data-number="32.4">
-<h2 data-number="32.4" class="anchored" data-anchor-id="newton-methods"><span class="header-section-number">32.4</span> Newton Methods</h2>
+<section id="newton-methods" class="level2" data-number="31.4">
+<h2 data-number="31.4" class="anchored" data-anchor-id="newton-methods"><span class="header-section-number">31.4</span> Newton Methods</h2>
 <p>Newton’s method is the most “pure” of these approaches; essentially Newton’s method uses a Taylor series approximation to approximate a quadratic function and find its maxima. It involves finding the Hessian (a matrix containing all the second and partial derivatives from your likelihood). An advantage of this approach is that it is theoretically the best of the three named approaches because it will often require fewer iterations to converge. However, there are two drawbacks:</p>
 </section>
-<section id="quasi-newton-methods" class="level2" data-number="32.5">
-<h2 data-number="32.5" class="anchored" data-anchor-id="quasi-newton-methods"><span class="header-section-number">32.5</span> Quasi-Newton Methods</h2>
+<section id="quasi-newton-methods" class="level2" data-number="31.5">
+<h2 data-number="31.5" class="anchored" data-anchor-id="quasi-newton-methods"><span class="header-section-number">31.5</span> Quasi-Newton Methods</h2>
 <p>Quasi-Newton methods start with a “guess” for the Hessian, apply the quadratic formula to attain a new point, update the guess of the Hessian, and repeat until convergence is attained. Importantly, the approximated Hessian will converge to the Hessian so long as the Wolfe conditions (a set of conditions on the likelihood) are satisfied. The easiest guess for the initial Hessian is the identity matrix, making the first step simply a gradient descent. When the identity matrix is used as an initial guess, the quasi-Newton methods converge “super-linearly”–that is it displays linear convergece initially, but approach quadratic convergence as the approximated Hessian updates itself. There are many quasi-Newton methods, but the most common is the “BFGS” updating method.</p>
 <p>In terms of time to convergence, quasi-Newton is typically much faster than pure Newton methods. This addresses the first drawback listed for Newton’s method, but it is still susceptible to the second issue. The other potential challenge with Quasi-Newton methods occurs when the Wolfe conditions are not satisfied - the method will typically not converge to the Hessian within a reasonable number of iterations, and can often exceed the maximum iterations set by a program.</p>
 </section>
-<section id="em-expectation-maximiation-algorithm" class="level2" data-number="32.6">
-<h2 data-number="32.6" class="anchored" data-anchor-id="em-expectation-maximiation-algorithm"><span class="header-section-number">32.6</span> EM (Expectation-Maximiation) Algorithm</h2>
+<section id="em-expectation-maximiation-algorithm" class="level2" data-number="31.6">
+<h2 data-number="31.6" class="anchored" data-anchor-id="em-expectation-maximiation-algorithm"><span class="header-section-number">31.6</span> EM (Expectation-Maximiation) Algorithm</h2>
 <p>The EM algorithm is another way of approximating the likelihood function and maximizing that approximation. It does this in a repeating series of stseps: the E (Expectation) step and the M (Maximization) step. In random effect models, where normality is assumed, the E-step results in an a quadratic function to be maximized in the M-step. Importantly, each iteration of the EM algorithm is guaranteed to increase the likelihood function, a feature that that may be too difficult to attain with the Newton methods when a quadratic function is not yet a good approximation. Thus, even if the likelihood function not well approximated by a quadratic function, we are assured to be getting closer to a maximum with the EM algorithm. Thus the EM algorithm fixes the second issue from Newton’s method. However, it only displays linear convergence (as opposed to “super linear” or “quadratic”) and can therefore take a very long time to converge.</p>
 </section>
-<section id="implementation-in-different-programs" class="level2" data-number="32.7">
-<h2 data-number="32.7" class="anchored" data-anchor-id="implementation-in-different-programs"><span class="header-section-number">32.7</span> Implementation in Different Programs</h2>
-<section id="statamplushlm" class="level3" data-number="32.7.1">
-<h3 data-number="32.7.1" class="anchored" data-anchor-id="statamplushlm"><span class="header-section-number">32.7.1</span> Stata/MPlus/HLM</h3>
+<section id="implementation-in-different-programs" class="level2" data-number="31.7">
+<h2 data-number="31.7" class="anchored" data-anchor-id="implementation-in-different-programs"><span class="header-section-number">31.7</span> Implementation in Different Programs</h2>
+<section id="statamplushlm" class="level3" data-number="31.7.1">
+<h3 data-number="31.7.1" class="anchored" data-anchor-id="statamplushlm"><span class="header-section-number">31.7.1</span> Stata/MPlus/HLM</h3>
 <p>Stata, Mplus, and HLM, each use a combination of the EM and the quasi-Newton methods when estimating models with random effects. The algorithms start with the EM algorithm and proceed until there is sufficient concavity to switch a quasi-Newton method. Using a combination of the EM and quasi-Newton methods minimizes computational time while maximizing the opportunity that the algorithm will converge to a maximum. Mplus and HLM will even switch back to the EM algorithm if the Wolfe conditions are not attained in a set amount of time; thus, my experience has been that Mplus and HLM tend to converge the fastest and tend to minimize convergence issues.</p>
 <p>Disclaimer: sometimes you may need to manually increase the number of EM iterations allowed to acheive convergence.</p>
 </section>
-<section id="r" class="level3" data-number="32.7.2">
-<h3 data-number="32.7.2" class="anchored" data-anchor-id="r"><span class="header-section-number">32.7.2</span> R</h3>
+<section id="r" class="level3" data-number="31.7.2">
+<h3 data-number="31.7.2" class="anchored" data-anchor-id="r"><span class="header-section-number">31.7.2</span> R</h3>
 <p>If I am interpreting the lmerControls documentation correctly, this method starts with the EM algorithm and then applies “unconstrained and box-constrained optimization using PORT routines” from the nlminb function. I’ll classify this algorithm as “other”, as opposed to the three named approaches above.</p>
 <p>In my opinion, lme’s optimization algorithm is less than ideal for two reasons. First, the number of initial EM steps is fixed and who’s to say that the default number of EM iterations will bring us to a region where the log-likelihood function is sufficiently concave?</p>
 <p>Second, HLM and Mplus have been estimating random effect models for a long time, and developers from both have come to the conclusion that the quasi-Newton method as the second method in a combination is the best for these models. I’ll assume this is a very informed decision on the end of these developers. Yet, it does not appear that this is what is occuring in R. Instead, R uses “unconstrained and box-constrained optimization using PORT routines,” whatever that is.</p>
@@ -765,10 +795,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -778,8 +825,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -791,7 +847,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -835,6 +1014,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -860,6 +1040,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -921,17 +1127,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./aic_check.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span>
+      <a href="./aic_check.html" class="pagination-link" aria-label="AIC, BIC, and Deviance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./survey_weights.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./survey_weights.html" class="pagination-link" aria-label="Survey Weights">
+        <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

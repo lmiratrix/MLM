@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Luke Miratrix">
 
-<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 33&nbsp; Survey Weights</title>
+<title>Resources for S043/Stat151: Multilevel and Longitudinal Models - 32&nbsp; Survey Weights</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,30 +63,58 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./survey_weights.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./survey_weights.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -89,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
@@ -333,32 +367,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glm_vs_transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">GLMs vs.&nbsp;Transformations</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./lr_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Likelihood Ratio Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aic_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">AIC, BIC, and Deviance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lmer_optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey_weights.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></span></a>
   </div>
 </li>
       </ul>
@@ -375,25 +403,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Pooling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Clarification on Fixed Effects and Identification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fe_crve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">A tour of fixed effects and cluster-robust SEs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./robust_mlm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">MLM and Cluster-Robust Standard Errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -410,25 +438,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hsb_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Code for HSB Example in Chapter 4 of R&amp;B</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./faraway_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Code for Faraway Example</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./perf_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Example of a three-level model of clustered data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kenya_ex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Example of a three-level longitudinal model</span></span></a>
   </div>
 </li>
       </ul>
@@ -445,31 +473,31 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">ICC Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rand_slopes_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Random Slopes Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rewb_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Within vs Between / Contextual Effects Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centering_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Centering Visualization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./latent_logit_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Latent Logit/LPM Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -486,7 +514,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./icc_derivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">ICC Derivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -497,20 +531,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inflated_variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Inflated Variance Derivation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./complex_error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cluster_demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span></a>
   </div>
 </li>
       </ul>
@@ -524,28 +552,28 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#multilevel-modeling-and-survey-weights" id="toc-multilevel-modeling-and-survey-weights" class="nav-link active" data-scroll-target="#multilevel-modeling-and-survey-weights"><span class="header-section-number">33.1</span> Multilevel modeling and survey weights</a></li>
-  <li><a href="#topline-advice" id="toc-topline-advice" class="nav-link" data-scroll-target="#topline-advice"><span class="header-section-number">33.2</span> Topline advice</a></li>
-  <li><a href="#what-are-survey-weights" id="toc-what-are-survey-weights" class="nav-link" data-scroll-target="#what-are-survey-weights"><span class="header-section-number">33.3</span> What are survey weights?</a></li>
-  <li><a href="#what-happens-if-you-ignore-the-weights" id="toc-what-happens-if-you-ignore-the-weights" class="nav-link" data-scroll-target="#what-happens-if-you-ignore-the-weights"><span class="header-section-number">33.4</span> What happens if you ignore the weights?</a></li>
-  <li><a href="#how-to-apply-weights" id="toc-how-to-apply-weights" class="nav-link" data-scroll-target="#how-to-apply-weights"><span class="header-section-number">33.5</span> How to apply weights?</a></li>
-  <li><a href="#further-references" id="toc-further-references" class="nav-link" data-scroll-target="#further-references"><span class="header-section-number">33.6</span> Further references</a></li>
+  <li><a href="#multilevel-modeling-and-survey-weights" id="toc-multilevel-modeling-and-survey-weights" class="nav-link active" data-scroll-target="#multilevel-modeling-and-survey-weights"><span class="header-section-number">32.1</span> Multilevel modeling and survey weights</a></li>
+  <li><a href="#topline-advice" id="toc-topline-advice" class="nav-link" data-scroll-target="#topline-advice"><span class="header-section-number">32.2</span> Topline advice</a></li>
+  <li><a href="#what-are-survey-weights" id="toc-what-are-survey-weights" class="nav-link" data-scroll-target="#what-are-survey-weights"><span class="header-section-number">32.3</span> What are survey weights?</a></li>
+  <li><a href="#what-happens-if-you-ignore-the-weights" id="toc-what-happens-if-you-ignore-the-weights" class="nav-link" data-scroll-target="#what-happens-if-you-ignore-the-weights"><span class="header-section-number">32.4</span> What happens if you ignore the weights?</a></li>
+  <li><a href="#how-to-apply-weights" id="toc-how-to-apply-weights" class="nav-link" data-scroll-target="#how-to-apply-weights"><span class="header-section-number">32.5</span> How to apply weights?</a></li>
+  <li><a href="#further-references" id="toc-further-references" class="nav-link" data-scroll-target="#further-references"><span class="header-section-number">32.6</span> Further references</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examining_shrinkage.html">MODEL FITTING &amp; INTERPRETATION</a></li><li class="breadcrumb-item"><a href="./survey_weights.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Survey Weights</span></h1>
+<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Survey Weights</span></h1>
 </div>
 
 
@@ -564,39 +592,41 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
 
-<section id="multilevel-modeling-and-survey-weights" class="level2" data-number="33.1">
-<h2 data-number="33.1" class="anchored" data-anchor-id="multilevel-modeling-and-survey-weights"><span class="header-section-number">33.1</span> Multilevel modeling and survey weights</h2>
+
+<section id="multilevel-modeling-and-survey-weights" class="level2" data-number="32.1">
+<h2 data-number="32.1" class="anchored" data-anchor-id="multilevel-modeling-and-survey-weights"><span class="header-section-number">32.1</span> Multilevel modeling and survey weights</h2>
 <p>In many circumstances you may be faced with a multilevel modeling project where you also have survey weights. Unfortunately R does not have good support for this hybrid of two worlds (although if you go the econometric direction you can incorporate weights into your robust standard errors).</p>
 <p>You basically have two options at this point: you can ignore the weights (defendable, but often upsetting to reviewers and colleagues), or switch to Stata, which allows for both.</p>
 </section>
-<section id="topline-advice" class="level2" data-number="33.2">
-<h2 data-number="33.2" class="anchored" data-anchor-id="topline-advice"><span class="header-section-number">33.2</span> Topline advice</h2>
+<section id="topline-advice" class="level2" data-number="32.2">
+<h2 data-number="32.2" class="anchored" data-anchor-id="topline-advice"><span class="header-section-number">32.2</span> Topline advice</h2>
 <p>Ignore the weights for your final project and worry about extending to your general population later on, depending on where your research takes you. More important than the weights is making sure you have random effects corresponding to all clustering involved in the way the data were collected. For example, if the program was a sample of states and then a sample of villages, and then households, you would have a 4-level model: states, villages, households, and individuals. You would want a random effect for each level. If you had few states, you could back off and have fixed effects for state and generalize only to the sampled states rather than the full country.</p>
 </section>
-<section id="what-are-survey-weights" class="level2" data-number="33.3">
-<h2 data-number="33.3" class="anchored" data-anchor-id="what-are-survey-weights"><span class="header-section-number">33.3</span> What are survey weights?</h2>
+<section id="what-are-survey-weights" class="level2" data-number="32.3">
+<h2 data-number="32.3" class="anchored" data-anchor-id="what-are-survey-weights"><span class="header-section-number">32.3</span> What are survey weights?</h2>
 <p>The easy way to think of sample weights (survey weights) is the answer to “how many people does this individual represent in the population?” (Although note that weights will generally be proportional to the answer to this question rather than literally that value.)</p>
 <p>For example, if you had three people, the first with a weight of 1, the second with a weight of 0.5 and the third with a weight of 3, then we would think of our population as being <span class="math inline">\(1 + 0.5 + 3 = 4.5\)</span> people, 3 of whom are people similar to our third sampled person, 0.5 of which our second sampled person, and 1 of whom is similar to our first person.</p>
 <p>In other words, our first person is sampled proportional to their prevalence in the population. The 0.5 weight person is “oversampled”—we have too many people like this in our sample, as compared to the population so we “downweight” them. The third person is underrepresented, by contrast. We should have had three times as many of these types of people in our sample as we have.</p>
 <p>Thus, sampling weights adjust for the probability of selecting an individual from the population when that probability is not constant (this could be due either by design or by chance). For nationally representative data surveys often select a sample where individuals have an unequal probability of being selected. This is done to increase the number of individuals and reduce sampling variability, particularly for certain areas or subgroups of the population. In some cases, corrections for non-response are also built into the weights. Sampling weights are then inversely proportional to the probability of selection.</p>
 <p>In some complex surveys, there may be more than one sampling weight when different subsamples are selected. For example, the Demographic and Health Surveys (DHS)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> select a subsample of adults to be tested for HIV. If 1 in 5 households is selected for HIV testing, then no weighting is needed. But if 1 in 5 urban households and 1 in 2 rural households are selected, then sampling weights need to be applied to both descriptive statistics and model estimates to estimate at national level.</p>
 </section>
-<section id="what-happens-if-you-ignore-the-weights" class="level2" data-number="33.4">
-<h2 data-number="33.4" class="anchored" data-anchor-id="what-happens-if-you-ignore-the-weights"><span class="header-section-number">33.4</span> What happens if you ignore the weights?</h2>
+<section id="what-happens-if-you-ignore-the-weights" class="level2" data-number="32.4">
+<h2 data-number="32.4" class="anchored" data-anchor-id="what-happens-if-you-ignore-the-weights"><span class="header-section-number">32.4</span> What happens if you ignore the weights?</h2>
 <p>In this case (as long as you are modeling the clustering correctly) you are estimating relationships on your sample, rather than the target population. This can be a totally fine thing: if you are interested in how some variables interrelate you might reasonably believe that a found pattern of relationships in the sample is very indicative of how things may play out on a wider stage. It would be odd for (statistically significant) relationships in the sample to not be at least somewhat similar to the population the sample came from. The true magnitudes may shift, but the story should be the same.</p>
 <p>For example, if, after ignoring weights, you find an impact of some treatment, then you know the treatment works, at least for those in your sample. Even if your sample is a nonrepresentative sample of your population, it is still some sort of representation, and thus you would believe that your treatment would work to some degree more generally. In this case, any differences between your sample and population would be due to treatment variation, i.e., some in your sample respond differently than some in the population, and so your results in the sample would be weighting some people more than we “should,” causing the discrepancy.</p>
 <p>Survey weights are usually much more important when trying to estimate level, or prevalence, of an outcome. If, for example, you are attempting to measure the average literacy in a population, then survey weights will be very important: if the weights of those systematically more (or less) literate are different, then ignoring the weights can cause bias. In addition, if some types of groups or areas are oversampled, then your estimates will tend to be biased towards the levels and relationships in the oversampled group/area. But if you are interested in the relationship between literacy and some covariate, the weights will matter less: it is only if the relationship between these variables is different in your high weight and low weight individuals where you will get bias. This is arguably a less natural phenomenon.</p>
 </section>
-<section id="how-to-apply-weights" class="level2" data-number="33.5">
-<h2 data-number="33.5" class="anchored" data-anchor-id="how-to-apply-weights"><span class="header-section-number">33.5</span> How to apply weights?</h2>
+<section id="how-to-apply-weights" class="level2" data-number="32.5">
+<h2 data-number="32.5" class="anchored" data-anchor-id="how-to-apply-weights"><span class="header-section-number">32.5</span> How to apply weights?</h2>
 <p>As a rule of thumb, you want to first read any available documentation for the data you are using. You want to understand how the sample was obtained and how the weights were calculated. Publicly available data often comes with manuals on how to handle weights. Some manuals even come with R and Stata code! This is a very important step as sometimes you have to manipulate the weights before you can use them! For example, when using DHS data, you have to divide the weight by 1,000,000 before use. This is a function of how the weights are calculated. In addition, many complex surveys that use weights may also have stratified the sample, and that is also something to account for in your analysis.</p>
 <p>When using survey weights it is always advisable to compare the results that include weights with those without them. In general, one should not expect see substantive changes in the point estimates of regression coefficients to the point of dramatically changing one’s interpretation of one’s results. The model itself is supposed to capture structural relationships between covariates and outcomes, and under correct model specification the weights are superfluous with regards to these coefficients. Where weights could cause change is with descriptives such as the overall averages (e.g., the intercepts, in particular, could be different. We may also see changes in the variance parameters. Finally, with weights, one usually sees an increase in the the standard errors.</p>
 <p>A limitation with some packages is one might not have an easy way to obtain model fit statistics to help compare models. A clean way to avoid this is to go through the process of model selection using the data in the sample (ignoring the weights) and using the packages and approaches we have seen in class. The findings from such an exploration would be valid for the structure of the data in our sample. Then, as a second step, include the survey weights to move to inference to a larger population (for which the sample is supposed to be representative), taking the preferred model choices from step one and fitting them through a package that allows for survey weights.</p>
 </section>
-<section id="further-references" class="level2" data-number="33.6">
-<h2 data-number="33.6" class="anchored" data-anchor-id="further-references"><span class="header-section-number">33.6</span> Further references</h2>
+<section id="further-references" class="level2" data-number="32.6">
+<h2 data-number="32.6" class="anchored" data-anchor-id="further-references"><span class="header-section-number">32.6</span> Further references</h2>
 <p>For some good resources see <span class="citation" data-cites="asparouhov2006 carle2009 rabe-hesketh2006">(<a href="references.html#ref-asparouhov2006" role="doc-biblioref"><strong>asparouhov2006?</strong></a>; <a href="references.html#ref-carle2009" role="doc-biblioref"><strong>carle2009?</strong></a>; <a href="references.html#ref-rabe-hesketh2006" role="doc-biblioref"><strong>rabe-hesketh2006?</strong></a>)</span>. Prior students previously also used <span class="citation" data-cites="laukaityte2018importance">(<a href="references.html#ref-laukaityte2018importance" role="doc-biblioref"><strong>laukaityte2018importance?</strong></a>)</span> and <span class="citation" data-cites="lorah2020estimating">(<a href="references.html#ref-lorah2020estimating" role="doc-biblioref"><strong>lorah2020estimating?</strong></a>)</span> for some guidance. They then worked with the <code>BIFIEsurvey</code> R package to fit multi-level models with survey weights to account for the complex sampling design in their data.</p>
 
 
@@ -688,10 +718,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -701,8 +748,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -714,7 +770,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -758,6 +937,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -783,6 +963,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -844,17 +1050,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./lmer_optimization.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span>
+      <a href="./lmer_optimization.html" class="pagination-link" aria-label="Optimization Algorithms for MLMs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Optimization Algorithms for MLMs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./pooling.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Pooling</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pooling.html" class="pagination-link" aria-label="Pooling">
+        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Pooling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

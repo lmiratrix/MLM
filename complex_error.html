@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -82,7 +82,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -91,30 +97,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_derivation.html">MATH DERIVATIONS</a></li><li class="breadcrumb-item"><a href="./complex_error.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_derivation.html">MATH DERIVATIONS</a></li><li class="breadcrumb-item"><a href="./complex_error.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -123,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
@@ -552,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -580,7 +614,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./icc_derivation.html">MATH DERIVATIONS</a></li><li class="breadcrumb-item"><a href="./complex_error.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">An overview of complex error structures</span></h1>
 </div>
@@ -601,7 +635,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p>In Unit 7 we talked about how we can model residuals around an overall population model using different specified structures on the correlation matrices for the students. This handout extends those topics, using the Raudenbush and Bryk Chapter 6 example on National Youth Survey data on deviant attitudes. We’re going to do a few things:</p>
 <ol type="1">
@@ -683,9 +719,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Just to get a sense of the data, let’s plot each age as a boxplot</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( nys1, <span class="fu">aes</span>( agefac, ATTIT ) ) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="complex_error_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="complex_error_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Note some features of the data: First, we see that ATTIT goes up over time. Second, we see the variation of points also goes up over time. This is heteroskedasticity.</p>
@@ -697,7 +738,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.2</span> ) <span class="sc">+</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="complex_error_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="complex_error_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Note how we have correlation of residuals, in that some students are systematically low and some are systematically higher (although there is a lot of bouncing around).</p>
@@ -1015,21 +1060,21 @@ Random effects:
  Formula: ~AGE | ID
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
-(Intercept) 0.51024133 (Intr)
+(Intercept) 0.51024132 (Intr)
 AGE         0.05038614 -0.98 
-Residual    0.16265428       
+Residual    0.16265429       
 
 Fixed effects:  ATTIT ~ 1 + AGE 
-                 Value  Std.Error  DF   t-value p-value
-(Intercept) -0.5133250 0.05834087 839 -8.798719       0
-AGE          0.0646849 0.00492904 839 13.123228       0
+                 Value  Std.Error  DF  t-value p-value
+(Intercept) -0.5133250 0.05834087 839 -8.79872       0
+AGE          0.0646849 0.00492904 839 13.12323       0
  Correlation: 
     (Intr)
 AGE -0.981
 
 Standardized Within-Group Residuals:
         Min          Q1         Med          Q3         Max 
--2.87852426 -0.55971198 -0.07521191  0.57495076  3.45648137 
+-2.87852414 -0.55971196 -0.07521191  0.57495075  3.45648134 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1077,27 +1122,27 @@ Random effects:
  Formula: ~AGE | ID
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
-(Intercept) 0.57693635 (Intr)
-AGE         0.05431371 -0.979
-Residual    0.14054173       
+(Intercept) 0.57693602 (Intr)
+AGE         0.05431367 -0.979
+Residual    0.14054184       
 
 Variance function:
  Structure: Different standard deviations per stratum
  Formula: ~1 | agefac 
  Parameter estimates:
        11        12        13        14        15 
-1.0000000 1.1956045 1.3095883 1.1255244 0.9802308 
+1.0000000 1.1956071 1.3095864 1.1255177 0.9802311 
 Fixed effects:  ATTIT ~ AGE 
                  Value  Std.Error  DF   t-value p-value
-(Intercept) -0.4929012 0.05715888 839 -8.623352       0
-AGE          0.0631404 0.00483385 839 13.062119       0
+(Intercept) -0.4929012 0.05715889 839 -8.623351       0
+AGE          0.0631404 0.00483385 839 13.062122       0
  Correlation: 
     (Intr)
 AGE -0.981
 
 Standardized Within-Group Residuals:
-        Min          Q1         Med          Q3         Max 
--2.91635759 -0.54982016 -0.07583344  0.54829414  3.23703121 
+       Min         Q1        Med         Q3        Max 
+-2.9163540 -0.5498217 -0.0758348  0.5482942  3.2370312 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1112,10 +1157,10 @@ Number of Groups: 239 </code></pre>
 <pre><code>ID 9 
 Marginal variance covariance matrix
          1        2        3        4        5
-1 0.034915 0.016947 0.018731 0.020515 0.022300
+1 0.034915 0.016947 0.018731 0.020516 0.022300
 2 0.016947 0.049916 0.026415 0.031150 0.035884
 3 0.018731 0.026415 0.067975 0.041784 0.049468
-4 0.020515 0.031150 0.041784 0.077440 0.063052
+4 0.020516 0.031150 0.041784 0.077440 0.063052
 5 0.022300 0.035884 0.049468 0.063052 0.095615
   Standard Deviations: 0.18685 0.22342 0.26072 0.27828 0.30922 </code></pre>
 </div>
@@ -1125,11 +1170,11 @@ Marginal variance covariance matrix
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(myVarCov[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1         2         3         4         5
-1 1.0000000 0.4059443 0.3844926 0.3945439 0.3859519
-2 0.4059443 1.0000000 0.4534860 0.5010154 0.5194178
-3 0.3844926 0.4534860 1.0000000 0.5759074 0.6136043
-4 0.3945439 0.5010154 0.5759074 1.0000000 0.7327485
-5 0.3859519 0.5194178 0.6136043 0.7327485 1.0000000</code></pre>
+1 1.0000000 0.4059446 0.3844935 0.3945453 0.3859525
+2 0.4059446 1.0000000 0.4534860 0.5010159 0.5194173
+3 0.3844935 0.4534860 1.0000000 0.5759089 0.6136046
+4 0.3945453 0.5010159 0.5759089 1.0000000 0.7327497
+5 0.3859525 0.5194173 0.6136046 0.7327497 1.0000000</code></pre>
 </div>
 </div>
 <p>No amount of squinting will show the structure in the original covariance matrix. But when you convert to a correlation matrix, you can again squint and begin to see the linear structures in its diagonal and off-diagonal elements. The same comment as above still applies: in practice, it’s much easier to think of things in terms of the hierarchical model, and only read the diagonals of the covariance matrix.</p>
@@ -1175,12 +1220,12 @@ Variance function:
  Formula: ~1 | agefac 
  Parameter estimates:
       11       12       13       14       15 
-1.000000 1.118479 1.414270 1.522511 1.560072 
+1.000000 1.118479 1.414269 1.522510 1.560074 
 
 Coefficients:
                  Value  Std.Error   t-value p-value
-(Intercept) -0.4557089 0.05465560 -8.337826       0
-AGE          0.0597274 0.00458343 13.031153       0
+(Intercept) -0.4557090 0.05465564 -8.337822       0
+AGE          0.0597274 0.00458344 13.031145       0
 
  Correlation: 
     (Intr)
@@ -1188,7 +1233,7 @@ AGE -0.979
 
 Standardized residuals:
          Min           Q1          Med           Q3          Max 
--1.482607475 -0.809004625 -0.006791829  0.840804662  4.082257854 
+-1.482606297 -0.809004080 -0.006791942  0.840804584  4.082258054 
 
 Residual standard error: 0.1903187 
 Degrees of freedom: 1079 total; 1077 residual</code></pre>
@@ -1203,8 +1248,8 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
          [,1]     [,2]     [,3]     [,4]     [,5]
 [1,] 0.036221 0.018541 0.019071 0.024335 0.026466
 [2,] 0.018541 0.045313 0.029251 0.026924 0.027989
-[3,] 0.019071 0.029251 0.072448 0.051704 0.047736
-[4,] 0.024335 0.026924 0.051704 0.083962 0.065764
+[3,] 0.019071 0.029251 0.072448 0.051703 0.047736
+[4,] 0.024335 0.026924 0.051703 0.083962 0.065764
 [5,] 0.026466 0.027989 0.047736 0.065764 0.088156
   Standard Deviations: 0.19032 0.21287 0.26916 0.28976 0.29691 </code></pre>
 </div>
@@ -1229,15 +1274,59 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span> <span class="sc">+</span> AGE11<span class="sc">|</span>ID,</span>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(),</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">control =</span> ctrl )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">control =</span> ctrl )</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: nys1 
+       AIC       BIC   logLik
+  -444.203 -389.4427 233.1015
+
+Random effects:
+ Formula: ~1 + AGE11 | ID
+ Structure: General positive-definite, Log-Cholesky parametrization
+            StdDev     Corr  
+(Intercept) 0.07999781 (Intr)
+AGE11       0.03332789 0.718 
+Residual    0.16897903       
+
+Correlation Structure: AR(1)
+ Formula: ~1 | ID 
+ Parameter estimate(s):
+      Phi 
+0.1868886 
+Fixed effects:  ATTIT ~ AGE11 + EXPO + FEMALE + MINORITY + log(INCOME + 1) 
+                      Value  Std.Error  DF   t-value p-value
+(Intercept)      0.26483469 0.04070122 838  6.506800  0.0000
+AGE11            0.04972825 0.00463402 838 10.731129  0.0000
+EXPO             0.31452987 0.02489980 838 12.631823  0.0000
+FEMALE          -0.01661080 0.02027639 235 -0.819219  0.4135
+MINORITY        -0.06296592 0.02676263 235 -2.352755  0.0195
+log(INCOME + 1) -0.00943584 0.02359588 235 -0.399893  0.6896
+ Correlation: 
+                (Intr) AGE11  EXPO   FEMALE MINORI
+AGE11           -0.123                            
+EXPO            -0.064 -0.225                     
+FEMALE          -0.181 -0.038  0.171              
+MINORITY        -0.491  0.008  0.011 -0.030       
+log(INCOME + 1) -0.923 -0.004  0.084 -0.054  0.407
+
+Standardized Within-Group Residuals:
+        Min          Q1         Med          Q3         Max 
+-2.61795250 -0.58685208 -0.08121038  0.57649581  2.82037550 
+
+Number of Observations: 1079
+Number of Groups: 239 </code></pre>
+</div>
 </div>
 <p>In order to get this model to converge, we had to use the <code>lmeControl</code> command above; without it, the model doesn’t converge due to not reaching a max in the given number of iterations. The <code>lmeControl</code> with <code>optim</code> apparently turns up the juice so it converges without complaint.</p>
 <p>Let’s compare our fit model to the same model without AR1 correlation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>model1simple <span class="ot">=</span> <span class="fu">lme</span>(<span class="at">fixed=</span>ATTIT <span class="sc">~</span> AGE11 <span class="sc">+</span> EXPO <span class="sc">+</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>), </span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>nys1,</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span> <span class="sc">+</span> AGE11<span class="sc">|</span>ID )</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">AR=</span>model1, <span class="at">noAR=</span>model1simple ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>model1simple <span class="ot">=</span> <span class="fu">lme</span>(<span class="at">fixed=</span>ATTIT <span class="sc">~</span> AGE11 <span class="sc">+</span> EXPO <span class="sc">+</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>), </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>nys1,</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span> <span class="sc">+</span> AGE11<span class="sc">|</span>ID )</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">AR=</span>model1, <span class="at">noAR=</span>model1simple ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =========================================
@@ -1267,7 +1356,7 @@ Num. groups: ID   239          239
 </div>
 <p>The AR1 model has a notably lower AIC and thus is significantly better:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( model1simple, model1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( model1simple, model1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Model df       AIC       BIC   logLik   Test  L.Ratio p-value
 model1simple     1 10 -436.8027 -387.0206 228.4014                        
@@ -1286,8 +1375,8 @@ model1           2 11 -444.2030 -389.4427 233.1015 1 vs 2 9.400292  0.0022</code
 <p>Still, as long as your focus is on location parameters such as true means or slopes, having hybrid models can be a good way to proceed. Let’s explore this by first fitting a “kitchen sink” model for this data, in which we use all available covariates; and seeing how adding heteroskedasticity, AR[1] structure, or both changes it (or doesn’t).</p>
 <p>What do we want in this “kitchen sink” model? Let’s first fit a very simple random intercept model with fixed effects for gender, minority status, “exposure”, and log(income), to see which of these covariates to focus on. We use the <code>lmerTest</code> package to get some early <span class="math inline">\(p\)</span>-values for these fixed effects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>modelKS0 <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> EXPO <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelKS0, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>modelKS0 <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> EXPO <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelKS0, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -1320,28 +1409,28 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>(The <code>correlation=FALSE</code> shortens the printout.)</p>
 <p>Apparently, MINORITY and EXPO are the covariates with significant effects; minority status is correlated with a lower tolerance for deviance, while “deviant” friends are of course correlated positively with tolerance of deviance. Let’s build a few hierarchical models including these in various specifications (can you identify what models are what? Some of these models are not necessarily good choices). We first center our age so we have meaningful intercepts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>age13 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">13</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>modelKS1 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13,</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>age13 <span class="sc">+</span> EXPO<span class="sc">|</span>ID )</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>modelKS2 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13, </span>
-<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>age13 <span class="sc">+</span> EXPO<span class="sc">|</span>ID )</span>
-<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>modelKS3 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13, </span>
-<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>EXPO<span class="sc">|</span>ID )</span>
-<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>modelKS4 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
-<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>age13 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">13</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>modelKS1 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13,</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>age13 <span class="sc">+</span> EXPO<span class="sc">|</span>ID )</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>modelKS2 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13, </span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>age13 <span class="sc">+</span> EXPO<span class="sc">|</span>ID )</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>modelKS3 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13, </span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>EXPO<span class="sc">|</span>ID )</span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>modelKS4 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And now we examine them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( modelKS1, modelKS2, modelKS3, modelKS4 ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( modelKS1, modelKS2, modelKS3, modelKS4 ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ===================================================================
@@ -1367,20 +1456,20 @@ Num. groups: ID   239          239          239          239
 </div>
 <p>OK, Number 4 seems like a pretty good model. Let’s see how much it improves when we add AR[1]:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>modelKS5 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>modelKS5 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -433.5943</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS4 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS4 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    MINORITY       age13        EXPO 
  0.34054593 -0.05606947  0.04830698  0.36778951 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    MINORITY       age13        EXPO 
  0.34083507 -0.05704474  0.04733879  0.35207989 </code></pre>
@@ -1388,7 +1477,7 @@ Num. groups: ID   239          239          239          239
 </div>
 <p>Note that the estimates for all the effects are essentially unchanged. However, the AIC is almost 40 points better. Also, because the model has done a better job explaining residual variance, the <span class="math inline">\(p\)</span>-value for the coefficient on MINORITY has dropped from 0.032 to 0.029, as we can see on the summary display below. This is not a large drop, but a noticeable one:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -1428,11 +1517,11 @@ Number of Groups: 239 </code></pre>
 <p>Is any of this drop in the <span class="math inline">\(p\)</span>-value due to overfitting? Given the size of the change in AIC, it seems doubtful that that’s a significant factor.</p>
 <p>Let’s try including heteroskedasticity, without AR[1]:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>modelKS6 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS6 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>modelKS6 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS6 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -389.5696</code></pre>
 </div>
@@ -1440,12 +1529,12 @@ Number of Groups: 239 </code></pre>
 <p>This did not improve AIC in this case, so we can avoid looking at this model further.</p>
 <p>For completeness, let’s look at a model with both AR(1) and heteroskedasticity:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>modelKS7 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID),</span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS7 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>modelKS7 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID),</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS7 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -431.1943</code></pre>
 </div>
@@ -1535,10 +1624,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1548,8 +1654,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1561,7 +1676,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1605,6 +1843,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1630,6 +1869,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1691,17 +1956,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cov_matrix_derivation.html" class="pagination-link">
+      <a href="./cov_matrix_derivation.html" class="pagination-link" aria-label="Covariance Derivation">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Covariance Derivation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cluster_demo.html" class="pagination-link">
+      <a href="./cluster_demo.html" class="pagination-link" aria-label="Walk-through of calculating robust standard errors">
         <span class="nav-page-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Walk-through of calculating robust standard errors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
