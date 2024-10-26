@@ -40,7 +40,7 @@ Let's illustrate with the High School and Beyond data.
 
 ## Robust standard errors without multilevel modeling
 
-As a reminder, here is how to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):
+As a reminder, here is one way to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):
 
 First we fit our regression, like we would normally:
 
@@ -94,7 +94,7 @@ fixef( M2 )
 The assumption of the random effects means we are not weighting all our data the same way.
 For example, if we find the clusters vary in size a lot, we might weight the clusters more equally when estimating a cluster-level coefficient (e.g., sector) instead of counting on the big clusters more.
 
-Regardless, we might worry that complex dependencies within our clusters are messing up our standard errors in our MLM, however.
+Regardless, we might worry that complex dependencies within our clusters are messing up our standard errors in our MLM.
 Fixing that is easy:
 
 ```{r}
@@ -115,7 +115,7 @@ We can compare the SEs as so:
 rbind( club$SE, se.fixef(M2) )
 ```
 
-We see that the SEs did not change much from the homoskedastic- and within-cluster-independence-assuming standard errors of the vanilla lmer call in this circumstance.
+We see that the SEs did not change much as compared to the vanilla lmer call that assumes homoskedasticity and within-cluster independence of the residuals in this circumstance.
 
 ### Misspecified how?
 

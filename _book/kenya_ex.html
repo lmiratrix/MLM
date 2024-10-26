@@ -594,7 +594,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link active" data-scroll-target="#load-the-data"><span class="header-section-number">40.1</span> Load the data</a></li>
-  <li><a href="#plot-the-data" id="toc-plot-the-data" class="nav-link" data-scroll-target="#plot-the-data"><span class="header-section-number">40.2</span> Plot the data</a></li>
+  <li><a href="#plot-and-prep-the-data" id="toc-plot-and-prep-the-data" class="nav-link" data-scroll-target="#plot-and-prep-the-data"><span class="header-section-number">40.2</span> Plot and prep the data</a></li>
   <li><a href="#the-mathematical-model" id="toc-the-mathematical-model" class="nav-link" data-scroll-target="#the-mathematical-model"><span class="header-section-number">40.3</span> The mathematical model</a></li>
   <li><a href="#fit-the-model" id="toc-fit-the-model" class="nav-link" data-scroll-target="#fit-the-model"><span class="header-section-number">40.4</span> Fit the model</a></li>
   <li><a href="#some-quick-plots" id="toc-some-quick-plots" class="nav-link" data-scroll-target="#some-quick-plots"><span class="header-section-number">40.5</span> Some quick plots</a></li>
@@ -629,11 +629,11 @@ window.Quarto = {
 </header>
 
 
-<p>This will illustrate fitting a three level model (where we have time variation and then clusters) and extracting the various components from it. This is a rough document, but hopefully will be useful. This example is based on a dataset used in Rabe-Hesketh and Skrondal, chapter 8.10, but you don’t really need that text.</p>
+<p>In this case study, we illustrate fitting a three level model (where we have time variation and then clusters) and then extracting the various components from it. This example is based on a dataset used in Rabe-Hesketh and Skrondal, chapter 8.10, but you don’t really need that text.</p>
+<p>Shoving a lot of things under the rug, in this case study we have five measurements on a collection of kids in Kenya across time. We are interested in the impact of improved nutrition. The children are clustered in schools. This gives a three-level structure, and we are watching kids grow. The schools were treated with different nutrition programs.</p>
 <section id="load-the-data" class="level2" data-number="40.1">
 <h2 data-number="40.1" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">40.1</span> Load the data</h2>
-<p>We first load the data. Shoving a lot of things under the rug, we have five measurements on a collection of kids in Kenya across time. We are interested in the impact of improved nutrition. The children are clustered in schools. This gives a three-level structure. The schools were treated with different nutrition programs.</p>
-<p>In the following we load the data and look at the first few lines. Lots of variables! The main ones are id (the identifier of the kid), treatment (the kind of treatment given to the school), schoolid (the identifier of the school), gender (the gender of the kid), and rn (the time variable). Our outcome is ravens (Raven’s colored progressive matrices asssessment).</p>
+<p>In the following we load the data and look at the first few lines. Lots of variables! The main ones are id (the identifier of the kid), treatment (the kind of treatment given to the school), schoolid (the identifier of the school), gender (the gender of the kid), and rn (the time variable). Our outcome is ravens (Raven’s colored progressive matrices assessment).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>kenya <span class="ot">=</span> <span class="fu">read.dta</span>( <span class="st">"data/kenya.dta"</span> )</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -663,10 +663,10 @@ window.Quarto = {
 </div>
 <p>We see we have 546 kids and 12 schools.</p>
 </section>
-<section id="plot-the-data" class="level2" data-number="40.2">
-<h2 data-number="40.2" class="anchored" data-anchor-id="plot-the-data"><span class="header-section-number">40.2</span> Plot the data</h2>
+<section id="plot-and-prep-the-data" class="level2" data-number="40.2">
+<h2 data-number="40.2" class="anchored" data-anchor-id="plot-and-prep-the-data"><span class="header-section-number">40.2</span> Plot and prep the data</h2>
 <p>We can look at the data.</p>
-<div class="cell">
+<div class="cell" data-warnings="false">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>( <span class="sc">~</span> gender ) <span class="sc">+</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -682,8 +682,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>or</p>
-<div class="cell">
+<p>or we can wrap by school to clean up our plot:</p>
+<div class="cell" data-warnings="false">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>( <span class="sc">~</span> schoolid ) <span class="sc">+</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -699,7 +699,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="cell">
+<p>Or we can look at a sample of 12 individual children:</p>
+<div class="cell" data-warnings="false">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>id.sub <span class="ot">=</span> <span class="fu">sample</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>id), <span class="dv">12</span> )</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ken.sub <span class="ot">=</span> <span class="fu">subset</span>( kenya, id <span class="sc">%in%</span> id.sub )</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>ken.sub, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
@@ -714,7 +715,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We have lots of noise! But there is also a trend.</p>
-<p>The progression of marginal means show there is growth over time, on average:</p>
+<p>Using the mosaic package we can easily calculate the progression of marginal means, and again see there is growth over time, on average:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>( ravens <span class="sc">~</span> rn, <span class="at">data=</span>kenya )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -731,7 +732,6 @@ window.Quarto = {
 5  5   7 17     19 21  31 19.5 3.10 496      50</code></pre>
 </div>
 </div>
-<p>(Using the mosaic package we can do this.)</p>
 <p>The above also shows that we have some missing data, more as the study progresses.</p>
 <p>We drop these missing observations:</p>
 <div class="cell">
@@ -756,27 +756,28 @@ window.Quarto = {
 </section>
 <section id="the-mathematical-model" class="level2" data-number="40.3">
 <h2 data-number="40.3" class="anchored" data-anchor-id="the-mathematical-model"><span class="header-section-number">40.3</span> The mathematical model</h2>
-<p>Let’s fit a random slope model.</p>
-<p><em>Level 1:</em> We have for individual <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>: [ Y_{ijt} = +* (t-L) + _{ijt} ]</p>
-<p><em>Level 2:</em> Each individual has their own growth curve. Their curve’s slope and intercepts varies around the school means: [ =* + gender<em>{ij} + u_{0ij} ] [ =</em> + gender*{ij} + u_{1ij} ] We also have that <span class="math inline">\((u_{0ij}, u_{1ij})\)</span> are normally distributed with some 2x2 covariance matrix. We are forcing the impact of gender to be constant across schools.</p>
-<p><em>Level 3:</em> Finally our school mean slope and intercepts are [ =* + w_{0i} ] [ =* + meat_j +* milk_j + calorie_j + w*{1i} ] For the rate of growth at a school we allow different slopes for different treatments (compared to baseline). The milk, meat, and calorie are the three different treatments applied. We also have that <span class="math inline">\((w_{0j}, w_{1j})\)</span> are normally distributed with some 2x2 covariance matrix: [</p>
-<span class="math display">\[\begin{pmatrix}w_{j0}\\
+<p>Let’s fit a random slope model, letting kids grow over time.</p>
+<p><em>Level 1:</em> We have for individual <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>: <span class="math display">\[ Y_{ijt} = \beta_{0ij} + \beta_{1ij} (t-L) + \epsilon_{ijt} \]</span></p>
+<p><em>Level 2:</em> Each individual has their own growth curve. Their curve’s slope and intercepts varies around the school means: <span class="math display">\[ \beta_{0ij} = \gamma_{00j} + \gamma_{01} gender_{ij} + u_{0ij} \]</span> <span class="math display">\[ \beta_{1ij} = \gamma_{10j} + \gamma_{11} gender_{ij} + u_{1ij} \]</span> We also have that <span class="math inline">\((u_{0ij}, u_{1ij})\)</span> are normally distributed with some 2x2 covariance matrix. We are forcing the impact of gender to be constant across schools, but are allowing girls and boys to grow at different rates. The average growth rate of a school can be different, as represented by the <span class="math inline">\(\gamma_{10j}\)</span>.</p>
+<p><em>Level 3:</em> Finally our school mean slope and intercepts are <span class="math display">\[ \gamma_{0j} = \mu_{00} + w_{0i} \]</span> <span class="math display">\[ \gamma_{1j} = \mu_{10} + \mu_{11} meat_j + \mu_{12} milk_j + \mu_{13} calorie_j + w_{1i}  \]</span> For the rate of growth at a school we allow different slopes for different treatments (compared to baseline). The milk, meat, and calorie are the three different treatments applied. Due to random assignment, we do not expect treatment to be related to baseline outcome, so we do not have the treatment in the intercept term–this is rather unstandard and we would typically allow baseline differences to account for random imbalance in the treatment assignment. But we are following the textbook example here.</p>
+<p>We also have that <span class="math inline">\((w_{0j}, w_{1j})\)</span> are normally distributed with some 2x2 covariance matrix:</p>
+<p><span class="math display">\[  \begin{pmatrix}w_{j0}\\
 w_{j1}
-\end{pmatrix}\]</span>
-<p>N((</p>
-<span class="math display">\[\begin{array}{c}
+\end{pmatrix} \sim N\left(\left(\begin{array}{c}
 0 \\
 0
-\end{array}\]</span>
-<p>), ) = N((</p>
-<span class="math display">\[\begin{array}{c}
+\end{array}\right), \left[
+\begin{array}{cc}
+\tau_{00} &amp; \tau_{01} \\
+&amp; \tau_{11}
+\end{array}
+\right]\right) = N\left(\left(\begin{array}{c}
 0 \\
 0
-\end{array}\]</span>
-<p>), _{sch} ) ]</p>
+\end{array}\right), \Sigma_{sch} \right) \]</span></p>
 <p>The <span class="math inline">\(\mu_0\)</span> and <span class="math inline">\(\mu_1\)</span> are the slope and intercept for the overall population growth (this is what defines our marginal model).</p>
 <p>We will use <span class="math inline">\(L = 1\)</span> to center the data at the first time point (so our intercept is expected ravens score at onset of the study).</p>
-<p><em>Conceptual question:</em> Why do we not have treatment in the intercept for school? What would changing <span class="math inline">\(L\)</span> do to our model and this reasoning?</p>
+<p><em>Conceptual question:</em> What would changing <span class="math inline">\(L\)</span> do to our model and the reasoning about not having treatment in the intercept for school?</p>
 </section>
 <section id="fit-the-model" class="level2" data-number="40.4">
 <h2 data-number="40.4" class="anchored" data-anchor-id="fit-the-model"><span class="header-section-number">40.4</span> Fit the model</h2>
@@ -820,12 +821,17 @@ deviance = 12496.0 </code></pre>
 <li><span class="math inline">\(\gamma_{01} = -0.30\)</span> and <span class="math inline">\(\gamma_{11} = -0.14\)</span>, giving estimates that girls score lower and gain slower than boys.</li>
 <li>The school-level variation in initial expected Raven scores is 0.45 (this is the standard deviation of <span class="math inline">\(w_{0i}\)</span>), relatively small compared to the individual variation of 1.40 (this is the standard deviation of <span class="math inline">\(u_{0ij}\)</span>).</li>
 <li>The correlation of the <span class="math inline">\(u_{0ij}\)</span> and <span class="math inline">\(u_{1ij}\)</span> is basically zero (estimated at -0.09).</li>
-<li>The random effects for school has a covariance matrix <span class="math inline">\(\Sigma_{sch}\)</span> of [ _{sch} = ] The very negative correlation suggests an extrapolation effect, and that perhaps we could drop the random slope for schools.</li>
+<li>The random effects for school has a covariance matrix <span class="math inline">\(\Sigma_{sch}\)</span> of <span class="math display">\[ \widehat{\Sigma}_{sch} = \left[
+\begin{array}{cc}
+0.45^2 &amp; 0.45 \times 0.09 \times -0.99 \\
+. &amp; 0.09^2
+\end{array}
+\right] \]</span> The very negative correlation suggests an extrapolation effect, and that perhaps we could drop the random slope for schools.</li>
 <li>The treatment effects are estimated as <span class="math inline">\(\mu_{11}=0.17, \mu_{12}=-0.13\)</span>, and <span class="math inline">\(\mu_{13}=-0.02\)</span>.<br>
 </li>
 <li>P-values for these will not be small, however, as the standard errors are all 0.09.</li>
 </ul>
-<p>We could try to look at uncertainty on our parameters using the <code>confint( M1 )</code> command, but it turns out that it crashes for this model. This can happen, and our -0.99 correlation gives a hint as to why. Let’s first drop the random slope and then try:</p>
+<p>We could try to look at uncertainty on our parameters using the <code>confint( M1 )</code> command, but it turns out that it crashes for this model. This can happen, and our -0.99 correlation gives a hint as to why. Let’s first drop the random slope at the school level and then try:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>M1B <span class="ot">=</span> <span class="fu">lmer</span>( ravens <span class="sc">~</span> rn <span class="sc">+</span> gender<span class="sc">*</span>rn <span class="sc">+</span> treatment<span class="sc">:</span>rn <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>rn<span class="sc">|</span>id<span class="sc">:</span>schoolid), </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data=</span>kenya )</span>
@@ -874,7 +880,7 @@ rn:treatmentcalorie -0.1775  0.20453</code></pre>
 </section>
 <section id="some-quick-plots" class="level2" data-number="40.5">
 <h2 data-number="40.5" class="anchored" data-anchor-id="some-quick-plots"><span class="header-section-number">40.5</span> Some quick plots</h2>
-<p>We can look at the empirical bayes intercepts:</p>
+<p>We can look at the Empirical Bayes intercepts:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">ranef</span>( M1 )<span class="sc">$</span>schoolid<span class="sc">$</span><span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> )</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>kids <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">ranef</span>( M1 )<span class="sc">$</span>id<span class="sc">$</span><span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> )</span>
