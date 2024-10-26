@@ -634,7 +634,7 @@ window.Quarto = {
 <p>We have talked about multilevel modeling, and talked about cluster robust standard errors. We can actually have both. In STATA, you just write “<code>, robust</code>” in your modeling command. In R, you have to use the <code>clubSandwich</code> package. Let’s illustrate with the High School and Beyond data.</p>
 <section id="robust-standard-errors-without-multilevel-modeling" class="level2" data-number="36.1">
 <h2 data-number="36.1" class="anchored" data-anchor-id="robust-standard-errors-without-multilevel-modeling"><span class="header-section-number">36.1</span> Robust standard errors without multilevel modeling</h2>
-<p>As a reminder, here is how to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):</p>
+<p>As a reminder, here is one way to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):</p>
 <p>First we fit our regression, like we would normally:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>one.sch <span class="ot">=</span> <span class="fu">filter</span>( dat, id <span class="sc">==</span> <span class="st">"8857"</span> )</span>
@@ -734,7 +734,7 @@ sector       2.100837  0.3411243  6.158567</code></pre>
 </div>
 </div>
 <p>The assumption of the random effects means we are not weighting all our data the same way. For example, if we find the clusters vary in size a lot, we might weight the clusters more equally when estimating a cluster-level coefficient (e.g., sector) instead of counting on the big clusters more.</p>
-<p>Regardless, we might worry that complex dependencies within our clusters are messing up our standard errors in our MLM, however. Fixing that is easy:</p>
+<p>Regardless, we might worry that complex dependencies within our clusters are messing up our standard errors in our MLM. Fixing that is easy:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( clubSandwich )</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>club <span class="ot">&lt;-</span> <span class="fu">coef_test</span>( M2,</span>
@@ -758,7 +758,7 @@ sector       2.100837  0.3411243  6.158567</code></pre>
 [2,]   0.2280585 0.1054911 0.3411243</code></pre>
 </div>
 </div>
-<p>We see that the SEs did not change much from the homoskedastic- and within-cluster-independence-assuming standard errors of the vanilla lmer call in this circumstance.</p>
+<p>We see that the SEs did not change much as compared to the vanilla lmer call that assumes homoskedasticity and within-cluster independence of the residuals in this circumstance.</p>
 <section id="misspecified-how" class="level3" data-number="36.2.1">
 <h3 data-number="36.2.1" class="anchored" data-anchor-id="misspecified-how"><span class="header-section-number">36.2.1</span> Misspecified how?</h3>
 <p>The sorts of misspecification that we might be worried about are things such as the following:</p>
