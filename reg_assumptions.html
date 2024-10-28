@@ -593,11 +593,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#oh-assumptions" id="toc-oh-assumptions" class="nav-link active" data-scroll-target="#oh-assumptions"><span class="header-section-number">24.1</span> Oh, assumptions</a></li>
-  <li><a href="#ommitted-variable-bias" id="toc-ommitted-variable-bias" class="nav-link" data-scroll-target="#ommitted-variable-bias"><span class="header-section-number">24.2</span> Ommitted variable bias</a></li>
-  <li><a href="#independence-assumptions" id="toc-independence-assumptions" class="nav-link" data-scroll-target="#independence-assumptions"><span class="header-section-number">24.3</span> Independence assumptions</a></li>
-  <li><a href="#number-of-clusters-needed" id="toc-number-of-clusters-needed" class="nav-link" data-scroll-target="#number-of-clusters-needed"><span class="header-section-number">24.4</span> Number of clusters needed?</a></li>
-  <li><a href="#testing-assumptions" id="toc-testing-assumptions" class="nav-link" data-scroll-target="#testing-assumptions"><span class="header-section-number">24.5</span> Testing assumptions</a></li>
+  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link active" data-scroll-target="#omitted-variable-bias"><span class="header-section-number">24.1</span> Omitted variable bias</a></li>
+  <li><a href="#independence-assumptions" id="toc-independence-assumptions" class="nav-link" data-scroll-target="#independence-assumptions"><span class="header-section-number">24.2</span> Independence assumptions</a></li>
+  <li><a href="#number-of-clusters-needed" id="toc-number-of-clusters-needed" class="nav-link" data-scroll-target="#number-of-clusters-needed"><span class="header-section-number">24.3</span> Number of clusters needed?</a></li>
+  <li><a href="#a-note-on-testing-assumptions" id="toc-a-note-on-testing-assumptions" class="nav-link" data-scroll-target="#a-note-on-testing-assumptions"><span class="header-section-number">24.4</span> A note on testing assumptions</a></li>
   </ul>
 </nav>
     </div>
@@ -629,13 +628,10 @@ window.Quarto = {
 </header>
 
 
-<section id="oh-assumptions" class="level2" data-number="24.1">
-<h2 data-number="24.1" class="anchored" data-anchor-id="oh-assumptions"><span class="header-section-number">24.1</span> Oh, assumptions</h2>
-<p>There are generally two kinds of assumptions we should worry about the most: ommitted variable bias, and independence assumptions. The latter of these is one we should always think about.</p>
-<p>Do read Chapter 9 of R&amp;B, paying attention to their examples and not so much to the mathematical formalism. It has some dense prose, but then moves to specific diagnostics that make what they are talking about much more clear (and it also provides things you can do to check assumptions). The <em>MLM in Plain Language</em> text has some simpler explanations. Also see below for some further notes.</p>
-</section>
-<section id="ommitted-variable-bias" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="ommitted-variable-bias"><span class="header-section-number">24.2</span> Ommitted variable bias</h2>
+<p>There are generally two kinds of assumptions we should worry about the most: omitted variable bias, and independence assumptions. The latter of these is one we should always think about, especially with clustered data.</p>
+<p>To learn about the assumptions, read Chapter 9 of R&amp;B, paying attention to their examples and not so much to the mathematical formalism. This chapter has some dense prose, but then moves to specific diagnostics that make what they are talking about much more clear (and it also provides things you can do to check assumptions in your own work). As another source, the <em>MLM in Plain Language</em> textbook has some simpler explanations. Also see below for some further notes.</p>
+<section id="omitted-variable-bias" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="omitted-variable-bias"><span class="header-section-number">24.1</span> Omitted variable bias</h2>
 <p>Consider the following numerical example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">100</span></span>
@@ -644,8 +640,8 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">X2 =</span> X1 <span class="sc">+</span> <span class="fu">rnorm</span>( N ),</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">Y =</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> X1 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> X2 <span class="sc">+</span> <span class="fu">rnorm</span>( N ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The above makes an <code>X2</code> that is correlated with <code>X1</code>, and a <code>Y</code> that is a function of both. The true model here is <span class="math display">\[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \epsilon_{i} \]</span> with coefficents <span class="math inline">\(\beta = (3, 0.5, 1.5)\)</span>.</p>
-<p>We fit two models, one with both covariates, and one with only one:</p>
+<p>The above code makes a dataset with <code>X2</code> correlated with <code>X1</code>, and a <code>Y</code> that is a function of both. The true model here is <span class="math display">\[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \epsilon_{i} \]</span>with coefficients <span class="math inline">\(\beta = (3, 0.5, 1.5)\)</span>.</p>
+<p>We fit two models, one including both covariates, and one including only one:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>M0 <span class="ot">=</span> <span class="fu">lm</span>( Y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> X1 <span class="sc">+</span> X2 , <span class="at">data =</span> dat )</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lm</span>( Y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> X1, <span class="at">data =</span> dat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -711,7 +707,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Note our coefficient is completely wrong when we omit a correlated variable. This is omitted variable bias, and in terms of our assumptions we are in a circumstance where the true residuals in our model are not centered around 0 for all values of <code>X1</code>, since they include the <code>X2</code> effect which is correlated with <code>X1</code>. We can see this as follows:</p>
+<p>Note our coefficient for the kept variable is completely wrong when we omit a correlated variable. This is <strong>omitted variable bias</strong>, and in terms of our assumptions we are in a circumstance where the true residuals in our model are not centered around 0 for all values of <code>X1</code>, since they include the <code>X2</code> effect which is correlated with <code>X1</code>. We can see this graphically by calculating the true residuals for our data (when we do not include X2) and then plotting them vs.&nbsp;X1:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">mutate</span>( dat, <span class="at">e =</span> Y <span class="sc">-</span> <span class="dv">3</span> <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> X1 )</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( dat, <span class="fu">aes</span>( X1, e ) ) <span class="sc">+</span></span>
@@ -725,39 +721,43 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Note how our residuals (which includes <code>X2</code>) are positive for bigger <code>X1</code>, due to the correlation of <code>X1</code> and <code>X2</code>.</p>
-<p><em>Conclusion:</em> On one hand, we have the wrong estimate for <span class="math inline">\(\beta_1\)</span>. On the other, the estimate we do get is fine if we view it as the best description of the data. We just need to remember that the interpretation of our coefficient includes the confounding effect of <code>X2</code> on <code>X1</code>.</p>
-<p>In this vein:</p>
-<p>Q: You mentioned during class that we don’t care too much about assumptions when looking at trends in the data. However, if we are trying to draw causal inferences, do these assumptions become more important?</p>
-<p>A: Even with the assumptions causal inference would depend on the model. Modern causal inference has a hard time with this, so you need other strategies such as quasiexperimental design. Hence my focus on descriptive aspects of data analysis.</p>
+<p>Note how our residuals (which includes <code>X2</code>) are positive for bigger <code>X1</code>, due to the correlation of <code>X1</code> and <code>X2</code>. We do not have independence between X1 and e, or mathematically put <span class="math inline">\(E[ e | X_1 ] \neq 0\)</span> for some values of <span class="math inline">\(X_1\)</span>.</p>
+<p>In math we can write this for our “no X2” model:</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_{1i} + \tilde{\epsilon}_i = \beta_0 + \beta_1 X_{1i} + (\beta_2 X_{2i} + \epsilon_{i})
+\]</span></p>
+<p>I.e., our <em>residual</em> in our model is actually the secret <span class="math inline">\(X_2\)</span> effect and the original residual. This means our <span class="math inline">\(\tilde{\epsilon}_i\)</span> are correlated with <span class="math inline">\(X_{1i}\)</span>!</p>
+<p><em>Conclusion:</em> On one hand, we have the wrong estimate for <span class="math inline">\(\beta_1\)</span>. On the other, the estimate we do get is fine if we view it as the best description of the data. In our model without <code>X2</code>, we are getting the best description of our data using the model we fit to it. We just need to remember that the interpretation of our coefficient includes any confounding effect of <code>X2</code> on <code>X1</code>. In other words, omitted variable bias is usually part of a critique about <em>causal</em> claims, not descriptive ones.</p>
 </section>
-<section id="independence-assumptions" class="level2" data-number="24.3">
-<h2 data-number="24.3" class="anchored" data-anchor-id="independence-assumptions"><span class="header-section-number">24.3</span> Independence assumptions</h2>
-<p>The independence assumptions are key. When we do not take violations of independence into account, we can be overly confident of our estimates.</p>
+<section id="independence-assumptions" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="independence-assumptions"><span class="header-section-number">24.2</span> Independence assumptions</h2>
+<p>The independence assumptions are key. When we do not take violations of independence into account, we can be overly confident of our estimates in that our standard errors can be very, very wrong.</p>
 <p>Generally with MLM we should think of these assumptions in terms of how we sampled our data. If we sampled our data by sampling a collection of schools, and then individuals within those schools, then we have two levels. We then need to ask two questions:</p>
 <ol type="1">
 <li><p>Were the schools sampled independently?</p></li>
 <li><p>Were the students sampled independently within the schools?</p></li>
 </ol>
 <p>If yes to both, we have met both our independence assumptions! We have met them even if the students are clustered in classes within their schools. As long as we did not sample using those classes (or other clusters), we are ok as our sample of students will be representative of the school they are in.</p>
-<p>One might then ask, more generally, if there is a problem with clustering if it’s not part of the sampling plan? E.g. if you sampled at the school level and surveyed all students, there is still natural clustering in classrooms: is that a problem? What about unobserved clustering like families, neighborhoods, etc. which are not part of sampling, but do exist naturally in populations?</p>
-<p>E.g., see this <a href="https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle">document</a> which says clustered SEs are <em>not</em> necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them.</p>
-<p>This is indeed correct. That being said, we might want to make clusters to investigate how things vary across those clusters.</p>
-<p>Q: More generally, is there a problem with clustering if it’s not part of the sampling plan? E.g. if you sampled at the school level and surveyed all students, there is still natural clustering in classrooms: is that a problem? What about unobserved clustering like families, neighborhoods, etc. which are not part of sampling, but do exist naturally in populations? Q: I’ll let Luke respond to how this affects the assumptions later on Piazza. My intuition is that we want to cluster/add levels at these different levels if we believe the outcomes or predictors are correlated Q: Thanks. I remember reading this https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle a few years ago, which says clustered SEs are <em>not</em> necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them, but I am wondering to what degree this holds in MLMs.</p>
-<p>A: This is correct. That being said, we might want to make clusters to investigate how things vary across those clusters.</p>
+<p>To be crystal clear, if some clustering is not part of how units are sampled, then it can be ignored. So if you are sampling kids from a school district at random, and later learn they are in different neighborhoods (or are grouped in some other natural way like households), you do not need to cluster by neighborhood. That said, you might want to model neighborhood as a cluster to investigate how things vary across those clusters.</p>
+<p>And what about if you sampled at the school level and surveyed all students within each sampled school. Do you need to worry about natural clustering such as classrooms in the school? In this case we are <em>somewhat</em> ok. First, we can pretend our students come from some hypothetical larger population of students. This is of course odd if we sampled all in a school, but we can think of this as something like “we have this collection of students, but we want to understand how much uncertainty we have regarding the students around their school mean if these students are here in some part due to random chance.” This explanation is admittedly hand-wavy, but it is implicitly done all the time. An important note is this treats the classrooms as fixed aspects of the school: we are estimating an average across the school’s classrooms, and thinking of students as sampled, but not the classroom experiences.</p>
+<p>That said, the school intercept might not fully capture complex dependence within the school (e.g., from student spillover within classrooms); to be 100% safe, use cluster robust standard errors as these allow for arbitrary correlation of students within school. By contrast, the random intercept model says student <em>residuals</em> are independent within school, meaning the shared school effect captures all the correlation of students.</p>
+<p>For further discussion, see this <a href="https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle">blog post/document from the World bank</a> which says clustered SEs are <em>not</em> necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them.</p>
 </section>
-<section id="number-of-clusters-needed" class="level2" data-number="24.4">
-<h2 data-number="24.4" class="anchored" data-anchor-id="number-of-clusters-needed"><span class="header-section-number">24.4</span> Number of clusters needed?</h2>
-<p>Ok, this isn’t an assumption per se, but onwards!</p>
-<p>Q: Why should you worry if the number of group is small? (referencing the recap slide)</p>
-<p>A: With few clusters, estimation is hard just like having a small dataset with OLS. The variance parameters in particular are difficult.</p>
+<section id="number-of-clusters-needed" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="number-of-clusters-needed"><span class="header-section-number">24.3</span> Number of clusters needed?</h2>
+<p>Needed number of clusters is not reall an assumption per se, but onwards!</p>
+<p>Here is a quick FAQ:</p>
+<p>Q: Why should you worry if the number of group is small?</p>
+<p>A: With few clusters, estimation is hard just like having a small dataset with OLS. The variance parameters in particular are difficult. The standard errors can be wildly off.</p>
 <p>Q: When you say “at least 20” you mean for the number of j’s, right?</p>
-<p>A: Yes, number of clusters. Mostly Harmless Econometrics readers might recall a discussion of 42 clusters (8.2.3), which contributes to this debate of the appropriate level of j-units</p>
+<p>A: Yes, number of clusters. Mostly Harmless Econometrics readers might recall a discussion of 42 clusters (8.2.3), which contributes to this debate of the appropriate number of level two units.</p>
 </section>
-<section id="testing-assumptions" class="level2" data-number="24.5">
-<h2 data-number="24.5" class="anchored" data-anchor-id="testing-assumptions"><span class="header-section-number">24.5</span> Testing assumptions</h2>
-<p>Q: How do we test these assumptions?</p>
-<p>A: Often with plots, like with classic OLS. for example we can pot a histogram of the residuals and see if they are normally distributed.</p>
+<section id="a-note-on-testing-assumptions" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="a-note-on-testing-assumptions"><span class="header-section-number">24.4</span> A note on testing assumptions</h2>
+<p>In this class we do not really talk about how to test these assumptions. In general, we usually test with plots, like with classic OLS. For example we can plot a histogram of the residuals and see if they are normally distributed. We can plot them vs.&nbsp;some covariate to check for heteroskedasticity as well.</p>
+<p>Similarly, we can also plot a histogram of empirical bayes estimated random effects to see if they are normally distributed, or plot those against (level 2) covariates to check for heteroskedasticity.</p>
+<p>You can also plot residuals by level two unit to look for heteroskedasticity. Make a boxplot for each level two unit and see if they are all the same size (roughly).</p>
+<p>See Raudenbush and Bryk for more discussion of what to check.</p>
 
 
 </section>
