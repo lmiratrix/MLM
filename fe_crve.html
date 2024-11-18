@@ -1001,18 +1001,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 12 × 4
    id    mathach     ses sector
    &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 1     -1.86    1.71        0
- 2 1      1.29   -0.536       0
- 3 1      0.695  -0.417       0
- 4 2     -0.709   0.0479      1
- 5 2      1.35    0.331       1
- 6 2      0.725  -0.811       1
- 7 3     -0.805   1.19        0
- 8 3     -0.0388  0.824       0
- 9 3     -0.235   0.366       0
-10 4      0.170   0.280       1
-11 4     -0.412  -1.11        1
-12 4      1.39    0.341       1</code></pre>
+ 1 1      -2.81  -1.09        0
+ 2 1       1.66   0.835       0
+ 3 1       0.298  1.12        0
+ 4 2      -1.29  -1.31        1
+ 5 2       0.138  0.196       1
+ 6 2       0.159 -0.0670      1
+ 7 3      -0.832 -2.25        0
+ 8 3      -0.867 -1.04        0
+ 9 3       1.08   0.909       0
+10 4      -1.94  -1.16        1
+11 4      -0.702  0.869       1
+12 4      -0.716  0.980       1</code></pre>
 </div>
 </div>
 <p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
@@ -1025,7 +1025,7 @@ lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
      id1       id2       id3       id4       ses    sector  
- 0.18764   0.37365   0.09757   0.28993  -0.57646        NA  </code></pre>
+-0.55097   0.03702   0.53276  -1.33303   0.92950        NA  </code></pre>
 </div>
 </div>
 <p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>
