@@ -1,5 +1,5 @@
 ---
-title: "Summarizing and exploring data"
+title: "Regression diagnostic plots for MLMs"
 author: "Luke Miratrix"
 editor: 
   markdown: 

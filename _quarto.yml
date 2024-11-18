@@ -21,7 +21,6 @@ book:
           - making_tables.qmd
           - reg_table_demo.qmd
           - diagnostic_plots.qmd
-          - anova.qmd
           - math_reference.qmd
           - pivot_wider.qmd
           - intro_missing_data.qmd

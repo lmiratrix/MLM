@@ -1,5 +1,5 @@
 ---
-title: "How Empirical Bayes over shrinks"
+title: "How Empirical Bayes over-shrinks"
 author: "Miratrix"
 date: "2023-09-26"
 output:

@@ -1,4 +1,4 @@
-# Making Regression Tables {#sec-make-regression-tables}
+# Making Regression and ANOVA Tables {#sec-make-regression-tables}
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE }
 
@@ -187,3 +187,64 @@ One function, `tab_model` from `sjPlot`, makes nice regression tables:
 library( sjPlot )
 tab_model(modA.T, modB.T)
 ```
+
+## Pretty ANOVA (liklihood ratio test) Tables
+
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+library(tidyverse)
+library(knitr)
+library(broom)
+```
+
+We now turn to how to give a nice display of likelihood ratio test results using the `kable` function.
+To show how to make such tables, we first create a fake illustrative data set called `a` that has 100 observations and specifies our outcome `Y` as a funciton of two uncorrelated variables `A` and `B`
+
+```{r}
+a <- tibble( A = rnorm( 100 ),
+            B = rnorm( 100 ),
+            Y = A * 0.2 + B * 0.5 + rnorm( 100, 0, 1 ) )
+```
+
+### Run the Models
+
+We fit two models, one with `A` and `B`, the other with just `A`.
+
+```{r}
+M1 <- lm( Y~ A + B, data = a )
+M2 <- lm( Y ~ A, data = a )
+```
+
+### Comparing the Models
+
+We use the `anova` function to compare the two models (see also the chapter on Likelihood Ratio tests).
+We see that `B` improves the model fit significantly.
+
+```{r}
+aa = anova( M2, M1 )
+aa
+
+aa |> 
+  tidy() |> 
+  kable()
+```
+
+### Compare to the Significance test on `B`
+
+Note that the p value for `B` is identical to the ANOVA results above.
+Why bother with ANOVA?
+It can test more complex hypotheses as well (multiple coefficients, random effects, etc.)
+
+```{r}
+M1 |> 
+  tidy() |> 
+  kable()
+```
+
+### Acknowledgements
+
+The ANOVA portion of this chapter was initially drafted by Josh Gilbert
+
