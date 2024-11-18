@@ -1,5 +1,5 @@
 ---
-title: "Easy Graphing with `ggeffects`"
+title: "Easy viz for multilevel models with `ggeffects`"
 author: "Josh Gilbert"
 editor: 
   markdown: 
@@ -13,8 +13,8 @@ knitr::opts_chunk$set(message = FALSE)
 ```
 
 An awesome convenience function for graphing regression models is the `ggeffects` package.
-It's the best equivalent I've found in R to Stata's `margins`.
-Let's demonstrate with the HSB data.
+It is the best equivalent we have found in R to Stata's `margins`.
+We demonstrate with the HSB data.
 
 ```{r}
 # load libraries
@@ -31,9 +31,8 @@ rm(list = ls())
 hsb <- read_dta("data/hsb.dta")
 ```
 
-## Fit a Series of Models
-
-We can fit 2- and 3-way interactions, but they can be hard to interpret from the coefficients alone (unless you have a lot of practice).
+To show off `ggeffects` we first fit some models with 2- and 3-way interactions.
+Such complex models can be hard to interpret from the coefficients alone (unless you have a lot of practice).
 
 ```{r}
 m1 <- lmer(mathach ~ ses + (1|schoolid), hsb)
@@ -63,9 +62,9 @@ ggeffect(m1) |>
   plot()
 ```
 
-With multiple covariates, we can call the `terms` argument.
-The first input is on X, the second is mapped to color, the third to facet.
-This makes visualizing the interactions super easy!
+With multiple covariates, we can use the `terms` argument, which allows us to aggregate our data within different groups.
+The first term will be our $x$-axis, the second will get mapped to color, the third to facet.
+This makes visualizing our interactions super easy!
 Any covariates included in the model but not included in `terms` are held constant at their means.
 
 ```{r}

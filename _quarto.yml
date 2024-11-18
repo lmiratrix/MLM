@@ -17,9 +17,10 @@ book:
           - intro_markdown.qmd
           - configuring_code_chunks.qmd
           - intro_linear_regression.qmd
-          - summary_plots.qmd
+          - summarizing_data.qmd
           - making_tables.qmd
           - reg_table_demo.qmd
+          - diagnostic_plots.qmd
           - anova.qmd
           - math_reference.qmd
           - pivot_wider.qmd

@@ -1,5 +1,5 @@
 ---
-title: "A R Code Style (Miratrix version)"
+title: "An R Code Style Guide (Miratrix version)"
 author: "Luke Miratrix, adapted from Peter Ganong via Avi Feller"
 date: '`r Sys.Date()`'
 output:

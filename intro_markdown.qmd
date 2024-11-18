@@ -8,6 +8,18 @@ editor:
 
 <!----- Above this comment (this is what an R Markdown comment looks like) is the header of your document. You can specify a lot of options up there. The most important ones are the title of your document, the author, and the output format. This document outputs to a .pdf. To do this, you need to have LaTeX installed on your computer. You'll want to either install a copy of LaTeX or output your document as an html_document or word_document. You should open this document in R Studio. To compile the document, click on the button that says 'Knit'  ----->
 
+```{r, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE,
+          fig.width = 5,
+          fig.height = 3,
+          out.width = "75%",
+          fig.align = "center")
+options(list(dplyr.summarise.inform = FALSE))
+theme_set( theme_classic() )
+```
+
+
 ## Overview
 
 [R Markdown](https://bookdown.org/yihui/rmarkdown/) (and its newer cousin [Quarto](https://quarto.org/)) is a simple but powerful markdown language which you can use to create documents with inline R code and results.
@@ -183,7 +195,7 @@ You can use more commands and write more complex inline code, depending on what 
 Plots are easy to embed.
 For example,
 
-```{r, echo = TRUE, fig.width = 7, fig.height = 7}
+```{r, echo = TRUE, fig.width = 7, fig.height = 4, message=FALSE}
 library(ggplot2)
 
 dat$male <- factor(dat$male, levels = c(0, 1), labels = c("Female", "Male"))
@@ -193,7 +205,7 @@ ggplot(data=dat, aes(p7vrq, attain, colour=male)) +
   labs(title="Attainment as a function of verbal reasoning",
        x = "Verbal reasoning quotient", 
        y = "Educational attainment", colour="Gender") +
-  geom_smooth(method="lm", se=FALSE, colour="darkorchid3")
+  geom_smooth(method="lm", formula = y ~ x, se=FALSE, colour="darkorchid3")
 ```
 
 Girls are rendered as coral, boys are rendered in turquoise, and the line of best fit is drawn in `darkorchid3` (because why not).
@@ -210,17 +222,14 @@ It's not uncommon to use wrong code to create a plot that looks correct (at leas
 You can directly render tables in R Markdown.
 The idea is, inside an R chunk, you call a command that prints out a table.
 The report then takes this printout and integrates it into your overall report.
-There are many different packages to make tables, but in class we'll mostly use `texreg`, `stargazer`, and the `tab_model()` function in `sjPlot`.
+There are many different packages to make tables, but in class we'll mostly use `knitr`, `texreg`, `stargazer`, and the `tab_model()` function in `sjPlot`.
 
 You can use these packages to create a descriptive table.
 For example:
 
 ```{r, results = 'asis', message = FALSE}
-# Here I specified results = asis. If I didn't stargazer will just render the table in html.
-# This is bad if you are making a pdf document.
-# I also specified message = FALSE, so that the package citation gets suppressed
-library(stargazer)
-stargazer(dat, type = "latex")
+head( dat ) %>%
+  knitr::kable( digits = 2 )
 ```
 
 See @sec-make-tables for more on making various tables.
@@ -239,11 +248,12 @@ m2 <- lm(attain ~ male + momed, data=dat)
 m3 <- lm(attain ~ male + momed + daded, data=dat)
 
 screenreg(list(m1,m2,m3), 
-          custom.coef.names=c("Intercept", "Male", "Maternal education", "Paternal education"))
+          custom.coef.names=c("Intercept", "Male", 
+                              "Maternal education", "Paternal education"))
 ```
 
 Both packages include a lot of options and make it easy to produce publication-quality tables with little effort.
-We have provided more resources on Canvas and in other portions of this book (see @make-regression-tables, in particular).
+See later chapters of this book (@sec-make-regression-tables, in particular) for more detail.
 
 ## Embedding mathematical models
 

@@ -17,17 +17,15 @@ library(sjPlot)
 set.seed( 101020 )
 ```
 
-## Oh, assumptions
+There are generally two kinds of assumptions we should worry about the most: omitted variable bias, and independence assumptions.
+The latter of these is one we should always think about, especially with clustered data.
 
-There are generally two kinds of assumptions we should worry about the most: ommitted variable bias, and independence assumptions.
-The latter of these is one we should always think about.
-
-Do read Chapter 9 of R&B, paying attention to their examples and not so much to the mathematical formalism.
-It has some dense prose, but then moves to specific diagnostics that make what they are talking about much more clear (and it also provides things you can do to check assumptions).
-The *MLM in Plain Language* text has some simpler explanations.
+To learn about the assumptions, read Chapter 9 of R&B, paying attention to their examples and not so much to the mathematical formalism.
+This chapter has some dense prose, but then moves to specific diagnostics that make what they are talking about much more clear (and it also provides things you can do to check assumptions in your own work).
+As another source, the *MLM in Plain Language* textbook has some simpler explanations.
 Also see below for some further notes.
 
-## Ommitted variable bias
+## Omitted variable bias
 
 Consider the following numerical example:
 
@@ -39,10 +37,10 @@ dat = mutate( dat,
               Y = 3 + 0.5 * X1 + 1.5 * X2 + rnorm( N ) )
 ```
 
-The above makes an `X2` that is correlated with `X1`, and a `Y` that is a function of both.
-The true model here is $$ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \epsilon_{i} $$ with coefficents $\beta = (3, 0.5, 1.5)$.
+The above code makes a dataset with `X2` correlated with `X1`, and a `Y` that is a function of both.
+The true model here is $$ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \epsilon_{i} $$with coefficients $\beta = (3, 0.5, 1.5)$.
 
-We fit two models, one with both covariates, and one with only one:
+We fit two models, one including both covariates, and one including only one:
 
 ```{r}
 M0 = lm( Y ~ 1 + X1 + X2 , data = dat )
@@ -56,9 +54,9 @@ tab_model(M0, M1, p.style = "stars",
           show.ci = FALSE, show.se = TRUE)
 ```
 
-Note our coefficient is completely wrong when we omit a correlated variable.
-This is omitted variable bias, and in terms of our assumptions we are in a circumstance where the true residuals in our model are not centered around 0 for all values of `X1`, since they include the `X2` effect which is correlated with `X1`.
-We can see this as follows:
+Note our coefficient for the kept variable is completely wrong when we omit a correlated variable.
+This is **omitted variable bias**, and in terms of our assumptions we are in a circumstance where the true residuals in our model are not centered around 0 for all values of `X1`, since they include the `X2` effect which is correlated with `X1`.
+We can see this graphically by calculating the true residuals for our data (when we do not include X2) and then plotting them vs. X1:
 
 ```{r, fig.height=3, fig.width=3}
 dat = mutate( dat, e = Y - 3 - 0.5 * X1 )
@@ -68,24 +66,27 @@ ggplot( dat, aes( X1, e ) ) +
 ```
 
 Note how our residuals (which includes `X2`) are positive for bigger `X1`, due to the correlation of `X1` and `X2`.
+We do not have independence between X1 and e, or mathematically put $E[ e | X_1 ] \neq 0$ for some values of $X_1$.
+
+In math we can write this for our "no X2" model:
+
+$$
+Y_i = \beta_0 + \beta_1 X_{1i} + \tilde{\epsilon}_i = \beta_0 + \beta_1 X_{1i} + (\beta_2 X_{2i} + \epsilon_{i})
+$$
+
+I.e., our *residual* in our model is actually the secret $X_2$ effect and the original residual.
+This means our $\tilde{\epsilon}_i$ are correlated with $X_{1i}$!
 
 *Conclusion:* On one hand, we have the wrong estimate for $\beta_1$.
 On the other, the estimate we do get is fine if we view it as the best description of the data.
-We just need to remember that the interpretation of our coefficient includes the confounding effect of `X2` on `X1`.
-
-In this vein:
-
-Q: You mentioned during class that we don't care too much about assumptions when looking at trends in the data.
-However, if we are trying to draw causal inferences, do these assumptions become more important?
-
-A: Even with the assumptions causal inference would depend on the model.
-Modern causal inference has a hard time with this, so you need other strategies such as quasiexperimental design.
-Hence my focus on descriptive aspects of data analysis.
+In our model without `X2`, we are getting the best description of our data using the model we fit to it.
+We just need to remember that the interpretation of our coefficient includes any confounding effect of `X2` on `X1`.
+In other words, omitted variable bias is usually part of a critique about *causal* claims, not descriptive ones.
 
 ## Independence assumptions
 
 The independence assumptions are key.
-When we do not take violations of independence into account, we can be overly confident of our estimates.
+When we do not take violations of independence into account, we can be overly confident of our estimates in that our standard errors can be very, very wrong.
 
 Generally with MLM we should think of these assumptions in terms of how we sampled our data.
 If we sampled our data by sampling a collection of schools, and then individuals within those schools, then we have two levels.
@@ -99,43 +100,49 @@ If yes to both, we have met both our independence assumptions!
 We have met them even if the students are clustered in classes within their schools.
 As long as we did not sample using those classes (or other clusters), we are ok as our sample of students will be representative of the school they are in.
 
-One might then ask, more generally, if there is a problem with clustering if it's not part of the sampling plan?
-E.g. if you sampled at the school level and surveyed all students, there is still natural clustering in classrooms: is that a problem?
-What about unobserved clustering like families, neighborhoods, etc. which are not part of sampling, but do exist naturally in populations?
+To be crystal clear, if some clustering is not part of how units are sampled, then it can be ignored.
+So if you are sampling kids from a school district at random, and later learn they are in different neighborhoods (or are grouped in some other natural way like households), you do not need to cluster by neighborhood.
+That said, you might want to model neighborhood as a cluster to investigate how things vary across those clusters.
 
-E.g., see this [document](https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle) which says clustered SEs are *not* necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them.
+And what about if you sampled at the school level and surveyed all students within each sampled school.
+Do you need to worry about natural clustering such as classrooms in the school?
+In this case we are *somewhat* ok.
+First, we can pretend our students come from some hypothetical larger population of students.
+This is of course odd if we sampled all in a school, but we can think of this as something like "we have this collection of students, but we want to understand how much uncertainty we have regarding the students around their school mean if these students are here in some part due to random chance." This explanation is admittedly hand-wavy, but it is implicitly done all the time.
+An important note is this treats the classrooms as fixed aspects of the school: we are estimating an average across the school's classrooms, and thinking of students as sampled, but not the classroom experiences.
 
-This is indeed correct.
-That being said, we might want to make clusters to investigate how things vary across those clusters.
+That said, the school intercept might not fully capture complex dependence within the school (e.g., from student spillover within classrooms); to be 100% safe, use cluster robust standard errors as these allow for arbitrary correlation of students within school.
+By contrast, the random intercept model says student *residuals* are independent within school, meaning the shared school effect captures all the correlation of students.
 
-Q: More generally, is there a problem with clustering if it's not part of the sampling plan?
-E.g. if you sampled at the school level and surveyed all students, there is still natural clustering in classrooms: is that a problem?
-What about unobserved clustering like families, neighborhoods, etc. which are not part of sampling, but do exist naturally in populations?
-Q: I'll let Luke respond to how this affects the assumptions later on Piazza.
-My intuition is that we want to cluster/add levels at these different levels if we believe the outcomes or predictors are correlated Q: Thanks.
-I remember reading this https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle a few years ago, which says clustered SEs are *not* necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them, but I am wondering to what degree this holds in MLMs.
-
-A: This is correct.
-That being said, we might want to make clusters to investigate how things vary across those clusters.
+For further discussion, see this [blog post/document from the World bank](https://blogs.worldbank.org/impactevaluations/when-should-you-cluster-standard-errors-new-wisdom-econometrics-oracle) which says clustered SEs are *not* necessary (in OLS) unless sampling was conducted at the cluster-level and that econometricians often overuse them.
 
 ## Number of clusters needed?
 
-Ok, this isn't an assumption per se, but onwards!
+Needed number of clusters is not reall an assumption per se, but onwards!
+
+Here is a quick FAQ:
 
 Q: Why should you worry if the number of group is small?
-(referencing the recap slide)
 
 A: With few clusters, estimation is hard just like having a small dataset with OLS.
 The variance parameters in particular are difficult.
+The standard errors can be wildly off.
 
 Q: When you say "at least 20" you mean for the number of j's, right?
 
 A: Yes, number of clusters.
-Mostly Harmless Econometrics readers might recall a discussion of 42 clusters (8.2.3), which contributes to this debate of the appropriate level of j-units
+Mostly Harmless Econometrics readers might recall a discussion of 42 clusters (8.2.3), which contributes to this debate of the appropriate number of level two units.
 
-## Testing assumptions
+## A note on testing assumptions
 
-Q: How do we test these assumptions?
+In this class we do not really talk about how to test these assumptions.
+In general, we usually test with plots, like with classic OLS.
+For example we can plot a histogram of the residuals and see if they are normally distributed.
+We can plot them vs. some covariate to check for heteroskedasticity as well.
 
-A: Often with plots, like with classic OLS.
-for example we can pot a histogram of the residuals and see if they are normally distributed.
+Similarly, we can also plot a histogram of empirical bayes estimated random effects to see if they are normally distributed, or plot those against (level 2) covariates to check for heteroskedasticity.
+
+You can also plot residuals by level two unit to look for heteroskedasticity.
+Make a boxplot for each level two unit and see if they are all the same size (roughly).
+
+See Raudenbush and Bryk for more discussion of what to check.

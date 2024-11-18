@@ -51,7 +51,7 @@ dat.g8 <- filter(dat, grade==8)
 
 ```
 
-For publication-ready tables and graphics, R has many wonderful packages to automate the process. Some of these packages are good for html documents (websites) and some are good for making PDF documents (reports and papers). This document demonstrates different ways of making regression tables in your reports, and talks about some weird wrinkles with using them with multilevel modeling.
+This document demonstrates different ways of making regression tables in your reports, and talks about some weird wrinkles with using them with multilevel modeling.
 
 ## The basics of regression tables
 

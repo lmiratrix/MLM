@@ -1,0 +1,67 @@
+---
+title: "Summarizing and exploring data"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r loadlibs, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(nlme)
+library(haven)
+library(lme4)
+library(tableone)
+library(stargazer)
+library(psych)
+
+options( digits=3 )
+knitr::opts_chunk$set( fig.height=3 )
+
+dat <- read_dta("data/hsb.dta")
+```
+
+In this chapter we outline a few simple checks you might conduct on a fitted random effects model to check for extreme outliers and whatnot.
+
+first, let's fit a random intercept model to our High School & Beyond data:
+
+```{r}
+m1 <- lmer(mathach ~ 1 + ses + (1|schoolid), data=dat)
+arm::display(m1)
+```
+
+We can check if some of our assumptions are being grossly violated, i.e. residuals at all levels are normally distributed.
+
+```{r, }
+  qplot(ranef(m1)$schoolid[,1],
+       main = "Histogram of random intercepts", xlab="")
+
+  qplot(resid(m1), 
+       main = "Hisogram of residuals")
+```
+
+We can check for heteroskedasticity by plotting residuals against predicted values
+
+```{r}
+  dat$yhat  = predict(m1)
+  dat$resid = resid(m1)
+  
+  ggplot(dat, aes(yhat, resid)) + 
+      geom_point(alpha=0.3) + 
+      geom_smooth() + 
+      labs(title = "Residuals against predicted values",
+           x = "Predicted values", y ="Residuals")
+```
+
+It looks reasonable (up to the discrete and bounded nature of our data).
+No major weird curves in the loess line through the residuals means linearity is a reasonable assumption.
+That being said, our nominal SEs around our loess line are tight, so the mild curve is probably evidence of *some* model misfit.
+
+We can also look at the distribution of random effects using the `lattice` package
+
+```{r}
+  library(lattice)
+  qqmath(ranef(m1, condVar=TRUE), strip=FALSE)
+```

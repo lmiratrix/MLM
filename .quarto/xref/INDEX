@@ -169,5 +169,11 @@
   },
   "visual_tour_of_nulls.qmd": {
     "visual_tour_of_nulls.html": "51d5eced"
+  },
+  "summarizing_data.qmd": {
+    "summarizing_data.html": "c2eb15cd"
+  },
+  "diagnostic_plots.qmd": {
+    "diagnostic_plots.html": "ab0ec5c1"
   }
 }

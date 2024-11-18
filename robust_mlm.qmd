@@ -40,7 +40,7 @@ Let's illustrate with the High School and Beyond data.
 
 ## Robust standard errors without multilevel modeling
 
-As a reminder, here is one way to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857):
+Before diving into MLM, one way to get classic Huber-White / Sandwich / Heteroskedastic-Robust Standard Errors for vanilla OLS for a single school (school 8857) is via the `sandwich` package.
 
 First we fit our regression, like we would normally:
 
@@ -60,14 +60,17 @@ library( lmtest )
 lmtest::coeftest(M0, type = "HC1")
 ```
 
-And here is cluster robust standard errors when you have clustered data, but have not bothered with multilevel modeling:
+This is how you would get cluster robust standard errors when you have clustered data, but have not bothered with multilevel modeling:
 
 ```{r}
 M1 = lm( mathach ~ 1 + ses + sector, data = dat )
 lmtest::coeftest( M1, type = "CL", cluster = dat$id )
 ```
 
-## CRSE + Multilevel Modeling
+As an alternative, the `lm_robust` method from the `estimatr` package does these steps in a single step, and is easier to use.
+But the above sets us up nicely for understanding how to add robustness to a MLM.
+
+## CRSE on top of Multilevel Modeling
 
 Ok, so we have seen how to get robust standard errors in the above; how do we combine them with multilevel modeling?
 First, let's fit our multilevel model:
@@ -115,9 +118,9 @@ We can compare the SEs as so:
 rbind( club$SE, se.fixef(M2) )
 ```
 
-We see that the SEs did not change much as compared to the vanilla lmer call that assumes homoskedasticity and within-cluster independence of the residuals in this circumstance.
+We see that the SEs did not change much as compared to the vanilla lmer call that assumes homoskedasticity and within-cluster independence of the residuals in this particular circumstance.
 
-### Misspecified how?
+### What misspecification should we worry about?
 
 The sorts of misspecification that we might be worried about are things such as the following:
 
@@ -126,9 +129,9 @@ The sorts of misspecification that we might be worried about are things such as 
 3.  Using a model with a single level of random effects (e.g., school random effects) when the real data-generating process has multiple levels of structure (e.g., school and classroom random effects); or
 4.  Assuming homoscedastic variance for the lowest-level errors when the real process is heteroskedastic or has some other structure.
 
-Of the above (3) could have "secret clustering" in your clusters, and give you radically incorrect standard errors.
+Of the above (3) could be due to "secret clustering" in your clusters, and in principle result in radically incorrect standard errors.
 The other options are more violations of homoskedasticity, and are likely to not be as serious of concerns.
-You can also diagnose them with residual plots, and see if you are seeing more scatter in your data for some groups or individuals than others.
+You can diagnose, in principle, heteroskedasticity with residual plots, checking to see if you have more scatter in your data for some groups or individuals than others.
 
 Regardless, if you are worried about these things, then the above will give you improved standard errors.
 
@@ -148,6 +151,7 @@ Y_{ij} = \beta_{0j} + \beta_{1j} X_{1,ij} + \ldots + \beta_{pj} X_{p,ij} + \epsi
 $$
 -->
 ```
+
 If we write our multilevel model in reduced form, we can write it as a mini-regression for each group $j$ of: $$
 Y_j = X_j \vec{\beta} + Z_j \vec{r}_j + e_j ,
 $$ where $Y_j$ is the vector of outcomes, $X_j$ and $Z_j$ are mini design matrices of covariates (including a column of 1s for the intercept, normally), with $X_j$ being all the covariates and $Z_j$ being those covariates that have corresponding random effects (also with a column of 1s), $\vec{\beta}$ the vector of coefficients (the fixed effects), $\vec{r}_j$ the vector of random effects for group $j$, and $e_j$ the vector of residuals.

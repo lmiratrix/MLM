@@ -1,0 +1,237 @@
+---
+title: "Summarizing and exploring data"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r loadlibs, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(nlme)
+library(haven)
+library(lme4)
+library(tableone)
+library(stargazer)
+library(psych)
+
+options( digits=3 )
+knitr::opts_chunk$set( fig.height=3 )
+```
+
+This chapter gives a brief introduction to a variety of packages for summarizing variables. We being by using `ggplot()` to make a few simple plots and then turn to making summary tables. These tools are useful in general for exploring and describing data, and they may be useful for final projects and other things as well.
+
+## National Youth Survey Example
+
+Our running example is the National Youth Survey (NYS) data as described in Raudenbush and Bryk, page 190.
+This data comes from a survey in which the same students were asked yearly about their acceptance of 9 "deviant" behaviors (such as smoking marijuana, stealing, etc.).
+The study began in 1976, and followed two cohorts of children, starting at ages 11 and 14 respectively.
+We will analyze the first 5 years of data.
+
+At each time point, we have measures of:
+
+-   `ATTIT`, the attitude towards deviance, with higher numbers implying higher tolerance for deviant behaviors.
+-   `EXPO`, the "exposure", based on asking the children how many friends they had who had engaged in each of the "deviant" behaviors.
+
+Both of these variables have been transformed to a logarithmic scale to reduce skew.
+
+For each student, we have:
+
+-   Gender (binary)
+-   Minority status (binary)
+-   Family income, in units of \$10K (this can be either categorical or continuous).
+
+
+We'll focus on the first cohort, from ages 11-15.
+First, let's read the data.
+Note that this data frame is in "wide format".
+That is, there is only one row for each student, with all the different observations for that student in different columns of that one row.
+
+```{r,  message=FALSE}
+nyswide <- read_csv("data/nyswide.csv")
+head(nyswide)
+```
+
+Generally, we would want such data in "long format", i.e. each student has multiple rows for the different observations.
+The `pivot_longer()` command does this for us.
+
+```{r}
+nys1 <- nyswide |> 
+  pivot_longer(ATTIT.11:EXPO.15, names_to = "score") |> 
+  mutate(outcome = word(score, 1, 1, sep = "\\."),
+         age = as.numeric(word(score, 2, 2, sep = "\\.")),
+         age_fac = factor(age)) |> 
+  select(-score) |> 
+  pivot_wider(names_from = outcome) |> 
+  # drop missing ATTIT values
+  drop_na(ATTIT)
+
+head( nys1 )
+```
+
+Just to get a sense of the data, let's plot each age as a boxplot
+
+```{r, fig.height=3}
+  ggplot(nys1, aes(age_fac, ATTIT)) +
+    geom_boxplot() + 
+    labs(title = "Boxplot of attitude towards deviance by age", 
+         x = "Age", y = "Attitude towards deviance")
+```
+
+*Note:* The boxplot's "x" variable is the group.
+You get one box per group.
+The "y" variable is the data we are making boxplots of.
+
+Note some features of the data:
+
+-   First, we see that `ATTIT` goes up over time.
+-   Second, we see the variation of points also goes up over time. This is evidence of heteroskedasticity.
+
+If we plot individual lines, grouped by gender and minority status, we have:
+
+```{r, fig.height = 3}
+nys1 |> 
+  drop_na() |> 
+  ggplot(aes(age, ATTIT, group=ID)) +
+  facet_grid( FEMALE ~ MINORITY ) +
+    geom_line(alpha=0.2, position = "jitter") + 
+    labs(title = "Individual trajectories of attitude towards deviance over time",
+         x = "Age",
+         y ="Attitude towards deviance")
+```
+
+If we squint, we can kind of see correlation of residuals: some students have systematically lower trajectories and some students have systematically higher trajectories (although there is a lot of bouncing around).
+
+## Tabulating data (Categorical variables)
+
+We can tabulate data as so:
+
+```{r}
+table(nys1$age)
+```
+
+or
+
+```{r}
+table(nys1$MINORITY, nys1$age)
+```
+
+Interestingly, we have more observations for later ages.
+
+We can make "proportion tables" as well:
+
+```{r}
+prop.table( table( nys1$MINORITY, nys1$INCOME  ), margin=1 )
+```
+
+The margin determines what adds up to 100%.
+
+## Summary statistics for continuous variables
+
+The `tableone` package is useful:
+
+```{r}
+  library(tableone)
+  
+# sample mean  
+  CreateTableOne(data = nys1,
+                 vars = c("ATTIT"))
+  
+# you can also stratify by a variables of interest
+  CreateTableOne(data = nys1,
+                 vars = c("ATTIT"), 
+                 strata = c("FEMALE"))
+  
+# you can also include binary variables
+  CreateTableOne(data = nys1, 
+                 vars = c("ATTIT", "age_fac"),  # include both binary and continuous variables here
+                 factorVars = c("age_fac"), # include only binary variables here
+                 strata = c("FEMALE"))
+```
+
+## Descriptive Statistics with the `psych` Package
+
+Another package for obtaining detailed descriptive statistics for your data is the `psych` package in R, which has `describe()`, a function that generates a comprehensive summary of each variable in your dataset.
+
+If you haven't already installed the `psych` package, you can do so using `install.packages()`.
+You then load the library as so:
+
+```{r}
+# install.packages("psych")
+library(psych)
+```
+
+The `describe()` function provides descriptive statistics such as mean, standard deviation, skewness, and kurtosis for each variable in your dataset.
+
+Here's an example using a built-in dataset, `iris`:
+
+```{r}
+summary_stats <- describe(nys1)
+print(summary_stats)
+```
+
+The `describe()` function generates a table with the following columns:
+
+-   **vars**: The variable number.
+-   **n**: Number of valid cases.
+-   **mean**: The mean of the variable.
+-   **sd**: The standard deviation.
+-   **median**: The median of the variable.
+-   **trimmed**: The mean after trimming 10% of the data from both ends.
+-   **mad**: The median absolute deviation (a robust estimate of the variability).
+-   **min**: The minimum value.
+-   **max**: The maximum value.
+-   **range**: The range (max - min).
+-   **skew**: The skewness (measure of asymmetry).
+-   **kurtosis**: The kurtosis (measure of peakedness).
+-   **se**: The standard error.
+
+## The `skimr` Package
+
+Yet another package that provides a comprehensive summary of your data is the `skimr` package.
+This package is more about exploring data in the moment, and less about report generation, however.
+
+One warning is `skimr` can generate special characters that can crash a R markdown report in some cases--so if you are using it, and getting weird errors when trying to render your reports, try commenting out the `skim()` call.
+Using it is simple:
+
+```{r}
+skimr::skim( nys1 )
+```
+
+## Summarizing by group
+
+To plot summaries by group, first aggregate your data, and plot the results.
+Do like so:
+
+```{r}
+aggdat = nys1 %>% 
+  group_by( ID, FEMALE, MINORITY) %>%
+  summarize( avg.ATTIT = mean( ATTIT, na.rm=TRUE ),
+             n_obs = n(), .groups="drop" )
+
+head( aggdat )
+```
+
+As shown above, you can include level 2 variables in your `group_by()` command to ensure they get carried through to the aggregated results.
+Neat trick.
+
+Anyway, we then plot:
+
+```{r, fig.height=3}
+ggplot( aggdat, aes(avg.ATTIT) ) +
+  geom_histogram( binwidth = 0.05 ) +
+  labs(main = "Average ATTIT across students", 
+       xlab = "" )
+```
+
+We can facet to see multiple groups:
+
+```{r, fig.height=3}
+ggplot( aggdat, aes(avg.ATTIT) ) +
+  facet_grid( FEMALE ~ MINORITY, labeller = label_both ) +
+  geom_histogram( binwidth = 0.05 ) +
+  labs(main = "Average ATTIT across students", 
+       xlab = "" )
+```
