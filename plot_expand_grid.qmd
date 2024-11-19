@@ -16,10 +16,8 @@ library( foreign )
 
 ```
 
-## Introduction
-
-This script demonstrates using the `predict()` function to make plots with separate lines for different groups.
-A core element is the `expand.grid()` method.
+In this chapter we demonstrate using the `predict()` function to make plots with separate lines for different groups.
+A core element for doing this is the `expand.grid()` method.
 The central idea is this: for each of our groups we manually create a series of points at different levels of our covariate (e.g. ses or time) and then predict the outcome for each of these values.
 We then plot these predicted points, and it makes a smooth curve for that group.
 

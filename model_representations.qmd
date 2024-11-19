@@ -9,9 +9,7 @@ editor:
 This handout walks through the mathematical representation of two core models: the random intercept model and the random slope model.
 The goal is to very carefully explain all the different math parts, and show how that translates to a `lmer()` call to R for fitting the model.
 
-## The Scenario
-
-We have a collection of schools that we have randomized into treatment and control conditions.
+For a running example, say we have a collection of schools that we have randomized into treatment and control conditions.
 The treatment condition is a novel reading program and the control condition is business as usual.
 We hope that the treatment accomplishes two things: raising reading level overall, and reducing the gap in reading level between "at-risk" kids and not at risk kids (we assume we have a at-risk status as a dummy variable, measured for all kids and treatment and control prior to treatment).
 
@@ -34,11 +32,10 @@ In R, we would say `coef()` for the intercept (including the mean $\gamma_0$) an
 In math, `coef()` gives $\gamma_0 + u_j$ and `ranef()` gives only $u_j$.
 Neither include the $\gamma_1$ or $\gamma_2$; these will be separate columns you get from `coef()`.
 
-##### Remarks.
+**Remarks:**
 
-We have *completely pooled* the coefficient for $R_{ij}$ and $X_{ij}$: we are assuming all the schools have the same relationship between the outcome and these covariates.
-
-The intercept $\alpha_{j}$ is the expected (predicted average) outcome of a not-at-risk student with $X_{ij} = 0$.
+ * We have *completely pooled* the coefficient for $R_{ij}$ and $X_{ij}$: we are assuming all the schools have the same relationship between the outcome and these covariates.
+ * The intercept $\alpha_{j}$ is the expected (predicted average) outcome of a not-at-risk student with $X_{ij} = 0$.
 Different schools have different means.
 In particular, treatment schools have a mean of $\gamma_1$ more than control; this is the treatment impact.
 
@@ -57,24 +54,21 @@ They will write the entire residual as $\varepsilon_{ij}$, however: $$\begin{ali
 Y_{ij} &= \gamma_{0} + \gamma_{1} Z_{j} + \gamma_{2} S_{j} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + \varepsilon_{ij}
 \end{aligned}$$
 
-##### Remarks.
+**Remarks:**
 
-The reduced form helps us see our treatment effect more clearly.
+ * The reduced form helps us see our treatment effect more clearly.
 It is a shift in outcome of $\gamma_1$ for treated students.
-
-The $\gamma_{0}$ is the overall mean reading level for students with $X_{ij}=0$ for not-at-risk students ($R_{ij}=0$) in control schools with $S_j = 0$.
-
-Note how we subscript school-level covariates with only a $j$ vs. individual-level covariates get an $ij$.
-If you want, you can index everything by $ij$; the fact that $S_{ij}$ will then be the same for all students $i$ in school $j$ is hidden in the data.
+ * The $\gamma_{0}$ is the overall mean reading level for students with $X_{ij}=0$ for not-at-risk students ($R_{ij}=0$) in control schools with $S_j = 0$.
+ * We subscript school-level covariates with only a $j$ vs. individual-level covariates get an $ij$. If you want, you can index everything by $ij$; the fact that $S_{ij}$ will then be the same for all students $i$ in school $j$ is hidden in the data.
 But it does make it look very much like OLS with a weird error term: $$
 Y_{ij} = \gamma_{0} + \gamma_{1} Z_{ij} + \gamma_{2} S_{ij} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + (u_{j} + \epsilon_{ij})
 $$
-
-Finally, you might call all the different pieces by different letters to indicate whether you care about them or not.
+ * You can call all the different pieces by different letters to indicate whether you care about them or not.
 E.g., $$Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + (u_{0j} +  \epsilon_{ij}) .$$ Here $\tau$ is our treatment effects of interest.
 The $\beta$'s are just adjustments to be ignored.
 The $\mu$ is the grand mean (for those not treated, with $S_{ij} = 0$ and $R_{ij} = 0$ and $X_{ij} = 0$).
 People often use $\mu$ for mean and $\tau$ for treatment.
+
 
 ### Fitting it in lmer
 
@@ -126,22 +120,19 @@ We might call them both random coefficients.
 Call the $u_{0j}, u_{1j}$, which are the residuals of the level 2 models, the random effects.
 In R, we would say `coef()` for the coefficients (including the means) and `ranef()` for the random effects.
 
-### Remarks.
+**Remarks:**
 
-We have *completely pooled* the coefficient for $X_{ij}$: we are assuming all the schools have the same relationship between the outcome and $X_{ij}$.
+ * We have *completely pooled* the coefficient for $X_{ij}$: we are assuming all the schools have the same relationship between the outcome and $X_{ij}$.
 This is why we have no level 2 equation for $\beta_{2}$ and we do not index $\beta_2$ as $\beta_{2j}$.
-
-The intercept $\beta_{0j}$ is the expected (predicted average) outcome of a not-at-risk student with $X_{ij} = 0$.
+ * The intercept $\beta_{0j}$ is the expected (predicted average) outcome of a not-at-risk student with $X_{ij} = 0$.
 Different schools have different means.
-
-The achievement gap of at-risk and not-at-risk students for control schools is measured by $\gamma_{10}$.
+ * The achievement gap of at-risk and not-at-risk students for control schools is measured by $\gamma_{10}$.
 For treatment schools it is $\gamma_{10} + \gamma_{11}$.
+ * The $\gamma_{01}$ is the average treatment effect for not-at-risk students.
+ * The $\gamma_{01} + \gamma_{11}$ is the average treatment effect for the at-risk students.
+ * If we find $\gamma_{11} \neq 0$ then the average effects differ for our two types of students, and the change in the achievement gap induced by treatment is measured by $\gamma_{11}$.
+ * In this model, the school-level covariate explains overall differences in reading between schools, but does not relate to the size of treatment impact in a school, or relate to the at-risk vs. not-at-risk achievement gap.
 
-The $\gamma_{01}$ is the average treatment effect for not-at-risk students.
-Then $\gamma_{01} + \gamma_{11}$ is the average treatment effect for the at-risk students.
-If we find $\gamma_{11} \neq 0$ then the average effects differ for our two types of students, and the change in the achievement gap induced by treatment is measured by $\gamma_{11}$.
-
-In this model, the school-level covariate explains overall differences in reading between schools, but does not relate to the size of treatment impact in a school, or relate to the at-risk vs. not-at-risk achievement gap.
 
 ### The level 2 covariate matrix.
 
@@ -166,7 +157,7 @@ Now we specifically have written our correlation of random effects as $\rho$.
 ### The Reduced Form Model
 
 If we plug in our 2nd level into the first we have to plug in both equations.
-If we do we get\...
+If we do we get...
 a mess: $$\begin{aligned}
 Y_{ij} &= \beta_{0j} + \beta_{1j} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 &= (\gamma_{00} + \gamma_{01} Z_{j} + \gamma_{02} S_{j} + u_{0j}) + (\gamma_{10} + \gamma_{11} Z_{j} + u_{1j}) R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
@@ -182,19 +173,15 @@ They will write the entire residual as $\varepsilon_{ij}$, however: $$\begin{ali
 Y_{ij} &= \gamma_{00} + (\gamma_{01} + \gamma_{11} R_{ij} ) Z_{j}  + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \varepsilon_{ij} \\
 \end{aligned}$$
 
-##### Remarks.
+**Remarks:**
 
-The reduced form helps us see our treatment effects and treatment variation across groups more clearly.
+ * The reduced form helps us see our treatment effects and treatment variation across groups more clearly.
 We can put both terms involving the treatment indicator in parenthesis (final line above) to show how treatment is different by $\gamma_{11}$ for the at-risk students.
-
-We also see that the difference in treatment effects between at-risk and not at-risk is an *interaction* between student risk and treatment assignment of the school (note the $Z_j R_{ij}$ term).
-
-The $\gamma_{00}$ is the overall mean reading level for students with $X_{ij}=0$ for not-at-risk students in control schools.
-The $\gamma_{10}$ is the average difference between at-risk and not-at-risk students in control schools, across all schools.
-
-We can rearrange our equations above to get $$Y_{ij} = ( \gamma_{00} + u_{0j}) + (\gamma_{01} + \gamma_{11} R_{ij} + u_{1j} ) Z_{j} + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} .$$ This shows the random intercept and random slope all bundled up.
-
-As with the intercept model, you might call all the different pieces by different letters to indicate whether you care about them or not.
+ * The difference in treatment effects between at-risk and not at-risk is an *interaction* between student risk and treatment assignment of the school (note the $Z_j R_{ij}$ term).
+ * The $\gamma_{00}$ is the overall mean reading level for students with $X_{ij}=0$ for not-at-risk students in control schools.
+ * The $\gamma_{10}$ is the average difference between at-risk and not-at-risk students in control schools, across all schools.
+ * We can rearrange our equations above to get $$Y_{ij} = ( \gamma_{00} + u_{0j}) + (\gamma_{01} + \gamma_{11} R_{ij} + u_{1j} ) Z_{j} + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} .$$ This shows the random intercept and random slope all bundled up.
+ * As with the intercept model, you might call all the different pieces by different letters to indicate whether you care about them or not.
 E.g., $$Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + \tau_{R} Z_{ij} R_{ij}  + (u_{0j} +  u_{1j} R_{ij} + \epsilon_{ij}) .$$ Here $\tau$ and $\tau_R$ are our treatment effects of interest.
 The $\beta$'s are just adjustments to be ignored.
 The $\mu$ is the grand mean.
@@ -220,11 +207,11 @@ and
     lmer( Y ~ 1 + Z + S + R + Z:R + X + (1 + R|id), data=dat )
 ```
 
-### Remarks.
+**Remarks:**
 
-See how the reduced form and `lmer()` align, especially if we write out what R automatically does with `R * Z` (R will expand `R*Z` into `R + Z + R:Z` automatically).
+ * See how the reduced form and `lmer()` align, especially if we write out what R automatically does with `R * Z` (R will expand `R*Z` into `R + Z + R:Z` automatically).
 
-### Another form for the two-level model
+### The bracket-subscript notation from Gelman and Hill
 
 The above is the "double-subscript" way of writing a model.
 By contrast, Gelman and Hill index with a nifty "bracket notation." First, let $j[i]$ indicate the school student $i$ is attending.

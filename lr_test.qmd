@@ -6,13 +6,16 @@ editor:
     wrap: sentence
 ---
 
+In this chapter we give an overview of using likelihood ratio tests to assess whether a more complex model is justified by the data, as compared to a simpler model.
+
+We will use our old friend HS&B to illustrate.
+We first load the data:
+
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 ```
-
-## R Setup
 
 ```{r}
 # load libraries
@@ -20,11 +23,6 @@ library(tidyverse)
 library(lme4)
 library(haven)
 library(sjPlot)
-
-# clear memory
-rm(list = ls())
-
-select <- dplyr::select
 
 # load HSB data
 hsb <- read_dta("data/hsb.dta") |> 
@@ -46,34 +44,36 @@ LR tests require that the models are *nested*, meaning that they use the same da
 We fit 3 models:
 
 1.  Random intercept model
-2.  Random slope model
-3.  Random slope model with no correlation between intercepts and slopes
+2.  Random slope model with no correlation between intercepts and slopes (you probably have not seen this before, but we will use it to test whether the slopes are correlated with the intercepts).
+3.  Random slope model
 
 We can see from the model output that the point estimates for the random slope variance $\tau_{11}$ and the correlation $\rho_{01}$ are non-zero, but how can we get p-values for these quantities?
 
 ```{r}
 m1 <- lmer(mathach ~ ses + (1|schoolid), hsb)
-m2 <- lmer(mathach ~ ses + (ses|schoolid), hsb)
-m3 <- lmer(mathach ~ ses + (ses||schoolid), hsb)
+m2 <- lmer(mathach ~ ses + (1|schoolid)+(0+ses|schoolid), hsb)
+m3 <- lmer(mathach ~ ses + (1+ses|schoolid), hsb)
 
 tab_model(m1, m2, m3,
           p.style = "stars",
           show.se = TRUE,
           show.ci = FALSE,
-          dv.labels = c("RI", "RS", "No Rho"))
+          dv.labels = c("RI", "No Rho", "RS"))
 ```
 
 ### Are random `ses` slopes necessary?
 
-We use `anova` to perform the LR test comparing `m1` and `m2`, and we see that the random slopes are not statistically significant.
+We use `anova` to perform the LR test comparing `m1` and `m3` to see if we need random slopes.
+We see that the random slopes are not statistically significant.
 
 ```{r}
-anova(m1, m2)
+anova(m1, m3)
 ```
 
 ### Is there a correlation between the random intercept and slope for `ses`?
 
-Similarly, we see that the correlation is non-significant
+We next can compare model 2 and model 3 to see if the correlation is needed, given the random slope model.
+We see it is not:
 
 ```{r}
 anova(m2, m3)

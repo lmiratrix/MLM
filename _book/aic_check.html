@@ -600,13 +600,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">=</span> <span class="fu">generate_multilevel_data</span>( <span class="at">J =</span> <span class="dv">40</span> )</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dd )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    sid           Y0        Y1 Z       Yobs         W
-1     1  0.503935805 1.0324568 1  1.0324568 0.2258868
-1.1   1  0.328656631 0.8571776 0  0.3286566 0.2258868
-1.2   1  0.009130691 0.5376517 1  0.5376517 0.2258868
-1.3   1  0.207750429 0.7362714 0  0.2077504 0.2258868
-1.4   1  0.361938398 0.8904594 1  0.8904594 0.2258868
-1.5   1 -0.024941896 0.5035791 0 -0.0249419 0.2258868</code></pre>
+<pre><code>    sid          Y0          Y1 Z        Yobs         W
+1     1 -0.09184578  1.16380775 0 -0.09184578  1.491379
+1.1   1 -0.69013099  0.56552254 0 -0.69013099  1.491379
+1.2   1 -1.20271692  0.05293662 1  0.05293662  1.491379
+1.3   1 -0.59381857  0.66183496 1  0.66183496  1.491379
+1.4   1 -1.61523581 -0.35958228 0 -1.61523581  1.491379
+2     2 -0.24185321 -0.38620777 0 -0.24185321 -1.116883</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X1 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X2 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
@@ -641,34 +641,34 @@ arm (Version 1.14-4, built: 2024-4-1)</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + (1 | sid), data = dd)
 coef.est  coef.se 
-    0.08     0.12 
+    0.07     0.13 
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.72    
- Residual             0.61    
+ sid      (Intercept) 0.77    
+ Residual             0.63    
 ---
-number of obs: 357, groups: sid, 40
-AIC = 771.9, DIC = 761.1
-deviance = 763.5 </code></pre>
+number of obs: 442, groups: sid, 40
+AIC = 960.1, DIC = 949.5
+deviance = 951.8 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + X1 + X2 + X3 + (1 | sid), data = dd)
             coef.est coef.se
-(Intercept)  0.08     0.12  
-X1           0.02     0.03  
-X2          -0.04     0.03  
-X3           0.05     0.04  
+(Intercept)  0.06     0.13  
+X1           0.07     0.03  
+X2          -0.01     0.03  
+X3           0.03     0.03  
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.72    
- Residual             0.61    
+ sid      (Intercept) 0.77    
+ Residual             0.63    
 ---
-number of obs: 357, groups: sid, 40
-AIC = 788.7, DIC = 742.1
-deviance = 759.4 </code></pre>
+number of obs: 442, groups: sid, 40
+AIC = 975.1, DIC = 928
+deviance = 945.5 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -682,28 +682,28 @@ Please cite the JSS article in your publications -- see citation("texreg").</cod
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( M1, M2, M3 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-=====================================================
-                      Model 1   Model 2   Model 3    
------------------------------------------------------
-(Intercept)              0.08      0.08      0.06    
-                        (0.12)    (0.12)    (0.09)   
-X1                                 0.02      0.02    
-                                  (0.03)    (0.03)   
-X2                                -0.04     -0.05    
-                                  (0.03)    (0.03)   
-X3                                 0.05      0.02    
-                                  (0.04)    (0.03)   
-X4                                           0.28 ***
-                                            (0.02)   
------------------------------------------------------
-AIC                    771.91    788.70    693.47    
-BIC                    783.55    811.97    720.61    
-Log Likelihood        -382.96   -388.35   -339.74    
-Num. obs.              357       357       357       
-Num. groups: sid        40        40        40       
-Var: sid (Intercept)     0.52      0.52      0.26    
-Var: Residual            0.38      0.38      0.30    
-=====================================================
+======================================================
+                      Model 1   Model 2    Model 3    
+------------------------------------------------------
+(Intercept)              0.07      0.06       0.06    
+                        (0.13)    (0.13)     (0.08)   
+X1                                 0.07 *     0.07 *  
+                                  (0.03)     (0.03)   
+X2                                -0.01       0.00    
+                                  (0.03)     (0.03)   
+X3                                 0.03       0.02    
+                                  (0.03)     (0.03)   
+X4                                            0.29 ***
+                                             (0.02)   
+------------------------------------------------------
+AIC                    960.07    975.07     846.82    
+BIC                    972.34    999.62     875.46    
+Log Likelihood        -477.03   -481.54    -416.41    
+Num. obs.              442       442        442       
+Num. groups: sid        40        40         40       
+Var: sid (Intercept)     0.60      0.59       0.25    
+Var: Residual            0.39      0.39       0.30    
+======================================================
 *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
 </div>
 </div>

@@ -595,10 +595,10 @@ window.Quarto = {
   <ul>
   <li><a href="#the-student-level-residual-matrix" id="toc-the-student-level-residual-matrix" class="nav-link active" data-scroll-target="#the-student-level-residual-matrix"><span class="header-section-number">48.1</span> The student-level residual matrix</a></li>
   <li><a href="#covariance-matrix-for-a-random-intercept-model" id="toc-covariance-matrix-for-a-random-intercept-model" class="nav-link" data-scroll-target="#covariance-matrix-for-a-random-intercept-model"><span class="header-section-number">48.2</span> Covariance matrix for a random intercept model</a></li>
-  <li><a href="#and-now-for-a-random-slope-model" id="toc-and-now-for-a-random-slope-model" class="nav-link" data-scroll-target="#and-now-for-a-random-slope-model"><span class="header-section-number">48.3</span> And now for a random slope model</a>
+  <li><a href="#covariance-matrix-for-a-random-slope-model" id="toc-covariance-matrix-for-a-random-slope-model" class="nav-link" data-scroll-target="#covariance-matrix-for-a-random-slope-model"><span class="header-section-number">48.3</span> Covariance matrix for a random slope model</a>
   <ul class="collapse">
-  <li><a href="#calculating-the-delta_tt" id="toc-calculating-the-delta_tt" class="nav-link" data-scroll-target="#calculating-the-delta_tt">Calculating the covariances</a></li>
-  <li><a href="#calculating-the-diagonal-terms." id="toc-calculating-the-diagonal-terms." class="nav-link" data-scroll-target="#calculating-the-diagonal-terms."><span class="header-section-number">48.3.1</span> Calculating the diagonal terms.</a></li>
+  <li><a href="#calculating-the-delta_tt" id="toc-calculating-the-delta_tt" class="nav-link" data-scroll-target="#calculating-the-delta_tt"><span class="header-section-number">48.3.1</span> Calculating the covariances</a></li>
+  <li><a href="#calculating-the-diagonal-terms." id="toc-calculating-the-diagonal-terms." class="nav-link" data-scroll-target="#calculating-the-diagonal-terms."><span class="header-section-number">48.3.2</span> Calculating the diagonal terms.</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -733,8 +733,8 @@ u_{i5}
 <p>Our multilevel model has given us a specific structure for our student-level residual covariance matrix <span class="math inline">\(\Sigma_i\)</span>. We could just fit a regression at the population level with this matrix specified, without talking about random intercepts or anything. We can also tweak this matrix in ways that capture other kinds of variation. This is the key to this approach to modeling clustered or non-independent data.</p>
 <p>In the next section we repeat this for a random slope model. Same idea, more messy math.</p>
 </section>
-<section id="and-now-for-a-random-slope-model" class="level2" data-number="48.3">
-<h2 data-number="48.3" class="anchored" data-anchor-id="and-now-for-a-random-slope-model"><span class="header-section-number">48.3</span> And now for a random slope model</h2>
+<section id="covariance-matrix-for-a-random-slope-model" class="level2" data-number="48.3">
+<h2 data-number="48.3" class="anchored" data-anchor-id="covariance-matrix-for-a-random-slope-model"><span class="header-section-number">48.3</span> Covariance matrix for a random slope model</h2>
 <p>Take a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11–15):</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -762,8 +762,8 @@ Y_{ti} &amp;= \beta_{0}  + \beta_{1}  age_{ti}  + r_{0i} + r_{1i} age_{ti} + \ep
 &amp;= \beta_{0}  + \beta_{1}  age_{ti}  + u_{ti}
 \end{aligned}\]</span> with <span class="math inline">\(u_{ti} = r_{0i} + r_{1i} age_{ti} + \epsilon_{ti}\)</span>.</p>
 <p>Now let’s use this definition of <span class="math inline">\(u_{ti}\)</span> to calculate all the <span class="math inline">\(\delta_{tt'}\)</span> values in the student level covariance matrix <span class="math inline">\(\Sigma_i\)</span>.</p>
-<section id="calculating-the-delta_tt" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="calculating-the-delta_tt">Calculating the covariances</h3>
+<section id="calculating-the-delta_tt" class="level3" data-number="48.3.1">
+<h3 data-number="48.3.1" class="anchored" data-anchor-id="calculating-the-delta_tt"><span class="header-section-number">48.3.1</span> Calculating the covariances</h3>
 <p>Let’s calculate <span class="math inline">\(\delta_{13} = cov( \epsilon_{i1}, \epsilon_{i2} )\)</span>.</p>
 <p>First we need a math fact about random quantities <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span>: <span class="math display">\[cov( A + B, C ) = cov( A, C ) + cov( B, C ) .\]</span> Also if you multiply something by a constant <span class="math inline">\(k\)</span> you have <span class="math display">\[cov( k_1 A, k_2 B ) = k_1 k_2 cov( A, B ) .\]</span></p>
 <p>Also note that <span class="math inline">\(a_1 = 0\)</span> and <span class="math inline">\(a_3 = 2\)</span>, given our coding of age ($a_1$ is the time covariate at age 11, which is 0, for example). Then we have, plugging in those values: <span class="math display">\[\begin{aligned}
@@ -777,8 +777,8 @@ Y_{ti} &amp;= \beta_{0}  + \beta_{1}  age_{ti}  + r_{0i} + r_{1i} age_{ti} + \ep
 <p>Note how we multiple out the individual components, and this gives an expression for the overall covariance of our two residuals. If we did this for each <span class="math inline">\(\delta_{tt'}\)</span> we could fill in our <span class="math inline">\(5 \times 5\)</span> matrix. Fun!</p>
 <p>A core idea here is the independence of the different residual pieces makes a lot of the terms go to 0, giving short(er) expressions than we might have otherwise. The random slope model dictates the overall covariance of the residuals.</p>
 </section>
-<section id="calculating-the-diagonal-terms." class="level3" data-number="48.3.1">
-<h3 data-number="48.3.1" class="anchored" data-anchor-id="calculating-the-diagonal-terms."><span class="header-section-number">48.3.1</span> Calculating the diagonal terms.</h3>
+<section id="calculating-the-diagonal-terms." class="level3" data-number="48.3.2">
+<h3 data-number="48.3.2" class="anchored" data-anchor-id="calculating-the-diagonal-terms."><span class="header-section-number">48.3.2</span> Calculating the diagonal terms.</h3>
 <p>For the variances, you would just calculate covariance of a quantity with itself. Let’s do <span class="math inline">\(\delta_{11}\)</span>, the variance of timepoint 1: <span class="math display">\[\begin{aligned}
 \delta_{11} &amp;= var( u_{1i} ) = cov( u_{1i}, u_{1i} ) \\
    &amp;= cov(  r_{0i} + r_{1i} a_1 + \epsilon_{1i},  r_{0i} + r_{1i} a_1 + \epsilon_{1i} ) \\

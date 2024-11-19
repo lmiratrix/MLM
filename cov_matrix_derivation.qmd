@@ -145,7 +145,7 @@ This is the key to this approach to modeling clustered or non-independent data.
 In the next section we repeat this for a random slope model.
 Same idea, more messy math.
 
-## And now for a random slope model
+## Covariance matrix for a random slope model
 
 Take a random slopes model with 5 timepoints (this is the NYS model, each time point is a year of age, 11--15):
 
@@ -182,7 +182,7 @@ The reduced form is $$\begin{aligned}
 
 Now let's use this definition of $u_{ti}$ to calculate all the $\delta_{tt'}$ values in the student level covariance matrix $\Sigma_i$.
 
-### Calculating the covariances {#calculating-the-delta_tt .unnumbered}
+### Calculating the covariances {#calculating-the-delta_tt}
 
 Let's calculate $\delta_{13} = cov( \epsilon_{i1}, \epsilon_{i2} )$.
 

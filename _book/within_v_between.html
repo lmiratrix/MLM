@@ -628,6 +628,7 @@ div.csl-indent {
 
 
 <p>Many find it hard to keep track of within, between, and contextual effects in MLMs. This short walkthrough shows how to fit and interpret each model using the HSB data.</p>
+<p>We first calculate school-average ses and then group mean center ses within school. This makes two variables, grp_mean_ses (level 2) and grp_center_ses (level 1).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -636,21 +637,17 @@ div.csl-indent {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># clear memory</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load HSB data</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mathach, ses, schoolid) <span class="sc">|&gt;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">|&gt;</span> </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp_mean_ses =</span> <span class="fu">mean</span>(ses)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp_center_ses =</span> ses <span class="sc">-</span> grp_mean_ses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># load HSB data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mathach, ses, schoolid) <span class="sc">|&gt;</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">|&gt;</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp_mean_ses =</span> <span class="fu">mean</span>(ses)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp_center_ses =</span> ses <span class="sc">-</span> grp_mean_ses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="fitting-the-models" class="level2" data-number="22.1">
 <h2 data-number="22.1" class="anchored" data-anchor-id="fitting-the-models"><span class="header-section-number">22.1</span> Fitting the Models</h2>
+<p>We next fit a variety of models to compare:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> ses, hsb)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fe <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> <span class="fu">factor</span>(schoolid), hsb)</span>
@@ -854,7 +851,7 @@ div.csl-indent {
 <pre><code>lm(formula = mathach ~ ses + factor(schoolid), data = hsb)</code></pre>
 </div>
 </div>
-<p>Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math. Fixed effects models focus on within-school comparisons: we are looking at how students within schools relate to each other, and then averaging this relationship across all our schools to get our final estimate.</p>
+<p>For students within a given school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math. Fixed effects models focus on within-school comparisons: we are looking at how students within schools relate to each other, and then averaging this relationship across all our schools to get our final estimate.</p>
 </section>
 <section id="random-intercepts" class="level3" data-number="22.2.3">
 <h3 data-number="22.2.3" class="anchored" data-anchor-id="random-intercepts"><span class="header-section-number">22.2.3</span> Random Intercepts</h3>
@@ -882,7 +879,21 @@ div.csl-indent {
 <pre><code>lmer(formula = mathach ~ grp_mean_ses + (1 | schoolid), data = hsb)</code></pre>
 </div>
 </div>
-<p>Schools that are 1-unit higher in mean SES are predicted to have mean math scores 5.86 points higher.</p>
+<p>Schools that are 1 unit higher in mean SES are predicted to have mean math scores 5.86 points higher. This looks very large, but remember that variation in school mean SES is typically much less than the variation in student ses scores. In particular, we can calculate the standard deviation of school mean ses’es to get:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">&lt;-</span> hsb <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( schoolid, grp_mean_ses ) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>( grp_mean_ses ) )</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+      n    sd
+  &lt;int&gt; &lt;dbl&gt;
+1   160 0.414</code></pre>
+</div>
+</div>
 </section>
 <section id="random-effects-within-and-between" class="level3" data-number="22.2.6">
 <h3 data-number="22.2.6" class="anchored" data-anchor-id="random-effects-within-and-between"><span class="header-section-number">22.2.6</span> Random Effects within and Between</h3>
@@ -902,12 +913,13 @@ div.csl-indent {
     data = hsb)</code></pre>
 </div>
 </div>
-<p>Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; <em>holding constant student SES</em>, a student that attends a school with 1-unit higher in mean SES are predicted to have mean math scores 3.68 points higher. The contextual effect is the <em>difference</em> in the within and between effects (note that 5.86 - 2.19 = 3.68, up to rounding), and, in principle, its significance test allows us to determine if having both is necessary. Mathematically, the Mundlak model and REWB are <em>identical</em>, as you can see from the deviance statistics. You would choose one over the other depending on your preferred interpretation.</p>
+<p>Holding constant school, students who are 1-unit higher in SES are predicted to score 2.19 points higher in math; <em>holding constant student SES</em>, a student that attends a school with 1-unit higher in mean SES are predicted to have mean math scores 3.68 points higher. The contextual effect is the <em>difference</em> in the within and between effects (note that 5.86 - 2.19 = 3.68, up to rounding), and, in principle, its significance test allows us to determine if having both is necessary.</p>
+<p>Mathematically, the Mundlak model and REWB are <em>identical</em>, as you can see from the deviance statistics. You would choose one over the other depending on your preferred interpretation.</p>
 </section>
 </section>
 <section id="further-reading" class="level2" data-number="22.3">
 <h2 data-number="22.3" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">22.3</span> Further Reading</h2>
-<p><span class="citation" data-cites="antonakis2019a">(<a href="references.html#ref-antonakis2019a" role="doc-biblioref">Antonakis, Bastardoz, and Rönkkö 2019</a>)</span></p>
+<p>Check out the Raudenbush and Bryk pages on within vs.&nbsp;between. Also see, if desired, read <span class="citation" data-cites="antonakis2019a">Antonakis, Bastardoz, and Rönkkö (<a href="references.html#ref-antonakis2019a" role="doc-biblioref">2019</a>)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

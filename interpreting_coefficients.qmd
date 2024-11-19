@@ -6,14 +6,14 @@ editor:
     wrap: sentence
 ---
 
-## Interpreting your models (they won't interpret themselves!)
+## Interpreting your models
 
 So, multilevel models sure are great, but they can also make interpretations much more challenging.
 You've done OLS regression, so you have an understanding of how to interpret regression coefficients.
 However, adding additional levels means that some of our interpretations also need to change.
 This document is intended to provide a brief guide to how to do that.
 
-### Coefficients and indices at various levels of the model {#coefficients-and-indices-at-various-levels-of-the-model .unnumbered}
+### Coefficients and indices at various levels of the model {#coefficients-and-indices-at-various-levels-of-the-model}
 
 But before we even start, we need to talk about how we use different coefficients and letters at different levels of the model.
 There isn't a single convention for how to do this, but we'll try to be consistent at least in this class.
@@ -73,7 +73,7 @@ Longitudinal models are similar, except for the subscripting.
 I'll always (probably) subscript the first level with $t$, for time.
 The second level will become $i$ (assuming that we're looking at growth in students or other individuals), followed by $j$ for the third level (we probably won't include a fourth level).
 
-### Interpreting fixed effects {#interpreting-fixed-effects .unnumbered}
+### Interpreting fixed effects {#interpreting-fixed-effects}
 
 Okay, that was complicated, although I think writing down definitions and rules is often more challenging than applying them.
 Now let's practice some interpretations, going back to our model.
@@ -125,7 +125,7 @@ Now we can interpret these coefficients as in a typical one-level linear regress
 
 Either interpretation is acceptable, and you should base your decision on how you're framing your question.
 
-### Interpreting variance-covariance parameters {#interpreting-variance-covariance-parameters .unnumbered}
+### Interpreting variance-covariance parameters {#interpreting-variance-covariance-parameters}
 
 Now we're going to turn to the variance-covariance matrix for the random offsets, namely
 

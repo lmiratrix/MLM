@@ -595,21 +595,17 @@ window.Quarto = {
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">2.1</span> Overview</a></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">2.2</span> Getting started</a></li>
-  <li><a href="#a-big-section" id="toc-a-big-section" class="nav-link" data-scroll-target="#a-big-section"><span class="header-section-number">3</span> A big section</a>
+  <li><a href="#embedding-r-code" id="toc-embedding-r-code" class="nav-link" data-scroll-target="#embedding-r-code"><span class="header-section-number">2.3</span> Embedding R code</a>
   <ul class="collapse">
-  <li><a href="#a-small-section" id="toc-a-small-section" class="nav-link" data-scroll-target="#a-small-section"><span class="header-section-number">3.1</span> A small section</a></li>
-  <li><a href="#embedding-r-code" id="toc-embedding-r-code" class="nav-link" data-scroll-target="#embedding-r-code"><span class="header-section-number">3.2</span> Embedding R code</a>
-  <ul class="collapse">
-  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">3.2.1</span> Code chunks</a></li>
-  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code"><span class="header-section-number">3.2.2</span> Inline code</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">2.3.1</span> Code chunks</a></li>
+  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code"><span class="header-section-number">2.3.2</span> Inline code</a></li>
   </ul></li>
-  <li><a href="#embedding-plots" id="toc-embedding-plots" class="nav-link" data-scroll-target="#embedding-plots"><span class="header-section-number">3.3</span> Embedding plots</a></li>
-  <li><a href="#embedding-tables" id="toc-embedding-tables" class="nav-link" data-scroll-target="#embedding-tables"><span class="header-section-number">3.4</span> Embedding tables</a></li>
-  <li><a href="#embedding-mathematical-models" id="toc-embedding-mathematical-models" class="nav-link" data-scroll-target="#embedding-mathematical-models"><span class="header-section-number">3.5</span> Embedding mathematical models</a></li>
-  <li><a href="#help-r-markdown-report-generation-doesnt-work" id="toc-help-r-markdown-report-generation-doesnt-work" class="nav-link" data-scroll-target="#help-r-markdown-report-generation-doesnt-work"><span class="header-section-number">3.6</span> Help! R Markdown report generation doesn’t work</a>
+  <li><a href="#embedding-plots" id="toc-embedding-plots" class="nav-link" data-scroll-target="#embedding-plots"><span class="header-section-number">2.4</span> Embedding plots</a></li>
+  <li><a href="#embedding-tables" id="toc-embedding-tables" class="nav-link" data-scroll-target="#embedding-tables"><span class="header-section-number">2.5</span> Embedding tables</a></li>
+  <li><a href="#embedding-math" id="toc-embedding-math" class="nav-link" data-scroll-target="#embedding-math"><span class="header-section-number">2.6</span> Embedding math</a></li>
+  <li><a href="#help-r-markdown-report-generation-doesnt-work" id="toc-help-r-markdown-report-generation-doesnt-work" class="nav-link" data-scroll-target="#help-r-markdown-report-generation-doesnt-work"><span class="header-section-number">2.7</span> Help! R Markdown report generation doesn’t work</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.6.1</span> </a></li>
-  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.7.1</span> </a></li>
   </ul></li>
   </ul>
 </nav>
@@ -660,17 +656,12 @@ output: pdf_document
 <p>You identify sections of the document using hashtags; more hashtags indicate less important sections.</p>
 <p>For example, this:</p>
 <pre><code># A big section</code></pre>
-<p>produces this:</p>
-</section>
-<section id="a-big-section" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> A big section</h1>
+<p>produces a big header (large font, etc.)</p>
 <p>while this</p>
 <pre><code>## A small section</code></pre>
-<p>produces this:</p>
-<section id="a-small-section" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="a-small-section"><span class="header-section-number">3.1</span> A small section</h2>
-<p>If your document includes a table of contents, the sections get used to automatically generate the table of contents.</p>
-<p>You can <em>italicize</em> words by writing <code>*italicize*</code> or <code>_italicize_</code>. You can <strong>bold</strong> words with <code>**bold**</code> or <code>__bold__</code>. N.B. Newer versions of Markdown and Quarto have a <a href="https://rstudio.github.io/visual-markdown-editing/">visual editor</a> that allows you to format things in the usual way, e.g., control-B for bold. We generally recommend using the visual editor.</p>
+<p>produces a smaller header (still a large font, but less large).</p>
+<p>Also, if your document includes a table of contents, the sections get used to automatically generate the table of contents.</p>
+<p>You can <em>italicize</em> words by writing <code>*italicize*</code> or <code>_italicize_</code>. You can <strong>bold</strong> words with <code>**bold**</code> or <code>__bold__</code>.</p>
 <p>You can add superscripts (E=mc<sup>2</sup>) by writing <code>E=mc^2^</code>.</p>
 <p>You can create unordered lists:</p>
 <pre><code>- Item 1
@@ -695,13 +686,14 @@ output: pdf_document
 <p>To start a new page, just type <code>\newpage</code> (not relevant for HTML output).</p>
 <p>As you may have noticed, one of the driving ideas behind R Markdown is that the text should be interpretable even if it’s not compiled. A person should be able to read this text file and understand the basic organization and what all of the symbols denote.</p>
 <p>You can also add links and images, and do many other things beyond what we’ll show you in this class. There are many resources out there, but <a href="https://rmarkdown.rstudio.com/lesson-1.html">here’s</a> one place you can start.</p>
-<p>To compile or knit the document, click on the button that says <code>Knit</code> or <code>Render</code>, or Shift + Ctrl/Cmd + K.</p>
+<p>Instead of writing markdown using this, we note that newer versions of Markdown and Quarto have a <a href="https://rstudio.github.io/visual-markdown-editing/">visual editor</a> that allows you to format things in the usual way, e.g., control-B for bold. Some people prefer to take that approach.</p>
+<p>Regardless, to compile or knit the document, click on the button that says <code>Knit</code> or <code>Render</code>, or Shift + Ctrl/Cmd + K.</p>
 </section>
-<section id="embedding-r-code" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="embedding-r-code"><span class="header-section-number">3.2</span> Embedding R code</h2>
+<section id="embedding-r-code" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="embedding-r-code"><span class="header-section-number">2.3</span> Embedding R code</h2>
 <p>There are two main ways to embed R code in R Markdown, code chunks or inline.</p>
-<section id="code-chunks" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">3.2.1</span> Code chunks</h3>
+<section id="code-chunks" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">2.3.1</span> Code chunks</h3>
 <p>To insert a code chunk click on <code>Insert</code> on the top right corner of your R Markdown file and select <code>R</code>. Or use keyboard shortcuts: Ctrl + Alt + I for PC and Cmd + Option + I for Mac:</p>
 <p>Code chunks have a number of different options. The most important ones for us are:</p>
 <ul>
@@ -724,8 +716,8 @@ output: pdf_document
 <p>Instead of specifying code chunks options every time, you can specify them globally in the setup chunk by using <code>knitr::opts_chunk$set(echo = TRUE, eval = TRUE)</code>. You can then add additional options only to relevant chunks. If you want to exclude specific chunks, you can re-set <code>echo = FALSE</code> and <code>eval = FALSE</code> for those specific chunks.</p>
 <p><strong>Running code chunks:</strong> A good practice is to run individual code chunks to make sure they are doing what you want them to do. You can do this by executing individual lines of code, or whole chunks. Go to <code>Run</code> in the upper right corner and select what chunks to execute, e.g. <code>Run Current Chunk</code>, <code>Run Next Chunk</code>, etc.</p>
 </section>
-<section id="inline-code" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="inline-code"><span class="header-section-number">3.2.2</span> Inline code</h3>
+<section id="inline-code" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="inline-code"><span class="header-section-number">2.3.2</span> Inline code</h3>
 <p>Code results can also be inserted directly in the text of your R Markdown file. This is particularly useful when you are extracting and interpreting model parameters. You can extract the coefficient from the model and use inline code to report it. If the data or model change, <em>the text will change too</em> when you knit the document.</p>
 <p>To add inline code, enclose it in <code>`r `</code>. For example, to report the mean reading score, you can use</p>
 <div class="cell" data-layout-align="center">
@@ -739,8 +731,8 @@ output: pdf_document
 <p>Here we used two commands: <code>round</code> and <code>mean</code>. You can use more commands and write more complex inline code, depending on what you want to report.</p>
 </section>
 </section>
-<section id="embedding-plots" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="embedding-plots"><span class="header-section-number">3.3</span> Embedding plots</h2>
+<section id="embedding-plots" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="embedding-plots"><span class="header-section-number">2.4</span> Embedding plots</h2>
 <p>Plots are easy to embed. For example,</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -764,8 +756,8 @@ output: pdf_document
 <p>Girls are rendered as coral, boys are rendered in turquoise, and the line of best fit is drawn in <code>darkorchid3</code> (because why not). Just because you have a lot of colors and plotting characters to work with doesn’t mean you need to use them all. In the options, I specified <code>fig.width = 7</code> and <code>fig.height = 7</code>. Notice that this command draws on <code>dat</code>, which we loaded in a previous chunk. When knitting the document, code chunks get executed in order and the results persist throughout the R Markdown document.</p>
 <p>For the purposes of class, we want to see both your plot code and the plot itself. It’s not uncommon to use wrong code to create a plot that looks correct (at least visually).</p>
 </section>
-<section id="embedding-tables" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="embedding-tables"><span class="header-section-number">3.4</span> Embedding tables</h2>
+<section id="embedding-tables" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="embedding-tables"><span class="header-section-number">2.5</span> Embedding tables</h2>
 <p>You can directly render tables in R Markdown. The idea is, inside an R chunk, you call a command that prints out a table. The report then takes this printout and integrates it into your overall report. There are many different packages to make tables, but in class we’ll mostly use <code>knitr</code>, <code>texreg</code>, <code>stargazer</code>, and the <code>tab_model()</code> function in <code>sjPlot</code>.</p>
 <p>You can use these packages to create a descriptive table. For example:</p>
 <div class="cell" data-layout-align="center">
@@ -919,8 +911,8 @@ Num. obs.           2310         2310         2310
 </div>
 <p>Both packages include a lot of options and make it easy to produce publication-quality tables with little effort. See later chapters of this book (<a href="reg_table_demo.html" class="quarto-xref"><span>Chapter 7</span></a>, in particular) for more detail.</p>
 </section>
-<section id="embedding-mathematical-models" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="embedding-mathematical-models"><span class="header-section-number">3.5</span> Embedding mathematical models</h2>
+<section id="embedding-math" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="embedding-math"><span class="header-section-number">2.6</span> Embedding math</h2>
 <p>We’ll be writing a lot of mathematical models in class. R Markdown can use <code>LaTeX</code> style math-writing to display mathematical script. Another chapter in the book has more resources with <code>LaTeX</code>syntax for the mostly commonly used models in the class. Similar to code chunks and inline code, you can use <code>LaTeX</code> for single or multiple equations, or for individual parameters embedded in the text.</p>
 <p>For example, the following statement</p>
 <pre><code>$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$</code></pre>
@@ -928,16 +920,15 @@ Num. obs.           2310         2310         2310
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 Y_i + \epsilon_i\]</span></p>
 <p>And the following statement <code>$\mu$</code> compiles to <span class="math inline">\(\mu\)</span>. This will be very helpful when we ask you to match R output to model parameters in homework.</p>
 </section>
-<section id="help-r-markdown-report-generation-doesnt-work" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="help-r-markdown-report-generation-doesnt-work"><span class="header-section-number">3.6</span> Help! R Markdown report generation doesn’t work</h2>
+<section id="help-r-markdown-report-generation-doesnt-work" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="help-r-markdown-report-generation-doesnt-work"><span class="header-section-number">2.7</span> Help! R Markdown report generation doesn’t work</h2>
 <p>Don’t put “View()” in your Markdown file when loading your csv file. Just put in the <code>read_csv</code> line. Otherwise you will not be able to knit.</p>
 <p>Also watch for the <code>skim()</code> command–it can crash report generation as well.</p>
 <p>If you can’t knit PDFs you need to install latex (tex). Once you do, reboot your computer. If things don’t work, then knit to Microsoft word (or, failing that, html as a last resort), print to pdf, and turn that in. But then ask a teaching fellow to help get things set up, since PDFs make for much more readable reports.</p>
-<section id="section" class="level3" data-number="3.6.1">
-<h3 data-number="3.6.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.6.1</span> </h3>
+<section id="section" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="section"><span class="header-section-number">2.7.1</span> </h3>
 
 
-</section>
 </section>
 </section>
 

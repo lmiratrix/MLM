@@ -13,7 +13,16 @@ library(tidyverse)
 library(haven)
 library(ggthemes)
 
-knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE,
+          fig.width = 5,
+          fig.height = 3,
+          out.width = "75%",
+          fig.align = "center",
+          message=FALSE)
+options(list(dplyr.summarise.inform = FALSE))
+theme_set( theme_classic() )
+
 ```
 
 This chapter demonstrates some powerful features of `ggplot2`, the plotting package that we use most in this course.

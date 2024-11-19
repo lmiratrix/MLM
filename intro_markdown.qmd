@@ -55,9 +55,7 @@ For example, this:
 # A big section
 ```
 
-produces this:
-
-# A big section
+produces a big header (large font, etc.)
 
 while this
 
@@ -65,17 +63,12 @@ while this
 ## A small section
 ```
 
-produces this:
+produces a smaller header (still a large font, but less large).
 
-## A small section
-
-If your document includes a table of contents, the sections get used to automatically generate the table of contents.
+Also, if your document includes a table of contents, the sections get used to automatically generate the table of contents.
 
 You can *italicize* words by writing `*italicize*` or `_italicize_`.
 You can **bold** words with `**bold**` or `__bold__`.
-N.B.
-Newer versions of Markdown and Quarto have a [visual editor](https://rstudio.github.io/visual-markdown-editing/) that allows you to format things in the usual way, e.g., control-B for bold.
-We generally recommend using the visual editor.
 
 You can add superscripts (E=mc^2^) by writing `E=mc^2^`.
 
@@ -115,7 +108,10 @@ A person should be able to read this text file and understand the basic organiza
 You can also add links and images, and do many other things beyond what we'll show you in this class.
 There are many resources out there, but [here's](https://rmarkdown.rstudio.com/lesson-1.html) one place you can start.
 
-To compile or knit the document, click on the button that says `Knit` or `Render`, or Shift + Ctrl/Cmd + K.
+Instead of writing markdown using this, we note that newer versions of Markdown and Quarto have a [visual editor](https://rstudio.github.io/visual-markdown-editing/) that allows you to format things in the usual way, e.g., control-B for bold.
+Some people prefer to take that approach.
+
+Regardless, to compile or knit the document, click on the button that says `Knit` or `Render`, or Shift + Ctrl/Cmd + K.
 
 ## Embedding R code
 
@@ -255,7 +251,7 @@ screenreg(list(m1,m2,m3),
 Both packages include a lot of options and make it easy to produce publication-quality tables with little effort.
 See later chapters of this book (@sec-make-regression-tables, in particular) for more detail.
 
-## Embedding mathematical models
+## Embedding math
 
 We'll be writing a lot of mathematical models in class.
 R Markdown can use `LaTeX` style math-writing to display mathematical script.
