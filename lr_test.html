@@ -593,14 +593,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#r-setup" id="toc-r-setup" class="nav-link active" data-scroll-target="#r-setup"><span class="header-section-number">29.1</span> R Setup</a></li>
-  <li><a href="#why-lr-tests" id="toc-why-lr-tests" class="nav-link" data-scroll-target="#why-lr-tests"><span class="header-section-number">29.2</span> Why LR Tests?</a></li>
-  <li><a href="#hsb-example" id="toc-hsb-example" class="nav-link" data-scroll-target="#hsb-example"><span class="header-section-number">29.3</span> HSB Example</a>
+  <li><a href="#why-lr-tests" id="toc-why-lr-tests" class="nav-link active" data-scroll-target="#why-lr-tests"><span class="header-section-number">29.1</span> Why LR Tests?</a></li>
+  <li><a href="#hsb-example" id="toc-hsb-example" class="nav-link" data-scroll-target="#hsb-example"><span class="header-section-number">29.2</span> HSB Example</a>
   <ul class="collapse">
-  <li><a href="#are-random-ses-slopes-necessary" id="toc-are-random-ses-slopes-necessary" class="nav-link" data-scroll-target="#are-random-ses-slopes-necessary"><span class="header-section-number">29.3.1</span> Are random <code>ses</code> slopes necessary?</a></li>
-  <li><a href="#is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" id="toc-is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" class="nav-link" data-scroll-target="#is-there-a-correlation-between-the-random-intercept-and-slope-for-ses"><span class="header-section-number">29.3.2</span> Is there a correlation between the random intercept and slope for <code>ses</code>?</a></li>
+  <li><a href="#are-random-ses-slopes-necessary" id="toc-are-random-ses-slopes-necessary" class="nav-link" data-scroll-target="#are-random-ses-slopes-necessary"><span class="header-section-number">29.2.1</span> Are random <code>ses</code> slopes necessary?</a></li>
+  <li><a href="#is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" id="toc-is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" class="nav-link" data-scroll-target="#is-there-a-correlation-between-the-random-intercept-and-slope-for-ses"><span class="header-section-number">29.2.2</span> Is there a correlation between the random intercept and slope for <code>ses</code>?</a></li>
   </ul></li>
-  <li><a href="#technical-notes" id="toc-technical-notes" class="nav-link" data-scroll-target="#technical-notes"><span class="header-section-number">29.4</span> Technical Notes</a></li>
+  <li><a href="#technical-notes" id="toc-technical-notes" class="nav-link" data-scroll-target="#technical-notes"><span class="header-section-number">29.3</span> Technical Notes</a></li>
   </ul>
 </nav>
     </div>
@@ -632,8 +631,8 @@ window.Quarto = {
 </header>
 
 
-<section id="r-setup" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="r-setup"><span class="header-section-number">29.1</span> R Setup</h2>
+<p>In this chapter we give an overview of using likelihood ratio tests to assess whether a more complex model is justified by the data, as compared to a simpler model.</p>
+<p>We will use our old friend HS&amp;B to illustrate. We first load the data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -641,48 +640,42 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># clear memory</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load HSB data</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mathach, ses, schoolid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># load HSB data</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data/hsb.dta"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mathach, ses, schoolid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="why-lr-tests" class="level2" data-number="29.2">
-<h2 data-number="29.2" class="anchored" data-anchor-id="why-lr-tests"><span class="header-section-number">29.2</span> Why LR Tests?</h2>
+<section id="why-lr-tests" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="why-lr-tests"><span class="header-section-number">29.1</span> Why LR Tests?</h2>
 <p>Our fixed effects coefficients have SEs, z-statistics, and p-values, which allow us to easily test the null hypothesis that the slopes are 0 in the population. No such quantities, however, are provided for the random effects of our model. We can use LR tests to address this issue and test the statistical significance of the various random portions of our model.</p>
 <p>We can also use LR tests on fixed effects or sets of fixed effects (like a nested F-test in OLS), but 99.9% of the time, the conclusion will be the same as using the z-statistics.</p>
 <p>LR tests require that the models are <em>nested</em>, meaning that they use the same data, and one model can be expressed as a constrained version of the other.</p>
 </section>
-<section id="hsb-example" class="level2" data-number="29.3">
-<h2 data-number="29.3" class="anchored" data-anchor-id="hsb-example"><span class="header-section-number">29.3</span> HSB Example</h2>
+<section id="hsb-example" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="hsb-example"><span class="header-section-number">29.2</span> HSB Example</h2>
 <p>We fit 3 models:</p>
 <ol type="1">
 <li>Random intercept model</li>
+<li>Random slope model with no correlation between intercepts and slopes (you probably have not seen this before, but we will use it to test whether the slopes are correlated with the intercepts).</li>
 <li>Random slope model</li>
-<li>Random slope model with no correlation between intercepts and slopes</li>
 </ol>
 <p>We can see from the model output that the point estimates for the random slope variance <span class="math inline">\(\tau_{11}\)</span> and the correlation <span class="math inline">\(\rho_{01}\)</span> are non-zero, but how can we get p-values for these quantities?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), hsb)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> (ses<span class="sc">|</span>schoolid), hsb)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> (ses<span class="sc">||</span>schoolid), hsb)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid)<span class="sc">+</span>(<span class="dv">0</span><span class="sc">+</span>ses<span class="sc">|</span>schoolid), hsb)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> ses <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>ses<span class="sc">|</span>schoolid), hsb)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m1, m2, m3,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">p.style =</span> <span class="st">"stars"</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="fu">c</span>(<span class="st">"RI"</span>, <span class="st">"RS"</span>, <span class="st">"No Rho"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="fu">c</span>(<span class="st">"RI"</span>, <span class="st">"No Rho"</span>, <span class="st">"RS"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table style="border-collapse:collapse; border:none;">
 <tbody><tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
 <th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">RI</th>
-<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">RS</th>
 <th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">No Rho</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">RS</th>
 </tr>
 <tr>
 <td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
@@ -697,18 +690,18 @@ window.Quarto = {
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">12.66 <sup>***</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.19</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">12.67 <sup>***</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.19</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">12.65 <sup>***</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">12.67 <sup>***</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.19</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">ses</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.39 <sup>***</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.11</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.39 <sup>***</sup></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.12</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.40 <sup>***</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.39 <sup>***</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.12</td>
 </tr>
 <tr>
@@ -718,27 +711,27 @@ window.Quarto = {
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">37.03</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">36.83</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">36.82</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">36.83</td>
 </tr>
 
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">4.77 <sub>schoolid</sub></td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">4.83 <sub>schoolid</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">4.85 <sub>schoolid</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">4.83 <sub>schoolid</sub></td>
 
 </tr><tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>11</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.41 <sub>schoolid.ses</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.42 <sub>schoolid.ses</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.41 <sub>schoolid.ses</sub></td>
 
 </tr><tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ρ<sub>01</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">-0.11 <sub>schoolid</sub></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">-0.11 <sub>schoolid</sub></td>
 
 </tr><tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
@@ -760,8 +753,8 @@ window.Quarto = {
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.077 / 0.182</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.077 / 0.189</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.077 / 0.185</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.077 / 0.189</td>
 </tr>
 <tr>
 <td colspan="7" style="font-style:italic; border-top:double black; text-align:right;">* p&lt;0.05&nbsp;&nbsp;&nbsp;** p&lt;0.01&nbsp;&nbsp;&nbsp;*** p&lt;0.001</td>
@@ -771,41 +764,41 @@ window.Quarto = {
 
 </div>
 </div>
-<section id="are-random-ses-slopes-necessary" class="level3" data-number="29.3.1">
-<h3 data-number="29.3.1" class="anchored" data-anchor-id="are-random-ses-slopes-necessary"><span class="header-section-number">29.3.1</span> Are random <code>ses</code> slopes necessary?</h3>
-<p>We use <code>anova</code> to perform the LR test comparing <code>m1</code> and <code>m2</code>, and we see that the random slopes are not statistically significant.</p>
+<section id="are-random-ses-slopes-necessary" class="level3" data-number="29.2.1">
+<h3 data-number="29.2.1" class="anchored" data-anchor-id="are-random-ses-slopes-necessary"><span class="header-section-number">29.2.1</span> Are random <code>ses</code> slopes necessary?</h3>
+<p>We use <code>anova</code> to perform the LR test comparing <code>m1</code> and <code>m3</code> to see if we need random slopes. We see that the random slopes are not statistically significant.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data: hsb
 Models:
 m1: mathach ~ ses + (1 | schoolid)
-m2: mathach ~ ses + (ses | schoolid)
+m3: mathach ~ ses + (1 + ses | schoolid)
    npar   AIC   BIC logLik deviance  Chisq Df Pr(&gt;Chisq)
 m1    4 46649 46677 -23320    46641                     
-m2    6 46648 46690 -23318    46636 4.5354  2     0.1035</code></pre>
+m3    6 46648 46690 -23318    46636 4.5354  2     0.1035</code></pre>
 </div>
 </div>
 </section>
-<section id="is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" class="level3" data-number="29.3.2">
-<h3 data-number="29.3.2" class="anchored" data-anchor-id="is-there-a-correlation-between-the-random-intercept-and-slope-for-ses"><span class="header-section-number">29.3.2</span> Is there a correlation between the random intercept and slope for <code>ses</code>?</h3>
-<p>Similarly, we see that the correlation is non-significant</p>
+<section id="is-there-a-correlation-between-the-random-intercept-and-slope-for-ses" class="level3" data-number="29.2.2">
+<h3 data-number="29.2.2" class="anchored" data-anchor-id="is-there-a-correlation-between-the-random-intercept-and-slope-for-ses"><span class="header-section-number">29.2.2</span> Is there a correlation between the random intercept and slope for <code>ses</code>?</h3>
+<p>We next can compare model 2 and model 3 to see if the correlation is needed, given the random slope model. We see it is not:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data: hsb
 Models:
-m3: mathach ~ ses + ((1 | schoolid) + (0 + ses | schoolid))
-m2: mathach ~ ses + (ses | schoolid)
+m2: mathach ~ ses + (1 | schoolid) + (0 + ses | schoolid)
+m3: mathach ~ ses + (1 + ses | schoolid)
    npar   AIC   BIC logLik deviance  Chisq Df Pr(&gt;Chisq)
-m3    5 46647 46681 -23318    46637                     
-m2    6 46648 46690 -23318    46636 0.2762  1     0.5992</code></pre>
+m2    5 46647 46681 -23318    46637                     
+m3    6 46648 46690 -23318    46636 0.2762  1     0.5992</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="technical-notes" class="level2" data-number="29.4">
-<h2 data-number="29.4" class="anchored" data-anchor-id="technical-notes"><span class="header-section-number">29.4</span> Technical Notes</h2>
+<section id="technical-notes" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="technical-notes"><span class="header-section-number">29.3</span> Technical Notes</h2>
 <p>TL/DR: The traditional LR test provided by <code>anova</code> is likely to be conservative for testing the significance of variance components. For the purposes of this course, it is fine.</p>
 <p>There is a lot of multilevel literature arguing that testing a null hypothesis on variance components with LR tests is not the best approach. The reason is that variances cannot be negative, so the null hypothesis exists on the “boundary of the parameter space” and therefore is “likely to be conservative” (to use the warning that Stata gives you, i.e., the p-values are too high). The true distribution of a 0 variance component is not a normal distribution, but a mixture distribution with half of the probability mass at 0 and the other half <span class="math inline">\(\chi^2\)</span>. When you’re testing the significance of the random intercepts model, you can divide the p-value by 2 to get the right answer (Stata default), though for more complex models it’s not so simple. There are some R packages that use simulation-based approaches to provide more robust results such as <code>pbkrtest::PBmodcomp</code>, but we won’t go into them here. See RH&amp;S pp.&nbsp;88-89 for a more thorough discussion of this issue. Despite this, the standard LR test remains common in practice.</p>
 

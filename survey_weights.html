@@ -21,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -627,9 +647,26 @@ window.Quarto = {
 </section>
 <section id="further-references" class="level2" data-number="32.6">
 <h2 data-number="32.6" class="anchored" data-anchor-id="further-references"><span class="header-section-number">32.6</span> Further references</h2>
-<p>For some good resources see <span class="citation" data-cites="asparouhov2006 carle2009 rabe-hesketh2006">(<a href="references.html#ref-asparouhov2006" role="doc-biblioref"><strong>asparouhov2006?</strong></a>; <a href="references.html#ref-carle2009" role="doc-biblioref"><strong>carle2009?</strong></a>; <a href="references.html#ref-rabe-hesketh2006" role="doc-biblioref"><strong>rabe-hesketh2006?</strong></a>)</span>. Prior students previously also used <span class="citation" data-cites="laukaityte2018importance">(<a href="references.html#ref-laukaityte2018importance" role="doc-biblioref"><strong>laukaityte2018importance?</strong></a>)</span> and <span class="citation" data-cites="lorah2020estimating">(<a href="references.html#ref-lorah2020estimating" role="doc-biblioref"><strong>lorah2020estimating?</strong></a>)</span> for some guidance. They then worked with the <code>BIFIEsurvey</code> R package to fit multi-level models with survey weights to account for the complex sampling design in their data.</p>
+<p>For some good resources see <span class="citation" data-cites="asparouhov2006 carle2009 rabe-hesketh2006">(<a href="references.html#ref-asparouhov2006" role="doc-biblioref">Asparouhov and Muthen 2006</a>; <a href="references.html#ref-carle2009" role="doc-biblioref">Carle 2009</a>; <a href="references.html#ref-rabe-hesketh2006" role="doc-biblioref">Rabe-Hesketh and Skrondal 2006</a>)</span>. Prior students previously also used <span class="citation" data-cites="laukaityte2018importance">Laukaityte and Wiberg (<a href="references.html#ref-laukaityte2018importance" role="doc-biblioref">2018</a>)</span> and <span class="citation" data-cites="lorah2020estimating">Lorah (<a href="references.html#ref-lorah2020estimating" role="doc-biblioref">2020</a>)</span> for some guidance. They then worked with the <code>BIFIEsurvey</code> R package to fit multi-level models with survey weights to account for the complex sampling design in their data.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-asparouhov2006" class="csl-entry" role="listitem">
+Asparouhov, Tihomir, and Bengt Muthen. 2006. <span>“Multilevel <span>Modeling</span> of <span>Complex Survey Data</span>.”</span> <em>ASA Section on Survey Research Methods</em>, 2718–26.
+</div>
+<div id="ref-carle2009" class="csl-entry" role="listitem">
+Carle, Adam C. 2009. <span>“Fitting Multilevel Models in Complex Survey Data with Design Weights: <span>Recommendations</span>.”</span> <em>BMC Medical Research Methodology</em> 9 (49): 1–13. <a href="https://doi.org/10.1186/1471-2288-9-49">https://doi.org/10.1186/1471-2288-9-49</a>.
+</div>
+<div id="ref-laukaityte2018importance" class="csl-entry" role="listitem">
+Laukaityte, Inga, and Marie Wiberg. 2018. <span>“Importance of Sampling Weights in Multilevel Modeling of International Large-Scale Assessment Data.”</span> <em>Communications in Statistics-Theory and Methods</em> 47 (20): 4991–5012.
+</div>
+<div id="ref-lorah2020estimating" class="csl-entry" role="listitem">
+Lorah, Julie. 2020. <span>“Estimating a Multilevel Model with Complex Survey Data: Demonstration Using TIMSS.”</span> <em>Journal of Modern Applied Statistical Methods</em> 18 (2): 24.
+</div>
+<div id="ref-rabe-hesketh2006" class="csl-entry" role="listitem">
+Rabe-Hesketh, Sophia, and Anders Skrondal. 2006. <span>“Multilevel Modelling of Complex Survey Data.”</span> <em>Journal of the Royal Statistical Society</em>, 805–27.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

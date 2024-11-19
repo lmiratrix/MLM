@@ -559,11 +559,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#interpreting-your-models-they-wont-interpret-themselves" id="toc-interpreting-your-models-they-wont-interpret-themselves" class="nav-link active" data-scroll-target="#interpreting-your-models-they-wont-interpret-themselves"><span class="header-section-number">21.1</span> Interpreting your models (they won’t interpret themselves!)</a>
+  <li><a href="#interpreting-your-models" id="toc-interpreting-your-models" class="nav-link active" data-scroll-target="#interpreting-your-models"><span class="header-section-number">21.1</span> Interpreting your models</a>
   <ul class="collapse">
-  <li><a href="#coefficients-and-indices-at-various-levels-of-the-model" id="toc-coefficients-and-indices-at-various-levels-of-the-model" class="nav-link" data-scroll-target="#coefficients-and-indices-at-various-levels-of-the-model">Coefficients and indices at various levels of the model</a></li>
-  <li><a href="#interpreting-fixed-effects" id="toc-interpreting-fixed-effects" class="nav-link" data-scroll-target="#interpreting-fixed-effects">Interpreting fixed effects</a></li>
-  <li><a href="#interpreting-variance-covariance-parameters" id="toc-interpreting-variance-covariance-parameters" class="nav-link" data-scroll-target="#interpreting-variance-covariance-parameters">Interpreting variance-covariance parameters</a></li>
+  <li><a href="#coefficients-and-indices-at-various-levels-of-the-model" id="toc-coefficients-and-indices-at-various-levels-of-the-model" class="nav-link" data-scroll-target="#coefficients-and-indices-at-various-levels-of-the-model"><span class="header-section-number">21.1.1</span> Coefficients and indices at various levels of the model</a></li>
+  <li><a href="#interpreting-fixed-effects" id="toc-interpreting-fixed-effects" class="nav-link" data-scroll-target="#interpreting-fixed-effects"><span class="header-section-number">21.1.2</span> Interpreting fixed effects</a></li>
+  <li><a href="#interpreting-variance-covariance-parameters" id="toc-interpreting-variance-covariance-parameters" class="nav-link" data-scroll-target="#interpreting-variance-covariance-parameters"><span class="header-section-number">21.1.3</span> Interpreting variance-covariance parameters</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -596,11 +596,11 @@ window.Quarto = {
 </header>
 
 
-<section id="interpreting-your-models-they-wont-interpret-themselves" class="level2" data-number="21.1">
-<h2 data-number="21.1" class="anchored" data-anchor-id="interpreting-your-models-they-wont-interpret-themselves"><span class="header-section-number">21.1</span> Interpreting your models (they won’t interpret themselves!)</h2>
+<section id="interpreting-your-models" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="interpreting-your-models"><span class="header-section-number">21.1</span> Interpreting your models</h2>
 <p>So, multilevel models sure are great, but they can also make interpretations much more challenging. You’ve done OLS regression, so you have an understanding of how to interpret regression coefficients. However, adding additional levels means that some of our interpretations also need to change. This document is intended to provide a brief guide to how to do that.</p>
-<section id="coefficients-and-indices-at-various-levels-of-the-model" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="coefficients-and-indices-at-various-levels-of-the-model">Coefficients and indices at various levels of the model</h3>
+<section id="coefficients-and-indices-at-various-levels-of-the-model" class="level3" data-number="21.1.1">
+<h3 data-number="21.1.1" class="anchored" data-anchor-id="coefficients-and-indices-at-various-levels-of-the-model"><span class="header-section-number">21.1.1</span> Coefficients and indices at various levels of the model</h3>
 <p>But before we even start, we need to talk about how we use different coefficients and letters at different levels of the model. There isn’t a single convention for how to do this, but we’ll try to be consistent at least in this class.</p>
 <p>We’ll distinguish between two basic types of models, those that are multilevel and <em>not</em> longitudinal, and those that <em>are</em> longitudinal.</p>
 <p>As a canonical example of the first type, let’s consider the model we use in class, namely</p>
@@ -630,8 +630,8 @@ u_{1j}\\
 <p>We’ll use <span class="math inline">\(\sigma^2_p\)</span> to indicate the variance of the level-2 residual for the <span class="math inline">\(p\)</span>th random effect (starting at 0 for the intercept). I’m not yet sure how to do the subscripting at level-3, and for now am hoping to just wing it. The correlation between the <span class="math inline">\(p\)</span>th and <span class="math inline">\(q\)</span>th random effects will be subscripted <span class="math inline">\(pq\)</span>, and correlations will always be identified with a <span class="math inline">\(\rho\)</span> (rho, not p).</p>
 <p>Longitudinal models are similar, except for the subscripting. I’ll always (probably) subscript the first level with <span class="math inline">\(t\)</span>, for time. The second level will become <span class="math inline">\(i\)</span> (assuming that we’re looking at growth in students or other individuals), followed by <span class="math inline">\(j\)</span> for the third level (we probably won’t include a fourth level).</p>
 </section>
-<section id="interpreting-fixed-effects" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="interpreting-fixed-effects">Interpreting fixed effects</h3>
+<section id="interpreting-fixed-effects" class="level3" data-number="21.1.2">
+<h3 data-number="21.1.2" class="anchored" data-anchor-id="interpreting-fixed-effects"><span class="header-section-number">21.1.2</span> Interpreting fixed effects</h3>
 <p>Okay, that was complicated, although I think writing down definitions and rules is often more challenging than applying them. Now let’s practice some interpretations, going back to our model.</p>
 <p>At the first level, we interpret (almost) exactly as we would in a standard regression model. If we have</p>
 <p><span class="math display">\[mathach_{ij} = \beta_{0j[i]} + \beta_{1j[i]}SES_i + \varepsilon_i,\]</span></p>
@@ -656,8 +656,8 @@ mathach_i &amp;= \gamma_{00} + \gamma_{01}sector_{j[i]} + u_{0j[i]} + (\gamma_{1
 </ol>
 <p>Either interpretation is acceptable, and you should base your decision on how you’re framing your question.</p>
 </section>
-<section id="interpreting-variance-covariance-parameters" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="interpreting-variance-covariance-parameters">Interpreting variance-covariance parameters</h3>
+<section id="interpreting-variance-covariance-parameters" class="level3" data-number="21.1.3">
+<h3 data-number="21.1.3" class="anchored" data-anchor-id="interpreting-variance-covariance-parameters"><span class="header-section-number">21.1.3</span> Interpreting variance-covariance parameters</h3>
 <p>Now we’re going to turn to the variance-covariance matrix for the random offsets, namely</p>
 <p><span class="math display">\[\begin{aligned}
 \Sigma = \begin{pmatrix}

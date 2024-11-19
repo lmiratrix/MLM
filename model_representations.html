@@ -559,20 +559,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-scenario" id="toc-the-scenario" class="nav-link active" data-scroll-target="#the-scenario"><span class="header-section-number">25.1</span> The Scenario</a></li>
-  <li><a href="#the-two-level-random-intercept-model" id="toc-the-two-level-random-intercept-model" class="nav-link" data-scroll-target="#the-two-level-random-intercept-model"><span class="header-section-number">25.2</span> The Two-Level Random Intercept Model</a>
+  <li><a href="#the-two-level-random-intercept-model" id="toc-the-two-level-random-intercept-model" class="nav-link active" data-scroll-target="#the-two-level-random-intercept-model"><span class="header-section-number">25.1</span> The Two-Level Random Intercept Model</a>
   <ul class="collapse">
-  <li><a href="#the-reduced-form-model" id="toc-the-reduced-form-model" class="nav-link" data-scroll-target="#the-reduced-form-model"><span class="header-section-number">25.2.1</span> The Reduced Form Model</a></li>
-  <li><a href="#fitting-it-in-lmer" id="toc-fitting-it-in-lmer" class="nav-link" data-scroll-target="#fitting-it-in-lmer"><span class="header-section-number">25.2.2</span> Fitting it in lmer</a></li>
+  <li><a href="#the-reduced-form-model" id="toc-the-reduced-form-model" class="nav-link" data-scroll-target="#the-reduced-form-model"><span class="header-section-number">25.1.1</span> The Reduced Form Model</a></li>
+  <li><a href="#fitting-it-in-lmer" id="toc-fitting-it-in-lmer" class="nav-link" data-scroll-target="#fitting-it-in-lmer"><span class="header-section-number">25.1.2</span> Fitting it in lmer</a></li>
   </ul></li>
-  <li><a href="#the-two-level-random-slopes-model" id="toc-the-two-level-random-slopes-model" class="nav-link" data-scroll-target="#the-two-level-random-slopes-model"><span class="header-section-number">25.3</span> The Two-Level Random Slopes Model</a>
+  <li><a href="#the-two-level-random-slopes-model" id="toc-the-two-level-random-slopes-model" class="nav-link" data-scroll-target="#the-two-level-random-slopes-model"><span class="header-section-number">25.2</span> The Two-Level Random Slopes Model</a>
   <ul class="collapse">
-  <li><a href="#remarks.-2" id="toc-remarks.-2" class="nav-link" data-scroll-target="#remarks.-2"><span class="header-section-number">25.3.1</span> Remarks.</a></li>
-  <li><a href="#the-level-2-covariate-matrix." id="toc-the-level-2-covariate-matrix." class="nav-link" data-scroll-target="#the-level-2-covariate-matrix."><span class="header-section-number">25.3.2</span> The level 2 covariate matrix.</a></li>
-  <li><a href="#the-reduced-form-model-1" id="toc-the-reduced-form-model-1" class="nav-link" data-scroll-target="#the-reduced-form-model-1"><span class="header-section-number">25.3.3</span> The Reduced Form Model</a></li>
-  <li><a href="#fitting-it-in-lmer-1" id="toc-fitting-it-in-lmer-1" class="nav-link" data-scroll-target="#fitting-it-in-lmer-1"><span class="header-section-number">25.3.4</span> Fitting it in lmer</a></li>
-  <li><a href="#remarks.-4" id="toc-remarks.-4" class="nav-link" data-scroll-target="#remarks.-4"><span class="header-section-number">25.3.5</span> Remarks.</a></li>
-  <li><a href="#another-form-for-the-two-level-model" id="toc-another-form-for-the-two-level-model" class="nav-link" data-scroll-target="#another-form-for-the-two-level-model"><span class="header-section-number">25.3.6</span> Another form for the two-level model</a></li>
+  <li><a href="#the-level-2-covariate-matrix." id="toc-the-level-2-covariate-matrix." class="nav-link" data-scroll-target="#the-level-2-covariate-matrix."><span class="header-section-number">25.2.1</span> The level 2 covariate matrix.</a></li>
+  <li><a href="#the-reduced-form-model-1" id="toc-the-reduced-form-model-1" class="nav-link" data-scroll-target="#the-reduced-form-model-1"><span class="header-section-number">25.2.2</span> The Reduced Form Model</a></li>
+  <li><a href="#fitting-it-in-lmer-1" id="toc-fitting-it-in-lmer-1" class="nav-link" data-scroll-target="#fitting-it-in-lmer-1"><span class="header-section-number">25.2.3</span> Fitting it in lmer</a></li>
+  <li><a href="#the-bracket-subscript-notation-from-gelman-and-hill" id="toc-the-bracket-subscript-notation-from-gelman-and-hill" class="nav-link" data-scroll-target="#the-bracket-subscript-notation-from-gelman-and-hill"><span class="header-section-number">25.2.4</span> The bracket-subscript notation from Gelman and Hill</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -606,25 +603,22 @@ window.Quarto = {
 
 
 <p>This handout walks through the mathematical representation of two core models: the random intercept model and the random slope model. The goal is to very carefully explain all the different math parts, and show how that translates to a <code>lmer()</code> call to R for fitting the model.</p>
-<section id="the-scenario" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="the-scenario"><span class="header-section-number">25.1</span> The Scenario</h2>
-<p>We have a collection of schools that we have randomized into treatment and control conditions. The treatment condition is a novel reading program and the control condition is business as usual. We hope that the treatment accomplishes two things: raising reading level overall, and reducing the gap in reading level between “at-risk” kids and not at risk kids (we assume we have a at-risk status as a dummy variable, measured for all kids and treatment and control prior to treatment).</p>
-</section>
-<section id="the-two-level-random-intercept-model" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="the-two-level-random-intercept-model"><span class="header-section-number">25.2</span> The Two-Level Random Intercept Model</h2>
+<p>For a running example, say we have a collection of schools that we have randomized into treatment and control conditions. The treatment condition is a novel reading program and the control condition is business as usual. We hope that the treatment accomplishes two things: raising reading level overall, and reducing the gap in reading level between “at-risk” kids and not at risk kids (we assume we have a at-risk status as a dummy variable, measured for all kids and treatment and control prior to treatment).</p>
+<section id="the-two-level-random-intercept-model" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="the-two-level-random-intercept-model"><span class="header-section-number">25.1</span> The Two-Level Random Intercept Model</h2>
 <p>We will use the “double-indexing” that is the most common notation for multilevel models (not the Gelman and Hill bracket (<span class="math inline">\(j[i]\)</span>) notation). Treatment is at the <em>school level</em>: let <span class="math inline">\(Z_j\)</span> be an indicator of whether school <span class="math inline">\(j\)</span> was treated (so a 0/1 variable). Then, for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> we have <span class="math display">\[\begin{aligned}
 Y_{ij} &amp;= \alpha_{j} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 \alpha_{j} &amp;= \gamma_{0} + \gamma_{1} Z_{j} + \gamma_{2} S_{j} + u_{j} \\
 \end{aligned}\]</span> with <span class="math inline">\(Y_{ij}\)</span> being the reading level of the student, <span class="math inline">\(R_{ij}\)</span> being a dummy variable of student’s “at risk” status, <span class="math inline">\(X_{ij}\)</span> being an important student demographic variable (e.g., prior reading level), and <span class="math inline">\(S_j\)</span> being a school-level covariate (such as a school quality measure).</p>
 <p>This is the two-level model. Level 1 is the first equation with the distribution on the residuals of <span class="math inline">\(\epsilon_{ij} \sim N( 0, \sigma^2 )\)</span>. Level 2 is the second equation with a distribution of random effects of <span class="math display">\[u_{j} \sim N( 0, \sigma^2_\alpha ) .\]</span> The <span class="math inline">\(\sigma^2_\alpha\)</span> is the variance of the random intercept.</p>
 <p>Call the <span class="math inline">\(\beta_{0j}\)</span> the random intercept and <span class="math inline">\(u_{j}\)</span> the random effect. The <span class="math inline">\(u_{j}\)</span> is the residual of the level 2 model,. In R, we would say <code>coef()</code> for the intercept (including the mean <span class="math inline">\(\gamma_0\)</span>) and <code>ranef()</code> for the random effect. In math, <code>coef()</code> gives <span class="math inline">\(\gamma_0 + u_j\)</span> and <code>ranef()</code> gives only <span class="math inline">\(u_j\)</span>. Neither include the <span class="math inline">\(\gamma_1\)</span> or <span class="math inline">\(\gamma_2\)</span>; these will be separate columns you get from <code>coef()</code>.</p>
-<section id="remarks." class="level5" data-number="25.2.0.0.1">
-<h5 data-number="25.2.0.0.1" class="anchored" data-anchor-id="remarks."><span class="header-section-number">25.2.0.0.1</span> Remarks.</h5>
-<p>We have <em>completely pooled</em> the coefficient for <span class="math inline">\(R_{ij}\)</span> and <span class="math inline">\(X_{ij}\)</span>: we are assuming all the schools have the same relationship between the outcome and these covariates.</p>
-<p>The intercept <span class="math inline">\(\alpha_{j}\)</span> is the expected (predicted average) outcome of a not-at-risk student with <span class="math inline">\(X_{ij} = 0\)</span>. Different schools have different means. In particular, treatment schools have a mean of <span class="math inline">\(\gamma_1\)</span> more than control; this is the treatment impact.</p>
-</section>
-<section id="the-reduced-form-model" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="the-reduced-form-model"><span class="header-section-number">25.2.1</span> The Reduced Form Model</h3>
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>We have <em>completely pooled</em> the coefficient for <span class="math inline">\(R_{ij}\)</span> and <span class="math inline">\(X_{ij}\)</span>: we are assuming all the schools have the same relationship between the outcome and these covariates.</li>
+<li>The intercept <span class="math inline">\(\alpha_{j}\)</span> is the expected (predicted average) outcome of a not-at-risk student with <span class="math inline">\(X_{ij} = 0\)</span>. Different schools have different means. In particular, treatment schools have a mean of <span class="math inline">\(\gamma_1\)</span> more than control; this is the treatment impact.</li>
+</ul>
+<section id="the-reduced-form-model" class="level3" data-number="25.1.1">
+<h3 data-number="25.1.1" class="anchored" data-anchor-id="the-reduced-form-model"><span class="header-section-number">25.1.1</span> The Reduced Form Model</h3>
 <p>If we plug in our 2nd level into the first we get the following: <span class="math display">\[\begin{aligned}
 Y_{ij} &amp;= \beta_{0j} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 &amp;= (\gamma_{0} + \gamma_{1} Z_{j} + \gamma_{2} S_{j} + u_{j}) + \beta_1 R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
@@ -633,24 +627,24 @@ Y_{ij} &amp;= \beta_{0j} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \
 <p>This is also called the <em>reduced form</em>; it is what econometricians work with. They will write the entire residual as <span class="math inline">\(\varepsilon_{ij}\)</span>, however: <span class="math display">\[\begin{aligned}
 Y_{ij} &amp;= \gamma_{0} + \gamma_{1} Z_{j} + \gamma_{2} S_{j} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + \varepsilon_{ij}
 \end{aligned}\]</span></p>
-<section id="remarks.-1" class="level5" data-number="25.2.1.0.1">
-<h5 data-number="25.2.1.0.1" class="anchored" data-anchor-id="remarks.-1"><span class="header-section-number">25.2.1.0.1</span> Remarks.</h5>
-<p>The reduced form helps us see our treatment effect more clearly. It is a shift in outcome of <span class="math inline">\(\gamma_1\)</span> for treated students.</p>
-<p>The <span class="math inline">\(\gamma_{0}\)</span> is the overall mean reading level for students with <span class="math inline">\(X_{ij}=0\)</span> for not-at-risk students (<span class="math inline">\(R_{ij}=0\)</span>) in control schools with <span class="math inline">\(S_j = 0\)</span>.</p>
-<p>Note how we subscript school-level covariates with only a <span class="math inline">\(j\)</span> vs.&nbsp;individual-level covariates get an <span class="math inline">\(ij\)</span>. If you want, you can index everything by <span class="math inline">\(ij\)</span>; the fact that <span class="math inline">\(S_{ij}\)</span> will then be the same for all students <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> is hidden in the data. But it does make it look very much like OLS with a weird error term: <span class="math display">\[
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>The reduced form helps us see our treatment effect more clearly. It is a shift in outcome of <span class="math inline">\(\gamma_1\)</span> for treated students.</li>
+<li>The <span class="math inline">\(\gamma_{0}\)</span> is the overall mean reading level for students with <span class="math inline">\(X_{ij}=0\)</span> for not-at-risk students (<span class="math inline">\(R_{ij}=0\)</span>) in control schools with <span class="math inline">\(S_j = 0\)</span>.</li>
+<li>We subscript school-level covariates with only a <span class="math inline">\(j\)</span> vs.&nbsp;individual-level covariates get an <span class="math inline">\(ij\)</span>. If you want, you can index everything by <span class="math inline">\(ij\)</span>; the fact that <span class="math inline">\(S_{ij}\)</span> will then be the same for all students <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> is hidden in the data. But it does make it look very much like OLS with a weird error term: <span class="math display">\[
 Y_{ij} = \gamma_{0} + \gamma_{1} Z_{ij} + \gamma_{2} S_{ij} + \beta_{1} R_{ij} + \beta_{2} X_{ij} + (u_{j} + \epsilon_{ij})
-\]</span></p>
-<p>Finally, you might call all the different pieces by different letters to indicate whether you care about them or not. E.g., <span class="math display">\[Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + (u_{0j} +  \epsilon_{ij}) .\]</span> Here <span class="math inline">\(\tau\)</span> is our treatment effects of interest. The <span class="math inline">\(\beta\)</span>’s are just adjustments to be ignored. The <span class="math inline">\(\mu\)</span> is the grand mean (for those not treated, with <span class="math inline">\(S_{ij} = 0\)</span> and <span class="math inline">\(R_{ij} = 0\)</span> and <span class="math inline">\(X_{ij} = 0\)</span>). People often use <span class="math inline">\(\mu\)</span> for mean and <span class="math inline">\(\tau\)</span> for treatment.</p>
+\]</span></li>
+<li>You can call all the different pieces by different letters to indicate whether you care about them or not. E.g., <span class="math display">\[Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + (u_{0j} +  \epsilon_{ij}) .\]</span> Here <span class="math inline">\(\tau\)</span> is our treatment effects of interest. The <span class="math inline">\(\beta\)</span>’s are just adjustments to be ignored. The <span class="math inline">\(\mu\)</span> is the grand mean (for those not treated, with <span class="math inline">\(S_{ij} = 0\)</span> and <span class="math inline">\(R_{ij} = 0\)</span> and <span class="math inline">\(X_{ij} = 0\)</span>). People often use <span class="math inline">\(\mu\)</span> for mean and <span class="math inline">\(\tau\)</span> for treatment.</li>
+</ul>
 </section>
-</section>
-<section id="fitting-it-in-lmer" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="fitting-it-in-lmer"><span class="header-section-number">25.2.2</span> Fitting it in lmer</h3>
+<section id="fitting-it-in-lmer" class="level3" data-number="25.1.2">
+<h3 data-number="25.1.2" class="anchored" data-anchor-id="fitting-it-in-lmer"><span class="header-section-number">25.1.2</span> Fitting it in lmer</h3>
 <p>We fit it as:</p>
 <pre><code>    lmer( Y ~ R + Z + X + S + (1|id), data=dat )</code></pre>
 </section>
 </section>
-<section id="the-two-level-random-slopes-model" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="the-two-level-random-slopes-model"><span class="header-section-number">25.3</span> The Two-Level Random Slopes Model</h2>
+<section id="the-two-level-random-slopes-model" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="the-two-level-random-slopes-model"><span class="header-section-number">25.2</span> The Two-Level Random Slopes Model</h2>
 <p>Now let’s get very complex to really unpack notational stuff. We are going to let treatment not only impact the average outcome in schools, but also allow treatment to differentially impact students who are “at risk”. I.e., we are going to have two treatment impacts, one for not at risk, and one for at risk. This is an interaction of risk status and treatment.</p>
 <p>Furthermore, we are going to let different schools have different gaps between at risk and not at risk, but allowing a random effect for the at risk coefficient.</p>
 <p>Using our same variables as above, we have, for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span> <span class="math display">\[\begin{aligned}
@@ -674,16 +668,18 @@ u_{1j}
 \end{bmatrix}
 \]</span> The <span class="math inline">\(\tau_{00}\)</span> is the variance of the random intercept. <span class="math inline">\(\tau_{11}\)</span> is the variance of the random slope. <span class="math inline">\(\tau_{10}\)</span> is the covariance (not correlation) of the random effects. To get the <em>correlation</em> of random effects we have <span class="math inline">\(\rho = \tau_{10} / \sqrt{ \tau_{00} } \sqrt{ \tau_{11} }\)</span>. (Note that <span class="math inline">\(\tau_{10} = \tau_{01}\)</span>, meaning the covariance of A and B is the same as covariance of B and A, so we just write one of them.)</p>
 <p>Call the <span class="math inline">\(\beta_{0j}\)</span> the random intercept and <span class="math inline">\(\beta_{1j}\)</span> a random coefficient. We might call them both random coefficients. Call the <span class="math inline">\(u_{0j}, u_{1j}\)</span>, which are the residuals of the level 2 models, the random effects. In R, we would say <code>coef()</code> for the coefficients (including the means) and <code>ranef()</code> for the random effects.</p>
-<section id="remarks.-2" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="remarks.-2"><span class="header-section-number">25.3.1</span> Remarks.</h3>
-<p>We have <em>completely pooled</em> the coefficient for <span class="math inline">\(X_{ij}\)</span>: we are assuming all the schools have the same relationship between the outcome and <span class="math inline">\(X_{ij}\)</span>. This is why we have no level 2 equation for <span class="math inline">\(\beta_{2}\)</span> and we do not index <span class="math inline">\(\beta_2\)</span> as <span class="math inline">\(\beta_{2j}\)</span>.</p>
-<p>The intercept <span class="math inline">\(\beta_{0j}\)</span> is the expected (predicted average) outcome of a not-at-risk student with <span class="math inline">\(X_{ij} = 0\)</span>. Different schools have different means.</p>
-<p>The achievement gap of at-risk and not-at-risk students for control schools is measured by <span class="math inline">\(\gamma_{10}\)</span>. For treatment schools it is <span class="math inline">\(\gamma_{10} + \gamma_{11}\)</span>.</p>
-<p>The <span class="math inline">\(\gamma_{01}\)</span> is the average treatment effect for not-at-risk students. Then <span class="math inline">\(\gamma_{01} + \gamma_{11}\)</span> is the average treatment effect for the at-risk students. If we find <span class="math inline">\(\gamma_{11} \neq 0\)</span> then the average effects differ for our two types of students, and the change in the achievement gap induced by treatment is measured by <span class="math inline">\(\gamma_{11}\)</span>.</p>
-<p>In this model, the school-level covariate explains overall differences in reading between schools, but does not relate to the size of treatment impact in a school, or relate to the at-risk vs.&nbsp;not-at-risk achievement gap.</p>
-</section>
-<section id="the-level-2-covariate-matrix." class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="the-level-2-covariate-matrix."><span class="header-section-number">25.3.2</span> The level 2 covariate matrix.</h3>
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>We have <em>completely pooled</em> the coefficient for <span class="math inline">\(X_{ij}\)</span>: we are assuming all the schools have the same relationship between the outcome and <span class="math inline">\(X_{ij}\)</span>. This is why we have no level 2 equation for <span class="math inline">\(\beta_{2}\)</span> and we do not index <span class="math inline">\(\beta_2\)</span> as <span class="math inline">\(\beta_{2j}\)</span>.</li>
+<li>The intercept <span class="math inline">\(\beta_{0j}\)</span> is the expected (predicted average) outcome of a not-at-risk student with <span class="math inline">\(X_{ij} = 0\)</span>. Different schools have different means.</li>
+<li>The achievement gap of at-risk and not-at-risk students for control schools is measured by <span class="math inline">\(\gamma_{10}\)</span>. For treatment schools it is <span class="math inline">\(\gamma_{10} + \gamma_{11}\)</span>.</li>
+<li>The <span class="math inline">\(\gamma_{01}\)</span> is the average treatment effect for not-at-risk students.</li>
+<li>The <span class="math inline">\(\gamma_{01} + \gamma_{11}\)</span> is the average treatment effect for the at-risk students.</li>
+<li>If we find <span class="math inline">\(\gamma_{11} \neq 0\)</span> then the average effects differ for our two types of students, and the change in the achievement gap induced by treatment is measured by <span class="math inline">\(\gamma_{11}\)</span>.</li>
+<li>In this model, the school-level covariate explains overall differences in reading between schools, but does not relate to the size of treatment impact in a school, or relate to the at-risk vs.&nbsp;not-at-risk achievement gap.</li>
+</ul>
+<section id="the-level-2-covariate-matrix." class="level3" data-number="25.2.1">
+<h3 data-number="25.2.1" class="anchored" data-anchor-id="the-level-2-covariate-matrix."><span class="header-section-number">25.2.1</span> The level 2 covariate matrix.</h3>
 <p>Sometimes people like to write the correlation matrix using other parameterizations. E.g., we might see <span class="math display">\[
 \begin{pmatrix} u_{0j} \\
 u_{1j}
@@ -700,9 +696,9 @@ u_{1j}
 \end{bmatrix}
 \]</span> to indicate the cross-school variation in the intercept (<span class="math inline">\(\alpha\)</span>) and the risk gap (<span class="math inline">\(R\)</span>). Now we specifically have written our correlation of random effects as <span class="math inline">\(\rho\)</span>.</p>
 </section>
-<section id="the-reduced-form-model-1" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="the-reduced-form-model-1"><span class="header-section-number">25.3.3</span> The Reduced Form Model</h3>
-<p>If we plug in our 2nd level into the first we have to plug in both equations. If we do we get... a mess: <span class="math display">\[\begin{aligned}
+<section id="the-reduced-form-model-1" class="level3" data-number="25.2.2">
+<h3 data-number="25.2.2" class="anchored" data-anchor-id="the-reduced-form-model-1"><span class="header-section-number">25.2.2</span> The Reduced Form Model</h3>
+<p>If we plug in our 2nd level into the first we have to plug in both equations. If we do we get… a mess: <span class="math display">\[\begin{aligned}
 Y_{ij} &amp;= \beta_{0j} + \beta_{1j} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 &amp;= (\gamma_{00} + \gamma_{01} Z_{j} + \gamma_{02} S_{j} + u_{0j}) + (\gamma_{10} + \gamma_{11} Z_{j} + u_{1j}) R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
 &amp;= \gamma_{00} + \gamma_{01} Z_{j} + \gamma_{02} S_{j} + u_{0j} + \gamma_{10} R_{ij} + \gamma_{11} Z_{j} R_{ij} + u_{1j} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} \\
@@ -712,30 +708,31 @@ Y_{ij} &amp;= \beta_{0j} + \beta_{1j} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} 
 <p>This is our <em>reduced form</em>; it is what econometricians work with. They will write the entire residual as <span class="math inline">\(\varepsilon_{ij}\)</span>, however: <span class="math display">\[\begin{aligned}
 Y_{ij} &amp;= \gamma_{00} + (\gamma_{01} + \gamma_{11} R_{ij} ) Z_{j}  + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \varepsilon_{ij} \\
 \end{aligned}\]</span></p>
-<section id="remarks.-3" class="level5" data-number="25.3.3.0.1">
-<h5 data-number="25.3.3.0.1" class="anchored" data-anchor-id="remarks.-3"><span class="header-section-number">25.3.3.0.1</span> Remarks.</h5>
-<p>The reduced form helps us see our treatment effects and treatment variation across groups more clearly. We can put both terms involving the treatment indicator in parenthesis (final line above) to show how treatment is different by <span class="math inline">\(\gamma_{11}\)</span> for the at-risk students.</p>
-<p>We also see that the difference in treatment effects between at-risk and not at-risk is an <em>interaction</em> between student risk and treatment assignment of the school (note the <span class="math inline">\(Z_j R_{ij}\)</span> term).</p>
-<p>The <span class="math inline">\(\gamma_{00}\)</span> is the overall mean reading level for students with <span class="math inline">\(X_{ij}=0\)</span> for not-at-risk students in control schools. The <span class="math inline">\(\gamma_{10}\)</span> is the average difference between at-risk and not-at-risk students in control schools, across all schools.</p>
-<p>We can rearrange our equations above to get <span class="math display">\[Y_{ij} = ( \gamma_{00} + u_{0j}) + (\gamma_{01} + \gamma_{11} R_{ij} + u_{1j} ) Z_{j} + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} .\]</span> This shows the random intercept and random slope all bundled up.</p>
-<p>As with the intercept model, you might call all the different pieces by different letters to indicate whether you care about them or not. E.g., <span class="math display">\[Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + \tau_{R} Z_{ij} R_{ij}  + (u_{0j} +  u_{1j} R_{ij} + \epsilon_{ij}) .\]</span> Here <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\tau_R\)</span> are our treatment effects of interest. The <span class="math inline">\(\beta\)</span>’s are just adjustments to be ignored. The <span class="math inline">\(\mu\)</span> is the grand mean. This model is the same as above, we are just changing names around.</p>
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>The reduced form helps us see our treatment effects and treatment variation across groups more clearly. We can put both terms involving the treatment indicator in parenthesis (final line above) to show how treatment is different by <span class="math inline">\(\gamma_{11}\)</span> for the at-risk students.</li>
+<li>The difference in treatment effects between at-risk and not at-risk is an <em>interaction</em> between student risk and treatment assignment of the school (note the <span class="math inline">\(Z_j R_{ij}\)</span> term).</li>
+<li>The <span class="math inline">\(\gamma_{00}\)</span> is the overall mean reading level for students with <span class="math inline">\(X_{ij}=0\)</span> for not-at-risk students in control schools.</li>
+<li>The <span class="math inline">\(\gamma_{10}\)</span> is the average difference between at-risk and not-at-risk students in control schools, across all schools.</li>
+<li>We can rearrange our equations above to get <span class="math display">\[Y_{ij} = ( \gamma_{00} + u_{0j}) + (\gamma_{01} + \gamma_{11} R_{ij} + u_{1j} ) Z_{j} + \gamma_{02} S_{j} + \gamma_{10} R_{ij} + \beta_{2} X_{ij} + \epsilon_{ij} .\]</span> This shows the random intercept and random slope all bundled up.</li>
+<li>As with the intercept model, you might call all the different pieces by different letters to indicate whether you care about them or not. E.g., <span class="math display">\[Y_{ij} = \mu + \tau Z_{ij}  + \beta_1 S_{ij} + \beta_2 R_{ij} + \beta_3 X_{ij} + \tau_{R} Z_{ij} R_{ij}  + (u_{0j} +  u_{1j} R_{ij} + \epsilon_{ij}) .\]</span> Here <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\tau_R\)</span> are our treatment effects of interest. The <span class="math inline">\(\beta\)</span>’s are just adjustments to be ignored. The <span class="math inline">\(\mu\)</span> is the grand mean. This model is the same as above, we are just changing names around.</li>
+</ul>
 </section>
-</section>
-<section id="fitting-it-in-lmer-1" class="level3" data-number="25.3.4">
-<h3 data-number="25.3.4" class="anchored" data-anchor-id="fitting-it-in-lmer-1"><span class="header-section-number">25.3.4</span> Fitting it in lmer</h3>
+<section id="fitting-it-in-lmer-1" class="level3" data-number="25.2.3">
+<h3 data-number="25.2.3" class="anchored" data-anchor-id="fitting-it-in-lmer-1"><span class="header-section-number">25.2.3</span> Fitting it in lmer</h3>
 <p>We fit it as:</p>
 <pre><code>    lmer( Y ~ R * Z + X + S + (R|id), data=dat )</code></pre>
 <p>Two other ways of saying the same thing:</p>
 <pre><code>    lmer( Y ~ 1 + R * Z + X + S + (1 + R|id), data=dat )</code></pre>
 <p>and</p>
 <pre><code>    lmer( Y ~ 1 + Z + S + R + Z:R + X + (1 + R|id), data=dat )</code></pre>
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>See how the reduced form and <code>lmer()</code> align, especially if we write out what R automatically does with <code>R * Z</code> (R will expand <code>R*Z</code> into <code>R + Z + R:Z</code> automatically).</li>
+</ul>
 </section>
-<section id="remarks.-4" class="level3" data-number="25.3.5">
-<h3 data-number="25.3.5" class="anchored" data-anchor-id="remarks.-4"><span class="header-section-number">25.3.5</span> Remarks.</h3>
-<p>See how the reduced form and <code>lmer()</code> align, especially if we write out what R automatically does with <code>R * Z</code> (R will expand <code>R*Z</code> into <code>R + Z + R:Z</code> automatically).</p>
-</section>
-<section id="another-form-for-the-two-level-model" class="level3" data-number="25.3.6">
-<h3 data-number="25.3.6" class="anchored" data-anchor-id="another-form-for-the-two-level-model"><span class="header-section-number">25.3.6</span> Another form for the two-level model</h3>
+<section id="the-bracket-subscript-notation-from-gelman-and-hill" class="level3" data-number="25.2.4">
+<h3 data-number="25.2.4" class="anchored" data-anchor-id="the-bracket-subscript-notation-from-gelman-and-hill"><span class="header-section-number">25.2.4</span> The bracket-subscript notation from Gelman and Hill</h3>
 <p>The above is the “double-subscript” way of writing a model. By contrast, Gelman and Hill index with a nifty “bracket notation.” First, let <span class="math inline">\(j[i]\)</span> indicate the school student <span class="math inline">\(i\)</span> is attending. Then we have: <span class="math display">\[\begin{aligned}
 Y_{i} &amp;= \beta_{0j[i]} + \beta_{1j[i]} R_{i} + \beta_{2} X_{i} + \epsilon_{i} \\
 \beta_{0j} &amp;= \gamma_{00} + \gamma_{01} Z_{j} + \gamma_{02} S_{j} + u_{0j} \\
