@@ -18,7 +18,6 @@ Many table-making packages and functions in R produce basic tables that display 
 
 To illustrate these concepts, let’s start with some fake data.
 
-
 ```{r}
 library( tidyverse )
 dat = tibble( G = sample( LETTERS[1:5], 100, replace=TRUE ),
@@ -124,15 +123,14 @@ See the `stargazer` help file for how to set/change more of the options: https:/
   stargazer( as.data.frame(dat), header = FALSE, type="text")
 ```
 
-To use `stargazer` in a PDF or HTML report, you will want the report to format the table so it doesn't look like raw output.  To do so, you would not set `type="text"` but rather `type="latex"` or `type="html"`, and then in the markdown chunk header (the thing that encloses all your R code) you would say "results='asis'" in your code chunk header like so:
+To use `stargazer` in a PDF or HTML report, you will want the report to format the table so it doesn't look like raw output. To do so, you would not set `type="text"` but rather `type="latex"` or `type="html"`, and then in the markdown chunk header (the thing that encloses all your R code) you would say "results='asis'" in your code chunk header like so:
 
+```{r, results="asis", messages=FALSE}
 ```
-{r, results="asis", messages=FALSE}
-```
 
-This will ensure the output of stargazer gets formatted properly in your R Markdown. 
+This will ensure the output of stargazer gets formatted properly in your R Markdown.
 
-Unfortunately, it is hard to dynamically make a report that can render to either html or a pdf, so you will have to choose one or the other.  If you are making a PDF, you will want to use `type="latex"` and if you are making an HTML report, you will want to use `type="html"`.
+Unfortunately, it is hard to dynamically make a report that can render to either html or a pdf, so you will have to choose one or the other. If you are making a PDF, you will want to use `type="latex"` and if you are making an HTML report, you will want to use `type="html"`.
 
 ## The `xtable` package
 
@@ -142,5 +140,5 @@ The `xtable` package is another great package for making tables. It is particula
 library(xtable)
 xtable(sdat, caption = "A table of fake data" )
 ```
-Here you would again use the "results='asis'" in the chunk header to get the table to render properly in your R Markdown document.
 
+Here you would again use the "results='asis'" in the chunk header to get the table to render properly in your R Markdown document.

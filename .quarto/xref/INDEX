@@ -175,5 +175,11 @@
   },
   "diagnostic_plots.qmd": {
     "diagnostic_plots.html": "ab0ec5c1"
+  },
+  "longitudinal.qmd": {
+    "longitudinal.html": "7eaf6f5b"
+  },
+  "bootstrap.qmd": {
+    "bootstrap.html": "5ab8ca27"
   }
 }

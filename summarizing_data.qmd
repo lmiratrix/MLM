@@ -1,12 +1,5 @@
----
-title: "Summarizing and exploring data"
-author: "Luke Miratrix"
-editor: 
-  markdown: 
-    wrap: sentence
-editor_options: 
-  chunk_output_type: console
----
+# Summarizing and exploring data {#sec-summarizing}
+
 
 ```{r loadlibs, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -21,7 +14,9 @@ options( digits=3 )
 knitr::opts_chunk$set( fig.height=3 )
 ```
 
-This chapter gives a brief introduction to a variety of packages for summarizing variables. We being by using `ggplot()` to make a few simple plots and then turn to making summary tables. These tools are useful in general for exploring and describing data, and they may be useful for final projects and other things as well.
+This chapter gives a brief introduction to a variety of packages for summarizing variables.
+We being by using `ggplot()` to make a few simple plots and then turn to making summary tables.
+These tools are useful in general for exploring and describing data, and they may be useful for final projects and other things as well.
 
 ## National Youth Survey Example
 
@@ -42,7 +37,6 @@ For each student, we have:
 -   Gender (binary)
 -   Minority status (binary)
 -   Family income, in units of \$10K (this can be either categorical or continuous).
-
 
 We'll focus on the first cohort, from ages 11-15.
 First, let's read the data.

@@ -1,0 +1,146 @@
+---
+title: "A flexible longitudinal model"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup_long, include=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lme4)
+
+options( digits=3 )
+knitr::opts_chunk$set( fig.height=3 )
+
+theme_set(theme_minimal())
+nyswide <- read_csv("data/nyswide.csv")
+
+nys1 <- nyswide |> 
+  pivot_longer(ATTIT.11:EXPO.15, names_to = "score") |> 
+  mutate(outcome = word(score, 1, 1, sep = "\\."),
+         age = as.numeric(word(score, 2, 2, sep = "\\.")),
+         age_fac = factor(age)) |> 
+  select(-score) |> 
+  pivot_wider(names_from = outcome) |> 
+  # drop missing ATTIT values
+  drop_na(ATTIT)
+
+```
+
+In this chapter we look at a way of fitting a longitudinal growth model that allows for a nonlinear curve that you do not parameterize.
+This is a useful tool for longitudinal data that shows up a lot in the final projects.
+That said, this approach only works if you are working with your data in waves.
+
+We will illustrate with the National Youth Survey (NYS) data as described in Raudenbush and Bryk, page 190.
+This data comes from a survey in which the same students were asked yearly about their acceptance of 9 "deviant" behaviors (such as smoking marijuana, stealing, etc.).
+We analyze the first 5 years of data, and have ATTIT (attitude towards deviance) and `EXPO` ("exposure", based on asking the children how many friends they had who had engaged in each of the "deviant" behaviors).
+See @sec-summarizing for more information on the data.
+
+Our modeling approach has two key ideas.
+The first is to let each year have its own mean.
+The second is to then "tilt" our curves to fit each student as best we can.
+
+
+## A nonparametric growth model
+For the first idea, we make each age a factor, and then fit our model:
+
+```{r,  message=FALSE}
+M0 = lmer( ATTIT ~ 0 + age_fac + (1|ID), data=nys1 )
+arm::display( M0 )
+```
+
+Note how each wave (here age) has its own mean across our coefficients.
+
+We can then plot our population average trajectory:
+
+```{r}
+newdata <- nys1 %>%
+  dplyr::select( age_fac ) %>%
+  unique()
+newdata$ID = -1
+newdata$ATTIT <- predict(M0, newdata=newdata, re.form=NA)
+
+ggplot(newdata, aes(age_fac, ATTIT, group=ID)) +
+  geom_line() + 
+  geom_point() + 
+  labs(title = "Population average trajectory of attitude towards deviance over time",
+       x = "Age",
+       y ="Attitude towards deviance") 
+```
+
+## Adding random slopes
+Our model does not allow for individual trajectories for each student, however.
+We are only allowing for an intercept shift.
+This is where the trick comes in: we are going to let each student have their own random slope for growth rate, which will "tilt" our curve for each student.
+We do this by having a random slope on the _continuous_ age variable, even though our fixed effects are on the _factor_ age variable.
+We center age around the beginning of the study, so our random intercepts correspond to ATTIT at age 11.
+
+```{r}
+nys1$age_c = nys1$age - 11
+M1 = lmer( ATTIT ~ 0 + age_fac + (1+age_c|ID), data=nys1,
+           control = lmerControl(optimizer = 'bobyqa') )
+arm::display( M1 )
+```
+
+We can then plot individual trajectories to see how this model is working.
+We first make a set of 20 students to plot:
+
+```{r}
+set.seed( 40440 )
+smp <- sample( unique( nys1$ID ), 20 )
+smp_dat <- nys1 %>% filter( ID %in% smp ) %>%
+  complete( ID, age ) %>%
+  mutate( age_fac = as.factor( age ),
+          age_c = age - 11 )
+```
+
+Each student is five rows of data, sometimes with missing values due to the `complete()` method from above:
+```{r}
+filter( smp_dat, ID == 52 ) %>%
+  dplyr::select( ID, age, age_fac, age_c, ATTIT )
+```
+
+We next predict the values for each student and plot those predicted values:
+```{r, fig.width = 5, fig.height = 4}
+smp_dat$pred <- predict(M1, newdata=smp_dat)
+
+# Make a population reference curve
+newdata$age = 11:15
+newdata$age_c = 0:4
+newdata$pred <- predict(M1, newdata=newdata, re.form=NA)
+
+ggplot(smp_dat, aes(age, pred)) +
+  geom_line( aes( group=ID ), alpha=0.5) + 
+  labs(title = "Individual trajectories",
+       x = "Age",
+       y ="Attitude towards deviance") +
+  geom_line( data = newdata, col="red", linewidth=1 )
+```
+
+Note how all our students have the same _shape_ of our overall trajectory, but some are slightly steeper and some more shallow.  This allows us to have a shared shape that we can shift (random intercept) and tilt (random slope) to fit the actual data.
+
+Compare our trajectories to the measured values:
+
+```{r, warning=FALSE}
+newdata$ID = NULL
+ggplot(smp_dat, aes(age, ATTIT)) +
+  facet_wrap( ~ ID ) +
+  geom_point() + 
+  geom_line( aes( y = pred ), col="blue" ) +
+  labs(title = "Comparing latent curves to observed values",
+       x = "Age",
+       y ="Attitude towards deviance") +
+    geom_line( data = newdata, col="red", lty=2 )
+```
+
+We can see how the latent curves are trying to get close to the observed data for each student. Our fit seems reasonable, but not perfect.
+
+## Conclusion
+Hopefully this tool is useful for examining how different waves of data may be different from one another.
+For example, if COVID happened in the middle of your study, you might expect a big shift in the data.  This model allows you to model that shift while still allowing for different individual growth trajectories over time.
+
+

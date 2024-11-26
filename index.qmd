@@ -20,7 +20,7 @@ This section has information on how to deal with the results from a `lmer()` cal
 
 ### Worked Examples
 
-The section has several case studies that illustrate things such as three-level models. It also has all the code to replicate the High School and Beyond example from Chapter 4 of Raudenbush and Bryk,
+The section has several case studies that illustrate things such as three-level models. One central chapter is the one with all the code to replicate the High School and Beyond example from Chapter 4 of Raudenbush and Bryk,
 
 ### Visualizations
 

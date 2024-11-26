@@ -190,7 +190,6 @@ tab_model(modA.T, modB.T)
 
 ## Pretty ANOVA (liklihood ratio test) Tables
 
-
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
@@ -200,8 +199,7 @@ library(knitr)
 library(broom)
 ```
 
-We now turn to how to give a nice display of likelihood ratio test results using the `kable` function.
-To show how to make such tables, we first create a fake illustrative data set called `a` that has 100 observations and specifies our outcome `Y` as a funciton of two uncorrelated variables `A` and `B`
+We now turn to how to give a nice display of likelihood ratio test results using the `kable` function. To show how to make such tables, we first create a fake illustrative data set called `a` that has 100 observations and specifies our outcome `Y` as a funciton of two uncorrelated variables `A` and `B`
 
 ```{r}
 a <- tibble( A = rnorm( 100 ),
@@ -220,8 +218,7 @@ M2 <- lm( Y ~ A, data = a )
 
 ### Comparing the Models
 
-We use the `anova` function to compare the two models (see also the chapter on Likelihood Ratio tests).
-We see that `B` improves the model fit significantly.
+We use the `anova` function to compare the two models (see also the chapter on Likelihood Ratio tests). We see that `B` improves the model fit significantly.
 
 ```{r}
 aa = anova( M2, M1 )
@@ -234,9 +231,7 @@ aa |>
 
 ### Compare to the Significance test on `B`
 
-Note that the p value for `B` is identical to the ANOVA results above.
-Why bother with ANOVA?
-It can test more complex hypotheses as well (multiple coefficients, random effects, etc.)
+Note that the p value for `B` is identical to the ANOVA results above. Why bother with ANOVA? It can test more complex hypotheses as well (multiple coefficients, random effects, etc.)
 
 ```{r}
 M1 |> 
@@ -247,4 +242,3 @@ M1 |>
 ### Acknowledgements
 
 The ANOVA portion of this chapter was initially drafted by Josh Gilbert
-

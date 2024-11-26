@@ -1,0 +1,247 @@
+---
+title: "Bootstrapping clustered data"
+author: "Luke Miratrix"
+editor: 
+  markdown: 
+    wrap: sentence
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup_long, include=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lme4)
+library(merTools)
+library( broom )
+options( digits=3 )
+knitr::opts_chunk$set( fig.height=3 )
+
+theme_set(theme_minimal())
+knitr::opts_chunk$set(echo = TRUE)
+
+library( tidyverse )
+library( arm )
+library( foreign )
+
+# read student data
+dat = read.spss( "data/hsb1.sav", to.data.frame=TRUE )
+head( dat )
+
+# school data
+sdat = read.spss( "data/hsb2.sav", to.data.frame=TRUE )
+head( sdat )
+
+
+dat = merge( dat, sdat, by="id", all.x=TRUE )
+head( dat )
+```
+
+Sometimes, despite your best efforts, you get convergence issues and 0 estimates for your random effects.
+When this happens, one way to assess uncertainty is to use a bootstrap.
+The idea of the bootstrap is to resample your data and see how your estimates vary with each resample.
+Even if many of your estimates trigger warnings, you will get a good sense of how variable your estimates may be given the structure of your data.
+In other words, the bootstrap takes the uncertainty of convergence issues and warnings into account!
+
+We illustrate using the High School & Beyond data.
+Note this specification generates a warning and also has a 1 for our correlation of random slope and intercept.
+Let's say we are stuck on this and don't know what to do next.
+
+```{r}
+M = lmer( mathach ~ 1 + ses*sector + (1+ses|id),
+          data = dat )
+```
+
+Well, at least we can look at our estimates:
+```{r}
+arm::display( M )
+```
+
+Given our warnings, we don't know if we can trust these standard errors, however.
+We can use the bootstrap to try and improve them.
+
+To bootstrap, we resample _entire schools_ (the clusters) with replacement from our data.
+If we sample the same school multiple times, we pretend each time is a different school that just happens to look the exact same.
+It turns out that this kind of resampling captures the variation inherent in our original data.
+
+First, as an aside, let's summarize our model with `tidy()`, which will help do inference later:
+
+```{r}
+library(broom)
+ests <- tidy( M )
+ests
+```
+
+We see our estimates for all our parameters, including variance.
+We only have SEs for our fixed effects, and we are nervous about all the SEs due to our warnings when we fit the `lmer` command.
+Again, bootstrap will help.
+
+## Bootstrapping
+To bootstrap we need to sample our clusters with replacement, making a new dataset like the old one, but with a random set of clusters.
+We want the same number of clusters, so we will end up with some clusters multiple times, and some not at all.
+
+To see bootstrapping in action, we first look at a toy example of 5 tiny clusters:
+
+```{r}
+set.seed( 40404 )
+toy = tibble( id = rep(c("A","B","C","D","E"), c(1,2,3,1,1)),
+              y = 1:8 )
+toy
+```
+
+Let's take a single bootstrap sample of it:
+```{r}
+tt <- toy %>%
+  group_by( id ) %>%
+  nest() %>%
+  ungroup()
+t_star = sample_n( tt, 5, replace=TRUE )
+t_star$new_id = 1:nrow(t_star)
+new_dat <- unnest(t_star, cols=data)
+new_dat
+```
+
+This code is technical (and annoying) but it does a single cluster bootstrap.
+We first collapse our data so each row is a cluster.
+We then sample clusters with replacement, and then give each sampled cluster a new ID.
+We finally unpack our data to get the same number of clusters (but the clusters themselves are randomly sampled).
+Note how we are re-using "B" three times, but give unique ids to each of our three draws.
+
+## Bootstrapping HS&B
+
+We can do the same thing with our data.
+We make a function to do it, since we will be wanting to do the entire process over and over.
+Here goes!
+
+```{r}
+boot_once <- function( dat ) {
+  tt <- dat %>%
+    group_by( id ) %>%
+    nest() %>%
+    ungroup()
+  t_star = sample_n( tt, nrow(tt), replace=TRUE )
+  t_star$id = 1:nrow(t_star)
+  t_star <- unnest(t_star, cols=data)
+  
+  M = lmer( mathach ~ 1 + ses*sector + (1+ses|id),
+            data = t_star )
+  
+  tidy( M )
+}
+```
+
+Let's try it out!
+
+```{r}
+boot_once( dat )
+```
+Note how our estimates are similar to our original data ones.
+But not quite--we are analyzing data that is _like_ our original data.
+Seeing how much everything varies is the point of the bootstrap.
+Here we go (the `map_dfr()` command is a way of rerunning our `boot_once` code 100 times):
+
+```{r, message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+set.seed( 40404 )
+boots = map_dfr( 1:100, \(.) boot_once( dat ) )
+```
+
+If you run this, you will get a whole bunch of convergence warnings and whatnot. Each bootstrap sample has a different difficult time.  But we want to see how estimates vary across all of that, so we don't care!
+
+Once done, we can see how all our estimates varied.
+Let's make a histogram of all our estimates for all our parameters:
+```{r fig.height = 6}
+ggplot( boots, aes( estimate ) ) +
+  facet_wrap( ~ term, scales="free" ) +
+  geom_histogram( bins=20 )
+```
+
+Note how our correlation is usually 1, but sometimes can be -1.  To get a confidence interval, we can use the quantile function and see the middle 95% range of our estimates:
+```{r, cache=TRUE}
+boots %>%
+  group_by( term ) %>%
+  summarize( q025 = quantile(estimate, 0.025),
+             q975 = quantile(estimate, 0.975) )
+```
+
+Our correlation is likely positive, but could be as low as 0.24.
+Our confidence on our random slope variation is quite wide, 0.02 to 0.67 or so.
+
+Our standard errors are the standard deviations of our estimates:
+
+```{r}
+SEs <- boots %>%
+  group_by( term ) %>%
+  summarize( SE_boot = sd(estimate) )
+
+ests <- left_join( ests, SEs, by="term" ) %>%
+  mutate( ratio = SE_boot / std.error )
+ests
+```
+
+In this case, our bootstrap SEs are about the same as the ones we originally got from our model, for our fixed effects.
+We also have SEs for the variance parameters!
+
+## The `lmeresampler` package to help
+
+We can also use the `lmeresampler` package to do the above.
+You write a function to calculate the statistics (estimates) that you care about, and then you bootstrap to get their uncertainty:
+
+```{r lmeresamper_demo, cache=TRUE}
+library( lmeresampler )
+
+sum_func <- function( x ) {
+  t <- tidy( x )
+  tt <- t$estimate
+  names(tt) <- t$term
+  tt
+}
+sum_func( M )
+
+bres <- lmeresampler::bootstrap( M, type = "case", 
+                                 .f = sum_func,
+                                 resample = c( TRUE, FALSE ),
+                                 B = 100 )
+
+bres
+```
+
+We can get confidence intervals as well:
+
+```{r lmreconfint}
+lmeresampler:::confint.lmeresamp( bres )
+```
+
+Nice!  
+
+
+## Side note: Parametric bootstrapping
+
+Some will instead use a parameteric bootstrap, where you generate data from your estimated model and then re-estimate to see how your estimates change.
+You can do this with `lmeresampler`, or you can use the `merTools` package (which also offers a bunch of other utilities and may be worth checking out):
+
+```{r}
+library(lme4)
+library(merTools)
+
+# Example data
+data(sleepstudy)
+
+# Fit a multilevel model
+model <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+
+# Perform parametric bootstrapping
+boot_results <- bootMer(
+  model,
+  FUN = fixef,  # Extract fixed effects
+  nsim = 1000,  # Number of bootstrap samples
+  use.u = TRUE,  # Include random effects uncertainty
+  type = "parametric"
+)
+
+# View bootstrap results
+summary(boot_results$t)  # Summary of bootstrap fixed effects
+```
+
+
+
+

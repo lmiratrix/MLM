@@ -48,7 +48,9 @@ book:
           - lr_test.qmd
           - aic_check.qmd
           - lmer_optimization.qmd
+          - bootstrap.qmd
           - survey_weights.qmd
+          - longitudinal.qmd
     - part: "FIXED EFFECTS and FRIENDS"
       chapters:
           - pooling.qmd
