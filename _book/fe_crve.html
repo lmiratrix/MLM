@@ -1005,20 +1005,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>fake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
-   id    mathach    ses sector
-   &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 1      -0.989  1.05       0
- 2 1      -0.190  0.194      0
- 3 1       1.46   0.492      0
- 4 2      -0.188  0.470      1
- 5 2       0.604 -1.16       1
- 6 2      -0.436 -1.52       1
- 7 3      -1.51  -0.519      0
- 8 3       0.268  1.69       0
- 9 3      -0.968  0.765      0
-10 4      -2.15  -0.320      1
-11 4      -0.135  0.960      1
-12 4       0.684  0.160      1</code></pre>
+   id    mathach     ses sector
+   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 1      2.87    1.15        0
+ 2 1     -0.475   1.42        0
+ 3 1     -0.0762 -1.24        0
+ 4 2      0.446  -0.0235      1
+ 5 2     -1.20   -1.14        1
+ 6 2     -0.308   0.983       1
+ 7 3     -0.0716  0.693       0
+ 8 3     -0.0275  1.08        0
+ 9 3      0.295  -0.598       0
+10 4      0.417   0.571       1
+11 4     -1.14    0.775       1
+12 4     -0.730  -0.345       1</code></pre>
 </div>
 </div>
 <p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
@@ -1030,8 +1030,8 @@ Call:
 lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
-    id1      id2      id3      id4      ses   sector  
--0.1369   0.2869  -0.9939  -0.6399   0.3986       NA  </code></pre>
+     id1       id2       id3       id4       ses    sector  
+ 0.64933  -0.33663  -0.04371  -0.57742   0.27813        NA  </code></pre>
 </div>
 </div>
 <p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>

@@ -6,65 +6,80 @@ editor:
     wrap: sentence
 ---
 
-## Convergence and optimization algorithms
+One of the perils of fitting MLMs are the wide variety of obscure and upsetting errors you might face when fitting your model.
+Many of these relate to "failure to converge."
+In this chapter, we'll discuss what this means and how to address it.
 
-Unlike OLS, which has a simple closed-form solution for parameter estimates, multi-level models are complex and often do not have closed-form solutions.[^lmer_optimization-1]
+Unlike OLS, which has a simple closed-form solution for parameter estimates (meaning your computer can just calculate the estimates directly, using a formula), multi-level models are complex and often do not have closed-form solutions.[^lmer_optimization-1]
 As a result, programming languages use optimization algorithms to fit models.
-These optimization algorithms are typically iterative processes that repeatedly test potential values and eventually converge to the model estimates.
+These optimization algorithms are typically iterative processes that repeatedly test potential values and eventually (we hope) converge to the model estimates.
+We talked about one way of thinking about this when covering maximum likelihood estimation, with the gradient ascent (hill climbing) idea.
 
 [^lmer_optimization-1]: "Closed form" means that there is a formula you can use to simply and directly calculate your estimates.
     For example, in OLS your matrix equation for $\hat{\beta} = (X'X)^{-1}X'Y$
 
 Typically, optimization algorithms involve approximating the log-likelihood function as a multivariate quadratic function.
 Sometimes this approximation is easy to find and closely matches the true log-likelihood; in these cases, convergence occurs quickly.
-However, we've seen that convergence is trickier when the log-likelihood function is flat near the maximum; it's also trickier with more complex and fragile likelihoods, like those created by the link functions from Generalized Least Squares (GLS) models.
+However, we've seen that convergence is trickier when the log-likelihood function is flat near the maximum; it is also trickier with more complex and fragile likelihoods, like those for problems that include link functions from Generalized Least Squares (GLS) models.
+When this happens, the algorithms can fail to find a good maximum in the number of iterations given, or can find a large area that is all about the same level, making determining which point is the maximum quite difficult.
+This is when you get your warning messages.
 
 ## What to do when your model won't converge
 
 If your error won't converge, you might get a warning message like this:
 
-Warning message: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max\|grad\| = 0.0463355 (tol = 0.001, component 1)
+```
+Warning message: In checkConv(attr(opt, "derivs"), opt$par, 
+ctrl = control$checkConv, : Model failed to converge with 
+max\|grad\| = 0.0463355 (tol = 0.001, component 1)
+```
 
 This warning message tells us two things.
-First, remember that we are trying to find the maximum of the likelihood function, or the place where the `slope = 0`.
+First, remember that we are trying to find the maximum of the likelihood function, or the place where the `slope = 0`, where the "slope" is how much the likelihood function is changing.
 In the warning, the `tol = 0.001` tells us that R will be happy if it finds estimates where the `slope` $\leq$ `0.001`.
 It's also saying that our slope when R stopped converging was `0.0463355`.
 
-Steps that you can take to resolve:
+When convergence fails, there are a few steps you can take to try and get it to do better:
 
-```{=tex}
-\begin{enumerate}
-  \item Try rescaling variables and refitting your model
-  \item Try changing your optimizer settings
-\end{enumerate}
-```
-To address items #2 and #3, you add a `Control` option into your `lme`, `lmer`, or `glmer` function.
+ 1. Try rescaling variables and refitting your model.
+ 2. Try changing your optimizer settings.
+
+For #1, calculate the standard deviation of all your variables and compare them to one another.  If you have one variable with a very large sd relative to the others, try rescaling it.
+For example, if you had income as a covariate, you might divide it by 1000 to get "income in thousands of dollars," which might make the scale more similar to other variables.
+
+For #2, you add a `Control` option into your `lme`, `lmer`, or `glmer` function.
 Each of those functions has its own option, but they all take the same arguments:
 
-```{=tex}
-\begin{enumerate}
-  \item lme: lmeControl()
-  \item lmer: lmerControl()
-  \item glmer: glmerControl()
-\end{enumerate}
-```
+ * lme: lmeControl()
+ * lmer: lmerControl()
+ * glmer: glmerControl()
+
 Below are some other optimizer options that you can try.
-For simplicitly, we're specifying them all as "glmer" options, but you could easily adjust them to match whichever model you are trying (but failing) to fit:
+For simplicity, we're specifying them all as "glmer" options, but you could easily adjust them to match whichever model you are trying (but failing) to fit:
+
+The following is a good default that often works:
 
 ```{r, eval = FALSE, }
-## Use a Nelder-Mead optimizer
 log_mod <- glmer(pass ~ (gender + frl_new + f3) + 
                    (gender + frl_new + f3|sch), 
                  data = wide_dat, family = binomial(),
-                 control = glmerControl(optimizer = 'Nelder_Mead'))
+                 control = glmerControl(optimizer = 'bobyqa'))
+```
 
+You can also try `optimizer = 'Nelder_Mead'`.
+Sometimes the syntax is a bit different:
+
+```{r, eval=FALSE}
 ## Use a BFGS optimizer 
 log_mod <- glmer(pass ~ (gender + frl_new + f3) + 
                    (gender + frl_new + f3|sch), 
                  data = wide_dat, family = binomial(),
                  control = glmerControl(optimizer="optim", optimMethod = "BFGS"))
+```
 
-#If these aren't working, you can downlaod a special package to use the optimx optimizer
+If these aren't working, you can downlaod a special package to use the optimx optimizer:
+
+```{r, eval=FALSE}
 #install.packages(‘optimx’)
 library(optimx)
 log_mod <- glmer(pass ~ (gender + frl_new + f3) + 
@@ -76,34 +91,29 @@ log_mod <- glmer(pass ~ (gender + frl_new + f3) +
                                              kkt = FALSE)))
 ```
 
-Aside from these examples, there are many other ways to adjust your optimization commands, which can be found here: https://rdrr.io/cran/lme4/man/lmerControl.html
+There are many other ways to adjust your optimization commands, which can be found here: https://rdrr.io/cran/lme4/man/lmerControl.html
 
 ## Technical Appendix: Understanding the Types of Optimization Algorithms
 
 There are generally four "types" of algorithms employed to find MLE/REML solutions:
 
-```{=tex}
-\begin{enumerate}
-\item Newton methods 
-\item Quasi-Newton methods
-\item EM algorithm 
-\item Other
-\end{enumerate}
-```
-## Newton Methods
+ * Newton methods 
+ * Quasi-Newton methods
+ * EM algorithm 
+ * Other
+
+### Newton Methods
 
 Newton's method is the most "pure" of these approaches; essentially Newton's method uses a Taylor series approximation to approximate a quadratic function and find its maxima.
 It involves finding the Hessian (a matrix containing all the second and partial derivatives from your likelihood).
 An advantage of this approach is that it is theoretically the best of the three named approaches because it will often require fewer iterations to converge.
 However, there are two drawbacks:
 
-```{=tex}
-\begin{enumerate}
-\item When there are a large number of parameters, it is time-consuming to analytically calculate or numerically approximate all second order and mixed derivatives needed for the Hessian matrix.
-\item In regions where the log-likelihood function is not sufficiently concave down, there is a tendency to dramatically overshoot because the step size to the next point is proportional to the inverse of the second derivative, resulting in pathological oscillations that would amplify if allowed to continue. Thus, where the log-likelihood function is not well approximated by a second order Taylor expansion, the method tends to fail miserably. This would be the case, for example, if the log-likelihood function was a standard normal density and you started out 2 SD from the mean.
+ 1. When there are a large number of parameters, it is time-consuming to analytically calculate or numerically approximate all second order and mixed derivatives needed for the Hessian matrix.
+ 2. In regions where the log-likelihood function is not sufficiently concave down, there is a tendency to dramatically overshoot because the step size to the next point is proportional to the inverse of the second derivative, resulting in pathological oscillations that would amplify if allowed to continue. Thus, where the log-likelihood function is not well approximated by a second order Taylor expansion, the method tends to fail miserably. This would be the case, for example, if the log-likelihood function was a standard normal density and you started out 2 SD from the mean.
 \end{enumerate}
-```
-## Quasi-Newton Methods
+
+### Quasi-Newton Methods
 
 Quasi-Newton methods start with a "guess" for the Hessian, apply the quadratic formula to attain a new point, update the guess of the Hessian, and repeat until convergence is attained.
 Importantly, the approximated Hessian will converge to the Hessian so long as the Wolfe conditions (a set of conditions on the likelihood) are satisfied.
@@ -115,7 +125,7 @@ In terms of time to convergence, quasi-Newton is typically much faster than pure
 This addresses the first drawback listed for Newton's method, but it is still susceptible to the second issue.
 The other potential challenge with Quasi-Newton methods occurs when the Wolfe conditions are not satisfied - the method will typically not converge to the Hessian within a reasonable number of iterations, and can often exceed the maximum iterations set by a program.
 
-## EM (Expectation-Maximiation) Algorithm
+### EM (Expectation-Maximiation) Algorithm
 
 The EM algorithm is another way of approximating the likelihood function and maximizing that approximation.
 It does this in a repeating series of stseps: the E (Expectation) step and the M (Maximization) step.
@@ -125,7 +135,7 @@ Thus, even if the likelihood function not well approximated by a quadratic funct
 Thus the EM algorithm fixes the second issue from Newton's method.
 However, it only displays linear convergence (as opposed to "super linear" or "quadratic") and can therefore take a very long time to converge.
 
-## Implementation in Different Programs
+## Optimizer Implementation in Different Programs
 
 ### Stata/MPlus/HLM
 
@@ -149,5 +159,5 @@ I'll assume this is a very informed decision on the end of these developers.
 Yet, it does not appear that this is what is occuring in R.
 Instead, R uses "unconstrained and box-constrained optimization using PORT routines," whatever that is.
 
-Even the according to the "See Also" section in the nlminb help file, the optim function is listed as preferred over the nlminb function.
+Even the according to the "See Also" section in the `nlminb` help file, the optim function is listed as preferred over the nlminb function.
 As it turns out, the optim function applies the "BFGS" quasi-Newton method as the default, which is consistent with Stata's approach.
