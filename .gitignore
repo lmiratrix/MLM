@@ -5,8 +5,6 @@
 .DS_Store
 data/
 book-output/
-rand_slopes_viz_files
 *_files/
 *_cache/
-
 /.quarto/
