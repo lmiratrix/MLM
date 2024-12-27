@@ -69,11 +69,11 @@ Any covariates included in the model but not included in `terms` are held consta
 
 ```{r}
 ggeffect(m2, terms = c("ses", "sector")) |> 
-  plot(ci = FALSE, add.data = TRUE)
+  plot(show_ci = FALSE, show_data = TRUE)
 
 ggeffect(m3, terms = c("ses", "sector")) |> 
-  plot(ci = FALSE)
+  plot(show_ci = FALSE)
 
 ggeffect(m4, terms = c("ses", "sector", "female")) |> 
-  plot(ci = FALSE)
+  plot(show_ci = FALSE)
 ```
