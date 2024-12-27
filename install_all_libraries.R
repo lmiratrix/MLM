@@ -43,18 +43,20 @@ packages <- c("Amelia",
               "tidyverse",
               "VIM",
               "nycflights13"
-              )
+)
 
 for(p in packages) {
-  tryCatch(test <- require(p,character.only=T), 
-           warning=function(w) return())
-  if(!test)
-  {
-    print(paste("Package", p, "not found. Installing Package!"))
+  test <- library(p, character.only = TRUE, logical.return = TRUE)
+
+  if(!test) {
+    message(paste("Package", p, "not found. Installing Package!"))
     install.packages(p)
-    require(p)
+    require(p, character.only = TRUE)
+  } else {
+    message(paste("Package", p, "found."))
   }
 }
+
 
 
 # some additional libraries that show up without explicit library calls

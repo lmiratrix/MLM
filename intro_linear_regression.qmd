@@ -115,7 +115,7 @@ For one easy kind of regression graph, try `ggeffects`:
 ```{r}
 # graph model 2, with Bill on X, Credit as color, and Guests held constant at the mean
 ggeffect(tip.mod, terms = c("Bill", "Credit")) |> 
-  plot(add.data = TRUE, ci = FALSE)
+  plot(show_data = TRUE, show_ci = FALSE)
 ```
 
 For making tables, @sec-make-regression-tables.
