@@ -31,6 +31,7 @@ book:
           - plot_expand_grid.qmd
           - ggeffects.qmd
           - coefficient_plots.qmd
+          - sjPlot_demo.qmd
           - double_plot.qmd
     - part: "MODEL FITTING & INTERPRETATION"
       chapters:
@@ -43,20 +44,22 @@ book:
           - reg_assumptions.qmd
           - model_representations.qmd
           - model_cheat_sheet.qmd
-          - growth_models_predictors.qmd
           - interpreting_glms.qmd
           - lr_test.qmd
           - aic_check.qmd
           - lmer_optimization.qmd
           - bootstrap.qmd
           - survey_weights.qmd
-          - longitudinal.qmd
     - part: "FIXED EFFECTS and FRIENDS"
       chapters:
           - pooling.qmd
           - fixed_effects.qmd
           - fe_crve.qmd
           - robust_mlm.qmd
+    - part: "LONGITUDINAL DATA"
+      chapters:
+          - growth_models_predictors.qmd
+          - longitudinal.qmd
     - part: "WORKED EXAMPLES"
       chapters:
           - hsb_ex.qmd

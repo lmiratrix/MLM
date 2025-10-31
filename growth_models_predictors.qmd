@@ -1,63 +1,162 @@
 ---
-title: "Predictors in Longitudinal Growth Models"
+title: "Building Longitudinal Growth Models"
 author: "Luke Miratrix"
 editor: 
   markdown: 
     wrap: sentence
 ---
 
-## Tips for growth models
+```{r, include=FALSE}
+library(tidyverse)
+library( lme4 )
+library( performance )
+library( arm )
+knitr::opts_chunk$set(echo = TRUE,
+          fig.width = 5,
+          fig.height = 3,
+          out.width = "75%",
+           message = FALSE,
+          fig.align = "center")
+options(list(dplyr.summarise.inform = FALSE))
+theme_set( theme_classic() )
+```
 
-Start with an unconditional growth model, i.e., don't include any level-1 or level-2 predictors.
-This model provides useful empirical evidence for determining a proper specification of the individual growth equation and baseline statistics for evaluating more complicated level-2 models.
+## ICC for longitudinal growth models
 
-The nature of the predictor in longitudinal analysis determines where it gets added to the model: Time-invariant predictors always go in level-2 (subject level) model Time-varying predictors can go in level-1 and/or level-2.
-The level of the predictor dictates which variance component it seeks to describe: Level-2 describes level-2 variances and Level-1 describes level-1 variances.
-Although the order in which you add these predictors (in a series of successive models) may not ultimately matter, general practice is to add level-2 (time-invariant) predictors first.
+The goal of the ICC is to quantify the proportion of total variance in the outcome that is attributable to between-person differences, relative to within-person differences.
+With a longitudinal growth model, we are allowing different people to have different baseline levels (the random intercept) and also different growth trajectories (e.g., the random slope, in a linear growth model).
+To calculate an overall "ICC" we would then want to calculate how much these individual growth trajectories explain.
 
-How to decide where to add predictors?
-One strategy:
+The easiest way to get a handle on this is to calculate the within and between variation in a bit of a roundabout way: we first calculate total variation of our observations around the overall population growth curve for our estimate of total variation, and then we look at the remaining residual variation beyond the random effects to get within variation.
+Between variation is then the difference of these quantities.
 
-1.  First fit an unconditional (i.e. no predictors) random intercept model.
-    This isn't really predictive, but we can use it as a baseline model that partitions variance into between and within-person variances.
-    Singer & Willett (2003) call this the "unconditional means model".
+We next demonstrate on a simple example using the `sleepstudy` data from the `lme4` package.
+The data look like this:
 
-2.  Calculate the ICC
+```{r data, out.width="100%"}
+data("sleepstudy", package = "lme4")
 
-    1.  If most of the variance is between-persons in the random intercept (level-2), then you'll use person-level predictors to reduce that variance (i.e., account for inter-person differences)
+ggplot( sleepstudy, aes( Days, Reaction, group=Subject ) ) +
+  facet_wrap( ~ Subject ) +
+  geom_smooth( method="lm", se=FALSE, lwd=0.5, alpha=0.5 ) +
+  geom_line() 
+```
 
-    2.  If most of the variance is within-person (level-1 residual variance), you'll need time-level predictors to reduce that variance (i.e. account for intra-person differences)
+We fit a no-covariate linear growth model to these data.
+We could fit any other growth model (e.g., quadratic) and everything that follows would be the same.
 
-Because the time-specific subscript *t* can only appear in the level-1 model, all time-varying predictors must appear in the level-1 individual growth model.
-That is, person-specific predictors that vary over time appear at level-1, not level-2.
-Time-invariant predictors go in level-2.
-Furthermore, because they are time-invariant, this means they have no within-person variation to allow for a level-2 residual; thus, the level-2 growth rate parameter corresponding to this time-invariant predictor will not have an error term (i.e. it's assumed to be zero).
-Interpretation wise, this assumes the effect of a person-specific effect is constant across population members.
-For a time-varying predictor, however, the associated level-2 growth parameter equation would have a residual term.
-This allows the effect of the time-varying predictor to vary randomly across the individuals in the population.
+```{r fit-model}
+# Random intercepts for Subject; time (Days) as fixed effect only
+m_rs <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy, 
+             REML = TRUE)
+arm::display(m_rs)
+```
 
-With only a few measurement points per person, we often lack sufficient data to estimate many variance components.
-Thus, it's suggested that we resist the temptation to automatically allow the effects of time-varying predictors to vary at level-2 unless you have a good reason, and enough data, to do so.
+Our fit model shows substantial variation in both intercepts and slopes across subjects.
 
-So far in class, we've seen person-specific variables appear in level-2 submodels as predictors for level-1 growth parameters.
-You might therefore think that substantive predictors must always appear at level-2, but this isn't true!
+We next calculate our "population level" residuals, and look at the within-person variation around the population curve to get the total variance.
 
-How inclusion of predictors affect variance components: Generally, when we include time-invariant predictors:
+```{r extract-icc-manual}
+sleepstudy$yhat_pop <- predict(m_rs, re.form = NA)  # population-level predictions
 
-1.  the level-1 variance component, $\sigma^2_e$, remains pretty stable because time-invariant predictors can't explain any within-person variation
+total_var = var( sleepstudy$Reaction - sleepstudy$yhat_pop )
+sqrt( total_var )
+```
 
-2.  the level-2 variance components, $\tau_{00}$ and $\tau_{01}$, will decrease if the time-invariant predictors explain some of the between-person variation in initial status or rates of change, respectively.
+Note the `re.form = NA`: this means our `predict()` method predicts from just the fixed effects---our residuals are then distance to the overall population line.
+
+Finally we calculate our ICC as 1 minus the ratio of within-person variance to total variance (which is equivilent to between-person over total, like we normally see, using the idea that total variation is within + between):
+
+```{r}
+1 - sigma(m_rs)^2 / total_var
+```
+
+Compare the above ICC to just the random intercept "traditional" ICC:
+
+```{r}
+m_ri <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy, 
+              REML = TRUE)
+
+vc = arm::sigma.hat(m_ri)
+vc$sigma$Subject^2 / ( vc$sigma$Subject^2 + vc$sigma$data^2 )
+```
+
+By including random slopes, we are explaining more of the total variation between people, so the ICC goes up.
+Arugably our fancy ICC is more authentically breaking down how much is between variation (how are people different) vs. within variation (how are individual observations noise around some fundamental growth trajectory).
+
+We can compare our answers to the `performance` package's `icc()` method:
+```{r extract-icc-helper}
+# Random intercept:
+icc(m_ri)
+
+# Random slope:
+icc(m_rs)
+```
+The "Unadjusted ICC" includes the fixed effects portion of the model (so the overall time trend); it is generally not preferred.
+But the `icc()` method seems to have estimated ICCs that make sense!
+
+The ICC in a longitudinal context highlights the stability or consistency of individuals’ scores across measurement occasions around some latent growth trajectory.
+A high ICC indicates that most of the variability in the outcome lies between individuals, implying the measures will be close to the true curves; a low ICC means outcomes fluctuate more within individuals around their latient growth curves across time points.
+
+
+## Building a growth model
+
+We next walk through the steps for building a set of growth models.
+
+*Start unconditional.*
+To start building a longitudinal growth model, start with an unconditional model, i.e., don't include any level-1 or level-2 predictors (other than your time variable).
+Singer & Willett (2003) call this the "unconditional means model."
+This base model will provide useful empirical evidence for determining a proper specification of the individual growth equation and also give you baseline statistics for evaluating more complicated level-2 models.
+
+*Calculate ICC.*
+Next calculate ICC as described above to get a sense of whether there is much to explain in terms of between-person variation.
+If most of the variance is between-persons in the random intercept (level-2), then you'll use person-level predictors to reduce that variance (i.e., account for inter-person differences).
+If most of the variance is within-person (level-1 residual variance), you'll need time-level predictors to reduce that variance (i.e. account for intra-person differences)
+
+You might also tinker with the form of your model at this point, e.g., deciding to move to a quadratic growth model or some other functional form.
+
+*Sequentially add predictors.* 
+Once you have your baseline model, you can start adding predictors.
+
+Time-invariant predictors always go into the level-2 (subject level) model.
+Time-varying predictors, by contrast, must appear in the level-1 individual growth model; this is enforced by the time-specific subscript *t*, which can only appear in level-1.
+
+Time-varying predictors can have information for both level 1 and level 2 (consider that some predictors might generally be high, but vary, for one person and generally be low, but vary, for another person).
+You can explicitly build a level-2 covariate by group averaging a level 1 covariate, and then build a "pure" level-1 covariate by subtracting the group means from the original predictor.
+This is group mean centering to achieve a between vs within decomposition, as we have discussed before.
+
+If you are trying to explain _growth_, you will want to interact your level 2 predictor with the time variable.
+Just including it without interactions will explain the overall level of outcome only.
+
+Although the order in which you add your predictors predictors (in a series of successive models) may not ultimately matter, general practice is to add level-2 (time-invariant) predictors first.
+
+You could, in principle, have random slopes for some of your time varying (level-1) predictors, allowing their effects to vary across people.
+Use this approach with caution: if you have only a few measurement points per person, you will not have much ability to estimate many variance components.
+Generally resist the temptation to automatically allow the effects of time-varying predictors to vary at level-2 unless you have a good reason, and enough data, to do so.
+
+### How inclusion of predictors affect variance components
+
+As with all multilevel models, the level of the predictor dictates which variance component it seeks to describe: Level-2 describes level-2 variances and Level-1 describes level-1 variances.
+
+This means, when we include time-invariant (level 2) predictors:
+
+1.  the level-1 variance component, $\sigma^2_e$, remains pretty stable because time-invariant predictors cannot explain any within-person variation
+
+2.  the level-2 variance components, $\tau_{00}$ can decrease if the time-invariant predictors explain some of the between-person variation in initial status.  If you interact the predictor with time, you could see a reduction in $\tau_{11}$ if the predictor indeed is able to explain differences in the growth rates.
 
 When we include time-varying predictors:
 
-1.  both level-1 and level-2 variance components might be affected because time-varying predictors vary both within a person and between people
+1.  both level-1 and level-2 variance components might be affected because time-varying predictors can vary both within a person and between people.  If you have group-mean centered your level 1 predictor, the level 2 variance should be stable.
 
-2.  we can interpret the resulting decrease in the level-1 variance component as amount of variation in the outcome explained by the time-varying predictors; however, it isn't meaningful to interpret subsequent changes in level-2 variance components because adding the time-varying predictor changes the meaning of the individual growth parameters, which consequently alters the meaning of the level-2 variances, so it doesn't make sense to compare the magnitude of these level-2 variances across successive models.
+2.  we can interpret the resulting decrease in the level-1 variance component as amount of variation in the outcome explained by the time-varying predictors; however, it isn't meaningful to interpret subsequent changes in level-2 variance components because adding the time-varying predictor changes the meaning of the individual growth parameters, which consequently alters the meaning of the level-2 variances. This means it does not make sense to compare the magnitude of these level-2 variances across successive models.
+
+Level-1 predictors make interpreting longitudinal growth models very, very confusing.  You are looking at growth beyond that which is explained by possible changes over time of the level-1 predictors!  Use them with care.
+
 
 ## Additional Resources
 
--   [https://books.google.com/books?i d=PpnA1M8VwR8C&pg=PA168&lpg=PA168&dq=longitudinal+data+analysis+level1+level2+predictors&source=bl&ots=N4p8yFdyuL&sig=wWjmaEeqakD040s4B9-QquJF1eE&hl=en&sa=X&ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&q=longitudinal%20data%20analysis%20level1%20level2%20predictors&f=false](https://books.google.com/books?i d=PpnA1M8VwR8C&pg=PA168&lpg=PA168&dq=longitudinal+data+analysis+level1+level2+predictors&source=bl&ots=N4p8yFdyuL&sig=wWjmaEeqakD040s4B9-QquJF1eE&hl=en&sa=X&ved=0CCwQ6AEwAWoVChMI5ZLsjKDjyAIVzB0-Ch1s6wGV#v=onepage&q=longitudinal%20data%20analysis%20level1%20level2%20predictors&f=false)
+- [Judith Singer and John Willett, Applied Longitudinal Data Analysis: Modeling Change and Event Occurrence](https://academic.oup.com/book/41753?login=false)
 
--   <http://jonathantemplin.com/files/mlm/mlm12uga/mlm12uga_section06.pdf>
+- [Lesa Hoﬀman, ”Multilevel Models for Longitudinal and Repeated Measures Data”](https://www.youtube.com/playlist?list=PLqK8c2KO4db7lIRvWelSv4FC6dfo_ublX) (A YouTube video)
 
--   <http://www.lesahoffman.com/944/944_Lecture07_Time-Invariant.pdf>
+- [Jonathan Templin, ”Time-Varying Predictors”, Longitudinal Data Analysis Workshop](https://www.lesahoffman.com/PSQF7375_AdvLong_2023/PSQF7375_AdvLong_Lecture5_Time-Varying_Change.pdf)

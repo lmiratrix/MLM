@@ -8,7 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 ```{r setup_long, include=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lme4)
@@ -44,8 +43,8 @@ Our modeling approach has two key ideas.
 The first is to let each year have its own mean.
 The second is to then "tilt" our curves to fit each student as best we can.
 
-
 ## A nonparametric growth model
+
 For the first idea, we make each age a factor, and then fit our model:
 
 ```{r,  message=FALSE}
@@ -72,11 +71,15 @@ ggplot(newdata, aes(age_fac, ATTIT, group=ID)) +
        y ="Attitude towards deviance") 
 ```
 
-## Adding random slopes
-Our model does not allow for individual trajectories for each student, however.
+The problem with this model is that it does not allow for individual trajectories for each student.
+All the individual kids all grow exactly the same, which might not be in line with what the data would actually show.
 We are only allowing for an intercept shift.
-This is where the trick comes in: we are going to let each student have their own random slope for growth rate, which will "tilt" our curve for each student.
-We do this by having a random slope on the _continuous_ age variable, even though our fixed effects are on the _factor_ age variable.
+We want to extend this model so that each student can have their own growth trajectory; we do this next.
+
+## Adding random slopes
+
+Even though we have fixed effects for growth, we can still let each student have their own random slope for growth rate, which will "tilt" our nonparameteric curve for each student.
+We do this by having a random slope on the *continuous* age variable, even though our fixed effects are on the *factor* age variable.
 We center age around the beginning of the study, so our random intercepts correspond to ATTIT at age 11.
 
 ```{r}
@@ -99,12 +102,14 @@ smp_dat <- nys1 %>% filter( ID %in% smp ) %>%
 ```
 
 Each student is five rows of data, sometimes with missing values due to the `complete()` method from above:
+
 ```{r}
 filter( smp_dat, ID == 52 ) %>%
   dplyr::select( ID, age, age_fac, age_c, ATTIT )
 ```
 
 We next predict the values for each student and plot those predicted values:
+
 ```{r, fig.width = 5, fig.height = 4}
 smp_dat$pred <- predict(M1, newdata=smp_dat)
 
@@ -121,7 +126,8 @@ ggplot(smp_dat, aes(age, pred)) +
   geom_line( data = newdata, col="red", linewidth=1 )
 ```
 
-Note how all our students have the same _shape_ of our overall trajectory, but some are slightly steeper and some more shallow.  This allows us to have a shared shape that we can shift (random intercept) and tilt (random slope) to fit the actual data.
+Note how all our students have the same *shape* of our overall trajectory, but some are slightly steeper and some more shallow.
+This allows us to have a shared shape that we can shift (random intercept) and tilt (random slope) to fit the actual data.
 
 Compare our trajectories to the measured values:
 
@@ -137,10 +143,52 @@ ggplot(smp_dat, aes(age, ATTIT)) +
     geom_line( data = newdata, col="red", lty=2 )
 ```
 
-We can see how the latent curves are trying to get close to the observed data for each student. Our fit seems reasonable, but not perfect.
+We can see how the latent curves are trying to get close to the observed data for each student.
+Our fit seems reasonable, but not perfect.
+
+## And the math?
+
+Writing the math can be tricky for this model.
+We do not have an intercept anymore, but instead have a different fixed effect for each time point.
+
+We could write our level 1 model with those individual fixed effects for each time point, and a linear growth on top of it:
+
+*Level 1:* We have for individual $i$ at time $t$: 
+
+$$ Y_{ti} = \beta_{t} + \beta_{0i} + \beta_{1i} ( age_{ti} - L ) + \epsilon_{ti} $$
+The $\beta_{t}$ here are the fixed effects for each time point (age).
+
+*Level 2:* We can then write for level 2 (assuming we have some individual level covariate $X_i$):
+
+$$
+\begin{align*}
+\beta_{0i} &= \gamma_{01} X_i + u_{0i} \\
+\beta_{1i} &= \gamma_{11} X_i + u_{1i}
+\end{align*}
+$$
+Note we do not have any $\gamma_{00}$ or $\gamma_{10}$---this is because our population curve is captured by the $\beta_t, t = 1, \ldots, 5$.
+In other words, the growth curve is relative growth around the fixed effects, and is implicitly zero-centered.
+
+
+<!--As an alternate, we could also try to write the model as:
+
+$$ Y_{ti} = \beta_{ti} + \epsilon_{ti} $$
+Now we are having fixed effects for each time point, but we are allowing them to vary by student, hence the additional $i$ subscript.
+We then need to specify what the $\beta_{ti}$, for $t = 1, \ldots, 5$, are.
+
+*Level 2:* We can then write for level 2 (assuming we have some individual level covariate $X_i$):
+$$
+\begin{align*}
+\beta_{0i} &= \gamma_{00} + u_{0i} \\
+\beta_{1i} &= \gamma_{10} + u_{0i} + u_{1i} \\
+\beta_{2i} &= \gamma_{20} + \gamma_{21} X
+\\
+\beta_{3i} &= \gamma_{30} + \gamma_{31} X
+
+ -->
 
 ## Conclusion
-Hopefully this tool is useful for examining how different waves of data may be different from one another.
-For example, if COVID happened in the middle of your study, you might expect a big shift in the data.  This model allows you to model that shift while still allowing for different individual growth trajectories over time.
 
-
+Hopefully this tool of a nonparameteric curve is useful for examining how different waves of data may be different from one another.
+For example, if COVID happened in the middle of your study, you might expect a big shift in the data.
+This model allows you to model that shift while still allowing for different individual growth trajectories over time.

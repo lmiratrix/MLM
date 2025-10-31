@@ -1,12 +1,10 @@
 ---
 title: "Intro to R Markdown"
-author: "Luke Miratrix"
+author: "Lily Bliznashka & Luke Miratrix"
 editor: 
   markdown: 
     wrap: sentence
 ---
-
-<!----- Above this comment (this is what an R Markdown comment looks like) is the header of your document. You can specify a lot of options up there. The most important ones are the title of your document, the author, and the output format. This document outputs to a .pdf. To do this, you need to have LaTeX installed on your computer. You'll want to either install a copy of LaTeX or output your document as an html_document or word_document. You should open this document in R Studio. To compile the document, click on the button that says 'Knit'  ----->
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -18,7 +16,6 @@ knitr::opts_chunk$set(echo = TRUE,
 options(list(dplyr.summarise.inform = FALSE))
 theme_set( theme_classic() )
 ```
-
 
 ## Overview
 
@@ -43,11 +40,12 @@ output: pdf_document
 ---
 ```
 
-A header can contain more or less information, as you see fit.
+You can specify a lot of options in a header.
+The most important ones are the title of your document, the author, and the output format.
 Your computer needs to have a copy of `LaTex` installed in order to output .pdf documents.
 If you don't, you should change `output: pdf_document` to `output: html_document` or `output: word_document`.
 
-You identify sections of the document using hashtags; more hashtags indicate less important sections.
+In the body of your document, you identify sections of the document using hashtags; more hashtags indicate less important sections.
 
 For example, this:
 
