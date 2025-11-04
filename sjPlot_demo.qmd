@@ -1,0 +1,103 @@
+---
+title: "Using sjPlot to plot models"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+library(lme4)
+library(sjPlot)
+library(ggeffects)
+library(tibble)
+library(dplyr)
+library( tidyverse )
+```
+
+An alternative tool for making plots of various models is to use the `sjPlot` package. Below are some examples of how to use `sjPlot` to visualize mixed-effects models fitted with `lme4`.
+
+We first fit a few models to some fake data:
+
+```{r simulate-models, include=FALSE}
+set.seed(123)
+df <- tibble(
+  cluster = rep(1:50, each = 10),
+  treatment = rbinom(500, 1, 0.5),
+  cov1 = rnorm(500),
+  female = rbinom(500, 1, 0.5),
+  SPED = rbinom(500, 1, 0.2),
+  Essay = rnorm(500, 70, 10),
+  Y = rnorm(500)
+) |> 
+  mutate(
+    Y = 1 + 0.5 * treatment + 0.3 * cov1 + 0.4 * treatment * cov1 + rnorm(500),
+    cluster = factor(cluster),
+    female = factor(female)
+  )
+```
+
+```{r}
+head( df )
+
+m1 <- lmer(Y ~ treatment + (1 | cluster), data = df)
+m2 <- lmer(Y ~ treatment + cov1 + (1 | cluster), data = df)
+m3 <- lmer(Y ~ treatment * cov1 + (1 | cluster), data = df)
+```
+
+We next look at some of the characteristics of these models and data, using `sjPlot`. We load the library:
+
+```{r}
+library(sjPlot)
+```
+
+Now off we go!
+
+## Frequency Plot for Binary Variable
+
+```{r plot-sped}
+plot_frq(df$SPED)
+```
+
+## Boxplot by Group
+
+`sjPlot` has some general data viz stuff:
+
+```{r plot-essay-by-female}
+plot_grpfrq(var.cnt = df$Essay, var.grp = df$female, type = "box")
+```
+
+## Fixed Effects Plot
+
+Coefficent plots (see prior chapter):
+
+```{r fixed-effects}
+plot_model(m3, type = "est")
+```
+
+## Marginal Effects (Main Effects)
+
+```{r marginal-effects}
+plot_model(m2, type = "eff", terms = c("cov1", "treatment"))
+```
+
+## Interaction Effects Plot
+
+```{r interaction-effects}
+plot_model(m3, type = "int", terms = c("cov1", "treatment"))
+```
+
+## Random Slopes Plot
+
+```{r random-slopes}
+plot_model(m3, type = "re", sort.est = TRUE) 
+```
+
+## Predicted Values by Covariate
+
+```{r predicted-cov1}
+plot_model(m3, type = "pred", terms = "cov1")
+```
+
+## ggeffects Plot of Marginal Effects
+
+```{r ggeffects-plot}
+plot(ggpredict(m3, terms = c("cov1", "treatment")))
+```
