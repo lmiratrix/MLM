@@ -4,7 +4,7 @@ project:
 book:
   title: "Resources for S043/Stat151: Multilevel and Longitudinal Models"
   author: "Luke Miratrix and Friends"
-  date: "09/30/2023"
+  date: "12/1/2025"
   chapters:
     - index.qmd
     - self_assess.qmd

@@ -3,7 +3,7 @@
 # and installs any that are not currently installed.  Good to run
 # before trying to render the book on a local machine.
 
-
+library( tidyverse )
 
 # List all qmd files
 qmd_files <- list.files(path = ".", pattern = "\\.qmd$", recursive = TRUE)
