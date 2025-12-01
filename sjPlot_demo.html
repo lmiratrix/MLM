@@ -670,21 +670,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> df<span class="sc">$</span>Essay, <span class="at">var.grp =</span> df<span class="sc">$</span>female, <span class="at">type =</span> <span class="st">"box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the sjPlot package.
-  Please report the issue at &lt;https://github.com/strengejacke/sjPlot/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Ignoring unknown labels:
 • colour : "female"</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
+Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
 Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
 Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
 Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
@@ -703,13 +694,7 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <h2 data-number="17.3" class="anchored" data-anchor-id="fixed-effects-plot"><span class="header-section-number">17.3</span> Fixed Effects Plot</h2>
 <p>Coefficent plots (see prior chapter):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-ℹ The deprecated feature was likely used in the sjPlot package.
-  Please report the issue at &lt;https://github.com/strengejacke/sjPlot/issues&gt;.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -722,7 +707,7 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <section id="marginal-effects-main-effects" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="marginal-effects-main-effects"><span class="header-section-number">17.4</span> Marginal Effects (Main Effects)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m2, <span class="at">type =</span> <span class="st">"eff"</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m2, <span class="at">type =</span> <span class="st">"eff"</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -735,7 +720,7 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <section id="interaction-effects-plot" class="level2" data-number="17.5">
 <h2 data-number="17.5" class="anchored" data-anchor-id="interaction-effects-plot"><span class="header-section-number">17.5</span> Interaction Effects Plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"int"</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"int"</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -748,9 +733,15 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <section id="random-slopes-plot" class="level2" data-number="17.6">
 <h2 data-number="17.6" class="anchored" data-anchor-id="random-slopes-plot"><span class="header-section-number">17.6</span> Random Slopes Plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"re"</span>, <span class="at">sort.est =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"re"</span>, <span class="at">sort.est =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Sorting each group of random effects ('sort.all') is not possible when 'facets = TRUE'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the sjPlot package.
+  Please report the issue at &lt;https://github.com/strengejacke/sjPlot/issues&gt;.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -764,7 +755,7 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <section id="predicted-values-by-covariate" class="level2" data-number="17.7">
 <h2 data-number="17.7" class="anchored" data-anchor-id="predicted-values-by-covariate"><span class="header-section-number">17.7</span> Predicted Values by Covariate</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"pred"</span>, <span class="at">terms =</span> <span class="st">"cov1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m3, <span class="at">type =</span> <span class="st">"pred"</span>, <span class="at">terms =</span> <span class="st">"cov1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -777,7 +768,7 @@ Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></
 <section id="ggeffects-plot-of-marginal-effects" class="level2" data-number="17.8">
 <h2 data-number="17.8" class="anchored" data-anchor-id="ggeffects-plot-of-marginal-effects"><span class="header-section-number">17.8</span> ggeffects Plot of Marginal Effects</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(m3, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(m3, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"cov1"</span>, <span class="st">"treatment"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

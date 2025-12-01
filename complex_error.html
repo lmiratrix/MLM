@@ -1092,8 +1092,8 @@ Random effects:
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
 (Intercept) 0.51024132 (Intr)
-AGE         0.05038614 -0.98 
-Residual    0.16265429       
+AGE         0.05038613 -0.98 
+Residual    0.16265428       
 
 Fixed effects:  ATTIT ~ 1 + AGE 
                  Value  Std.Error  DF  t-value p-value
@@ -1105,7 +1105,7 @@ AGE -0.981
 
 Standardized Within-Group Residuals:
         Min          Q1         Med          Q3         Max 
--2.87852414 -0.55971196 -0.07521191  0.57495075  3.45648134 
+-2.87852421 -0.55971197 -0.07521191  0.57495076  3.45648135 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1153,27 +1153,27 @@ Random effects:
  Formula: ~AGE | ID
  Structure: General positive-definite, Log-Cholesky parametrization
             StdDev     Corr  
-(Intercept) 0.57693602 (Intr)
-AGE         0.05431367 -0.979
-Residual    0.14054184       
+(Intercept) 0.57693477 (Intr)
+AGE         0.05431359 -0.979
+Residual    0.14054178       
 
 Variance function:
  Structure: Different standard deviations per stratum
  Formula: ~1 | agefac 
  Parameter estimates:
        11        12        13        14        15 
-1.0000000 1.1956071 1.3095864 1.1255177 0.9802311 
+1.0000000 1.1956077 1.3095863 1.1255204 0.9802346 
 Fixed effects:  ATTIT ~ AGE 
                  Value  Std.Error  DF   t-value p-value
-(Intercept) -0.4929012 0.05715889 839 -8.623351       0
-AGE          0.0631404 0.00483385 839 13.062122       0
+(Intercept) -0.4929012 0.05715886 839 -8.623357       0
+AGE          0.0631404 0.00483385 839 13.062128       0
  Correlation: 
     (Intr)
 AGE -0.981
 
 Standardized Within-Group Residuals:
-       Min         Q1        Med         Q3        Max 
--2.9163540 -0.5498217 -0.0758348  0.5482942  3.2370312 
+        Min          Q1         Med          Q3         Max 
+-2.91635242 -0.54982114 -0.07583457  0.54829526  3.23703249 
 
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
@@ -1188,10 +1188,10 @@ Number of Groups: 239 </code></pre>
 <pre><code>ID 9 
 Marginal variance covariance matrix
          1        2        3        4        5
-1 0.034915 0.016947 0.018731 0.020516 0.022300
+1 0.034915 0.016947 0.018731 0.020515 0.022300
 2 0.016947 0.049916 0.026415 0.031150 0.035884
 3 0.018731 0.026415 0.067975 0.041784 0.049468
-4 0.020516 0.031150 0.041784 0.077440 0.063052
+4 0.020515 0.031150 0.041784 0.077440 0.063052
 5 0.022300 0.035884 0.049468 0.063052 0.095615
   Standard Deviations: 0.18685 0.22342 0.26072 0.27828 0.30922 </code></pre>
 </div>
@@ -1201,11 +1201,11 @@ Marginal variance covariance matrix
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(myVarCov[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1         2         3         4         5
-1 1.0000000 0.4059446 0.3844935 0.3945453 0.3859525
-2 0.4059446 1.0000000 0.4534860 0.5010159 0.5194173
-3 0.3844935 0.4534860 1.0000000 0.5759089 0.6136046
-4 0.3945453 0.5010159 0.5759089 1.0000000 0.7327497
-5 0.3859525 0.5194173 0.6136046 0.7327497 1.0000000</code></pre>
+1 1.0000000 0.4059437 0.3844931 0.3945449 0.3859525
+2 0.4059437 1.0000000 0.4534856 0.5010152 0.5194168
+3 0.3844931 0.4534856 1.0000000 0.5759082 0.6136041
+4 0.3945449 0.5010152 0.5759082 1.0000000 0.7327484
+5 0.3859525 0.5194168 0.6136041 0.7327484 1.0000000</code></pre>
 </div>
 </div>
 <p>No amount of squinting will show the structure in the original covariance matrix. But when you convert to a correlation matrix, you can again squint and begin to see the linear structures in its diagonal and off-diagonal elements. The same comment as above still applies: in practice, it’s much easier to think of things in terms of the hierarchical model, and only read the diagonals of the covariance matrix.</p>
@@ -1251,12 +1251,12 @@ Variance function:
  Formula: ~1 | agefac 
  Parameter estimates:
       11       12       13       14       15 
-1.000000 1.118479 1.414269 1.522510 1.560074 
+1.000000 1.118479 1.414270 1.522511 1.560072 
 
 Coefficients:
                  Value  Std.Error   t-value p-value
-(Intercept) -0.4557090 0.05465564 -8.337822       0
-AGE          0.0597274 0.00458344 13.031145       0
+(Intercept) -0.4557089 0.05465559 -8.337827       0
+AGE          0.0597274 0.00458343 13.031155       0
 
  Correlation: 
     (Intr)
@@ -1264,7 +1264,7 @@ AGE -0.979
 
 Standardized residuals:
          Min           Q1          Med           Q3          Max 
--1.482606297 -0.809004080 -0.006791942  0.840804584  4.082258054 
+-1.482607775 -0.809004770 -0.006791798  0.840804688  4.082257849 
 
 Residual standard error: 0.1903187 
 Degrees of freedom: 1079 total; 1077 residual</code></pre>
@@ -1279,8 +1279,8 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
          [,1]     [,2]     [,3]     [,4]     [,5]
 [1,] 0.036221 0.018541 0.019071 0.024335 0.026466
 [2,] 0.018541 0.045313 0.029251 0.026924 0.027989
-[3,] 0.019071 0.029251 0.072448 0.051703 0.047736
-[4,] 0.024335 0.026924 0.051703 0.083962 0.065764
+[3,] 0.019071 0.029251 0.072448 0.051704 0.047736
+[4,] 0.024335 0.026924 0.051704 0.083962 0.065764
 [5,] 0.026466 0.027989 0.047736 0.065764 0.088156
   Standard Deviations: 0.19032 0.21287 0.26916 0.28976 0.29691 </code></pre>
 </div>

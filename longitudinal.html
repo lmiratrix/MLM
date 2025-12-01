@@ -818,10 +818,10 @@ deviance = -350.1 </code></pre>
 <p><span class="math display">\[ Y_{ti} = \beta_{t} + \beta_{0i} + \beta_{1i} ( age_{ti} - L ) + \epsilon_{ti} \]</span> The <span class="math inline">\(\beta_{t}\)</span> here are the fixed effects for each time point (age).</p>
 <p><em>Level 2:</em> We can then write for level 2 (assuming we have some individual level covariate <span class="math inline">\(X_i\)</span>):</p>
 <p><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \beta_{0i} &amp;= \gamma_{01} X_i + u_{0i} \\
 \beta_{1i} &amp;= \gamma_{11} X_i + u_{1i}
-\end{align*}
+\end{aligned}
 \]</span> Note we do not have any <span class="math inline">\(\gamma_{00}\)</span> or <span class="math inline">\(\gamma_{10}\)</span>—this is because our population curve is captured by the <span class="math inline">\(\beta_t, t = 1, \ldots, 5\)</span>. In other words, the growth curve is relative growth around the fixed effects, and is implicitly zero-centered.</p>
 <!--As an alternate, we could also try to write the model as:
 
@@ -831,13 +831,14 @@ We then need to specify what the $\beta_{ti}$, for $t = 1, \ldots, 5$, are.
 
 *Level 2:* We can then write for level 2 (assuming we have some individual level covariate $X_i$):
 $$
-\begin{align*}
+\begin{aligned}
 \beta_{0i} &= \gamma_{00} + u_{0i} \\
 \beta_{1i} &= \gamma_{10} + u_{0i} + u_{1i} \\
 \beta_{2i} &= \gamma_{20} + \gamma_{21} X
 \\
 \beta_{3i} &= \gamma_{30} + \gamma_{31} X
-
+\end{aligned}
+$$
  -->
 </section>
 <section id="conclusion" class="level2" data-number="39.4">

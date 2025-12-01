@@ -819,7 +819,7 @@ prob = \frac{ odds }{ 1 + odds } = \frac{ \exp( \eta ) }{ 1 + \exp(\eta)} = \fra
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>( <span class="fu">exp</span>(REs), <span class="fu">c</span>( <span class="fl">0.05</span>, <span class="fl">0.95</span> ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     5%     95% 
-  0.291 469.148 </code></pre>
+  0.291 469.139 </code></pre>
 </div>
 </div>
 <p>This means the odds of detachment for some patients (the 5% least likely to have detachment) is 30% of the baseline detachment. For a 95th percentile patient, we have an odds multiplier of around 470—they are much, much more likely to have detachment at any moment in time. This is why the curves for the patients in the main lecture are so different.</p>
@@ -989,9 +989,9 @@ y = Poisson(e^{0.5x})
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.375 <sup>***</sup></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.377 <sup>***</sup></td>
 <td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.029</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-0.074 <sup></sup></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-0.072 <sup></sup></td>
 <td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.045</td>
 </tr>
 <tr class="even">
@@ -1008,7 +1008,7 @@ y = Poisson(e^{0.5x})
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
-<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.631 / 0.631</td>
+<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.631 / 0.630</td>
 <td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.906</td>
 </tr>
 <tr class="odd">

@@ -774,10 +774,11 @@ sector       2.100837  0.3411243  6.158567</code></pre>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">test =</span> <span class="st">"Satterthwaite"</span>)</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>club</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       Coef. Estimate    SE t-stat d.f. (Satt) p-val (Satt) Sig.
- (Intercept)    11.72 0.226  51.86        88.9       &lt;0.001  ***
-         ses     2.37 0.119  19.89       142.8       &lt;0.001  ***
-      sector     2.10 0.347   6.05       149.5       &lt;0.001  ***</code></pre>
+<pre><code>Alternative hypothesis: two-sided 
+       Coef. Estimate    SE Null value t-stat d.f. (Satt) p-val (Satt) Sig.
+ (Intercept)    11.72 0.226          0  51.86        88.9       &lt;0.001  ***
+         ses     2.37 0.119          0  19.89       142.8       &lt;0.001  ***
+      sector     2.10 0.347          0   6.05       149.5       &lt;0.001  ***</code></pre>
 </div>
 </div>
 <p>The <code>clubSandwich</code> package works for multi-level models fit with either <code>lme4::lmer()</code> or <code>nlme::lme()</code>. Note that <code>coef_test</code> is <em>not</em> the same as <code>coeftest</code>. The <code>vcov = "CR1S"</code> replicates the Stata SEs (or so it has been speculated, and assuming they use the same correction as for panel data models).</p>
