@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./fixed_effects.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,7 +132,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -648,7 +651,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>One way forward is to aggregate our HS&amp;B data and merge it into our school-level data, and then analyze the result.</p>
 <p>We aggregate as so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>col.dat <span class="ot">=</span> dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( id ) <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>col.dat <span class="ot">=</span> dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( id ) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>( <span class="at">per.fem =</span> <span class="fu">mean</span>(female),</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">per.min =</span> <span class="fu">mean</span>(minority),</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean.ses =</span> <span class="fu">mean</span>(ses),</span>
@@ -657,7 +660,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># combine our school-level variables (ours and theirs) into one data.frame</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sdat <span class="ot">=</span> <span class="fu">merge</span>( sdat, col.dat, <span class="at">by=</span><span class="st">"id"</span>, <span class="at">all=</span><span class="cn">TRUE</span> )</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( sdat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( sdat )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    id size sector pracad disclim himinty meanses   per.fem    per.min
 1 1224  842      0   0.35   1.597       0  -0.428 0.5957447 0.08510638
@@ -677,10 +680,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can now answer our research question with a school-level regression with <code>lm_robust()</code>, that calculates heteroskedastic-robust standard errors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( estimatr )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( estimatr )</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Magg <span class="ot">=</span> <span class="fu">lm_robust</span>( mean.ach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> mean.ses, <span class="at">data=</span>sdat )</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>( Magg )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>( Magg )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         term  estimate std.error statistic       p.value   conf.low conf.high
 1 (Intercept) 12.119496 0.1890070 64.121943 1.628760e-114 11.7461711 12.492820
@@ -700,8 +703,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instead of using our aggregated data, we can merge our <em>school-level</em> variables into the student data and run a student level regression:</p>
 <p>The merge brings in level 2 variables, repeating them for each student in a school:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">merge</span>( dat, sdat, <span class="at">by=</span><span class="st">"id"</span> )</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">merge</span>( dat, sdat, <span class="at">by=</span><span class="st">"id"</span> )</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    id minority female    ses mathach size sector pracad disclim himinty
 1 1224        0      1 -1.528   5.876  842      0   0.35   1.597       0
@@ -721,9 +724,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>If we run our regression without handling our clustering, we get fine point estimates, but our standard errors are wrong:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Mstud <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses, <span class="at">data =</span> dat )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Mstud <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses, <span class="at">data =</span> dat )</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>( Mstud ) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -763,11 +766,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The standard errors for the above regression, however, is <strong>wrong</strong>: we are not taking the clustering into account. We can fix this with cluster-robust standard errors. The <code>lm_robust()</code> method comes to the rescue:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Mstud <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Mstud <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> dat,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">clusters =</span> dat<span class="sc">$</span>id )</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>( Mstud ) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -836,12 +839,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For our research question, we see that Catholic schools score about 2 points higher than Public, on average, beyond individual level SES.</p>
 <p>We can further control for school mean SES, like with aggregation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Mstud2 <span class="ot">=</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses <span class="sc">+</span> meanses, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Mstud2 <span class="ot">=</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sector <span class="sc">+</span> ses <span class="sc">+</span> meanses, </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> dat,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>( Mstud2 ) </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>rs <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits=</span><span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -920,17 +923,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The contextual value of school mean SES is explaining some of the difference between Catholic and public schools, here: note the reduction of the coefficient for <code>sector</code>. That being said, and still accounting for clustering, <code>sector</code> is still quite significant. The <code>lm_robust()</code> function is also giving us confidence intevals, which is nice: we see anything between 0.7 and 1.9 is possible.</p>
 <p>Relative to the overall standard deviation of math achievement we have:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sd_math <span class="ot">=</span> <span class="fu">sd</span>( dat<span class="sc">$</span>mathach )</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sd_math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sd_math <span class="ot">=</span> <span class="fu">sd</span>( dat<span class="sc">$</span>mathach )</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sd_math</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.878246</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rs <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rs <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">estimate =</span> estimate <span class="sc">/</span> sd_math,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">std.error =</span> std.error <span class="sc">/</span> sd_math,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">conf.low =</span> conf.low <span class="sc">/</span> sd_math,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">conf.high =</span> conf.high <span class="sc">/</span> sd_math ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits =</span> <span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( <span class="at">digits =</span> <span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1016,33 +1019,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Fixed effects cannot be used to take into account school differences if we are interested in level 2 variables, because the fixed effects and level 2 variables are <em>co-linear</em>. Put another way, if we let each school have its own mean outcome (represented by the coefficient for a dummy variable for that school), then we can’t have a variable like <code>sector</code> to measure how Catholic schools are different from public schools, conditioned on all the school mean outcomes. There is nothing left to explain as, by construction, there are no differences in school mean outcomes once we “control for” the individual school mean outcomes via fixed effects!</p>
 <p>What R will do when you give colinear variables is drop the extra ones. Here is a mini-example fake dataset of 4 schools with 3 students in each school:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">=</span> <span class="fu">tibble</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">=</span> <span class="fu">tibble</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>),</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mathach =</span> <span class="fu">rnorm</span>( <span class="dv">12</span> ),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ses =</span> <span class="fu">rnorm</span>( <span class="dv">12</span> ),</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sector =</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span> ) )</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fake<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">as.factor</span>( fake<span class="sc">$</span>id )</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>fake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>fake</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
    id    mathach     ses sector
    &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 1      0.238  -1.88        0
- 2 1     -1.00   -1.07        0
- 3 1     -0.253  -1.11        0
- 4 2      1.39   -1.53        1
- 5 2     -0.297  -0.423       1
- 6 2      1.49   -1.34        1
- 7 3      0.829  -0.970       0
- 8 3      1.70    2.04        0
- 9 3      0.183  -0.402       0
-10 4     -0.894   0.970       1
-11 4      0.0481  0.0694      1
-12 4      0.211   2.23        1</code></pre>
+ 1 1      -0.711  0.674       0
+ 2 1       1.01   1.33        0
+ 3 1      -0.272  1.81        0
+ 4 2       1.27   0.573       1
+ 5 2      -2.53   0.0595      1
+ 6 2      -1.08   0.397       1
+ 7 3      -0.416  1.95        0
+ 8 3      -0.393  0.514       0
+ 9 3      -1.17   1.72        0
+10 4       2.32  -1.99        1
+11 4      -0.230  0.0211      1
+12 4       0.346 -0.630       1</code></pre>
 </div>
 </div>
 <p>And our regression model with fixed effects for school plus our school-level <code>ses</code> gives this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> id <span class="sc">+</span> ses <span class="sc">+</span> sector, <span class="at">data =</span> fake )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> id <span class="sc">+</span> ses <span class="sc">+</span> sector, <span class="at">data =</span> fake )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1050,7 +1053,7 @@ lm(formula = mathach ~ 0 + id + ses + sector, data = fake)
 
 Coefficients:
      id1       id2       id3       id4       ses    sector  
--0.23608   0.94439   0.88686  -0.29404   0.07542        NA  </code></pre>
+ 0.54054  -0.63667  -0.07666   0.45186  -0.41707        NA  </code></pre>
 </div>
 </div>
 <p>Note the <code>NA</code> for sector! We cannot estimate it due to colinearity, so it got dropped.</p>
@@ -1060,11 +1063,11 @@ Coefficients:
 <p>That being said, fixed effects are an excellent way to control for school differences when looking at <em>within-school relationships</em>. For example, we can ask how math relates to SES within schools, controlling for systematic differences across schools.</p>
 <p>Here is the no fixed effect regression, and the fixed effect regression:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Mstud3_noFE <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses, <span class="at">data=</span>dat )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Mstud3_noFE <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses, <span class="at">data=</span>dat )</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>id)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Mstud3 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> id, <span class="at">data=</span>dat )</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud3 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud3 ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      ses    id1224    id1288    id1296    id1308    id1317 
  2.191172 10.667255 13.244353  8.568302 15.098561 12.421003 </code></pre>
@@ -1073,10 +1076,10 @@ Coefficients:
 <p>For our fixed effect model, we will have lots of coefficients because we have a fixed effect for each school; the <code>head()</code> command is just showing us the first few. We also had to explicitly make our <code>id</code> variable a factor (categorical variable), so R doesn’t think it is a continuous covariate.</p>
 <p>For our standard errors, etc., we can further account for clustering of our residuals above and beyond what can be explained by our fixed effects (even if we subtract out the mean outcome, we might still have dependencies between students within a given school). So we use our cluster-robust standard errors as so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Mstud3_rob <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> id, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Mstud3_rob <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> id, </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data=</span>dat,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> dat<span class="sc">$</span>id )</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">tidy</span>( Mstud3_rob ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">tidy</span>( Mstud3_rob ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    term  estimate  std.error statistic       p.value  conf.low conf.high
 1    ses  2.191172 0.12984948  16.87471  1.239339e-35  1.934466  2.447878
@@ -1097,10 +1100,10 @@ Coefficients:
 <p>We have again used <code>head()</code> to just get the first lines. The whole printout would be one line per school, plus the ses coefficient!</p>
 <p>Let’s compare our three models (note the way we omit coefficients with <code>id</code> to drop our fixed effects from the table):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="st">`</span><span class="at">No FE</span><span class="st">`</span><span class="ot">=</span>Mstud3_noFE, <span class="st">`</span><span class="at">FE</span><span class="st">`</span> <span class="ot">=</span> Mstud3, <span class="st">`</span><span class="at">FE + CRVE</span><span class="st">`</span><span class="ot">=</span>Mstud3_rob ), </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">omit.coef=</span><span class="st">"id"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">include.ci =</span> <span class="cn">FALSE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">include.ci =</span> <span class="cn">FALSE</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ==================================================
@@ -1131,15 +1134,15 @@ N Clusters                              160
 <h3 data-number="36.3.3" class="anchored" data-anchor-id="bonus-interactions-with-level-2-variables-are-ok-even-with-fixed-effects"><span class="header-section-number">36.3.3</span> Bonus: Interactions with level-2 variables are OK, even with fixed effects</h3>
 <p>If we want to see if the <em>relationship</em> of math and SES is different between schools, we can get tricky like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Mstud4 <span class="ot">=</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Mstud4 <span class="ot">=</span> <span class="fu">lm_robust</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>dat,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cluster =</span> id )</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      ses    id1224    id1288    id1296    id1308    id1317 
  2.782105 10.923946 13.172496  8.819744 15.498595 12.682641 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>( <span class="fu">coef</span>( Mstud4 ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    id9359     id9397     id9508     id9550     id9586 ses:sector 
  14.763044   9.982311  13.772485  10.941590  13.973252  -1.348572 </code></pre>
@@ -1148,11 +1151,11 @@ N Clusters                              160
 <p>Note interaction terms always get pushed to the end of the list of estimates by R. So we have to pull them out with <code>tail()</code>.</p>
 <p>In the following we compare SEs to if we hadn’t used cluster robust SEs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses <span class="sc">+</span> ses<span class="sc">:</span>sector <span class="sc">+</span> id, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>dat )</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">wrong=</span>a, <span class="at">adjusted=</span>Mstud4 ), </span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">omit.coef=</span><span class="st">"id"</span>, <span class="at">single.row =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">include.ci=</span><span class="cn">FALSE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">include.ci=</span><span class="cn">FALSE</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ==================================================
@@ -1264,13 +1267,14 @@ N Clusters                       160
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

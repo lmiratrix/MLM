@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./perf_ex.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -120,7 +121,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -160,7 +161,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -666,28 +669,28 @@ window.Quarto = {
 <h2 data-number="43.1" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">43.1</span> Load the data</h2>
 <p>In the following we load the data and look at the first few lines. Lots of variables! The main ones are id (the identifier of the kid), treatment (the kind of treatment given to the school), schoolid (the identifier of the school), gender (the gender of the kid), and rn (the time variable). Our outcome is ravens (Raven’s colored progressive matrices assessment).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>kenya <span class="ot">=</span> <span class="fu">read.dta</span>( <span class="st">"data/kenya.dta"</span> )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>kenya <span class="ot">=</span> <span class="fu">read.dta</span>( <span class="st">"data/kenya.dta"</span> )</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># look at first 9 variables</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( kenya[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="dv">3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( kenya[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="dv">3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id schoolid rn relyear ravens arithmetic vmeaning dstotal age_at_time0
 1  1        2  1   -0.15     15          5       25       6         7.19
 2  1        2  2    0.14     19          7       39       8         7.19
 3  1        2  3    0.46     21          7       33       7         7.19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what times do we have?</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( kenya<span class="sc">$</span>rn ) <span class="co">#time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what times do we have?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( kenya<span class="sc">$</span>rn ) <span class="co">#time</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   1   2   3   4   5 
 546 546 546 546 546 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>id ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>id ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 546</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>schoolid) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>schoolid) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
@@ -698,9 +701,9 @@ window.Quarto = {
 <h2 data-number="43.2" class="anchored" data-anchor-id="plot-and-prep-the-data"><span class="header-section-number">43.2</span> Plot and prep the data</h2>
 <p>We can look at the data.</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>( <span class="sc">~</span> gender ) <span class="sc">+</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 114 rows containing missing values or values outside the scale range
 (`geom_line()`).</code></pre>
@@ -715,9 +718,9 @@ window.Quarto = {
 </div>
 <p>or we can wrap by school to clean up our plot:</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>( <span class="sc">~</span> schoolid ) <span class="sc">+</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 114 rows containing missing values or values outside the scale range
 (`geom_line()`).</code></pre>
@@ -732,11 +735,11 @@ window.Quarto = {
 </div>
 <p>Or we can look at a sample of 12 individual children:</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>id.sub <span class="ot">=</span> <span class="fu">sample</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>id), <span class="dv">12</span> )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>id.sub <span class="ot">=</span> <span class="fu">sample</span>( <span class="fu">unique</span>( kenya<span class="sc">$</span>id), <span class="dv">12</span> )</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ken.sub <span class="ot">=</span> <span class="fu">subset</span>( kenya, id <span class="sc">%in%</span> id.sub )</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>ken.sub, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>ravens, <span class="at">group=</span>id )  )<span class="sc">+</span> </span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>( <span class="sc">~</span> id ) <span class="sc">+</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -748,7 +751,7 @@ window.Quarto = {
 <p>We have lots of noise! But there is also a trend.</p>
 <p>Using the mosaic package we can easily calculate the progression of marginal means, and again see there is growth over time, on average:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>( ravens <span class="sc">~</span> rn, <span class="at">data=</span>kenya )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>( ravens <span class="sc">~</span> rn, <span class="at">data=</span>kenya )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'mosaic':
   method                           from   
@@ -766,20 +769,20 @@ window.Quarto = {
 <p>The above also shows that we have some missing data, more as the study progresses.</p>
 <p>We drop these missing observations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>kenya <span class="ot">=</span> <span class="fu">subset</span>( kenya, <span class="sc">!</span><span class="fu">is.na</span>( ravens ) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>( rn ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>kenya <span class="ot">=</span> <span class="fu">subset</span>( kenya, <span class="sc">!</span><span class="fu">is.na</span>( ravens ) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>( rn ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We have some treatments, which we order so control is first</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>( kenya<span class="sc">$</span>treatment )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>( kenya<span class="sc">$</span>treatment )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Factor w/ 4 levels "meat","milk",..: 1 1 1 1 1 4 4 4 4 4 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( kenya<span class="sc">$</span>treatment )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( kenya<span class="sc">$</span>treatment )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "meat"    "milk"    "calorie" "control"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>kenya<span class="sc">$</span>treatment <span class="ot">=</span> <span class="fu">relevel</span>( kenya<span class="sc">$</span>treatment, <span class="at">ref =</span> <span class="st">"control"</span> )</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( kenya<span class="sc">$</span>treatment )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>kenya<span class="sc">$</span>treatment <span class="ot">=</span> <span class="fu">relevel</span>( kenya<span class="sc">$</span>treatment, <span class="at">ref =</span> <span class="st">"control"</span> )</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>( kenya<span class="sc">$</span>treatment )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "control" "meat"    "milk"    "calorie"</code></pre>
 </div>
@@ -813,15 +816,15 @@ w_{j1}
 <section id="fit-the-model" class="level2" data-number="43.4">
 <h2 data-number="43.4" class="anchored" data-anchor-id="fit-the-model"><span class="header-section-number">43.4</span> Fit the model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lme4 )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( lme4 )</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>kenya<span class="sc">$</span>rn <span class="ot">=</span> kenya<span class="sc">$</span>rn <span class="sc">-</span> <span class="dv">1</span> <span class="co"># center by L=1</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lmer</span>( ravens <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rn <span class="sc">+</span> gender<span class="sc">*</span>rn <span class="sc">+</span> treatment<span class="sc">:</span>rn <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>rn<span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>rn<span class="sc">|</span>id<span class="sc">:</span>schoolid), </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data=</span>kenya )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data=</span>kenya )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
 Model failed to converge with max|grad| = 0.00324559 (tol = 0.002, component 1)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>( M1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>( M1 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = ravens ~ 1 + rn + gender * rn + treatment:rn + 
     (1 + rn | schoolid) + (1 + rn | id:schoolid), data = kenya)
@@ -865,9 +868,9 @@ deviance = 12496.0 </code></pre>
 </ul>
 <p>We could try to look at uncertainty on our parameters using the <code>confint( M1 )</code> command, but it turns out that it crashes for this model. This can happen, and our -0.99 correlation gives a hint as to why. Let’s first drop the random slope at the school level and then try:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>M1B <span class="ot">=</span> <span class="fu">lmer</span>( ravens <span class="sc">~</span> rn <span class="sc">+</span> gender<span class="sc">*</span>rn <span class="sc">+</span> treatment<span class="sc">:</span>rn <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>rn<span class="sc">|</span>id<span class="sc">:</span>schoolid), </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>M1B <span class="ot">=</span> <span class="fu">lmer</span>( ravens <span class="sc">~</span> rn <span class="sc">+</span> gender<span class="sc">*</span>rn <span class="sc">+</span> treatment<span class="sc">:</span>rn <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>rn<span class="sc">|</span>id<span class="sc">:</span>schoolid), </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data=</span>kenya )</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>( M1B )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>( M1B )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = ravens ~ rn + gender * rn + treatment:rn + (1 | 
     schoolid) + (1 + rn | id:schoolid), data = kenya)
@@ -891,7 +894,7 @@ number of obs: 2598, groups: id:schoolid, 546; schoolid, 12
 AIC = 12544.4, DIC = 12478
 deviance = 12498.9 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>( M1B )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>( M1B )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      2.5 %   97.5 %
 .sig01               1.1657  1.65435
@@ -914,7 +917,7 @@ rn:treatmentcalorie -0.1775  0.20453</code></pre>
 <h2 data-number="43.5" class="anchored" data-anchor-id="some-quick-plots"><span class="header-section-number">43.5</span> Some quick plots</h2>
 <p>We can look at the Empirical Bayes intercepts:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">ranef</span>( M1 )<span class="sc">$</span>schoolid<span class="sc">$</span><span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">ranef</span>( M1 )<span class="sc">$</span>schoolid<span class="sc">$</span><span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> )</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>kids <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">ranef</span>( M1 )<span class="sc">$</span>id<span class="sc">$</span><span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> )</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">resid =</span> <span class="fu">resid</span>( M1 ) )</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">=</span> <span class="fu">bind_rows</span>( <span class="at">school=</span>schools, <span class="at">child=</span>kids, <span class="at">residual=</span>resid, <span class="at">.id=</span><span class="st">"type"</span> )</span>
@@ -922,7 +925,7 @@ rn:treatmentcalorie -0.1775  0.20453</code></pre>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( resids, <span class="fu">aes</span>( <span class="at">x =</span> type, <span class="at">y =</span> resid ) ) <span class="sc">+</span></span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -934,10 +937,10 @@ rn:treatmentcalorie -0.1775  0.20453</code></pre>
 <p>This shows that the variation in occasion is much larger than kid, which is much larger than school.</p>
 <p>We can calculate all the individual growth curves and plot those:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>kenya<span class="sc">$</span>predictions <span class="ot">=</span> <span class="fu">predict</span>( M1 )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>kenya<span class="sc">$</span>predictions <span class="ot">=</span> <span class="fu">predict</span>( M1 )</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="at">data=</span>kenya, <span class="fu">aes</span>( <span class="at">x=</span>rn, <span class="at">y=</span>predictions, <span class="at">group=</span>id ) ) <span class="sc">+</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> schoolid, <span class="at">labeller =</span> label_both) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1003,13 +1006,14 @@ rn:treatmentcalorie -0.1775  0.20453</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

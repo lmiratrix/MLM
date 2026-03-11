@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,14 +90,15 @@ div.csl-indent {
 <link href="./pooling.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -140,7 +141,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -180,7 +181,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -703,8 +706,8 @@ window.Quarto = {
 <h2 data-number="35.3" class="anchored" data-anchor-id="model-syntax-removing-the-main-ses-term-vs-not"><span class="header-section-number">35.3</span> Model syntax: removing the main ses term vs not</h2>
 <p>We talked about both these two models:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id, <span class="at">data=</span>dat.ten )</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id, <span class="at">data=</span>dat.ten )</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ses     id1288     id3533     id3881     id4530     id5761     id6074 
  3.2554487 13.1149374 10.3671216 11.6441421 10.0390287 12.1419451 14.2022643 
@@ -713,8 +716,8 @@ window.Quarto = {
 ses:id5761 ses:id6074 ses:id6170 ses:id8800 ses:id9225 ses:id9347 
 -0.1474381 -1.7263610  1.5563357 -0.6873233 -0.3695565 -0.5694548 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id <span class="sc">-</span> ses, <span class="at">data=</span>dat.ten )</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M2 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> ses<span class="sc">*</span>id <span class="sc">-</span> ses, <span class="at">data=</span>dat.ten )</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M2 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    id1288     id3533     id3881     id4530     id5761     id6074     id6170 
 13.1149374 10.3671216 11.6441421 10.0390287 12.1419451 14.2022643 15.6332900 
@@ -727,7 +730,7 @@ ses:id5761 ses:id6074 ses:id6170 ses:id8800 ses:id9225 ses:id9347
 <p>Note how when we remove ses via <code>- ses</code> we gain an extra interaction term of <code>ses:id1288</code>. In M1, our <code>ses</code> coefficient is our baseline slope of school 1288. The ses interaction terms are <em>slope changes</em>.</p>
 <p>Note how if we add ses to the changes we get back all the slopes in M2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )[<span class="dv">12</span><span class="sc">:</span><span class="dv">20</span>] <span class="sc">+</span> <span class="fu">coef</span>(M1)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>( M1 )[<span class="dv">12</span><span class="sc">:</span><span class="dv">20</span>] <span class="sc">+</span> <span class="fu">coef</span>(M1)[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ses:id3533 ses:id3881 ses:id4530 ses:id5761 ses:id6074 ses:id6170 ses:id8800 
 -0.3117701  2.3907058  1.6474260  3.1080106  1.5290877  4.8117843  2.5681254 
@@ -740,13 +743,13 @@ ses:id9225 ses:id9347
 <h3 data-number="35.3.1" class="anchored" data-anchor-id="plot-our-model"><span class="header-section-number">35.3.1</span> Plot our model</h3>
 <p>To plot our model we make a dataset of the intercepts and slopes of each school. Doing this with M2 is much easier than M1, since the coefficients are exactly what we want:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">names</span>( <span class="fu">coef</span>(M2) )[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">names</span>( <span class="fu">coef</span>(M2) )[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">inter =</span> <span class="fu">coef</span>(M2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">slope =</span> <span class="fu">coef</span>(M2)[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>] )</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to fix our IDs.  :-(</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>lines<span class="sc">$</span>id <span class="ot">=</span> <span class="fu">gsub</span>( <span class="st">"id"</span>, <span class="st">""</span>, lines<span class="sc">$</span>id)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( lines )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( lines )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         id    inter      slope
 id1288 1288 13.11494  3.2554487
@@ -760,13 +763,13 @@ id6074 6074 14.20226  1.5290877</code></pre>
 <p>(The gsub “substitutes” (replaces) the string “id” with “” in all of our ids so we get back to the actual school ids. Otherwise we will not be able to connect these data to our raw students as easily.)</p>
 <p>We now plot!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( dat.ten, <span class="fu">aes</span>( ses, mathach ) ) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( dat.ten, <span class="fu">aes</span>( ses, mathach ) ) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> id, <span class="at">nrow=</span><span class="dv">2</span> ) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">size=</span><span class="fl">0.75</span>, <span class="at">alpha=</span><span class="fl">0.5</span> ) <span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>( <span class="at">data=</span>lines, <span class="fu">aes</span>( <span class="at">slope=</span>slope, </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">intercept=</span>inter ), </span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">1</span> ) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>( <span class="at">xintercept =</span> <span class="dv">0</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>( <span class="at">xintercept =</span> <span class="dv">0</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -785,9 +788,9 @@ id6074 6074 14.20226  1.5290877</code></pre>
 <h3 data-number="35.3.3" class="anchored" data-anchor-id="what-differences-if-any-are-there-between-running-a-new-linear-model-on-each-school-vs.-running-the-interacted-model-on-the-set-of-10-schools"><span class="header-section-number">35.3.3</span> What differences, if any, are there between running a new linear model on each school vs.&nbsp;running the interacted model on the set of 10 schools?</h3>
 <p>The lines would be <em>exactly</em> the same. The standard errors are different. Here is the line on just school 1288:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>s1288 <span class="ot">=</span> <span class="fu">filter</span>( dat.ten, id <span class="sc">==</span> <span class="st">"1288"</span> )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>s1288 <span class="ot">=</span> <span class="fu">filter</span>( dat.ten, id <span class="sc">==</span> <span class="st">"1288"</span> )</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>M_1288 <span class="ot">=</span> <span class="fu">lm</span>( mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ses, <span class="at">data=</span>s1288 )</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( M_1288 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( M_1288 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -811,8 +814,8 @@ F-statistic:  2.45 on 1 and 23 DF,  p-value: 0.1312</code></pre>
 </div>
 <p>The SEs will be different, however. Compare:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">=</span> <span class="fu">summary</span>( M2 )</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sum<span class="sc">$</span>coefficients[ <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">11</span> ), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">=</span> <span class="fu">summary</span>( M2 )</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sum<span class="sc">$</span>coefficients[ <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">11</span> ), ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error   t value     Pr(&gt;|t|)
 id1288     13.114937   1.291495 10.154850 9.121968e-22
@@ -895,13 +898,14 @@ Antonakis, John, Nicolas Bastardoz, and Mikko Rönkkö. 2019. <span>“On Ignori
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

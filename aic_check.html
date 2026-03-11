@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./lr_test.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,7 +132,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -624,22 +627,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this section, we briefly walk through how to find AIC, BIC, and Deviance to compare models. We have a simple multilevel dataset (we generate through a utility package, <code>blkvar</code>, that Miratrix and the C.A.R.E.S. lab has used to explore how multilevel modeling works in practice), and generate a few variables that we will use as predictors. Only the fourth variable is actually useful for prediction! Let’s see if our AIC, etc., measures identify which model is superior.</p>
 <p>To install a “working package” we use <code>devtools</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"https://github.com/lmiratrix/blkvar"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"https://github.com/lmiratrix/blkvar"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( blkvar )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( blkvar )</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">=</span> <span class="fu">generate_multilevel_data</span>( <span class="at">J =</span> <span class="dv">40</span> )</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dd )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dd )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    sid         Y0         Y1 Z       Yobs         W
-1     1  1.7596309  2.3091809 1  2.3091809  1.018444
-1.1   1  0.9473675  1.4969176 1  1.4969176  1.018444
-1.2   1  1.5897352  2.1392852 0  1.5897352  1.018444
-1.3   1  1.3973794  1.9469295 0  1.3973794  1.018444
-2     2 -0.5235175 -0.4486207 1 -0.4486207 -1.376848
-2.1   2 -1.1383334 -1.0634366 1 -1.0634366 -1.376848</code></pre>
+1     1 -1.2708384 -1.6878515 1 -1.6878515 -2.029727
+1.1   1 -0.6235435 -1.0405566 0 -0.6235435 -2.029727
+1.2   1 -0.2893901 -0.7064032 0 -0.2893901 -2.029727
+1.3   1 -0.7175480 -1.1345611 0 -0.7175480 -2.029727
+1.4   1  0.0763043 -0.3407088 0  0.0763043 -2.029727
+1.5   1 -0.2253494 -0.6423625 1 -0.6423625 -2.029727</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X1 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X1 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X2 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X3 <span class="ot">=</span> <span class="fu">rnorm</span>( <span class="fu">nrow</span>(dd) )</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>X4 <span class="ot">=</span> dd<span class="sc">$</span>Yobs <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dd))</span>
@@ -648,7 +651,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">=</span> <span class="fu">lmer</span>( Yobs <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>sid), <span class="at">data=</span>dd )</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">=</span> <span class="fu">lmer</span>( Yobs <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4 <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>sid), <span class="at">data=</span>dd )</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( arm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( arm )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: MASS</code></pre>
 </div>
@@ -666,42 +669,42 @@ Attaching package: 'MASS'</code></pre>
 arm (Version 1.14-4, built: 2024-4-1)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Working directory is /Users/lmiratrix/Dropbox/MLM Course F2025/MLM textbook</code></pre>
+<pre><code>Working directory is /Users/lmiratrix/Dropbox/courses/MLM Course F2025/MLM textbook</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + (1 | sid), data = dd)
 coef.est  coef.se 
-    0.21     0.15 
+    0.12     0.15 
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.92    
- Residual             0.64    
+ sid      (Intercept) 0.90    
+ Residual             0.66    
 ---
-number of obs: 434, groups: sid, 40
-AIC = 973.7, DIC = 963.7
-deviance = 965.7 </code></pre>
+number of obs: 364, groups: sid, 40
+AIC = 852.8, DIC = 842.8
+deviance = 844.8 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(M2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lmer(formula = Yobs ~ 1 + X1 + X2 + X3 + (1 | sid), data = dd)
             coef.est coef.se
-(Intercept)  0.22     0.15  
-X1          -0.06     0.03  
-X2           0.00     0.03  
-X3          -0.04     0.03  
+(Intercept)  0.12     0.15  
+X1           0.06     0.04  
+X2           0.08     0.04  
+X3          -0.01     0.04  
 
 Error terms:
  Groups   Name        Std.Dev.
- sid      (Intercept) 0.92    
- Residual             0.64    
+ sid      (Intercept) 0.89    
+ Residual             0.66    
 ---
-number of obs: 434, groups: sid, 40
-AIC = 989.4, DIC = 943.3
-deviance = 960.4 </code></pre>
+number of obs: 364, groups: sid, 40
+AIC = 866.8, DIC = 822.6
+deviance = 838.7 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Version:  1.39.4
 Date:     2024-07-23
@@ -710,30 +713,30 @@ Author:   Philip Leifeld (University of Manchester)
 Consider submitting praise using the praise or praise_interactive functions.
 Please cite the JSS article in your publications -- see citation("texreg").</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( M1, M2, M3 ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( M1, M2, M3 ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ======================================================
                       Model 1   Model 2    Model 3    
 ------------------------------------------------------
-(Intercept)              0.21      0.22       0.14    
+(Intercept)              0.12      0.12       0.10    
                         (0.15)    (0.15)     (0.10)   
-X1                                -0.06 *    -0.01    
-                                  (0.03)     (0.03)   
-X2                                -0.00      -0.04    
-                                  (0.03)     (0.03)   
-X3                                -0.04      -0.01    
-                                  (0.03)     (0.03)   
-X4                                            0.33 ***
-                                             (0.02)   
+X1                                 0.06       0.05    
+                                  (0.04)     (0.03)   
+X2                                 0.08 *     0.06    
+                                  (0.04)     (0.03)   
+X3                                -0.01       0.00    
+                                  (0.04)     (0.03)   
+X4                                            0.34 ***
+                                             (0.03)   
 ------------------------------------------------------
-AIC                    973.68    989.39     796.25    
-BIC                    985.90   1013.83     824.76    
-Log Likelihood        -483.84   -488.69    -391.12    
-Num. obs.              434       434        434       
+AIC                    852.85    866.80     737.32    
+BIC                    864.54    890.18     764.60    
+Log Likelihood        -423.42   -427.40    -361.66    
+Num. obs.              364       364        364       
 Num. groups: sid        40        40         40       
-Var: sid (Intercept)     0.85      0.85       0.40    
-Var: Residual            0.41      0.41       0.26    
+Var: sid (Intercept)     0.80      0.80       0.34    
+Var: Residual            0.44      0.44       0.32    
 ======================================================
 *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
 </div>
@@ -793,13 +796,14 @@ Var: Residual            0.41      0.41       0.26
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

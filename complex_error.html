@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cov_matrix_derivation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -120,7 +121,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -160,7 +161,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -696,8 +699,8 @@ window.Quarto = {
 <p>We’ll focus on the first cohort, from ages 11-15. First, let’s read the data.</p>
 <p>Note that this table is in “wide format”. That is, there is only one row for each student, with all the different observations for that student in different columns of that one row.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nyswide <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/nyswide.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyswide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nyswide <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/nyswide.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyswide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID ATTIT.11 EXPO.11 ATTIT.12 EXPO.12 ATTIT.13 EXPO.13 ATTIT.14 EXPO.14
 1  3     0.11   -0.37     0.20   -0.27     0.00   -0.37     0.00   -0.27
@@ -717,7 +720,7 @@ window.Quarto = {
 </div>
 <p>For our purposes, we want it in “long format.” The <code>pivot_longer()</code> command does this for us:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nys1.na <span class="ot">&lt;-</span> nyswide <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nys1.na <span class="ot">&lt;-</span> nyswide <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(ATTIT<span class="fl">.11</span><span class="sc">:</span>ATTIT<span class="fl">.15</span>, EXPO<span class="fl">.11</span><span class="sc">:</span>EXPO<span class="fl">.15</span>),</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"AGE"</span>),</span>
@@ -730,7 +733,7 @@ window.Quarto = {
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Make age a number</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>AGE <span class="ot">=</span> <span class="fu">as.numeric</span>(nys1<span class="sc">$</span>AGE)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( nys1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( nys1 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
      ID FEMALE MINORITY INCOME   AGE ATTIT  EXPO
@@ -745,13 +748,13 @@ window.Quarto = {
 </div>
 <p>We also need to make our age a factor so it is treated appropriately as an indicator of what wave the data was collected in.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>agefac <span class="ot">=</span> <span class="fu">as.factor</span>(nys1<span class="sc">$</span>AGE) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>agefac <span class="ot">=</span> <span class="fu">as.factor</span>(nys1<span class="sc">$</span>AGE) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Just to get a sense of the data, let’s plot each age as a boxplot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( nys1, <span class="fu">aes</span>( agefac, ATTIT ) ) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( nys1, <span class="fu">aes</span>( agefac, ATTIT ) ) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -763,11 +766,11 @@ window.Quarto = {
 <p>Note some features of the data: First, we see that ATTIT goes up over time. Second, we see the variation of points also goes up over time. This is heteroskedasticity.</p>
 <p>If we plot individual lines we have</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>AGEjit <span class="ot">=</span> <span class="fu">jitter</span>(nys1<span class="sc">$</span>AGE)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>AGEjit <span class="ot">=</span> <span class="fu">jitter</span>(nys1<span class="sc">$</span>AGE)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>ATTITjit <span class="ot">=</span> <span class="fu">jitter</span>(nys1<span class="sc">$</span>ATTIT, <span class="at">amount=</span><span class="fl">0.05</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( <span class="fu">filter</span>( nys1, <span class="fu">complete.cases</span>(nys1) ), <span class="fu">aes</span>( AGEjit, ATTITjit, <span class="at">group=</span>ID ) ) <span class="sc">+</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">alpha=</span><span class="fl">0.2</span> ) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -828,31 +831,31 @@ y_{i5}
 <p>The above provides a framework for thinking about grouped data: each group (i.e., student) is a small world with a linear prediction line and a collection of residuals around that line. Under this view, we specify a specific structure on how the residuals relate to each other. (E.g., for classic OLS we would have i.i.d. normally distributed residuals, represented as our <span class="math inline">\(\Sigma\)</span> being a diagonal matrix with <span class="math inline">\(\sigma^2\)</span> along the diagonal and 0s everywhere else). In R, once we determine what structure we want, we can fit models based on parameterized correlation matrices using the <code>lme</code> command from the <code>nlme</code> package (You may need to first call <code>install.packages("nlme")</code> to get this package), or the <code>gls</code> package.</p>
 <p>Let’s load the <code>nlme</code> package now:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Recall that all of these models include a linear term on age and an intercept (so two fixed effects and no covariate adjustment).</p>
 <section id="compound-symmetry-random-intercept-model" class="level3" data-number="52.3.1">
 <h3 data-number="52.3.1" class="anchored" data-anchor-id="compound-symmetry-random-intercept-model"><span class="header-section-number">52.3.1</span> Compound symmetry (random intercept model)</h3>
 <p>A “compound symmetry” residual covariance structure (all diagonal elements equal, all off-diagonal elements equal) is actually equivalent to a random intercepts model. Thus, there are 2 ways to get this same model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelRE <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> AGE, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelRE <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> AGE, </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modelCompSymm <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modelCompSymm <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>nys1,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">correlation=</span><span class="fu">corCompSymm</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">correlation=</span><span class="fu">corCompSymm</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For reference, using the <code>lme4</code> package we again have (we use <code>lme4::</code> in front of <code>lmer</code> to avoid loading the <code>lme4</code> package fully):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>modelRE.lme4 <span class="ot">=</span> lme4<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> AGE <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>modelRE.lme4 <span class="ot">=</span> lme4<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> AGE <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can get the correlation matrix for individuals #3:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>myVarCovs <span class="ot">=</span> <span class="fu">getVarCov</span>(modelRE,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>myVarCovs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>myVarCovs <span class="ot">=</span> <span class="fu">getVarCov</span>(modelRE,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>myVarCovs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ID 9 
 Marginal variance covariance matrix
@@ -867,7 +870,7 @@ Marginal variance covariance matrix
 </div>
 <p>If we look at an individual #5, who only has 4 timepoints we get a <span class="math inline">\(4 \times 4\)</span> matrix:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelRE,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelRE,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ID 33 
 Marginal variance covariance matrix
@@ -884,7 +887,7 @@ Marginal variance covariance matrix
 <h4 data-number="52.3.1.1" class="anchored" data-anchor-id="comparing-the-models"><span class="header-section-number">52.3.1.1</span> Comparing the models</h4>
 <p>These are two very different ways of specifying the same thing, and the parameter estimates we get out are also not the same. Compare the two summary printouts:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -914,7 +917,7 @@ Number of Groups: 239 </code></pre>
 </div>
 <p>and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelCompSymm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelCompSymm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized least squares fit by REML
   Model: ATTIT ~ AGE 
@@ -947,27 +950,27 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 </div>
 <p>These do not look very similar, do they? But wait:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelCompSymm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelCompSymm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'log Lik.' 106.4848 (df=4)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelRE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelRE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'log Lik.' 106.4848 (df=4)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelRE.lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelRE.lme4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'log Lik.' 106.4848 (df=4)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelCompSymm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelCompSymm )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -204.9696</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelRE )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelRE )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -204.9696</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelRE.lme4 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelRE.lme4 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -204.9696</code></pre>
 </div>
@@ -1013,11 +1016,11 @@ u_{ni}
 <h4 data-number="52.3.2.1" class="anchored" data-anchor-id="fitting-the-ar1-covariance-structure"><span class="header-section-number">52.3.2.1</span> Fitting the AR[1] covariance structure</h4>
 <p>To get a true AR[1] residual covariance structure, we need to leave the world of hierarchical models, and thus use the command <code>gls</code>. This is just what we’ve discussed in class. However, later on in this document, we’ll see how to add AR[1] structure on top of a hierarchical model, which is messier from a theoretical point of view, but often more useful and interpretable in practice.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>modelAR1 <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>modelAR1 <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE, </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>nys1,</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelAR1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelAR1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized least squares fit by REML
   Model: ATTIT ~ AGE 
@@ -1050,7 +1053,7 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 </div>
 <p>You have to dig around in the large amount of output to find the parameter estimates, but they are there. <code>Phi1</code> is the auto-correlation parameter. And the covariance of residuals:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelAR1,<span class="at">type=</span><span class="st">"marginal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelAR1,<span class="at">type=</span><span class="st">"marginal"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Marginal variance covariance matrix
           [,1]     [,2]     [,3]     [,4]      [,5]
@@ -1061,7 +1064,7 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 [5,] 0.0094485 0.015339 0.024901 0.040425 0.0656260
   Standard Deviations: 0.25618 0.25618 0.25618 0.25618 0.25618 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelAR1)<span class="sc">$</span>AIC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelAR1)<span class="sc">$</span>AIC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -250.4103</code></pre>
 </div>
@@ -1073,14 +1076,14 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 <h3 data-number="52.3.3" class="anchored" data-anchor-id="random-slopes"><span class="header-section-number">52.3.3</span> Random slopes</h3>
 <p>In theory, a random slopes model could be done with <code>gls</code> as well as with <code>lme</code> by building the final residual matrices as a function of the random slope parameters; in practice, it’s much more practical just to do it as a hierarchical model with <code>lme</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>modelRS <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> AGE, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>modelRS <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> AGE, </span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We have separated our fixed and random components with <code>lme()</code>. We first include a formula with only fixed effects, and then give a right-side-only formula with terms similar to what you’d put in parentheses with <code>lmer()</code> for the random effects.</p>
 <p>Our results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -1110,7 +1113,7 @@ Standardized Within-Group Residuals:
 Number of Observations: 1079
 Number of Groups: 239 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelRS,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getVarCov</span>(modelRS,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ID 9 
 Marginal variance covariance matrix
@@ -1122,7 +1125,7 @@ Marginal variance covariance matrix
 5 0.024108 0.036992 0.049876 0.062760 0.102100
   Standard Deviations: 0.19912 0.21828 0.24641 0.28084 0.31953 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRS)<span class="sc">$</span>AIC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRS)<span class="sc">$</span>AIC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -310.125</code></pre>
 </div>
@@ -1135,14 +1138,14 @@ Marginal variance covariance matrix
 <h3 data-number="52.3.4" class="anchored" data-anchor-id="random-slopes-with-heteroskedasticity"><span class="header-section-number">52.3.4</span> Random slopes with heteroskedasticity</h3>
 <p>Relaxing the homoskedasticity assumption in the random slopes model leaves us a bit in between worlds. We’re not fully into the world of GLS, because there are still random effects; but we’re not fully in the world of hierarchical models because there is structure in the residuals within groups. We’ll talk more about this compromise below; for now, let’s just do it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>modelRSH <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> AGE, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>modelRSH <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> AGE, </span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The key line is the <code>varIdent</code> line: we are saying each age factor level gets its own weight (rescaling) of the residuals—this is heteroskedasticity. In particular, the above says our residual variance will be weighted by a weight for each age factor, so each age level effectively gets its own variance. This is where these models start to get a bit exciting—we have random slopes, and then heteroskedastic residuals (homoskedastic for any given age level), all together. Our fit model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRSH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRSH)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -1182,8 +1185,8 @@ Number of Groups: 239 </code></pre>
 <p>Note how we have 5 parameter estimates for the residuals, listed under <code>agefac</code>. It appears as if we have more variation in age 13 than other ages. Age 11, the baseline, is 1.0; it is our reference scaling. These numbers are all scaling the overall residual variance parameter <span class="math inline">\(\sigma^2\)</span> of <span class="math inline">\(0.1405^2\)</span>.</p>
 <p>For looking at the covariance structure of the residuals, we use <code>getVarCov()</code> again:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>myVarCov <span class="ot">=</span> <span class="fu">getVarCov</span>(modelRSH,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>myVarCov</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>myVarCov <span class="ot">=</span> <span class="fu">getVarCov</span>(modelRSH,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>myVarCov</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ID 9 
 Marginal variance covariance matrix
@@ -1198,7 +1201,7 @@ Marginal variance covariance matrix
 </div>
 <p>We get lists of matrices back from our call. We can convert any one to a correlation matrix:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(myVarCov[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(myVarCov[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1         2         3         4         5
 1 1.0000000 0.4059437 0.3844931 0.3945449 0.3859525
@@ -1211,7 +1214,7 @@ Marginal variance covariance matrix
 <p>No amount of squinting will show the structure in the original covariance matrix. But when you convert to a correlation matrix, you can again squint and begin to see the linear structures in its diagonal and off-diagonal elements. The same comment as above still applies: in practice, it’s much easier to think of things in terms of the hierarchical model, and only read the diagonals of the covariance matrix.</p>
 <p>We can also get our AIC:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRSH)<span class="sc">$</span>AIC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelRSH)<span class="sc">$</span>AIC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -312.5801</code></pre>
 </div>
@@ -1223,13 +1226,13 @@ Marginal variance covariance matrix
 <h3 data-number="52.3.5" class="anchored" data-anchor-id="fully-unrestricted-model"><span class="header-section-number">52.3.5</span> Fully unrestricted model</h3>
 <p>OK, let’s go whole hog, and fit the unrestricted model. Again, this means leaving the world of hierarchical models and using gls.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>modelUnrestricted <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>modelUnrestricted <span class="ot">=</span> <span class="fu">gls</span>(ATTIT <span class="sc">~</span> AGE, </span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>nys1,</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">correlation=</span><span class="fu">corSymm</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID),</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelUnrestricted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelUnrestricted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized least squares fit by REML
   Model: ATTIT ~ AGE 
@@ -1272,8 +1275,8 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 </div>
 <p>And our residual structure:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>myvc <span class="ot">=</span> <span class="fu">getVarCov</span>(modelUnrestricted,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>myvc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>myvc <span class="ot">=</span> <span class="fu">getVarCov</span>(modelUnrestricted,<span class="at">type=</span><span class="st">"marginal"</span>, <span class="at">individual=</span><span class="dv">3</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>myvc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Marginal variance covariance matrix
          [,1]     [,2]     [,3]     [,4]     [,5]
@@ -1287,7 +1290,7 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 </div>
 <p>And AIC:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelUnrestricted )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelUnrestricted )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -319.262</code></pre>
 </div>
@@ -1299,7 +1302,7 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 <h2 data-number="52.4" class="anchored" data-anchor-id="having-both-ar1-and-random-slopes"><span class="header-section-number">52.4</span> Having both AR[1] and Random Slopes</h2>
 <p>Let’s look at an AR1 residual structure along with some covariates in our main model. The following has AR[1] and <em>also</em> a random intercept and slope:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>AGE11 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">11</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>AGE11 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">11</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">lmeControl</span>(<span class="at">opt=</span><span class="st">'optim'</span>);</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">lme</span>(<span class="at">fixed=</span>ATTIT <span class="sc">~</span> AGE11 <span class="sc">+</span> EXPO <span class="sc">+</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>), </span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
@@ -1307,7 +1310,7 @@ Degrees of freedom: 1079 total; 1077 residual</code></pre>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(),</span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">control =</span> ctrl )</span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -1354,10 +1357,10 @@ Number of Groups: 239 </code></pre>
 <p>In order to get this model to converge, we had to use the <code>lmeControl</code> command above; without it, the model doesn’t converge due to not reaching a max in the given number of iterations. The <code>lmeControl</code> with <code>optim</code> apparently turns up the juice so it converges without complaint.</p>
 <p>Let’s compare our fit model to the same model without AR1 correlation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>model1simple <span class="ot">=</span> <span class="fu">lme</span>(<span class="at">fixed=</span>ATTIT <span class="sc">~</span> AGE11 <span class="sc">+</span> EXPO <span class="sc">+</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>), </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>model1simple <span class="ot">=</span> <span class="fu">lme</span>(<span class="at">fixed=</span>ATTIT <span class="sc">~</span> AGE11 <span class="sc">+</span> EXPO <span class="sc">+</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>), </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>nys1,</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span> <span class="sc">+</span> AGE11<span class="sc">|</span>ID )</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">AR=</span>model1, <span class="at">noAR=</span>model1simple ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( <span class="at">AR=</span>model1, <span class="at">noAR=</span>model1simple ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =========================================
@@ -1387,7 +1390,7 @@ Num. groups: ID   239          239
 </div>
 <p>The AR1 model has a notably lower AIC and thus is significantly better:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( model1simple, model1 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( model1simple, model1 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Model df       AIC       BIC   logLik   Test  L.Ratio p-value
 model1simple     1 10 -436.8027 -387.0206 228.4014                        
@@ -1406,8 +1409,8 @@ model1           2 11 -444.2030 -389.4427 233.1015 1 vs 2 9.400292  0.0022</code
 <p>Still, as long as your focus is on location parameters such as true means or slopes, having hybrid models can be a good way to proceed. Let’s explore this by first fitting a “kitchen sink” model for this data, in which we use all available covariates; and seeing how adding heteroskedasticity, AR[1] structure, or both changes it (or doesn’t).</p>
 <p>What do we want in this “kitchen sink” model? Let’s first fit a very simple random intercept model with fixed effects for gender, minority status, “exposure”, and log(income), to see which of these covariates to focus on. We use the <code>lmerTest</code> package to get some early <span class="math inline">\(p\)</span>-values for these fixed effects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>modelKS0 <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> EXPO <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelKS0, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>modelKS0 <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(ATTIT <span class="sc">~</span> FEMALE <span class="sc">+</span> MINORITY <span class="sc">+</span> <span class="fu">log</span>(INCOME <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> EXPO <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID), <span class="at">data=</span>nys1)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelKS0, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -1440,7 +1443,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>(The <code>correlation=FALSE</code> shortens the printout.)</p>
 <p>Apparently, MINORITY and EXPO are the covariates with significant effects; minority status is correlated with a lower tolerance for deviance, while “deviant” friends are of course correlated positively with tolerance of deviance. Let’s build a few hierarchical models including these in various specifications (can you identify what models are what? Some of these models are not necessarily good choices). We first center our age so we have meaningful intercepts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>age13 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">13</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>nys1<span class="sc">$</span>age13 <span class="ot">=</span> nys1<span class="sc">$</span>AGE <span class="sc">-</span> <span class="dv">13</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>modelKS1 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13,</span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
@@ -1456,12 +1459,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>modelKS4 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
 <span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
-<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And now we examine them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( modelKS1, modelKS2, modelKS3, modelKS4 ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( texreg )</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">screenreg</span>( <span class="fu">list</span>( modelKS1, modelKS2, modelKS3, modelKS4 ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ===================================================================
@@ -1487,20 +1490,20 @@ Num. groups: ID   239          239          239          239
 </div>
 <p>OK, Number 4 seems like a pretty good model. Let’s see how much it improves when we add AR[1]:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>modelKS5 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>modelKS5 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID) )</span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS5 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -433.5943</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS4 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS4 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    MINORITY       age13        EXPO 
  0.34054593 -0.05606947  0.04830698  0.36778951 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>( modelKS5 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    MINORITY       age13        EXPO 
  0.34083507 -0.05704474  0.04733879  0.35207989 </code></pre>
@@ -1508,7 +1511,7 @@ Num. groups: ID   239          239          239          239
 </div>
 <p>Note that the estimates for all the effects are essentially unchanged. However, the AIC is almost 40 points better. Also, because the model has done a better job explaining residual variance, the <span class="math inline">\(p\)</span>-value for the coefficient on MINORITY has dropped from 0.032 to 0.029, as we can see on the summary display below. This is not a large drop, but a noticeable one:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modelKS5 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( modelKS5 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: nys1 
@@ -1548,11 +1551,11 @@ Number of Groups: 239 </code></pre>
 <p>Is any of this drop in the <span class="math inline">\(p\)</span>-value due to overfitting? Given the size of the change in AIC, it seems doubtful that that’s a significant factor.</p>
 <p>Let’s try including heteroskedasticity, without AR[1]:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>modelKS6 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>modelKS6 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
 <span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS6 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS6 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -389.5696</code></pre>
 </div>
@@ -1560,12 +1563,12 @@ Number of Groups: 239 </code></pre>
 <p>This did not improve AIC in this case, so we can avoid looking at this model further.</p>
 <p>For completeness, let’s look at a model with both AR(1) and heteroskedasticity:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>modelKS7 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>modelKS7 <span class="ot">=</span> <span class="fu">lme</span>(ATTIT <span class="sc">~</span> MINORITY <span class="sc">+</span> age13 <span class="sc">+</span> EXPO, </span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>nys1,</span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>ID,</span>
 <span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span>AGE<span class="sc">|</span>ID),</span>
 <span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights=</span><span class="fu">varIdent</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>agefac) )</span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS7 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>( modelKS7 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -431.1943</code></pre>
 </div>
@@ -1627,13 +1630,14 @@ Number of Groups: 239 </code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

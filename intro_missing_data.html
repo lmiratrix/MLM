@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./pivot_wider.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-236d90495073fb2ac8939117e3e83141.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-95f147d06fdb9f8ce149f95e323965f4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6005ac3d383419db6177456688079a2d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a10baafebd9fe527f297f90548bb6a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,7 +132,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Resources for S043/Stat151: Multilevel and Longitudinal Models</a> 
     </div>
@@ -658,34 +661,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Handling missing data is the icky, unglamorous part of any statistical analysis. It is where the skeletons lie. There’s a range of options available, which are, broadly speaking:</p>
 <ol type="1">
 <li>Delete the observations with missing covariates (this is a “complete case analysis”)</li>
-<li>Plug in some kind of reasonable value for the missing covariate. This is called “imputation.” We discuss three ways of doing this that are increasingly sophisticated and layered on each other:</li>
+<li>Plug in reasonable values for the missing values. This is called “imputation.” We discuss three ways of doing this that are increasingly sophisticated and layered on each other:</li>
 </ol>
-<!-- -->
 <ol type="a">
 <li>Mean imputation. Simply take the mean of all the observations where you know the value, and then use that for anything that is missing.</li>
-<li>Regression imputation. You generate regression equations describing how all the variables are connected, and use those to predict any missing value.</li>
-<li>Stochastic regression imputation. Here we use regression imputation, but we also add some residual noise to all our imputed values so that our imputed values have as much variation as our actual values (otherwise our imputed values will tend to be all clumped together).</li>
+<li>Regression imputation. Generate regression equations describing how all the variables are connected, and use those to predict any missing value.</li>
+<li>Stochastic regression imputation. Use regression imputation, but also add some residual noise to all our imputed values so that our imputed values have as much variation as our actual values (otherwise our imputed values will tend to be all clumped together).</li>
 </ol>
-<!-- -->
 <ol start="3" type="1">
-<li>Multiply impute the missing data, by fully modeling the covariate and the missingness, and generating a range of complete datasets under this model. Here you end up with a bunch of complete datasets that are all “reasonable guesses” as to what the full dataset might have been. You then analyze each one, and aggregate your findings across them to get a final answer.</li>
+<li>Multiply impute the missing data, by fully modeling the covariate and the missingness, and generating a range of complete datasets under this model. Here you end up with a collection of complete datasets that are all “reasonable guesses” as to what the full dataset might have been. You then analyze each one, and aggregate your findings across them to get a final answer.</li>
 </ol>
-<p>The first two general approaches are imperfect, while the third is often more work than the original analysis that we were hoping to perform. For this course, doing a 2a, 2b, or 2c are all reasonable choices. If you have very little missing data you can often get away with 1. We have no expectations that people will take the plunge into #3 (multiple imputation). In real life, people will often analyze their data with a complete case analysis and some other strategy, and then compare the results. In Education, if missingness is below 10% people usually just do mean imputation, but regression imputation would probably be superior.</p>
+<p>The first two general approaches are imperfect, while the third is often more work than the original analysis that we were hoping to perform. For this course, doing a 2a, 2b, or 2c are all reasonable choices. If you have very little missing data you can often get away with #1. We have no expectations that people will take the plunge into #3 (multiple imputation). In real life, people will often analyze their data with a complete case analysis and some other strategy, and then compare the results. In Education, if missingness is below 10% people usually just do mean imputation, but regression imputation would probably be superior.</p>
 <p>This handout provides an introduction to missing data, and includes a few commands to explore and deal with missing data. In this document we first talk about exploring missing data (in particular getting plots that show you if you have any notable patterns in how things are missing) and then we give a brief walk-through of the 3 methods listed above.</p>
 <p>We will the <code>mice</code> and <code>VIM</code> packages, which you can install using <code>install.packages()</code> if you have not yet done so. These are simple and powerful packages for visualizing and imputing missing data. At the end of this document we also describe the <code>Amelia</code> package.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Throughout we use a small built-in R dataset on air quality as a working example.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(airquality)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(airquality)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(airquality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 153</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(airquality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ozone Solar.R Wind Temp Month Day
 1    41     190  7.4   67     5   1
@@ -695,7 +696,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5    NA      NA 14.3   56     5   5
 6    28      NA 14.9   66     5   6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Ozone          Solar.R         Wind            Temp     
  Min.   :  1.0   Min.   :  7   Min.   : 1.70   Min.   :56.0  
@@ -713,7 +714,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="11.2" class="anchored" data-anchor-id="visualizing-missing-data"><span class="header-section-number">11.2</span> Visualizing missing data</h2>
 <p>Just like with anything in statistics, the first thing to do is to look at our data. We want to know which variables are often missing, and if some variables are often missing together. We also want to know how much data is missing. The mice package has a variety of plots to show us patterns of missingness:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">md.pattern</span>(airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">md.pattern</span>(airquality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -731,11 +732,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>This plot gives us the different missing data patterns and the number of observations that have each missing data pattern. For example, the second row in the plot says there are 35 observations that have a missing data pattern where only Ozone is missing.</p>
-<p>Easier to understand patterns!</p>
 <p>We can also just look at 10 observations to see everything that is going on. Here we take the first 10 rows of our dataset, but could also take a random 10 row with the tidyverse’s <code>sample_n</code> method.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  airqualitysub <span class="ot">=</span> airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  airqualitysub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  airqualitysub <span class="ot">=</span> airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  airqualitysub</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 1     41     190  7.4   67     5   1
@@ -750,15 +750,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10    NA     194  8.6   69     5  10</code></pre>
 </div>
 </div>
-<p>We see that we have one observation missing two covariates and one each of missing Ozone only and Solar.R only.</p>
+<p>We see that we have one observation missing two covariates and one each of missing <code>Ozone</code> only and <code>Solar.R</code> only.</p>
 <section id="the-vim-package" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="the-vim-package"><span class="header-section-number">11.2.1</span> The VIM Package</h3>
-<p>The VIM package gives some alternate plots to explore missing data patterns. For example, <code>aggr()</code>:</p>
+<p>The <code>VIM</code> package gives some alternate plots to explore missing data patterns. For example, <code>aggr()</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">aggr</span>(airquality, <span class="at">col=</span><span class="fu">c</span>(<span class="st">'navyblue'</span>,<span class="st">'red'</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">aggr</span>(airquality, <span class="at">col=</span><span class="fu">c</span>(<span class="st">'navyblue'</span>,<span class="st">'red'</span>),</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">numbers=</span><span class="cn">TRUE</span>, <span class="at">sortVars=</span><span class="cn">TRUE</span>, <span class="at">labels=</span><span class="fu">names</span>(data),</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">cex.axis=</span>.<span class="dv">7</span>, <span class="at">gap=</span><span class="dv">3</span>, <span class="at">prop=</span><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="fu">c</span>(<span class="st">"Histogram of missing data"</span>,<span class="st">"Pattern"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="fu">c</span>(<span class="st">"Histogram of missing data"</span>,<span class="st">"Pattern"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -778,9 +778,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       Day 0.0000</code></pre>
 </div>
 </div>
-<p>On the left, we have the proportion of missing data for each variable in our dataset. We can see that Ozone and Solar.R have missing values. On the right, we have the joint distribution of missingness. We can see that 111 observations have no missing values. From those with missing values, the majority have missing values for Ozone, some have missing values for Solar.R and only 2 observations have missing values for both Ozone and Solar.R.</p>
+<p>On the left, we have the proportion of missing data for each variable in our dataset; We can see that <code>Ozone</code> and <code>Solar.R</code> have missing values, and <code>Ozone</code> is clearly missing at higher rates than <code>Solar.R</code> On the right, we have the joint distribution of missingness. We can see that 111 observations have no missing values. From those with missing values, the majority have missing values for Ozone, some have missing values for Solar.R and only 2 observations have missing values for both Ozone and Solar.R.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">marginplot</span>(airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">marginplot</span>(airquality[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -798,8 +798,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Working with complete cases (dropping observations with any missing data on our outcome and predictors) is always an option. We have been doing this in class and section. However, this can lead to substantial data loss, if we have a lot of missingness and it can heavily bias our results depending on why observations are missing.</p>
 <p>Complete case analysis is the R default.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind, <span class="at">data =</span> airquality )</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind, <span class="at">data =</span> airquality )</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -824,9 +824,9 @@ F-statistic: 64.6 on 1 and 114 DF,  p-value: 9.27e-13</code></pre>
 </div>
 <p>Note the listing in the summary of number of items deleted. You can find out which rows were deleted:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## which rows/observations were deleted</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## which rows/observations were deleted</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  deleted <span class="ot">&lt;-</span> <span class="fu">na.action</span>(fit)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  deleted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  deleted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  5  10  25  26  27  32  33  34  35  36  37  39  42  43  45  46  52  53  54  55 
   5  10  25  26  27  32  33  34  35  36  37  39  42  43  45  46  52  53  54  55 
@@ -835,29 +835,31 @@ F-statistic: 64.6 on 1 and 114 DF,  p-value: 9.27e-13</code></pre>
 attr(,"class")
 [1] "omit"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">naprint</span>(deleted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">naprint</span>(deleted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "37 observations deleted due to missingness"</code></pre>
 </div>
 </div>
 <p>We have more incomplete rows if we add Solar.R as predictor.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind<span class="sc">+</span>Solar.R, <span class="at">data=</span>airquality)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">naprint</span>(<span class="fu">na.action</span>(fit2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind<span class="sc">+</span>Solar.R, <span class="at">data=</span>airquality)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">naprint</span>(<span class="fu">na.action</span>(fit2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "42 observations deleted due to missingness"</code></pre>
 </div>
 </div>
 <p>We can also drop observations with missing data ourselves instead of letting R do it for us. <strong>Dropping data preemptively is generally a good idea, especially if you plan on using predict().</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## complete cases on all variables in the data set </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## complete cases on all variables in the data set </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>complete.v1 <span class="ot">=</span> <span class="fu">filter</span>( airquality, <span class="fu">complete.cases</span>(airquality) )</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">## drop observations with missing values, but ignoring a specific variable  </span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>complete.v2 <span class="ot">=</span> <span class="fu">filter</span>(airquality, <span class="fu">complete.cases</span>(<span class="fu">select</span>( airquality, <span class="sc">-</span>Wind) ) )</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## drop observations with missing values on a specific variable  </span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>complete.v3 <span class="ot">=</span> <span class="fu">filter</span>(airquality, <span class="sc">!</span><span class="fu">is.na</span>(Ozone))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">## drop observations with missing values, but ignoring a specific</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">## variable</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>complete.v2 <span class="ot">=</span> <span class="fu">filter</span>( airquality, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">complete.cases</span>( <span class="fu">select</span>( airquality, <span class="sc">-</span>Wind) ) )</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">## drop observations with missing values on a specific variable</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>complete.v3 <span class="ot">=</span> <span class="fu">filter</span>(airquality, <span class="sc">!</span><span class="fu">is.na</span>(Ozone))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Once you have subset your data, you just analyze what is left as normal. Easy as pie!</p>
 </section>
@@ -869,18 +871,18 @@ attr(,"class")
 <h3 data-number="11.4.1" class="anchored" data-anchor-id="doing-mean-imputation-manually"><span class="header-section-number">11.4.1</span> Doing Mean Imputation manually</h3>
 <p>Manually, we can just replace missing values for a variable with the grand/global mean.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## make a new copy of the data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## make a new copy of the data</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  data.mean.impute <span class="ot">=</span> airquality</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## select the observations with missing Ozone</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  miss.ozone <span class="ot">=</span> <span class="fu">is.na</span>(data.mean.impute<span class="sc">$</span>Ozone)</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="do">## replace those NAs with mean(Ozone)</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  data.mean.impute[miss.ozone,<span class="st">"Ozone"</span>] <span class="ot">=</span> <span class="fu">mean</span>(airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  data.mean.impute[miss.ozone,<span class="st">"Ozone"</span>] <span class="ot">=</span> <span class="fu">mean</span>(airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In a multi-level context, it might make more sense to impute using the group mean rather than the grand mean. Here’s a generic function to do it. Here we group by month:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## a function that replaces missing values in a vector </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## a function that replaces missing values in a vector </span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## by the mean of the other values</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  mean.impute <span class="ot">=</span> <span class="cf">function</span>(y) { </span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>      y[<span class="fu">is.na</span>(y)] <span class="ot">=</span> <span class="fu">mean</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
@@ -889,17 +891,17 @@ attr(,"class")
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  data.mean.impute <span class="ot">=</span> airquality <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Month) <span class="sc">%&gt;%</span></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Ozone =</span> <span class="fu">mean.impute</span>(Ozone),</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">Solar.R =</span> <span class="fu">mean.impute</span>(Solar.R) ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">Solar.R =</span> <span class="fu">mean.impute</span>(Solar.R) ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We have mean imputed the Ozone column and the Solar.R column</p>
 </section>
 <section id="mean-imputation-with-the-mice-package" class="level3" data-number="11.4.2">
 <h3 data-number="11.4.2" class="anchored" data-anchor-id="mean-imputation-with-the-mice-package"><span class="header-section-number">11.4.2</span> Mean imputation with the Mice package</h3>
 <p>We can use the <code>mice</code> package to do mean imputation. The mice package is a package that can do some quite complex imputation, and so when you call <code>mice()</code> (which says “impute missing values please”) you get back a rather complex object telling you what mice imputed, for whom, etc. This object, which is a <code>mids</code> object (see <code>help(mids)</code>), contains the multiply imputed dataset (or in our case, so far, singly imputed). The <code>mice</code> package then provides a lot of nice functions allowing you to get your imputed information out of this object.</p>
-<p>We first demonstrate this for the 10 observations sampled above. Mice is generally going to be a two-step process: impute data, get completed dataset.</p>
+<p>We first demonstrate this for the smaller 10 observations dataset we made above. Mice is generally going to be a two-step process: impute data, get completed dataset.</p>
 <p>For step 1:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub, <span class="at">method=</span><span class="st">"mean"</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub, <span class="at">method=</span><span class="st">"mean"</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  iter imp variable
@@ -908,7 +910,7 @@ attr(,"class")
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Number of logged events: 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>  imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>  imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Class: mids
 Number of multiple imputations:  1 
@@ -930,8 +932,8 @@ Number of logged events:  1
 </div>
 <p>For step 2:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> <span class="fu">complete</span>(imp)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  cmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> <span class="fu">complete</span>(imp)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  cmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 1   41.0     190  7.4   67     5   1
@@ -949,26 +951,26 @@ Number of logged events:  1
 <p>We see there are no missing values in <code>cmp</code>. They were all imputed with the mean of the other non-missing values. This is <strong>mean imputation</strong>.</p>
 <p>Now let’s impute the full dataset.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality, <span class="at">method=</span><span class="st">"mean"</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality, <span class="at">method=</span><span class="st">"mean"</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  iter imp variable
   1   1  Ozone  Solar.R</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> <span class="fu">complete</span>( imp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> <span class="fu">complete</span>( imp )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We next make a dummy variable for each row of our data noting whether anything was imputed or not. We use the <code>ici</code> (Incomplete Case Indication) function to list all rows with any missing values.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( <span class="fu">ici</span>(airquality) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( <span class="fu">ici</span>(airquality) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE FALSE FALSE FALSE  TRUE  TRUE</code></pre>
 </div>
 </div>
 <p>Note how we have a TRUE or FALSE for each row of our data.</p>
-<p>We then store this as a covariate in our completed dataset:</p>
+<p>We then store our <code>ici</code> values as a covariate in our completed dataset:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>  cmp<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>(airquality)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( cmp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>  cmp<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>(airquality)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( cmp )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ozone Solar.R Wind Temp Month Day imputed
 1  41.0     190  7.4   67     5   1   FALSE
@@ -983,21 +985,21 @@ Number of logged events:  1
 <h4 data-number="11.4.2.1" class="anchored" data-anchor-id="how-well-did-mean-imputation-work"><span class="header-section-number">11.4.2.1</span> How well did mean imputation work?</h4>
 <p>Mean imputation has problems. The imputed values will all be the same, and thus when we look at how much variation is in our variables after imputation, it will go down. Compare the SD of our completed dataset Ozone values to the SD of the Ozone values for our non-missing values.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>( airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span><span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>( airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span><span class="cn">TRUE</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 33</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>( cmp<span class="sc">$</span>Ozone )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>( cmp<span class="sc">$</span>Ozone )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 28.7</code></pre>
 </div>
 </div>
 <p>Next, let’s look at some plots of our completed data, coloring the points by whether they were imputed.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cmp, <span class="fu">aes</span>(<span class="at">x=</span>Ozone, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_bin</span>( <span class="at">geom=</span><span class="st">"step"</span>, <span class="at">position=</span><span class="st">"identity"</span>,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1005,9 +1007,9 @@ Number of logged events:  1
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cmp, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cmp, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1020,59 +1022,57 @@ Number of logged events:  1
 </section>
 <section id="important-aside-namespaces-and-function-collisions" class="level4" data-number="11.4.2.2">
 <h4 data-number="11.4.2.2" class="anchored" data-anchor-id="important-aside-namespaces-and-function-collisions"><span class="header-section-number">11.4.2.2</span> Important Aside: Namespaces and function collisions</h4>
-<p>We now need to discuss a sad aspect of R. The short story is, different packages have functions with the same names and so if you have both packages loaded you will need to specify which package to use when calling such a function. You can do this by giving the “surname” of the function at the beginning of the function call (like, I believe, the Chinese). This comes up because for us the method <code>complete()</code> exists both in the tidyverse and in mice. In tidyverse, <code>complete()</code> fills in rows of missing combinations of values. In mice, <code>complete()</code> gives us a completed dataset after we have made an imputation call.</p>
-<p>It turns out that since we loaded tidyverse first and mice second, the mice’s <code>complete()</code> method is the default. But if we loaded the packages in the other order, we would get strange errors. To be clear, we thus tell R to use <code>mice</code> by writing:</p>
+<p>We now need to discuss a sad aspect of R. The short story is, different packages have functions with the same names and so if you have both packages loaded you will need to specify which package to use when calling such a function. You can do this by giving the “surname” of the function at the beginning of the function call. Namespace collision comes up here because the method <code>complete()</code> exists both in the tidyverse and in mice. In tidyverse, <code>complete()</code> fills in rows of missing combinations of values. In mice, <code>complete()</code> gives us a completed dataset after we have made an imputation call.</p>
+<p>It turns out that since we loaded tidyverse first and mice second, the mice’s <code>complete()</code> method is the default. But if we loaded the packages in the other order, we would get strange errors. To be clear, we can tell R to use <code>mice</code>’s <code>complete()</code> by writing</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>  cmp <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In general, you can detect such “namespace collisions” by noticing weird error messages all of a sudden when you don’t expect them. You can then type, for example, <code>help( complete )</code> and it will list all the different <code>complete</code>s around.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">help</span>( complete )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Also when you load a package it will write down what functions are getting mixed up for you. If you were looking at your R code you would get something like this:</p>
+<p>In general, you can detect such “namespace collisions” by noticing weird error messages all of a sudden when you don’t expect them. You can then type <code>help( complete )</code> in the console and the help index page will list all the different <code>complete</code>s that have been loaded.</p>
+<p>Also when you load a package it will write down what functions are getting mixed up for you. If you were looking at your R console output you should see something like this:</p>
 <pre><code>tidyr::complete() masks mice::complete()</code></pre>
 </section>
 </section>
 </section>
 <section id="regression-imputation" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="regression-imputation"><span class="header-section-number">11.5</span> Regression imputation</h2>
-<p>Regression imputation is half way between mean imputation and multiple imputation. In regression imputation we predict what values we expect for anything missing based on the other values of the observation. For example, if we know that urban/rural is correlated with race, we might impute a different value for race if we know an observation came from an urban environment vs.&nbsp;rural. We do this with regression: we fit a model predicting each variable using the others and then use that regression model to predict any missing values.</p>
-<p>We can do this manually, but then it gets very hard when multiple variables are missing for a given observation. The mice package is more clever: it does variables one at a time, and the cycles around so everything can get imputed.</p>
+<p>Regression imputation is half way between mean imputation and multiple imputation. In regression imputation we predict what values we expect for anything missing based on the other values of the observation. For example, if, in the nonmissing part of our data, urban/rural is correlated with race, we might impute a different value for race if we know an observation came from an urban environment vs.&nbsp;rural. We do this with regression: we fit a model predicting each variable using the others and then use that regression model to predict any missing values.</p>
+<p>We can do this manually, but then it gets very hard when multiple variables are missing for a given observation. The mice package is more clever: it does variables one at a time, and the cycles around so everything can get imputed using the completed data from earlier iterations.</p>
 <section id="manually" class="level3" data-number="11.5.1">
 <h3 data-number="11.5.1" class="anchored" data-anchor-id="manually"><span class="header-section-number">11.5.1</span> Manually</h3>
 <p>Here is how to use other variables to predict missing values.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ic</span>( airqualitysub )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ic</span>( airqualitysub )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 5     NA      NA 14.3   56     5   5
 6     28      NA 14.9   66     5   6
 10    NA     194  8.6   69     5  10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Solar.R, <span class="at">data=</span>airqualitysub)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="do">## predict for missing ozone  </span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  need.pred <span class="ot">=</span> <span class="fu">subset</span>( airqualitysub, <span class="fu">is.na</span>( Ozone ) )</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  need.pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Solar.R, <span class="at">data=</span>airqualitysub)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="do">## predict for missing ozone  </span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  need.pred <span class="ot">=</span> <span class="fu">subset</span>( airqualitysub, <span class="fu">is.na</span>( Ozone ) )</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  need.pred</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 5     NA      NA 14.3   56     5   5
 10    NA     194  8.6   69     5  10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata=</span>need.pred)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata=</span>need.pred)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  pred</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   5   10 
   NA 23.1 </code></pre>
 </div>
 </div>
-<p>But now we have to merge back in, and we didn’t solve for case 5 because we are missing the variable we would use to predict the other missing variable. Ick. This is where missing data gets <em>really</em> hard (when we have multiple missing values on multiple variables). So let’s quit now and turn to a package that will handle all of this for us.</p>
+<p>But now we have to merge our imputed data back in, and we still haven’t solved for observation 5 because we are missing the variable we would use to predict the other missing variable! Ick. Multiple missing values on multiple variables is where missing data gets <em>really</em> hard. So let’s quit now and turn to a package that will handle all of this for us.</p>
 </section>
 <section id="mice" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="mice"><span class="header-section-number">11.5.2</span> Mice</h3>
 <p>To do regression imputation using mice, we simply call the <code>mice()</code> method:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">method=</span><span class="st">"norm.predict"</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">3</span>,<span class="at">seed=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">method=</span><span class="st">"norm.predict"</span>,</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">3</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  iter imp variable
@@ -1081,133 +1081,160 @@ Number of logged events:  1
   3   1  Ozone  Solar.R</code></pre>
 </div>
 </div>
-<p>We have everything! How did it do it? By <em>chaining equations</em>. First we start with mean imputation. Then we use our fit model to predict for one covariate, and then we use those predicted scores to predict for the next covariate, and so forth. We cycle back and then everything is jointly predicting everything else.</p>
-<p>The <code>complete()</code> method gives us a complete dataset with everything imputed. Like so:</p>
+<p>The <code>m=1</code> means “make 1 imputed dataset.” The <code>maxit=3</code> means “Do a maximum of 3 cycles of imputation (so each variable could be imputed up to three times).</p>
+<p>Now <code>imp</code> is just like with mean imputation and so we have everything! How did it do it? By <em>chaining equations</em>. First <code>mice</code> starts with mean imputation. This gives an initial complete dataset. Then <code>mice</code> uses a prediction model to re-predict for the missing values for one covariate. We now have a new and improved (and still complete) dataset. We use this <em>new</em> dataset to run a prediction model on the next covariate, and so forth. We cycle around a few times and then everything is jointly predicting everything else.</p>
+<p>The <code>complete()</code> method gives us the final complete dataset with everything imputed. Like so:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>  cdat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( cdat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>  cdat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( cdat )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ozone Solar.R
 1  41.0     190
 2  36.0     118
 3  12.0     149
 4  18.0     313
-5  42.7     186
+5  42.6     186
 6  28.0     169</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>( cdat )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>( cdat )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 153</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>( airquality )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>( airquality )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 153</code></pre>
 </div>
 </div>
 <p>Next we make a variable of which cases have imputed values and not (any row with missing data must have been partially imputed.)</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>  cdat<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>( airquality )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>  cdat<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>( airquality )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And see our results! Compare to mean imputation, above.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">x=</span>Ozone, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_bin</span>( <span class="at">geom=</span><span class="st">"step"</span>, <span class="at">position=</span><span class="st">"identity"</span>,</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">x=</span>Ozone, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_bin</span>( <span class="at">geom=</span><span class="st">"step"</span>, <span class="at">position=</span><span class="st">"identity"</span>,</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-28-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This is better than mean imputation. See how we impute different Ozone for different Solar Radiation values, taking advantage of the information of knowing that they are correlated? But it still is obvious what is mean imputed and what is not. Also, the variance of our imputed values still does not contain the residual variation around the predicted values that we would get in real data. We can do one more enhancement to fix this.</p>
+<p>Our regression imputation is better than mean imputation. See how we impute different Ozone for different Solar Radiation values, taking advantage of the information of knowing that they are correlated? But it still is obvious what is mean imputed and what is not. Also, the variance of our imputed values still does not contain the residual variation around the predicted values that we would get in real data. We can do one more enhancement to fix this.</p>
 </section>
 <section id="stochastic-regression-imputation" class="level3" data-number="11.5.3">
 <h3 data-number="11.5.3" class="anchored" data-anchor-id="stochastic-regression-imputation"><span class="header-section-number">11.5.3</span> Stochastic regression imputation</h3>
-<p>We extend regression imputation by randomly drawing observations that <em>look like</em> real ones. See in the two imputations below we get slightly different values for our imputed data.</p>
-<p>Here we do it on our mini-dataset and look at the imputed values for our observations with missing values only:</p>
+<p>We extend regression imputation by randomly drawing observations that <em>look like</em> real ones. The easiest way to think of this is we first predict our missing value, and then we add some residual noise to account for the fact that any covariate value would not be <em>perfectly</em> predicted by the other values.</p>
+<p>To illustrate, we first do it on our mini-dataset and look at the imputed values for our observations with missing values only:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],<span class="at">method=</span><span class="st">"norm.nob"</span>,<span class="at">m=</span><span class="dv">1</span>,<span class="at">maxit=</span><span class="dv">1</span>,<span class="at">seed=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>( airqualitysub[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method=</span><span class="st">"norm.nob"</span>,</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>, <span class="at">seed=</span><span class="dv">1234</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  iter imp variable
   1   1  Ozone  Solar.R</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Ozone
        1
-5   8.09
-10 44.58
-
-$Solar.R
-      1
-5 181.2
-6  83.7</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],<span class="at">method=</span><span class="st">"norm.nob"</span>,<span class="at">m=</span><span class="dv">1</span>,<span class="at">maxit=</span><span class="dv">1</span>,<span class="at">seed=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- iter imp variable
-  1   1  Ozone  Solar.R</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$Ozone
-      1
-5  34.4
-10 31.6
+5  36.67
+10 -7.32
 
 $Solar.R
     1
-5 381
-6 260</code></pre>
+5 235
+6 238</code></pre>
 </div>
-</div>
-<p>Now let’s do it on the full data and look at the imputed values and compare to our plots above.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],<span class="at">method=</span><span class="st">"norm.nob"</span>,<span class="at">m=</span><span class="dv">1</span>,<span class="at">maxit=</span><span class="dv">1</span>,<span class="at">seed=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">mice</span>( airqualitysub[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method=</span><span class="st">"norm.nob"</span>, </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">m=</span><span class="dv">1</span>, <span class="at">maxit=</span><span class="dv">1</span>, <span class="at">seed=</span><span class="dv">4234</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  iter imp variable
   1   1  Ozone  Solar.R</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>  cdat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  cdat<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>( airquality )</span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">x=</span>Ozone, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_bin</span>( <span class="at">geom=</span><span class="st">"step"</span>, <span class="at">position=</span><span class="st">"identity"</span>,</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Ozone
+      1
+5  30.8
+10 57.6
+
+$Solar.R
+    1
+5 277
+6 498</code></pre>
+</div>
+</div>
+<p>Stochastic imputation is <em>random</em>. Because of this, we now have a new argument to <code>mice()</code>: the <code>seed = 1234</code> sets the random seed so that we can get the same results if we run this code again. We set two different seeds to get two different randomly generated imputations. Note in the two imputations above how we get slightly different values for our imputed data.</p>
+<p>Now let’s do it on the full data and look at the imputed values and compare to our plots above.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">method=</span><span class="st">"norm.nob"</span>,</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">m=</span><span class="dv">1</span>,<span class="at">maxit=</span><span class="dv">1</span>,<span class="at">seed=</span><span class="dv">13434</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  Ozone  Solar.R</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>  cdat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>( imp )</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  cdat<span class="sc">$</span>imputed <span class="ot">=</span> <span class="fu">ici</span>( airquality )</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">x=</span>Ozone, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_bin</span>( <span class="at">geom=</span><span class="st">"step"</span>, <span class="at">position=</span><span class="st">"identity"</span>,</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">10</span>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( cdat, <span class="fu">aes</span>(<span class="at">y=</span>Ozone, <span class="at">x=</span>Solar.R, <span class="at">col=</span>imputed) ) <span class="sc">+</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">y=</span><span class="st">"Ozone (ppb)"</span>, <span class="at">x=</span><span class="st">"Solar Radiation (lang)"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-29-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Better, but not perfect. What is better? What is still not perfect?</p>
+<p><strong>First aside:</strong> All variables you’ll be using for your final analysis model should be included in the imputation model. Notice we included the full dataset in <code>mice</code>, not just the variables with missing values. This way we can account for associations between all the outcome and the predictors in the model we’ll be fitting. Your imputation model can even be more complicated than your model of interest. That is, you can include additional variables that predict missing values but will not be part of your final model of interest.</p>
+<p><strong>Second aside:</strong> All variables in your imputation model should be in the correct functional form! Quadratic, higher order polynomials and interaction terms are just another variable that we would need to impute. Although it may seem logical to impute your variables first and then calculate the interaction or non-linear term later, this can lead to bias.</p>
+<p><strong>Third aside:</strong> The ordering of the variables in the dataset you are feeding into <code>mice</code> can make a difference in results and model convergence. Generally, you want to order your variables from least missing to most missing. Here, we reorder the variables from least to most missing, and obtain different results.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">=</span> airqualitysub[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>)]</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Day Month Temp Wind Solar.R Ozone
+1   1     5   67  7.4     190    41
+2   2     5   72  8.0     118    36
+3   3     5   74 12.6     149    12
+4   4     5   62 11.5     313    18
+5   5     5   56 14.3      NA    NA
+6   6     5   66 14.9      NA    28</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>  test.imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(test, <span class="at">seed=</span><span class="dv">2</span>, <span class="at">m=</span><span class="dv">1</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Number of logged events: 1</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="multiple-imputation" class="level2" data-number="11.6">
@@ -1215,11 +1242,11 @@ $Solar.R
 <p>If missing data is a significant issue in your dataset, then mean or regression imputation can be a bit too hacky and approximate. In these contexts, multiple imputation is the way to go.</p>
 <p>We do this as follows:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub, <span class="at">seed=</span><span class="dv">2</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airqualitysub, <span class="at">seed=</span><span class="dv">2</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Number of logged events: 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>  imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>  imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Class: mids
 Number of multiple imputations:  5 
@@ -1238,88 +1265,21 @@ Number of logged events:  1
   it im dep     meth   out
 1  0  0     constant Month</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$Ozone
-    1  2  3  4  5
-5  18 41 28 23 23
-10 36 18 36 19 28
-
-$Solar.R
-    1  2   3  4  5
-5 149 99 194 99 19
-6 194 19 194 19 19
-
-$Wind
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Temp
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Month
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Day
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
-</div>
-<p>See multiple columns of imputed data? (We have 5 here.)</p>
-<p><strong>First aside:</strong> All variables you’ll be using for your model should be included in the imputation model. Notice we included the full dataset in <code>mice</code>, not just the variables with missing values. This way we can account for associations between all the outcome and the predictors in the model we’ll be fitting. Your imputation model can be more complicated than your model of interest. That is, you can include additional variables that predict missing values but will not be part of your final model of interest.</p>
-<p><strong>Second aside:</strong> All variables in your imputation model should be in the correct functional form! Quadratic, higher order polynomials and interaction terms are just another variable that we need to impute. Although it may seem logical to impute your variables first and then calculate the interaction or non-linear term, this can lead to bias.</p>
-<p><strong>Third aside:</strong> The ordering of the variables in the dataset you are feeding into <code>mice</code> can make a difference in results and model convergence. Generally, you want to order your variables from least to most missing. Here, we reorder the variables from least to most missing, and obtain different results.</p>
+<p>We can look at our imputed solar values:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">=</span> airqualitysub[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>)]</span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>imp<span class="sc">$</span>imp<span class="sc">$</span>Solar.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Day Month Temp Wind Solar.R Ozone
-1   1     5   67  7.4     190    41
-2   2     5   72  8.0     118    36
-3   3     5   74 12.6     149    12
-4   4     5   62 11.5     313    18
-5   5     5   56 14.3      NA    NA
-6   6     5   66 14.9      NA    28</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>  test.imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(test, <span class="at">seed=</span><span class="dv">2</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Number of logged events: 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>  test.imp<span class="sc">$</span>imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$Day
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Month
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Temp
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Wind
-[1] 1 2 3 4 5
-&lt;0 rows&gt; (or 0-length row.names)
-
-$Solar.R
-    1   2   3   4   5
-5 194 118 194 313 190
-6 118 194 118 118 190
-
-$Ozone
-    1  2  3  4  5
-5  18 23 23 23 41
-10 12  8 18 19  8</code></pre>
+<pre><code>    1  2   3  4  5
+5 149 99 194 99 19
+6 194 19 194 19 19</code></pre>
 </div>
 </div>
+<p>See multiple columns of imputed data? (We have 5 columns here, one for each imputation, with each row a single observation we are imputing for.)</p>
 <p><strong>How to get each complete dataset?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="do">## first complete dataset </span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="do">## first complete dataset </span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 1     41     190  7.4   67     5   1
@@ -1333,8 +1293,8 @@ $Ozone
 9      8      19 20.1   61     5   9
 10    36     194  8.6   69     5  10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="do">## and our second complete dataset</span></span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="do">## and our second complete dataset</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 1     41     190  7.4   67     5   1
@@ -1349,16 +1309,16 @@ $Ozone
 10    18     194  8.6   69     5  10</code></pre>
 </div>
 </div>
-<p>See how they are different? They were randomly imputed. We basically used the stochastic regression thing, above, multiple times.</p>
+<p>See how the two datasets are are different? They were randomly imputed. We basically used the stochastic regression thing, above, multiple times.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">1</span>)[ <span class="fu">ici</span>(airqualitysub), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">1</span>)[ <span class="fu">ici</span>(airqualitysub), ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 5     18     149 14.3   56     5   5
 6     28     194 14.9   66     5   6
 10    36     194  8.6   69     5  10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">2</span>)[ <span class="fu">ici</span>(airqualitysub), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>  mice<span class="sc">::</span><span class="fu">complete</span>(imp, <span class="dv">2</span>)[ <span class="fu">ici</span>(airqualitysub), ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Ozone Solar.R Wind Temp Month Day
 5     41      99 14.3   56     5   5
@@ -1368,94 +1328,95 @@ $Ozone
 </div>
 <p>On full data:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(airquality, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now we estimate for each imputed dataset using the <code>with()</code> method that, in <code>mice</code>, will do the regression for each completed dataset. See <code>help with.mids</code>.</p>
+<p>Once you have imputed, you can estimate for each imputed dataset using the <code>with()</code> method that, in <code>mice</code>, will do the regression or other specified analysis for each completed dataset. See <code>help with.mids</code> for more information.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">with</span>(imp, <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind <span class="sc">+</span> Temp <span class="sc">+</span> Solar.R))</span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">with</span>(imp, <span class="fu">lm</span>(Ozone <span class="sc">~</span> Wind <span class="sc">+</span> Temp <span class="sc">+</span> Solar.R))</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>call :
-with.mids(data = imp, expr = lm(Ozone ~ Wind + Temp + Solar.R))
-
-call1 :
-mice(data = airquality, printFlag = FALSE, seed = 1)
-
-nmis :
-[1] 37  7  0  0  0  0
-
-analyses :
-[[1]]
-
-Call:
-lm(formula = Ozone ~ Wind + Temp + Solar.R)
-
-Coefficients:
-(Intercept)         Wind         Temp      Solar.R  
-   -66.2402      -2.8219       1.6134       0.0563  
-
-
-[[2]]
-
-Call:
-lm(formula = Ozone ~ Wind + Temp + Solar.R)
-
-Coefficients:
-(Intercept)         Wind         Temp      Solar.R  
-   -71.2842      -2.9055       1.6749       0.0633  
-
-
-[[3]]
-
-Call:
-lm(formula = Ozone ~ Wind + Temp + Solar.R)
-
-Coefficients:
-(Intercept)         Wind         Temp      Solar.R  
-   -66.9511      -2.9322       1.6479       0.0543  
-
-
-[[4]]
-
-Call:
-lm(formula = Ozone ~ Wind + Temp + Solar.R)
-
-Coefficients:
-(Intercept)         Wind         Temp      Solar.R  
-   -33.8480      -3.6628       1.3244       0.0427  
-
-
-[[5]]
-
-Call:
-lm(formula = Ozone ~ Wind + Temp + Solar.R)
-
-Coefficients:
-(Intercept)         Wind         Temp      Solar.R  
-   -77.4163      -2.7438       1.7264       0.0663  </code></pre>
+<pre><code>[1] "mira"</code></pre>
 </div>
 </div>
-<p>This can take <em>any</em> function call that takes a formula. So <code>glm</code>, <code>lm</code>, whatever… We can then pool the estimates using the standard theory of combining multiply imputed datasets. The basic idea is to combine the variation/uncertainty of the multiple sets with the average uncertainty we would have for each set if it was truly complete and not imputed.</p>
+<p>We get back a <code>mira</code> object, which is essentially a list of results, one for each imputed dataset. The <code>with()</code> method can take <em>any</em> function call that takes a formula. So <code>glm</code>, <code>lm</code>, whatever…</p>
+<p>The next step is to pool the estimates using the standard theory of combining multiply imputed datasets. The basic idea is to combine the variation/uncertainty of the multiple sets with the average uncertainty we would have for each set, if it were truly complete and not imputed.</p>
+<p>Pooling looks like this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">pool</span>(fit))</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>( tab )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>pooled <span class="ot">&lt;-</span> <span class="fu">pool</span>(fit)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>pooled</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "term"      "estimate"  "std.error" "statistic" "df"        "p.value"  </code></pre>
+<pre><code>Class: mipo    m = 5 
+         term m estimate     ubar        b        t dfcom   df   riv lambda
+1 (Intercept) 5 -63.1480 3.66e+02 2.88e+02 7.12e+02   149 13.8 0.945  0.486
+2        Wind 5  -3.0132 3.02e-01 1.37e-01 4.67e-01   149 24.0 0.546  0.353
+3        Temp 5   1.5974 4.52e-02 2.50e-02 7.52e-02   149 19.6 0.663  0.399
+4     Solar.R 5   0.0566 3.92e-04 8.44e-05 4.94e-04   149 52.4 0.258  0.205
+    fmi
+1 0.547
+2 0.401
+3 0.452
+4 0.234</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>  tab[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         term estimate std.error   df
-1 (Intercept) -63.1480   26.6769 13.8
-2        Wind  -3.0132    0.6831 24.0
-3        Temp   1.5974    0.2742 19.6
-4     Solar.R   0.0566    0.0222 52.4</code></pre>
 </div>
-</div>
-<p><strong>Aside:</strong> You will notice that once we fit our model on the imputed data, <code>with()</code> returned an object of class <code>mira</code>. <code>Mira</code> objects can be pooled to get the pooled estimates, whereas objects of class <code>glm</code>, <code>lm</code>, <code>lmer</code>, etc. cannot be pooled. You will also notice that you cannot use <code>predict</code> with a <code>mira</code> object. To use <code>predict</code>, you can stack the imputed datasets and fit your model on this complete dataset. Parameter estimates generated by <code>pool</code> are the average of the parameter estimates from the model fit on each imputed dataset separately. So your coefficients are fine. However, your SEs will be underestimated. How underestimated your SEs will be depends, to an extent, on how much data is missing and whether it is missing at random.</p>
-<p>Our old, sad method:</p>
+<p>Parameter estimates generated by <code>pool</code> are the average of the parameter estimates from the model fit on each imputed dataset separately. The SEs are calculated by averaging the SEs and inflating them a bit based on how much the individual estimates changed–this accounts for the uncertainty from having missing values that we can only guess at, rather than see directly.</p>
+<p>We can summarize our analysis to get p-values like this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone<span class="sc">~</span>Wind<span class="sc">+</span>Temp<span class="sc">+</span>Solar.R,<span class="at">data=</span>airquality,<span class="at">na.action=</span>na.omit)</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>( fit )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">summary</span>(pooled)</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>( tab )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-63.148</td>
+<td style="text-align: right;">26.677</td>
+<td style="text-align: right;">-2.37</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">0.033</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wind</td>
+<td style="text-align: right;">-3.013</td>
+<td style="text-align: right;">0.683</td>
+<td style="text-align: right;">-4.41</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Temp</td>
+<td style="text-align: right;">1.597</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: right;">5.83</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Solar.R</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">2.55</td>
+<td style="text-align: right;">52.4</td>
+<td style="text-align: right;">0.014</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can compare to our old, sad method of complete case analysis:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone<span class="sc">~</span>Wind<span class="sc">+</span>Temp<span class="sc">+</span>Solar.R,</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span>airquality,<span class="at">na.action=</span>na.omit)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>( fit )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1480,16 +1441,10 @@ Residual standard error: 21.2 on 107 degrees of freedom
 Multiple R-squared:  0.606, Adjusted R-squared:  0.595 
 F-statistic: 54.8 on 3 and 107 DF,  p-value: &lt;2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(fit)),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)   -64.34     23.055   -2.79    0.006
-Wind           -3.33      0.654   -5.09    0.000
-Temp            1.65      0.254    6.52    0.000
-Solar.R         0.06      0.023    2.58    0.011</code></pre>
 </div>
-</div>
-<p>In this case, the missing data estimates are basically the same as the complete case analysis, it appears. We only had 5% missing data though.</p>
+<p>In this case, the missing data estimates are basically the same as the complete case analysis. We only had 5% missing data though; generally, with small amounts of missing data, nothing changes anything much.</p>
+<p><strong>Aside:</strong> You will notice that once we fit our model on the imputed data, <code>with()</code> returned an object of class <code>mira</code>. <code>Mira</code> objects can be pooled to get the pooled estimates, whereas objects of class <code>glm</code>, <code>lm</code>, <code>lmer</code>, etc. cannot be pooled.</p>
+<p>You unfortunately cannot use <code>predict()</code> with a <code>mira</code> object. To use <code>predict</code>, one trick is to first stack the imputed datasets into one mega dataset, and then fit your model on this complete dataset.</p>
 </section>
 <section id="extensions" class="level2" data-number="11.7">
 <h2 data-number="11.7" class="anchored" data-anchor-id="extensions"><span class="header-section-number">11.7</span> Extensions</h2>
@@ -1497,9 +1452,9 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 <h3 data-number="11.7.1" class="anchored" data-anchor-id="non-continuous-variables"><span class="header-section-number">11.7.1</span> Non-continuous variables</h3>
 <p>Everything shown above can easily be extended to non-continuous variables. The easiest way to do this is using the <code>mice</code> package. It allows you to specify the type of variable you are imputing, e.g.&nbsp;dichotomous or categorical. <code>Mice</code> will automatically detect and handle non-continuous variables. You can also specify these variables yourself. Here is an example using <code>nhanes</code> data (another built-in R dataset).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load data </span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(nhanes2)</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(nhanes2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load data </span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(nhanes2)</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(nhanes2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age  bmi  hyp chl
 1 20-39   NA &lt;NA&gt;  NA
@@ -1509,9 +1464,9 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 5 20-39 20.4   no 113
 6 60-99   NA &lt;NA&gt; 184</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create some missing values for an ordered categorical variable</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>  nhanes2<span class="sc">$</span>age[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">=</span> <span class="cn">NA</span></span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(nhanes2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create some missing values for an ordered categorical variable</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  nhanes2<span class="sc">$</span>age[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(nhanes2) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age  bmi  hyp chl
 1  &lt;NA&gt;   NA &lt;NA&gt;  NA
@@ -1521,10 +1476,10 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 5  &lt;NA&gt; 20.4   no 113
 6 60-99   NA &lt;NA&gt; 184</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="do">## impute 5 datasets </span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  imp.cat <span class="ot">&lt;-</span> <span class="fu">mice</span>(nhanes2, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">print=</span><span class="cn">FALSE</span>)     </span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  full.cat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>(imp.cat)           <span class="do">## print the first imputed data set</span></span>
-<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(full.cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="do">## impute 5 datasets </span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  imp.cat <span class="ot">&lt;-</span> <span class="fu">mice</span>(nhanes2, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">print=</span><span class="cn">FALSE</span>)     </span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  full.cat <span class="ot">=</span> mice<span class="sc">::</span><span class="fu">complete</span>(imp.cat)        </span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(full.cat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age  bmi hyp chl
 1 40-59 21.7 yes 187
@@ -1537,16 +1492,18 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 </div>
 <p>We can check what imputation method <code>mice</code> used for each variable:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>  imp.cat<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>  imp.cat<span class="sc">$</span>method</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      age       bmi       hyp       chl 
 "polyreg"     "pmm"  "logreg"     "pmm" </code></pre>
 </div>
 </div>
-<p>We can see that <code>mice</code> used the <code>polyreg</code> imputation method for the variable <em>age</em>, which means it treated it as an unordered categorical variable. But this is an ordered variable: higher values categories signified older age. We can manually force <code>mice</code> to treat <em>age</em> as an ordered categorical variable. We will keep the imputation methods for the remaining variables the same.</p>
+<p>We can see that <code>mice</code> used the <code>polyreg</code> imputation method for the variable <em>age</em>, which means it treated it as an unordered categorical variable. But we know our <em>age</em> variable is an ordered variable: higher values categories signified older age. We can manually force <code>mice</code> to treat <em>age</em> as an ordered as so:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>  imp.cat2 <span class="ot">&lt;-</span> <span class="fu">mice</span>(nhanes2, <span class="at">meth=</span><span class="fu">c</span>(<span class="st">"polr"</span>,<span class="st">"pmm"</span>,<span class="st">"logreg"</span>,<span class="st">"pmm"</span>), <span class="at">m=</span><span class="dv">5</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(mice<span class="sc">::</span><span class="fu">complete</span>(imp.cat2, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>  imp.cat2 <span class="ot">&lt;-</span> <span class="fu">mice</span>(nhanes2, </span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">meth=</span><span class="fu">c</span>(<span class="st">"polr"</span>,<span class="st">"pmm"</span>,<span class="st">"logreg"</span>,<span class="st">"pmm"</span>),</span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">m=</span><span class="dv">5</span>, <span class="at">print=</span><span class="cn">FALSE</span>)</span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(mice<span class="sc">::</span><span class="fu">complete</span>(imp.cat2, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age  bmi hyp chl
 1 40-59 27.5 yes 184
@@ -1556,7 +1513,7 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 5 40-59 20.4  no 113
 6 60-99 22.7  no 184</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>  imp.cat2<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>  imp.cat2<span class="sc">$</span>method</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     age      bmi      hyp      chl 
   "polr"    "pmm" "logreg"    "pmm" </code></pre>
@@ -1566,20 +1523,20 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 <section id="multi-level-data" class="level3" data-number="11.7.2">
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="multi-level-data"><span class="header-section-number">11.7.2</span> Multi-level data</h3>
 <p>Multilevel data gets more tricky: should we impute taking into account cluster? How do we do that?</p>
-<p>For an initial pass, I would recommend simply doing regression imputation <em>ignoring</em> cluster/grouping, and then adding in that dummy variable of whether a value is imputed.</p>
+<p>For an initial pass, I recommend simply doing regression imputation <em>ignoring</em> cluster/grouping, and then adding in a dummy variable of whether a value is imputed.</p>
 </section>
 <section id="longitudinal-data" class="level3" data-number="11.7.3">
 <h3 data-number="11.7.3" class="anchored" data-anchor-id="longitudinal-data"><span class="header-section-number">11.7.3</span> Longitudinal data</h3>
 <p>With longitudinal data we can often use all our data even for individuals with missing data on the outcome, if we assume data are MAR (“Missing at Random”). MAR means that conditional on the observed data, missingness may depend on any observed data, but not on unobserved data. we explore our missing data on individuals over time and on outcomes as above to get a sense of whether MAR is a reasonable assumption or not. Then <code>lmer</code> basically handles the rest for us, as far as we have enough observations per individual, on average, to estimate the number of random effects we are trying to estimate. With respect to missing data on covariates or predictors, you can handle those with one of the methods described above.</p>
 <p>Here we show how to explore missing data in longitudinal analysis using data on toenail detachment, which you will see in the unit on generalized MLMs. The data is from a RCT where patients were getting a different type of drug to prevent toenail detachment (the outcome).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load data</span></span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>  toes <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dta</span>( <span class="st">"data/toenail.dta"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load data</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  toes <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dta</span>( <span class="st">"data/toenail.dta"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>First, let’s look at how many times patients were observed.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## how many time points per patient?</span></span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>( <span class="fu">table</span>( toes<span class="sc">$</span>patient ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="do">## how many time points per patient?</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>( <span class="fu">table</span>( toes<span class="sc">$</span>patient ) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   1   2   3   4   5   6   7 
@@ -1588,26 +1545,26 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 </div>
 <p>We have 224 patients observed at all 7 time points, and the rest of the patients are observed at fewer time points, between 1 and 6.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define function </span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>summarise.patient <span class="ot">=</span> <span class="cf">function</span>( patient ) {</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>    pat <span class="ot">=</span> <span class="fu">rep</span>( <span class="st">"."</span>, <span class="dv">7</span> )</span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>    pat[ patient<span class="sc">$</span>visit ] <span class="ot">=</span> <span class="st">'X'</span></span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>( pat, <span class="at">collapse=</span><span class="st">""</span> )</span>
-<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## For each patient, this code makes a string of "." </span></span>
-<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>  <span class="do">## then it replaces all dots with an "X" if we have data for that visit</span></span>
-<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize missingness  </span></span>
-<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> toes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( patient ) <span class="sc">%&gt;%</span></span>
-<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do</span>( <span class="at">pattern =</span> <span class="fu">summarise.patient</span>(.) ) <span class="sc">%&gt;%</span></span>
-<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(pattern))</span>
-<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Group the data by patient </span></span>
-<span id="cb124-15"><a href="#cb124-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Then use the do() command on each chunk of our dataframe</span></span>
-<span id="cb124-16"><a href="#cb124-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## The "." means "the chunk" (it is a pronoun, essentially).  </span></span>
-<span id="cb124-17"><a href="#cb124-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## This code creates a list of character vectors</span></span>
-<span id="cb124-18"><a href="#cb124-18" aria-hidden="true" tabindex="-1"></a>  <span class="do">## The unnest() takes our character vector out of this list made by "do"</span></span>
-<span id="cb124-19"><a href="#cb124-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-20"><a href="#cb124-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( miss )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define function </span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>summarise.patient <span class="ot">=</span> <span class="cf">function</span>( patient ) {</span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>    pat <span class="ot">=</span> <span class="fu">rep</span>( <span class="st">"."</span>, <span class="dv">7</span> )</span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>    pat[ patient<span class="sc">$</span>visit ] <span class="ot">=</span> <span class="st">'X'</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>( pat, <span class="at">collapse=</span><span class="st">""</span> )</span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## For each patient, this code makes a string of "." </span></span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="do">## then it replaces all dots with an "X" if we have data for that visit</span></span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize missingness  </span></span>
+<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> toes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( patient ) <span class="sc">%&gt;%</span></span>
+<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do</span>( <span class="at">pattern =</span> <span class="fu">summarise.patient</span>(.) ) <span class="sc">%&gt;%</span></span>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(pattern))</span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Group the data by patient </span></span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Then use the do() command on each chunk of our dataframe</span></span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## The "." means "the chunk" (it is a pronoun, essentially).  </span></span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## This code creates a list of character vectors</span></span>
+<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a>  <span class="do">## The unnest() takes our character vector out of this list made by "do"</span></span>
+<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( miss )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   patient pattern
@@ -1620,11 +1577,11 @@ Solar.R         0.06      0.023    2.58    0.011</code></pre>
 6       7 XXXXXXX</code></pre>
 </div>
 </div>
-<p>Here we see the different patterns of missing outcomes, i.e., when patients leave and if they come back. When patients leave and never come back, regardless of the time point (see lines 4 and 5), we have monotone missingness.</p>
+<p>Here we see the different patterns of missing outcomes, i.e., when patients leave and if they come back. When patients leave and never come back, regardless of the time point (see lines 4 and 5), we have “monotone missingness.”</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort missing patterns in decreasing order</span></span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="do">## starting with no missingness </span></span>
-<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>( <span class="fu">table</span>( miss<span class="sc">$</span>pattern ), <span class="at">decreasing=</span><span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort missing patterns in decreasing order</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="do">## starting with no missingness </span></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>( <span class="fu">table</span>( miss<span class="sc">$</span>pattern ), <span class="at">decreasing=</span><span class="cn">TRUE</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 XXXXXXX XXXXX.X XXXX.XX XXX.... X...... XXXXX.. XXXX... XX..... XXX.XXX XXXXXX. 
@@ -1632,11 +1589,11 @@ XXXXXXX XXXXX.X XXXX.XX XXX.... X...... XXXXX.. XXXX... XX..... XXX.XXX XXXXXX.
 XXX.X.. XXXX..X X.XXXXX XX..X.. XX.XXX. XX.XXXX XXX..XX XXX.X.X 
       2       2       1       1       1       1       1       1 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize number of data patterns </span></span>
-<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> miss <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( pattern ) <span class="sc">%&gt;%</span></span>
-<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>( <span class="at">n=</span><span class="fu">n</span>() )</span>
-<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> <span class="fu">arrange</span>( miss, <span class="sc">-</span>n )</span>
-<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>miss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize number of data patterns </span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> miss <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( pattern ) <span class="sc">%&gt;%</span></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>( <span class="at">n=</span><span class="fu">n</span>() )</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>miss <span class="ot">=</span> <span class="fu">arrange</span>( miss, <span class="sc">-</span>n )</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>miss</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 2
    pattern     n
@@ -1660,103 +1617,45 @@ XXX.X.. XXXX..X X.XXXXX XX..X.. XX.XXX. XX.XXXX XXX..XX XXX.X.X
 17 XXX..XX     1
 18 XXX.X.X     1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="do">## percent missing data (224 complete cases)</span></span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="dv">224</span> <span class="sc">/</span> <span class="fu">sum</span>( miss<span class="sc">$</span>n )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="do">## percent missing data (224 complete cases)</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="dv">224</span> <span class="sc">/</span> <span class="fu">sum</span>( miss<span class="sc">$</span>n )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.762</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 76% of patients with complete data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 76% of patients with complete data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Second, we look at patterns of missing outcomes. The outcome here is toenail detachment.</p>
+<p>We can look at patterns of missing outcomes by reshaping to wide, to have one column per time point, and then looking at the missing data patterns with <code>md.pattern()</code> from the <code>mice</code> package:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="do">## reshape data to wide </span></span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  dat.wide <span class="ot">=</span> <span class="fu">reshape</span>( toes2, <span class="at">direction=</span><span class="st">"wide"</span>, <span class="at">v.names=</span><span class="st">"outcome"</span>,</span>
-<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">idvar=</span><span class="st">"patient"</span>, <span class="at">timevar =</span> <span class="st">"visit"</span> )</span>
-<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>( dat.wide )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   patient treatment           Tx outcome.1 outcome.2 outcome.3 outcome.4
-1        1         1 Itraconazole         1         1         1         0
-8        2         0  Terbinafine         0         0         1         1
-14       3         0  Terbinafine         0         0         0         0
-21       4         0  Terbinafine         1         0         0         0
-28       6         1 Itraconazole         1         1         1         0
-35       7         1 Itraconazole         0         0         0         0
-   outcome.5 outcome.6 outcome.7
-1          0         0         0
-8          0         0        NA
-14         0         0         1
-21         0         0         0
-28         0         0         0
-35         1         1         1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## looking at missing data with mice package</span></span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">md.pattern</span>( dat.wide )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="do">## reshape data to wide </span></span>
+<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>  dat.wide <span class="ot">=</span> <span class="fu">reshape</span>( toes2, <span class="at">direction=</span><span class="st">"wide"</span>, <span class="at">v.names=</span><span class="st">"outcome"</span>,</span>
+<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">idvar=</span><span class="st">"patient"</span>, <span class="at">timevar =</span> <span class="st">"visit"</span> )</span>
+<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-5"><a href="#cb127-5" aria-hidden="true" tabindex="-1"></a><span class="do">## looking at missing data with mice package</span></span>
+<span id="cb127-6"><a href="#cb127-6" aria-hidden="true" tabindex="-1"></a>  pat <span class="ot">&lt;-</span> <span class="fu">md.pattern</span>( dat.wide )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    patient treatment Tx outcome.1 outcome.2 outcome.3 outcome.4 outcome.7
-224       1         1  1         1         1         1         1         1
-21        1         1  1         1         1         1         1         1
-10        1         1  1         1         1         1         1         1
-2         1         1  1         1         1         1         1         1
-3         1         1  1         1         1         1         1         0
-5         1         1  1         1         1         1         1         0
-4         1         1  1         1         1         1         1         0
-3         1         1  1         1         1         1         0         1
-1         1         1  1         1         1         1         0         1
-1         1         1  1         1         1         1         0         1
-2         1         1  1         1         1         1         0         0
-6         1         1  1         1         1         1         0         0
-1         1         1  1         1         1         0         1         1
-1         1         1  1         1         1         0         1         0
-1         1         1  1         1         1         0         0         0
-3         1         1  1         1         1         0         0         0
-1         1         1  1         1         0         1         1         1
-5         1         1  1         1         0         0         0         0
-          0         0  0         0         6        11        22        30
-    outcome.5 outcome.6    
-224         1         1   0
-21          1         0   1
-10          0         1   1
-2           0         0   2
-3           1         1   1
-5           1         0   2
-4           0         0   3
-3           1         1   1
-1           1         0   2
-1           0         1   2
-2           1         0   3
-6           0         0   4
-1           1         1   1
-1           1         1   2
-1           1         0   4
-3           0         0   5
-1           1         1   1
-5           0         0   6
-           31        50 150</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Another way to generating missingness patterns is to create a function</span></span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="do">## This function takes the visits and outcomes and puts a 1 or 0 if there is an</span></span>
-<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="do">## outcome and a dot if missing.</span></span>
-<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>make.pat <span class="ot">=</span> <span class="cf">function</span>( visit, outcome ) {</span>
-<span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a>    pat <span class="ot">=</span> <span class="fu">rep</span>( <span class="st">"."</span>, <span class="dv">7</span> )</span>
-<span id="cb137-6"><a href="#cb137-6" aria-hidden="true" tabindex="-1"></a>    pat[ visit ] <span class="ot">=</span> outcome</span>
-<span id="cb137-7"><a href="#cb137-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>( pat, <span class="at">collapse=</span><span class="st">""</span> )</span>
-<span id="cb137-8"><a href="#cb137-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb137-9"><a href="#cb137-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-10"><a href="#cb137-10" aria-hidden="true" tabindex="-1"></a><span class="do">## call our function on all our patients.</span></span>
-<span id="cb137-11"><a href="#cb137-11" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">=</span> toes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( patient ) <span class="sc">%&gt;%</span></span>
-<span id="cb137-12"><a href="#cb137-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>( <span class="at">tx =</span> Tx[[<span class="dv">1</span>]],</span>
-<span id="cb137-13"><a href="#cb137-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">num.obs =</span> <span class="fu">n</span>(),</span>
-<span id="cb137-14"><a href="#cb137-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">num.detach =</span> <span class="fu">sum</span>( outcome ),</span>
-<span id="cb137-15"><a href="#cb137-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">out =</span> <span class="fu">make.pat</span>( visit, outcome ) )</span>
-<span id="cb137-16"><a href="#cb137-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-17"><a href="#cb137-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( outcomes, <span class="dv">20</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Another way to generate missingness patterns is to create a function. The following function takes the visits and outcomes and puts a 1 or 0 if there is an outcome and a dot if missing:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>make.pat <span class="ot">=</span> <span class="cf">function</span>( visit, outcome ) {</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>    pat <span class="ot">=</span> <span class="fu">rep</span>( <span class="st">"."</span>, <span class="dv">7</span> )</span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>    pat[ visit ] <span class="ot">=</span> outcome</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>( pat, <span class="at">collapse=</span><span class="st">""</span> )</span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="do">## call our function on all our patients.</span></span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">=</span> toes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>( patient ) <span class="sc">%&gt;%</span></span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>( <span class="at">tx =</span> Tx[[<span class="dv">1</span>]],</span>
+<span id="cb128-10"><a href="#cb128-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">num.obs =</span> <span class="fu">n</span>(),</span>
+<span id="cb128-11"><a href="#cb128-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">num.detach =</span> <span class="fu">sum</span>( outcome ),</span>
+<span id="cb128-12"><a href="#cb128-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">out =</span> <span class="fu">make.pat</span>( visit, outcome ) )</span>
+<span id="cb128-13"><a href="#cb128-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-14"><a href="#cb128-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( outcomes, <span class="dv">20</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 5
    patient tx           num.obs num.detach out    
@@ -1782,26 +1681,6 @@ XXX.X.. XXXX..X X.XXXXX XX..X.. XX.XXX. XX.XXXX XXX..XX XXX.X.X
 19      22 Terbinafine        7          3 1110000
 20      23 Itraconazole       7          0 0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="do">## how many folks have no detachments?</span></span>
-<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( outcomes<span class="sc">$</span>num.detach )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  0   1   2   3   4   5   6   7 
-163  25  25  31  30   8   4   8 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="dv">163</span> <span class="sc">/</span> <span class="fu">nrow</span>(outcomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.554</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="do">## how many always detached?</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( outcomes<span class="sc">$</span>num.detach <span class="sc">==</span> outcomes<span class="sc">$</span>num.obs )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span> <span class="sc">/</span> <span class="fu">nrow</span>(outcomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0544</code></pre>
-</div>
 </div>
 </section>
 </section>
@@ -1823,7 +1702,7 @@ XXX.X.. XXXX..X X.XXXXX XX..X.. XX.XXX. XX.XXXX XXX..XX XXX.X.X
 <p>In the following code, we look at the object we get back from <code>mice()</code>. It has lots of parts that we can peek into.</p>
 <p>First, the <code>imp</code> list inside of <code>imp</code> stores all of our newly imputed data. It is itself a list of each variable with their imputed values:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Ozone
       1   2   3   4   5
@@ -1891,7 +1770,7 @@ $Day
 [1] 1 2 3 4 5
 &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>( imp<span class="sc">$</span>imp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>( imp<span class="sc">$</span>imp )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 6
  $ Ozone  :'data.frame':    37 obs. of  5 variables:
@@ -1931,7 +1810,7 @@ $Day
   ..$ 4: logi(0) 
   ..$ 5: logi(0) </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>( imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>( imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   37 obs. of  5 variables:
  $ 1: int  6 12 14 37 11 65 22 13 63 23 ...
@@ -1944,11 +1823,11 @@ $Day
 <p>We see that Ozone and Solar.R have imputed values, and the other variables do not.</p>
 <p>Next, we see two missing observations in our original data and then see the two imputed values for these two missing observations.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>  airqualitysub<span class="sc">$</span>Ozone</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a>  airqualitysub<span class="sc">$</span>Ozone</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 41 36 12 18 NA 28 23 19  8 NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone[,<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   6  12  14  37  11  65  22  13  63  23  24  64 115  66  44  23  20  59  40
 [20]  40  23  44  30  45  44  89  16  46  35  20  28 115  46  16  41  50  24</code></pre>
@@ -1956,20 +1835,20 @@ $Day
 </div>
 <p>We can make (the hard way) a vector of Ozone by plugging our missing values into the original data. But the <code>complete()</code> method, above, is preferred.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>  oz <span class="ot">=</span> airqualitysub<span class="sc">$</span>Ozone</span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a>  oz[ <span class="fu">is.na</span>( oz ) ] <span class="ot">=</span> imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>  oz <span class="ot">=</span> airqualitysub<span class="sc">$</span>Ozone</span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>  oz[ <span class="fu">is.na</span>( oz ) ] <span class="ot">=</span> imp<span class="sc">$</span>imp<span class="sc">$</span>Ozone[,<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in oz[is.na(oz)] = imp$imp$Ozone[, 1]: number of items to replace is
 not a multiple of replacement length</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>  oz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>  oz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 41 36 12 18  6 28 23 19  8 12</code></pre>
 </div>
 </div>
 <p><strong>What else is there in <code>imp</code>?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(imp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(imp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "data"            "imp"             "m"               "where"          
  [5] "blocks"          "call"            "nmis"            "method"         
@@ -1981,7 +1860,7 @@ not a multiple of replacement length</code></pre>
 </div>
 <p><strong>What was our imputation method?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>method</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
   "pmm"   "pmm"      ""      ""      ""      "" </code></pre>
@@ -1990,7 +1869,7 @@ not a multiple of replacement length</code></pre>
 <p>Mean imputation for each variable with missing values. Later this will say other thing.</p>
 <p><strong>What was used to impute what?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>predictorMatrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>  imp<span class="sc">$</span>predictorMatrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Ozone Solar.R Wind Temp Month Day
 Ozone       0       1    1    1     1   1
@@ -2006,11 +1885,11 @@ Day         1       1    1    1     1   0</code></pre>
 <h2 data-number="11.10" class="anchored" data-anchor-id="appendix-the-amelia-package"><span class="header-section-number">11.10</span> Appendix: The amelia package</h2>
 <p>Amelia is another multiple imputation and missing data package. We do not prefer it, but have some demonstration code in the following, for reference.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(Amelia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(Amelia)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For missingness we can make the following:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">missmap</span>(airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">missmap</span>(airquality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2022,13 +1901,13 @@ Day         1       1    1    1     1   0</code></pre>
 <p>Each row of the plot is a row of the data, and missing values are shown in brown. But ugly! And hard to see any trends in the missingness.</p>
 <p>You can use the <code>Amelia</code> package to do mean imputation.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
-<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="do">## exclude variables that do not vary</span></span>
-<span id="cb169-4"><a href="#cb169-4" aria-hidden="true" tabindex="-1"></a>  a.airquality <span class="ot">=</span> airquality <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Month)</span>
-<span id="cb169-5"><a href="#cb169-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-6"><a href="#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="do">## impute data</span></span>
-<span id="cb169-7"><a href="#cb169-7" aria-hidden="true" tabindex="-1"></a>  a.imp <span class="ot">&lt;-</span> <span class="fu">amelia</span>(a.airquality, <span class="at">m=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="do">## exclude variables that do not vary</span></span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>  a.airquality <span class="ot">=</span> airquality <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Month)</span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="do">## impute data</span></span>
+<span id="cb152-7"><a href="#cb152-7" aria-hidden="true" tabindex="-1"></a>  a.imp <span class="ot">&lt;-</span> <span class="fu">amelia</span>(a.airquality, <span class="at">m=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-- Imputation 1 --
 
@@ -2050,7 +1929,7 @@ Day         1       1    1    1     1   0</code></pre>
 
   1  2  3  4  5  6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>  a.imp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>  a.imp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Amelia output with 5 imputed datasets.
@@ -2068,22 +1947,22 @@ Imputation 5:  6</code></pre>
 </div>
 <p>We can plot our imputed values against our observed values to check that they make sense. We will do this for just one of five datasets we just imputed using <code>Amelia</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="do">## put imputed values from the third dataset in an object</span></span>
-<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a>  one_imp <span class="ot">&lt;-</span> a.imp<span class="sc">$</span>imputations[[<span class="dv">3</span>]]<span class="sc">$</span>Ozone</span>
-<span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb173-4"><a href="#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="do">## make object with observed values </span></span>
-<span id="cb173-5"><a href="#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="do">## from observations without missing Ozone values</span></span>
-<span id="cb173-6"><a href="#cb173-6" aria-hidden="true" tabindex="-1"></a>  obs_data <span class="ot">&lt;-</span> a.airquality<span class="sc">$</span>Ozone </span>
-<span id="cb173-7"><a href="#cb173-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb173-8"><a href="#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="do">## make a plot overlaying observed and imputed values</span></span>
-<span id="cb173-9"><a href="#cb173-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(one_imp[<span class="fu">is.na</span>(obs_data)], <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Ozone"</span>,</span>
-<span id="cb173-10"><a href="#cb173-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">main=</span><span class="st">"Histogram of Imputed Values in 3rd Imputation </span><span class="sc">\n</span><span class="st">Compared to Density in Observed Data"</span>,</span>
-<span id="cb173-11"><a href="#cb173-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">"cyan"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.02</span>))</span>
-<span id="cb173-12"><a href="#cb173-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">density</span>(obs_data[<span class="sc">!</span><span class="fu">is.na</span>(obs_data)]), <span class="at">col=</span><span class="st">"darkblue"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="do">## put imputed values from the third dataset in an object</span></span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a>  one_imp <span class="ot">&lt;-</span> a.imp<span class="sc">$</span>imputations[[<span class="dv">3</span>]]<span class="sc">$</span>Ozone</span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="do">## make object with observed values </span></span>
+<span id="cb156-5"><a href="#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="do">## from observations without missing Ozone values</span></span>
+<span id="cb156-6"><a href="#cb156-6" aria-hidden="true" tabindex="-1"></a>  obs_data <span class="ot">&lt;-</span> a.airquality<span class="sc">$</span>Ozone </span>
+<span id="cb156-7"><a href="#cb156-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb156-8"><a href="#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="do">## make a plot overlaying observed and imputed values</span></span>
+<span id="cb156-9"><a href="#cb156-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(one_imp[<span class="fu">is.na</span>(obs_data)], <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Ozone"</span>,</span>
+<span id="cb156-10"><a href="#cb156-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">main=</span><span class="st">"Histogram of Imputed Values in 3rd Imputation </span><span class="sc">\n</span><span class="st">Compared to Density in Observed Data"</span>,</span>
+<span id="cb156-11"><a href="#cb156-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">"cyan"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.02</span>))</span>
+<span id="cb156-12"><a href="#cb156-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">density</span>(obs_data[<span class="sc">!</span><span class="fu">is.na</span>(obs_data)]), <span class="at">col=</span><span class="st">"darkblue"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="intro_missing_data_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2147,13 +2026,14 @@ Imputation 5:  6</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
