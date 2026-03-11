@@ -9,3 +9,5 @@ book-output/
 *_cache/
 /.quarto/
 _book/
+
+**/*.quarto_ipynb

@@ -4,6 +4,8 @@ author: "Maxime Rischard and Luke Miratrix"
 editor: 
   markdown: 
     wrap: sentence
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE, cache=FALSE}
@@ -22,21 +24,17 @@ It is where the skeletons lie.
 There's a range of options available, which are, broadly speaking:
 
 1.  Delete the observations with missing covariates (this is a "complete case analysis")
-2.  Plug in some kind of reasonable value for the missing covariate. This is called "imputation." We discuss three ways of doing this that are increasingly sophisticated and layered on each other:
+2.  Plug in reasonable values for the missing values. This is called "imputation." We discuss three ways of doing this that are increasingly sophisticated and layered on each other:
 
-<!-- -->
+ a.  Mean imputation. Simply take the mean of all the observations where you know the value, and then use that for anything that is missing.
+ b.  Regression imputation. Generate regression equations describing how all the variables are connected, and use those to predict any missing value.
+ c.  Stochastic regression imputation. Use regression imputation, but also add some residual noise to all our imputed values so that our imputed values have as much variation as our actual values (otherwise our imputed values will tend to be all clumped together).
 
-a.  Mean imputation. Simply take the mean of all the observations where you know the value, and then use that for anything that is missing.
-b.  Regression imputation. You generate regression equations describing how all the variables are connected, and use those to predict any missing value.
-c.  Stochastic regression imputation. Here we use regression imputation, but we also add some residual noise to all our imputed values so that our imputed values have as much variation as our actual values (otherwise our imputed values will tend to be all clumped together).
-
-<!-- -->
-
-3.  Multiply impute the missing data, by fully modeling the covariate and the missingness, and generating a range of complete datasets under this model. Here you end up with a bunch of complete datasets that are all "reasonable guesses" as to what the full dataset might have been. You then analyze each one, and aggregate your findings across them to get a final answer.
+3.  Multiply impute the missing data, by fully modeling the covariate and the missingness, and generating a range of complete datasets under this model. Here you end up with a collection of complete datasets that are all "reasonable guesses" as to what the full dataset might have been. You then analyze each one, and aggregate your findings across them to get a final answer.
 
 The first two general approaches are imperfect, while the third is often more work than the original analysis that we were hoping to perform.
 For this course, doing a 2a, 2b, or 2c are all reasonable choices.
-If you have very little missing data you can often get away with 1.
+If you have very little missing data you can often get away with #1.
 We have no expectations that people will take the plunge into #3 (multiple imputation).
 In real life, people will often analyze their data with a complete case analysis and some other strategy, and then compare the results.
 In Education, if missingness is below 10% people usually just do mean imputation, but regression imputation would probably be superior.
@@ -79,8 +77,6 @@ The mice package has a variety of plots to show us patterns of missingness:
 This plot gives us the different missing data patterns and the number of observations that have each missing data pattern.
 For example, the second row in the plot says there are 35 observations that have a missing data pattern where only Ozone is missing.
 
-Easier to understand patterns!
-
 We can also just look at 10 observations to see everything that is going on.
 Here we take the first 10 rows of our dataset, but could also take a random 10 row with the tidyverse's `sample_n` method.
 
@@ -89,11 +85,11 @@ Here we take the first 10 rows of our dataset, but could also take a random 10 r
   airqualitysub
 ```
 
-We see that we have one observation missing two covariates and one each of missing Ozone only and Solar.R only.
+We see that we have one observation missing two covariates and one each of missing `Ozone` only and `Solar.R` only.
 
 ### The VIM Package
 
-The VIM package gives some alternate plots to explore missing data patterns.
+The `VIM` package gives some alternate plots to explore missing data patterns.
 For example, `aggr()`:
 
 ```{r, fig.height=3, fig.width=4}
@@ -103,8 +99,8 @@ For example, `aggr()`:
       ylab=c("Histogram of missing data","Pattern"))
 ```
 
-On the left, we have the proportion of missing data for each variable in our dataset.
-We can see that Ozone and Solar.R have missing values.
+On the left, we have the proportion of missing data for each variable in our dataset; 
+We can see that `Ozone` and `Solar.R` have missing values, and `Ozone` is clearly missing at higher rates than `Solar.R`
 On the right, we have the joint distribution of missingness.
 We can see that 111 observations have no missing values.
 From those with missing values, the majority have missing values for Ozone, some have missing values for Solar.R and only 2 observations have missing values for both Ozone and Solar.R.
@@ -158,10 +154,12 @@ We can also drop observations with missing data ourselves instead of letting R d
 ## complete cases on all variables in the data set 
 complete.v1 = filter( airquality, complete.cases(airquality) )
   
-## drop observations with missing values, but ignoring a specific variable  
-complete.v2 = filter(airquality, complete.cases(select( airquality, -Wind) ) )
+## drop observations with missing values, but ignoring a specific
+## variable
+complete.v2 = filter( airquality, 
+                      complete.cases( select( airquality, -Wind) ) )
 
-## drop observations with missing values on a specific variable  
+## drop observations with missing values on a specific variable
 complete.v3 = filter(airquality, !is.na(Ozone))
 ```
 
@@ -226,7 +224,7 @@ The mice package is a package that can do some quite complex imputation, and so 
 This object, which is a `mids` object (see `help(mids)`), contains the multiply imputed dataset (or in our case, so far, singly imputed).
 The `mice` package then provides a lot of nice functions allowing you to get your imputed information out of this object.
 
-We first demonstrate this for the 10 observations sampled above.
+We first demonstrate this for the smaller 10 observations dataset we made above.
 Mice is generally going to be a two-step process: impute data, get completed dataset.
 
 For step 1:
@@ -263,7 +261,7 @@ We use the `ici` (Incomplete Case Indication) function to list all rows with any
 
 Note how we have a TRUE or FALSE for each row of our data.
 
-We then store this as a covariate in our completed dataset:
+We then store our `ici` values as a covariate in our completed dataset:
 
 ```{r}
   cmp$imputed = ici(airquality)
@@ -302,28 +300,24 @@ It also gives the big spike at the mean for the histogram.
 
 We now need to discuss a sad aspect of R.
 The short story is, different packages have functions with the same names and so if you have both packages loaded you will need to specify which package to use when calling such a function.
-You can do this by giving the "surname" of the function at the beginning of the function call (like, I believe, the Chinese).
-This comes up because for us the method `complete()` exists both in the tidyverse and in mice.
+You can do this by giving the "surname" of the function at the beginning of the function call.
+Namespace collision comes up here because the method `complete()` exists both in the tidyverse and in mice.
 In tidyverse, `complete()` fills in rows of missing combinations of values.
 In mice, `complete()` gives us a completed dataset after we have made an imputation call.
 
 It turns out that since we loaded tidyverse first and mice second, the mice's `complete()` method is the default.
 But if we loaded the packages in the other order, we would get strange errors.
-To be clear, we thus tell R to use `mice` by writing:
+To be clear, we can tell R to use `mice`'s `complete()` by writing
 
 ```{r, fig.height=3}
   cmp = mice::complete( imp )
 ```
 
 In general, you can detect such "namespace collisions" by noticing weird error messages all of a sudden when you don't expect them.
-You can then type, for example, `help( complete )` and it will list all the different `complete`s around.
-
-```{r, eval=FALSE}
-  help( complete )
-```
+You can then type `help( complete )` in the console and the help index page will list all the different `complete`s that have been loaded.
 
 Also when you load a package it will write down what functions are getting mixed up for you.
-If you were looking at your R code you would get something like this:
+If you were looking at your R console output you should see something like this:
 
 ```         
 tidyr::complete() masks mice::complete()
@@ -333,11 +327,11 @@ tidyr::complete() masks mice::complete()
 
 Regression imputation is half way between mean imputation and multiple imputation.
 In regression imputation we predict what values we expect for anything missing based on the other values of the observation.
-For example, if we know that urban/rural is correlated with race, we might impute a different value for race if we know an observation came from an urban environment vs. rural.
+For example, if, in the nonmissing part of our data, urban/rural is correlated with race, we might impute a different value for race if we know an observation came from an urban environment vs. rural.
 We do this with regression: we fit a model predicting each variable using the others and then use that regression model to predict any missing values.
 
 We can do this manually, but then it gets very hard when multiple variables are missing for a given observation.
-The mice package is more clever: it does variables one at a time, and the cycles around so everything can get imputed.
+The mice package is more clever: it does variables one at a time, and the cycles around so everything can get imputed using the completed data from earlier iterations.
 
 ### Manually
 
@@ -354,9 +348,9 @@ Here is how to use other variables to predict missing values.
   pred
 ```
 
-But now we have to merge back in, and we didn't solve for case 5 because we are missing the variable we would use to predict the other missing variable.
+But now we have to merge our imputed data back in, and we still haven't solved for observation 5 because we are missing the variable we would use to predict the other missing variable!
 Ick.
-This is where missing data gets *really* hard (when we have multiple missing values on multiple variables).
+Multiple missing values on multiple variables is where missing data gets *really* hard.
 So let's quit now and turn to a package that will handle all of this for us.
 
 ### Mice
@@ -364,17 +358,21 @@ So let's quit now and turn to a package that will handle all of this for us.
 To do regression imputation using mice, we simply call the `mice()` method:
 
 ```{r}
-  imp <- mice(airquality[,1:2], method="norm.predict", m=1, maxit=3,seed=1)
+  imp <- mice(airquality[,1:2], method="norm.predict",
+              m=1, maxit=3 )
 ```
 
-We have everything!
+The `m=1` means "make 1 imputed dataset." The `maxit=3` means "Do a maximum of 3 cycles of imputation (so each variable could be imputed up to three times).
+
+Now `imp` is just like with mean imputation and so we have everything!
 How did it do it?
 By *chaining equations*.
-First we start with mean imputation.
-Then we use our fit model to predict for one covariate, and then we use those predicted scores to predict for the next covariate, and so forth.
-We cycle back and then everything is jointly predicting everything else.
+First `mice` starts with mean imputation. This gives an initial complete dataset.
+Then `mice` uses a prediction model to re-predict for the missing values for one covariate. We now have a new and improved (and still complete) dataset.
+We use this _new_ dataset to run a prediction model on the next covariate, and so forth.
+We cycle around a few times and then everything is jointly predicting everything else.
 
-The `complete()` method gives us a complete dataset with everything imputed.
+The `complete()` method gives us the final complete dataset with everything imputed.
 Like so:
 
 ```{r}
@@ -404,7 +402,7 @@ ggplot( cdat, aes(y=Ozone, x=Solar.R, col=imputed) ) +
     labs( y="Ozone (ppb)", x="Solar Radiation (lang)" )
 ```
 
-This is better than mean imputation.
+Our regression imputation is better than mean imputation.
 See how we impute different Ozone for different Solar Radiation values, taking advantage of the information of knowing that they are correlated?
 But it still is obvious what is mean imputed and what is not.
 Also, the variance of our imputed values still does not contain the residual variation around the predicted values that we would get in real data.
@@ -413,22 +411,33 @@ We can do one more enhancement to fix this.
 ### Stochastic regression imputation
 
 We extend regression imputation by randomly drawing observations that *look like* real ones.
-See in the two imputations below we get slightly different values for our imputed data.
+The easiest way to think of this is we first predict our missing value, and then we add some residual noise to account for the fact that any covariate value would not be _perfectly_ predicted by the other values. 
 
-Here we do it on our mini-dataset and look at the imputed values for our observations with missing values only:
+To illustrate, we first do it on our mini-dataset and look at the imputed values for our observations with missing values only:
 
 ```{r}
-  imp <- mice(airqualitysub[,1:2],method="norm.nob",m=1,maxit=1,seed=1)
-  imp$imp
-  
-  imp <- mice(airqualitysub[,1:2],method="norm.nob",m=1,maxit=1,seed=4)
-  imp$imp
+imp <- mice( airqualitysub[,1:2], 
+             method="norm.nob",
+             m=1, maxit=1, seed=1234)
+imp$imp
+
+imp <- mice( airqualitysub[,1:2],
+             method="norm.nob", 
+             m=1, maxit=1, seed=4234)
+imp$imp
 ```
+
+
+Stochastic imputation is _random_.
+Because of this, we now have a new argument to `mice()`: the `seed = 1234` sets the random seed so that we can get the same results if we run this code again.
+We set two different seeds to get two different randomly generated imputations.
+Note in the two imputations above how we get slightly different values for our imputed data.
 
 Now let's do it on the full data and look at the imputed values and compare to our plots above.
 
 ```{r, fig.height=3}
-  imp <- mice(airquality[,1:2],method="norm.nob",m=1,maxit=1,seed=1)
+  imp <- mice(airquality[,1:2], method="norm.nob",
+              m=1,maxit=1,seed=13434)
 
   cdat = mice::complete( imp )
   cdat$imputed = ici( airquality )
@@ -446,6 +455,27 @@ Better, but not perfect.
 What is better?
 What is still not perfect?
 
+**First aside:** All variables you'll be using for your final analysis model should be included in the imputation model.
+Notice we included the full dataset in `mice`, not just the variables with missing values.
+This way we can account for associations between all the outcome and the predictors in the model we'll be fitting.
+Your imputation model can even be more complicated than your model of interest.
+That is, you can include additional variables that predict missing values but will not be part of your final model of interest.
+
+**Second aside:** All variables in your imputation model should be in the correct functional form!
+Quadratic, higher order polynomials and interaction terms are just another variable that we would need to impute.
+Although it may seem logical to impute your variables first and then calculate the interaction or non-linear term later, this can lead to bias.
+
+**Third aside:** The ordering of the variables in the dataset you are feeding into `mice` can make a difference in results and model convergence.
+Generally, you want to order your variables from least missing to most missing.
+Here, we reorder the variables from least to most missing, and obtain different results.
+
+```{r}
+  test = airqualitysub[,c(6,5,4,3,2,1)]
+  head(test)
+  test.imp <- mice(test, seed=2, m=1, print=FALSE)
+```
+
+
 ## Multiple imputation
 
 If missing data is a significant issue in your dataset, then mean or regression imputation can be a bit too hacky and approximate.
@@ -456,44 +486,27 @@ We do this as follows:
 ```{r}
   imp <- mice(airqualitysub, seed=2, print=FALSE)
   imp
-  imp$imp
+```
+
+We can look at our imputed solar values:
+```{r}
+imp$imp$Solar.R
 ```
 
 See multiple columns of imputed data?
-(We have 5 here.)
-
-**First aside:** All variables you'll be using for your model should be included in the imputation model.
-Notice we included the full dataset in `mice`, not just the variables with missing values.
-This way we can account for associations between all the outcome and the predictors in the model we'll be fitting.
-Your imputation model can be more complicated than your model of interest.
-That is, you can include additional variables that predict missing values but will not be part of your final model of interest.
-
-**Second aside:** All variables in your imputation model should be in the correct functional form!
-Quadratic, higher order polynomials and interaction terms are just another variable that we need to impute.
-Although it may seem logical to impute your variables first and then calculate the interaction or non-linear term, this can lead to bias.
-
-**Third aside:** The ordering of the variables in the dataset you are feeding into `mice` can make a difference in results and model convergence.
-Generally, you want to order your variables from least to most missing.
-Here, we reorder the variables from least to most missing, and obtain different results.
-
-```{r}
-  test = airqualitysub[,c(6,5,4,3,2,1)]
-  head(test)
-  test.imp <- mice(test, seed=2, print=FALSE)
-  test.imp$imp
-```
+(We have 5 columns here, one for each imputation, with each row a single observation we are imputing for.)
 
 **How to get each complete dataset?**
 
 ```{r}
 ## first complete dataset 
-  mice::complete(imp, 1)
+mice::complete(imp, 1)
 
 ## and our second complete dataset
-  mice::complete(imp, 2)
+mice::complete(imp, 2)
 ```
 
-See how they are different?
+See how the two datasets are are different?
 They were randomly imputed.
 We basically used the stochastic regression thing, above, multiple times.
 
@@ -508,43 +521,55 @@ On full data:
   imp <- mice(airquality, seed=1, print=FALSE)
 ```
 
-Now we estimate for each imputed dataset using the `with()` method that, in `mice`, will do the regression for each completed dataset.
-See `help with.mids`.
+Once you have imputed, you can estimate for each imputed dataset using the `with()` method that, in `mice`, will do the regression or other specified analysis for each completed dataset.
+See `help with.mids` for more information.
 
 ```{r}
   fit <- with(imp, lm(Ozone ~ Wind + Temp + Solar.R))
-  fit
+  class(fit)
 ```
 
-This can take *any* function call that takes a formula.
-So `glm`, `lm`, whatever... We can then pool the estimates using the standard theory of combining multiply imputed datasets.
-The basic idea is to combine the variation/uncertainty of the multiple sets with the average uncertainty we would have for each set if it was truly complete and not imputed.
+We get back a `mira` object, which is essentially a list of results, one for each imputed dataset.
+The `with()` method can take *any* function call that takes a formula.
+So `glm`, `lm`, whatever...
+
+The next step is to pool the estimates using the standard theory of combining multiply imputed datasets.
+The basic idea is to combine the variation/uncertainty of the multiple sets with the average uncertainty we would have for each set, if it were truly complete and not imputed.
+
+Pooling looks like this:
+```{r}
+pooled <- pool(fit)
+pooled
+```
+
+Parameter estimates generated by `pool` are the average of the parameter estimates from the model fit on each imputed dataset separately.
+The SEs are calculated by averaging the SEs and inflating them a bit based on how much the individual estimates changed--this accounts for the uncertainty from having missing values that we can only guess at, rather than see directly.
+
+We can summarize our analysis to get p-values like this:
+```{r}
+  tab <- summary(pooled)
+  knitr::kable( tab )
+```
+
+We can compare to our old, sad method of complete case analysis:
 
 ```{r}
-  tab <- summary(pool(fit))
-  colnames( tab )
-  tab[,c(1:3,5)]
+  fit <- lm(Ozone~Wind+Temp+Solar.R,
+            data=airquality,na.action=na.omit)
+  summary( fit )
 ```
+
+In this case, the missing data estimates are basically the same as the complete case analysis.
+We only had 5% missing data though; generally, with small amounts of missing data, nothing changes anything much.
+
 
 **Aside:** You will notice that once we fit our model on the imputed data, `with()` returned an object of class `mira`.
 `Mira` objects can be pooled to get the pooled estimates, whereas objects of class `glm`, `lm`, `lmer`, etc. cannot be pooled.
-You will also notice that you cannot use `predict` with a `mira` object.
-To use `predict`, you can stack the imputed datasets and fit your model on this complete dataset.
-Parameter estimates generated by `pool` are the average of the parameter estimates from the model fit on each imputed dataset separately.
-So your coefficients are fine.
-However, your SEs will be underestimated.
-How underestimated your SEs will be depends, to an extent, on how much data is missing and whether it is missing at random.
 
-Our old, sad method:
 
-```{r}
-  fit <- lm(Ozone~Wind+Temp+Solar.R,data=airquality,na.action=na.omit)
-  summary( fit )
-  round(coef(summary(fit)),3)
-```
+You unfortunately cannot use `predict()` with a `mira` object.
+To use `predict`, one trick is to first stack the imputed datasets into one mega dataset, and then fit your model on this complete dataset.
 
-In this case, the missing data estimates are basically the same as the complete case analysis, it appears.
-We only had 5% missing data though.
 
 ## Extensions
 
@@ -568,7 +593,7 @@ Here is an example using `nhanes` data (another built-in R dataset).
 
 ## impute 5 datasets 
   imp.cat <- mice(nhanes2, m = 5, print=FALSE)     
-  full.cat = mice::complete(imp.cat)           ## print the first imputed data set
+  full.cat = mice::complete(imp.cat)        
   head(full.cat)
 ```
 
@@ -579,12 +604,13 @@ We can check what imputation method `mice` used for each variable:
 ```
 
 We can see that `mice` used the `polyreg` imputation method for the variable *age*, which means it treated it as an unordered categorical variable.
-But this is an ordered variable: higher values categories signified older age.
-We can manually force `mice` to treat *age* as an ordered categorical variable.
-We will keep the imputation methods for the remaining variables the same.
+But we know our *age* variable is an ordered variable: higher values categories signified older age.
+We can manually force `mice` to treat *age* as an ordered as so:
 
 ```{r}
-  imp.cat2 <- mice(nhanes2, meth=c("polr","pmm","logreg","pmm"), m=5, print=FALSE)
+  imp.cat2 <- mice(nhanes2, 
+                   meth=c("polr","pmm","logreg","pmm"),
+                   m=5, print=FALSE)
   head(mice::complete(imp.cat2, 1))
   imp.cat2$method
 ```
@@ -594,7 +620,8 @@ We will keep the imputation methods for the remaining variables the same.
 Multilevel data gets more tricky: should we impute taking into account cluster?
 How do we do that?
 
-For an initial pass, I would recommend simply doing regression imputation *ignoring* cluster/grouping, and then adding in that dummy variable of whether a value is imputed.
+For an initial pass, I recommend simply doing regression imputation *ignoring* cluster/grouping, and then adding in a dummy variable of whether a value is imputed.
+
 
 ### Longitudinal data
 
@@ -655,7 +682,7 @@ head( miss )
 ```
 
 Here we see the different patterns of missing outcomes, i.e., when patients leave and if they come back.
-When patients leave and never come back, regardless of the time point (see lines 4 and 5), we have monotone missingness.
+When patients leave and never come back, regardless of the time point (see lines 4 and 5), we have "monotone missingness."
 
 ```{r}
 ## sort missing patterns in decreasing order
@@ -673,21 +700,20 @@ miss
   ## 76% of patients with complete data
 ```
 
-Second, we look at patterns of missing outcomes.
-The outcome here is toenail detachment.
-
+We can look at patterns of missing outcomes by reshaping to wide, to have one column per time point, and then looking at the missing data patterns with `md.pattern()` from the `mice` package:
 ```{r}
 ## reshape data to wide 
   dat.wide = reshape( toes2, direction="wide", v.names="outcome",
                     idvar="patient", timevar = "visit" )
-  head( dat.wide )
 
 ## looking at missing data with mice package
-  md.pattern( dat.wide )
+  pat <- md.pattern( dat.wide )
+```
 
-## Another way to generating missingness patterns is to create a function
-## This function takes the visits and outcomes and puts a 1 or 0 if there is an
-## outcome and a dot if missing.
+Another way to generate missingness patterns is to create a function.
+The following function takes the visits and outcomes and puts a 1 or 0 if there is an outcome and a dot if missing:
+
+```{r}
 make.pat = function( visit, outcome ) {
     pat = rep( ".", 7 )
     pat[ visit ] = outcome
@@ -703,15 +729,6 @@ outcomes = toes %>% group_by( patient ) %>%
 
 head( outcomes, 20 )
 
-## how many folks have no detachments?
-table( outcomes$num.detach )
-
-163 / nrow(outcomes)
-
-## how many always detached?
-sum( outcomes$num.detach == outcomes$num.obs )
-
-16 / nrow(outcomes)
 ```
 
 ## Further reading
